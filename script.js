@@ -40,16 +40,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (icon) icon.classList.remove('rotate-180');
             }
         });
+
+        // 🛠️ تحسين: إغلاق الشريط الجانبي عند تغيير حجم الشاشة من صغير إلى كبير
+        window.addEventListener('resize', () => {
+            // إذا أصبح حجم الشاشة كبير (أكبر من 1024 بكسل) وقائمة sidebar مفتوحة (في وضع الشاشات الصغيرة)
+            if (window.innerWidth >= 1024 && sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                mainContent.classList.remove('filter', 'blur-sm');
+                const icon = toggleButton.querySelector('svg');
+                if (icon) icon.classList.remove('rotate-180');
+            }
+        });
     }
 
     // تهيئة وظائف التبويبات (لصفحة Auth)
     setupAuthTabs();
+    
+    // تهيئة وظيفة تتبع حقول الإدخال (لإضافة تأثيرات التركيز)
+    setupInputFocusEffect();
     
     // 💡 الفحص الذكي: قم بتفعيل تأثير Glass Hover فقط إذا كانت الصفحة تحتوي على تبويبات التسجيل (Auth)
     const isAuthPage = document.querySelector('.tab-button');
     if (isAuthPage) {
         setupGlassHover();
     }
+    
+    // إخفاء الـ Loader عند تحميل المحتوى بالكامل
+    hideLoader();
 });
 
 // ----------------------------------------------------
@@ -72,12 +89,13 @@ function setupAuthTabs() {
             tabPanels.forEach(panel => {
                 panel.classList.add('hidden');
                 panel.classList.remove('flex');
+                panel.classList.remove('animate-fade-in'); // لإيقاف أي أنيميشن سابق
             });
 
             const targetPanel = document.getElementById(targetId);
             if (targetPanel) {
                 targetPanel.classList.remove('hidden');
-                targetPanel.classList.add('flex'); // استخدم فئة flex كما في Tailwind
+                targetPanel.classList.add('flex', 'animate-fade-in'); // إضافة أنيميشن بسيط
             }
         });
     });
@@ -92,25 +110,38 @@ function setupAuthTabs() {
 // 3. إدارة الـ Loader (للاستخدام المستقبلي)
 // ----------------------------------------------------
 
+// يُفترض وجود عنصر في HTML يحمل ID "app-loader"
+const loader = document.getElementById('app-loader');
+
 /**
  * وظيفة لإظهار الـ Loader.
  */
 function showLoader() {
-    // ... (الكود الخاص بـ Loader)
+    if (loader) {
+        loader.classList.remove('hidden');
+        loader.classList.add('flex');
+    }
 }
 
 /**
  * وظيفة لإخفاء الـ Loader.
  */
 function hideLoader() {
-    // ... (الكود الخاص بـ Loader)
+    if (loader) {
+        // نستخدم setTimeout لضمان اكتمال تحميل الصفحة ورؤية Loader لثواني معدودة (اختياري)
+        setTimeout(() => {
+            loader.classList.add('hidden');
+            loader.classList.remove('flex');
+        }, 300); // 300ms مهلة بسيطة
+    }
 }
 
 // ----------------------------------------------------
 // 4. وظيفة تأثيرات Glassmorphism (Glass Hover Effect)
 // ----------------------------------------------------
 
-/* * هذه الوظيفة تطبق تأثير إمالة (Tilt/Parallax) عند التمرير 
+/**
+ * هذه الوظيفة تطبق تأثير إمالة (Tilt/Parallax) عند التمرير 
  * لجعل تأثير Glassmorphism يبدو أكثر تفاعلية.
  */
 function setupGlassHover() {
@@ -121,7 +152,6 @@ function setupGlassHover() {
         card.style.transition = 'transform 0.5s ease, box-shadow 0.5s ease';
 
         card.addEventListener('mousemove', (e) => {
-            // الحصول على أبعاد العنصر
             const rect = card.getBoundingClientRect();
             // حساب الإحداثيات بالنسبة لمركز العنصر
             const x = e.clientX - rect.left; 
@@ -146,6 +176,28 @@ function setupGlassHover() {
             // إعادة التنسيق إلى الوضع الأصلي عند إبعاد المؤشر
             card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
             card.style.boxShadow = '0 8px 32px 0 rgba(0, 0, 0, 0.37)'; // ظل الـ Glassmorphism الافتراضي
+        });
+    });
+}
+
+// ----------------------------------------------------
+// 5. وظيفة تأثير التركيز على حقول الإدخال (Input Focus Effect)
+// ----------------------------------------------------
+
+/**
+ * تضيف فئة 'focused' إلى حقول الإدخال عند التركيز عليها.
+ * يمكن استخدام هذه الفئة لتطبيق تنسيقات مخصصة (مثل Tailwind) عند التركيز.
+ */
+function setupInputFocusEffect() {
+    const inputs = document.querySelectorAll('input, textarea, select');
+
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.classList.add('focused');
+        });
+
+        input.addEventListener('blur', () => {
+            input.classList.remove('focused');
         });
     });
 }
