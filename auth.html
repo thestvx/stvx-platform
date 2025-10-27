@@ -54,9 +54,6 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
         }
-        
-        /* 🛑 تم إزالة أنماط Loader Overlay من هنا 🛑 */
-        /* سيتم إخفاؤه بالكامل عبر auth.css */
     </style>
 </head>
 <body class="text-white font-sans auth-background">
@@ -168,24 +165,17 @@
             loginForm.classList.add('hidden');
         });
 
-        // 🛑 تم تعديل هذا الجزء: الانتقال المباشر بدون استدعاء showLoader() 🛑
+        // 🛑 الانتقال المباشر بدون لودر 🛑
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             window.location.href = 'index.html';
         });
 
-        // 🛑 تم تعديل هذا الجزء: الانتقال المباشر بدون استدعاء showLoader() 🛑
+        // 🛑 الانتقال المباشر بدون لودر 🛑
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
             window.location.href = 'index.html';
         });
-
-        // 🛑 تم حذف هذا الكود لأنه كان يستدعي hideLoader() عند تحميل الصفحة 🛑
-        /*
-        window.addEventListener('load', () => {
-            setTimeout(() => { hideLoader(); }, 100);
-        });
-        */
     </script>
 </body>
 </html>
