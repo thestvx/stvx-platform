@@ -5,7 +5,7 @@
 /* -------------------------------------- */
 .auth-background {
     /* تغيير الخلفية إلى الصورة المطلوبة */
-    background-image: url('images/loginbackground002.png'); /* ⬅️ تم التعديل هنا */
+    background-image: url('images/loginbackground003.png'); /* ⬅️ تم التعديل هنا */
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
