@@ -1,639 +1,378 @@
 /*
- * STVX AUTH DESIGN
- * تم تحديث الثيم من الأخضر إلى الذهبي/البرتقالي (#ffc72c)
- */
+    ملف auth.css (مُعدَّل ليناسب تصميم STVX الداكن/الزجاجي/الذهبي)
+*/
 
-/* -------------------- 0. الخطوط المخصصة -------------------- */
-@font-face {
-    font-family: 'Expo-Bold';
-    src: url('fonts/Expo-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
 
-@font-face {
-    font-family: 'Expo-Regular';
-    src: url('fonts/Expo-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
+/* إعادة ضبط المتغيرات الأساسية مع استخدام خط Cairo للمشروع */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cairo', sans-serif; /* تم استبدال Montserrat بـ Cairo */
 }
 
-:root {
-    /* -------------------- متغيرات الألوان الذهبية الجديدة -------------------- */
-    --primary-color: #ffc72c; /* الذهبي الأساسي */
-    --primary-gradient: linear-gradient(135deg, #ffc72c 0%, #e5b328 100%); /* تدرج ذهبي */
-    --secondary-gradient: linear-gradient(135deg, #cc9f23 0%, #ffc72c 100%); /* تدرج ثانوي */
-    --success-gradient: linear-gradient(135deg, #ffc72c 0%, #e5b328 100%); /* ذهبي للنجاح */
-    
-    --glass-bg: rgba(255, 255, 255, 0.25); 
-    --glass-border: rgba(255, 255, 255, 0.4); 
-    
-    --text-primary: #ffffff; 
-    --text-secondary: rgba(255, 255, 255, 0.8); 
-    
-    --input-bg: rgba(255, 255, 255, 0.1); 
-    --input-border: rgba(255, 255, 255, 0.5); 
-    
-    --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
-    
-    /* ... متغيرات التوثيق ... */
-}
+/* إزالة تنسيق الخلفية هنا والاعتماد على .dark-bg في HTML */
+/* جسم الصفحة تم تنسيقه بالفعل في <style> tag بملف auth.html */
 
-body {
-    font-family: 'Expo-Regular', sans-serif;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-    direction: rtl; 
-}
+/* ---------------------------------------------------------------- */
+/* تنسيق الـ Glassmorphism الأساسي */
+/* ---------------------------------------------------------------- */
 
-/* Forest Background (مُعدَّل لتناسب ثيم الـ Dark/Gold) */
-.background-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    
-    /* يُفترض أن تكون خلفية داكنة (Dark/Abstract) */
-    background-image: url('images/AUTH-BACKGROUND.jpg'); 
-    
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    animation: forestMovement 15s ease infinite; 
-}
-
-.background-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        45deg,
-        rgba(0, 0, 0, 0.7) 0%, /* تم تعتيم الخلفية ليتناسب مع الثيم الداكن */
-        rgba(30, 30, 30, 0.5) 25%, 
-        rgba(10, 10, 10, 0.3) 50%,
-        rgba(30, 30, 30, 0.5) 75%,
-        rgba(0, 0, 0, 0.7) 100%
-    );
-    backdrop-filter: blur(3px);
-}
-/* Keyframes تبقى كما هي */
-@keyframes forestMovement { 
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Container */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-    position: relative;
-    z-index: 1;
-}
-
-/* Glaseffekt Card */
 .glass-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow);
-    padding: 40px;
-    width: 100%;
-    max-width: 450px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.05); /* خلفية شبه شفافة */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
 }
 
-.glass-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--primary-gradient);
-    animation: pulse 2s ease-in-out infinite;
+.container {
+    /* تطبيق الثيم الزجاجي الداكن بدلاً من الخلفية البيضاء #fff */
+    background-color: rgba(0, 0, 0, 0.3); /* خلفية داكنة شبه شفافة */
+    border-radius: 30px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5); /* ظل داكن أقوى */
+    position: relative;
+    overflow: hidden;
+    width: 768px;
+    max-width: 90%; /* تعديل ليتناسب بشكل أفضل مع الشاشات الصغيرة */
+    min-height: 550px; /* زيادة الارتفاع قليلاً */
+    color: #fff; /* لون النص الافتراضي أبيض */
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Toggle Buttons */
-.toggle-container {
-    display: flex;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 15px;
-    padding: 5px;
-    margin-bottom: 30px;
-    position: relative;
-    overflow: hidden;
+.container p {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.3px;
+    margin: 20px 0;
+    color: #ddd;
 }
 
-.toggle-btn {
-    font-family: 'Expo-Bold', sans-serif; 
-    flex: 1;
-    padding: 15px 20px;
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    font-weight: bold;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease; 
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+.container span {
+    font-size: 12px;
+    color: #aaa;
 }
 
-.toggle-btn.active {
-    color: var(--text-primary);
-    background: var(--primary-gradient);
-    box-shadow: 0 4px 15px rgba(255, 199, 44, 0.5); /* ظل ذهبي */
+.container a {
+    color: #ffc72c; /* لون الرابط الذهبي */
+    font-size: 13px;
+    text-decoration: none;
+    margin: 15px 0 10px;
+    transition: color 0.3s;
+}
+.container a:hover {
+    color: #fff;
 }
 
-.toggle-btn:hover:not(.active) {
-    color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.1);
+/* ---------------------------------------------------------------- */
+/* تنسيق الأزرار (اللون الذهبي والظل النيون) */
+/* ---------------------------------------------------------------- */
+
+.container button, .action-button {
+    background: #ffc72c; /* اللون الذهبي الأساسي */
+    color: #000;
+    font-size: 14px;
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 199, 44, 0.6); /* ظل نيون ذهبي */
+    transition: all 0.3s ease;
 }
 
-/* Form Container */
+.container button:hover, .action-button:hover {
+    box-shadow: 0 0 25px rgba(255, 199, 44, 0.9);
+    transform: translateY(-1px);
+}
+
+.container button.hidden {
+    background-color: transparent;
+    border-color: #fff;
+    color: #fff;
+    box-shadow: none;
+}
+
+/* ---------------------------------------------------------------- */
+/* تنسيق النماذج وحقول الإدخال */
+/* ---------------------------------------------------------------- */
+
+.container form {
+    /* يجب أن تكون خلفية النموذج شفافة أو داكنة قليلاً لتلائم الـ Glassmorphism */
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    height: 100%;
+}
+
+.container input {
+    /* حقول الإدخال بتأثير Glassmorphism خفيف */
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 8px 0;
+    padding: 10px 15px;
+    font-size: 13px;
+    border-radius: 8px;
+    width: 100%;
+    outline: none;
+    color: #fff;
+    transition: border-color 0.3s;
+}
+
+.container input::placeholder {
+    color: #aaa;
+}
+
+.container input:focus {
+    border-color: #ffc72c; /* توهج ذهبي عند التركيز */
+}
+
 .form-container {
-    display: none;
-    animation: fadeIn 0.5s ease;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+    color: #fff; /* لضمان ظهور النص باللون الأبيض */
 }
 
-.form-container.active {
-    display: block;
+/* ---------------------------------------------------------------- */
+/* تنسيق الانزلاق والتبديل (Toggle) */
+/* ---------------------------------------------------------------- */
+
+.sign-in {
+    left: 0;
+    width: 50%;
+    z-index: 2;
 }
 
-.form-header {
-    text-align: center;
-    margin-bottom: 30px;
+/* في وضع النشاط، ينزلق تسجيل الدخول (Sign-in) نحو اليسار (مع RTL) */
+.container.active .sign-in {
+    transform: translateX(-100%);
 }
 
-.form-header h2 {
-    font-family: 'Expo-Bold', sans-serif; 
-    color: var(--text-primary);
-    font-size: 2rem;
-    font-weight: bold; 
-    margin-bottom: 10px;
-    background: var(--primary-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.sign-up {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
 }
 
-.form-header p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
+/* في وضع النشاط، ينزلق إنشاء الحساب (Sign-up) نحو اليمين (مع RTL) */
+.container.active .sign-up {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: move 0.6s;
 }
 
-/* Input Styles */
-.input-row {
-    display: flex;
-    gap: 15px;
+@keyframes move {
+    0%, 49.99% {
+        opacity: 0;
+        z-index: 1;
+    }
+    50%, 100% {
+        opacity: 1;
+        z-index: 5;
+    }
 }
 
-.input-group {
-    margin-bottom: 20px;
-    flex: 1;
+/* ---------------------------------------------------------------- */
+/* أيقونات التواصل الاجتماعي */
+/* ---------------------------------------------------------------- */
+
+.social-icons {
+    margin: 20px 0;
 }
 
-#registerForm .input-group {
-    margin-bottom: 16px;
+.social-icons a {
+    /* أيقونات زجاجية */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 50%; /* تم التعديل إلى 50% لجعله دائري بالكامل */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 8px; /* زيادة التباعد قليلاً */
+    width: 45px;
+    height: 45px;
+    color: #ddd;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
-.input-container {
-    position: relative;
+.social-icons a:hover {
+    background-color: #ffc72c; /* خلفية ذهبية عند التمرير */
+    border-color: #ffc72c;
+    color: #000; /* لون الأيقونة أسود */
 }
 
-.input-container input {
-    width: 100%;
-    padding: 18px 45px 18px 50px; 
-    background: var(--input-bg);
-    border: 2px solid transparent;
-    border-radius: 15px;
-    color: var(--text-primary);
-    font-family: 'Expo-Regular', sans-serif; 
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    text-align: right; 
+/* ---------------------------------------------------------------- */
+/* تنسيق لوحة التبديل (Toggle Panel) */
+/* ---------------------------------------------------------------- */
+
+.toggle-container {
+    position: absolute;
+    top: 0;
+    /* يتم عكس الاتجاه ليتناسب مع RTL */
+    right: 0; 
+    left: 50%; 
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+    /* عكس الحدود الدائرية لـ RTL */
+    border-radius: 0 150px 100px 0;
+    z-index: 1000;
 }
 
-#registerForm .input-container input {
-    padding: 15px 45px 15px 50px;
+.container.active .toggle-container {
+    /* يتم عكس الانزلاق لـ RTL */
+    transform: translateX(-100%);
+    /* عكس الحدود مرة أخرى عند النشاط */
+    border-radius: 150px 0 0 100px;
 }
 
-.input-container input::placeholder {
-    color: var(--text-secondary);
+.toggle {
+    /* خلفية متدرجة ذهبية داكنة للوحة التبديل */
+    background: linear-gradient(to right, #cc9d00, #ffc72c); 
+    height: 100%;
+    color: #fff;
+    position: relative;
+    /* يتم تعديل الاتجاهات لـ RTL */
+    right: -100%; 
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
 }
 
-.input-container input:focus {
-    outline: none;
-    border-color: var(--input-border);
-    background: rgba(255, 255, 255, 0.15); 
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 199, 44, 0.3); /* ظل ذهبي */
+.container.active .toggle {
+    /* يتم عكس الانزلاق لـ RTL */
+    transform: translateX(-50%);
 }
 
-.input-icon {
-    position: absolute;
-    right: 15px; 
-    left: auto; 
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
+.toggle-panel {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 30px;
+    text-align: center;
+    top: 0;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
 }
 
-.input-container input:focus + .input-icon,
-.input-container input:focus ~ .input-icon {
-    color: #ffc72c; /* أيقونة ذهبية عند التركيز */
+.toggle-left {
+    right: 0; /* تم عكس الاتجاه لـ RTL */
+    transform: translateX(0);
 }
 
-.input-border {
-    position: absolute;
-    bottom: 0;
-    right: 0; 
-    left: auto;
-    width: 0;
-    height: 2px;
-    background: var(--primary-gradient);
-    transition: width 0.3s ease;
+.container.active .toggle-left {
+    transform: translateX(200%); /* تم عكس الانزلاق لـ RTL */
 }
 
-.input-container input:focus ~ .input-border {
-    width: 100%;
+.toggle-right {
+    left: 0; /* تم عكس الاتجاه لـ RTL */
+    transform: translateX(-200%); /* تم عكس الانزلاق لـ RTL */
 }
 
-.password-toggle {
-    position: absolute;
-    left: 15px; 
-    right: auto;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.password-toggle:hover {
-    color: var(--text-primary);
-}
-
-/* Form Options */
-.form-options {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-#registerForm .form-options {
-    margin-bottom: 20px;
-}
-
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    position: relative;
-}
-
-.checkbox-container input {
-    display: none;
-}
-
-.checkmark {
-    width: 20px;
-    height: 20px;
-    background: var(--input-bg);
-    border: 2px solid var(--input-border);
-    border-radius: 6px;
-    margin-right: 0;
-    margin-left: 12px; 
-    position: relative;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    backdrop-filter: blur(10px);
-    cursor: pointer;
-    overflow: hidden;
-}
-
-.checkbox-container:hover .checkmark {
-    border-color: #ffc72c;  /* ذهبي */
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 199, 44, 0.4); 
-}
-
-.checkbox-container input:checked ~ .checkmark {
-    background: var(--primary-gradient); 
-    border-color: transparent;
-    transform: scale(1);
-    box-shadow: 0 4px 15px rgba(255, 199, 44, 0.5); 
-}
-
-.checkbox-container a {
-    color: #ffc72c;  /* ذهبي */
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.checkbox-container a:hover {
-    color: #e5b328;  /* ذهبي أغمق */
-}
-
-.forgot-password {
-    color: #ffc72c;  /* ذهبي */
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.forgot-password:hover {
-    color: #e5b328;  /* ذهبي أغمق */
-    text-decoration: underline;
-}
-
-/* Submit Button */
-.submit-btn {
-    font-family: 'Expo-Bold', sans-serif; 
-    width: 100%;
-    padding: 18px;
-    background: var(--primary-gradient);
-    border: none;
-    border-radius: 15px;
-    color: var(--text-primary);
-    font-size: 1rem;
-    font-weight: bold; 
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 30px;
-}
-
-#registerForm .submit-btn {
-    margin-bottom: 20px;
-    padding: 16px;
-}
-
-.submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(255, 199, 44, 0.5);  /* ظل ذهبي */
-}
-
-.register-btn {
-    background: var(--secondary-gradient);
-}
-
-.register-btn:hover {
-    box-shadow: 0 10px 30px rgba(204, 159, 35, 0.5);  /* ظل ذهبي أغمق */
-}
-
-/* Social Login */
-.social-login {
-    text-align: center;
-}
-
-.social-login p {
-    color: var(--text-secondary);
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-    position: relative;
-}
-
-.social-login p::before,
-.social-login p::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 30%;
-    height: 1px;
-    background: var(--input-border);
-}
-
-.social-login p::before {
-    right: 0;
-    left: auto;
-}
-
-.social-login p::after {
-    left: 0;
-    right: auto;
-}
-
-.social-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.social-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    background: var(--input-bg);
-    backdrop-filter: blur(10px);
-    color: var(--text-primary);
-}
-
-/* Success Message */
-.success-message {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.success-content i {
-    font-size: 4rem;
-    color: #ffc72c;  /* ذهبي */
-    margin-bottom: 20px;
+.container.active .toggle-right {
+    transform: translateX(0);
 }
 
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-    
-    .glass-card {
-        padding: 30px 20px;
-        max-width: 100%;
-    }
-    
-    .form-header h2 {
-        font-size: 1.5rem;
-    }
-    
-    .input-row {
-        flex-direction: column;
-        gap: 0;
-    }
-    
-    .form-options {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    
-    .social-buttons {
-        gap: 10px;
-    }
+/* ---------------------------------------------------------------- */
+/* تنسيق النموذج متعدد الخطوات (Multi-Step Form) */
+/* ---------------------------------------------------------------- */
+
+#msform {
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+#msform fieldset {
+    /* خلفية شفافة لـ Glassmorphism */
+    background: transparent;
+    border: 0 none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 20px;
+    position: relative;
 }
 
-
-/* -------------------- 7. تصميم زر العودة الجديد (Dots Grid Button) -------------------- */
-
-.Btn-Container.back-to-home-new {
-    /* الموقع في الزاوية اليسرى العليا */
-    position: absolute;
-    top: 30px;
-    left: 30px; 
-    z-index: 100;
-
-    /* التنسيقات الأساسية المطبقة والمكيفة */
-    display: flex;
-    width: 170px;
-    height: fit-content;
-    background-color: var(--glass-bg); 
-    border-radius: 40px;
-    box-shadow: var(--shadow); 
-    justify-content: space-between;
-    align-items: center;
-    border: none;
-    cursor: pointer;
-    text-decoration: none; 
-    transition: all 0.3s ease;
+#msform fieldset:not(:first-of-type) {
+    display: none;
 }
 
-.Btn-Container.back-to-home-new:hover {
-    /* تأثير طفيف عند التمرير */
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(255, 199, 44, 0.5);  /* ظل ذهبي */
+.action-button {
+    width: 120px; /* زيادة العرض قليلاً */
+    margin: 10px 5px;
 }
 
-.icon-Container {
-    width: 45px;
-    height: 45px;
-    /* تم تغيير الخلفية إلى لون الثيم الأساسي */
-    background-color: var(--primary-color);  /* ذهبي */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: 3px solid var(--text-primary); 
+/* شريط التقدم (Progress Bar) */
+#progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    counter-reset: step;
+    display: flex;
+    justify-content: center;
+}
+#progressbar li {
+    list-style-type: none;
+    color: #aaa;
+    text-transform: uppercase;
+    font-size: 10px;
+    width: 33.33%;
+    position: relative;
+    text-align: center;
 }
 
-.text {
-    width: calc(170px - 45px);
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-primary); 
-    font-size: 1.1em;
-    letter-spacing: 1.2px;
+/* تنسيق الدائرة الرقمية */
+#progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 24px;
+    line-height: 24px;
+    display: block;
+    font-size: 12px;
+    color: #333;
+    background: #ddd;
+    border-radius: 50%;
+    margin: 0 auto 5px auto;
 }
 
-.icon-Container svg {
-    /* تم تغيير لون النقاط ليتناسب مع الخلفية الذهبية للزر */
-    fill: #000000;
-    transition-duration: 1.5s;
+/* تنسيق الخط الواصل بين الدوائر */
+#progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: #555; /* لون داكن للخط */
+    position: absolute;
+    /* عكس الاتجاه لـ RTL */
+    right: -50%; 
+    top: 11px;
+    z-index: -1;
 }
 
-/* حركة الأيقونة النقطية عند التمرير */
-.Btn-Container:hover .icon-Container svg {
-    transition-duration: 1.5s;
-    animation: arrow 1s linear infinite;
-}
-/* تم تعديل الحركة لتكون مناسبة للزر كنقطة دخول/عودة، بدلاً من حركة سهم (arrow) */
-@keyframes arrow {
-    0% {
-        transform: rotate(0deg);
-        opacity: 0.7;
-    }
-    100% {
-        transform: rotate(360deg);
-        opacity: 1;
-    }
+#progressbar li:first-child:after {
+    content: none;
 }
 
-/* تعديل متجاوب لزر العودة */
-@media (max-width: 768px) {
-    .Btn-Container.back-to-home-new {
-        top: 15px;
-        left: 15px; 
-        width: 140px;
-    }
-    .icon-Container {
-        width: 40px;
-        height: 40px;
-    }
-    .text {
-        width: calc(140px - 40px);
-        font-size: 1em;
-    }
+/* تنسيق الخطوة النشطة */
+#progressbar li.active:before, #progressbar li.active:after {
+    background: #ffc72c; /* اللون الذهبي */
+    color: black;
+    box-shadow: 0 0 10px rgba(255, 199, 44, 0.8); /* ظل نيون ذهبي */
 }
