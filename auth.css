@@ -25,47 +25,8 @@
 }
 
 /* -------------------------------------- */
-/* 3. تنسيق النص المتحرك (الحركة الخطية الجديدة) */
+/* 🛑 تم حذف جميع أكواد النص المتحرك 🛑 */
 /* -------------------------------------- */
-
-/* إلغاء الكود القديم للـ stvx-legacy-container */
-.stvx-legacy-container {
-    display: none !important; 
-}
-
-/* حاوية النص (توضع فوق البطاقة الرئيسية) */
-.auth-card-border-text-container {
-    position: fixed;
-    top: calc(50% - 300px); /* يبدأ أعلى مركز الشاشة */
-    width: 100vw; /* يغطي عرض الشاشة بالكامل */
-    z-index: 5;
-    height: 600px;
-    overflow: hidden;
-    pointer-events: none; /* يسمح بالنقر على العناصر أسفله */
-}
-
-/* النص المتحرك نفسه */
-.scrolling-text-on-path {
-    white-space: nowrap;
-    font-family: 'Akira-Like', sans-serif;
-    font-size: 2.5rem; /* حجم أصغر يناسب الحركة الخطية */
-    font-weight: 900;
-    color: rgba(255, 255, 255, 0.08); /* لون شفاف جداً */
-    user-select: none;
-    line-height: 1.2;
-    display: block;
-    
-    animation: scrollLinear 15s linear infinite;
-    width: 200%; /* ضعف العرض لضمان السلاسة */
-    position: absolute;
-    top: 50%; 
-    transform: translateY(-50%); /* للتموضع العمودي في المنتصف */
-}
-
-@keyframes scrollLinear {
-    from { transform: translateX(0) translateY(-50%); }
-    to { transform: translateX(-50%) translateY(-50%); } 
-}
 
 
 /* -------------------------------------- */
