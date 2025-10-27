@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STVX Portfolio | تصميم الواجهات والثيم الزجاجي</title>
+    <title>STVX Platform | فنّ بصري وشيفرة مبدعة</title>
     
     <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet"> 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css"> 
@@ -27,7 +24,8 @@
                         'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
                     },
                     fontFamily: {
-                        sans: ['Cairo', 'sans-serif'],
+                        // 🛑 تم تعديل الخط الأساسي إلى Expo Arabic 🛑
+                        sans: ['Expo Arabic', 'sans-serif'],
                         logo: ['Pacifico', 'cursive'],
                     },
                     // تعريفات الأنيميشن (للحركة السلسة) 
@@ -94,7 +92,7 @@
             
             <div class="flex items-center space-x-4 rtl:space-x-reverse">
                    <button class="w-10 h-10 flex items-center justify-center rounded-full glass-button-hover !rounded-button whitespace-nowrap">
-                       <i class="ri-notification-line text-gray-300 text-xl"></i>
+                        <i class="ri-notification-line text-gray-300 text-xl"></i>
                    </button>
                 
                 <a href="auth.html" class="bg-transparent border border-primary/50 hover:bg-white/10 text-primary px-4 py-2 rounded-full font-bold text-sm transition-colors whitespace-nowrap">
@@ -168,42 +166,42 @@
                     <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all" style="animation: slideUp 0.6s ease-out 0.7s forwards;">
                         <div class="flex items-center space-x-3 rtl:space-x-reverse">
                             <img src="https://readdy.ai/api/search-image?query=UI%2FUX%20icon%20with%20screen%20and%20mouse%2C%20gold%20gradient%20background%2C%20modern%20minimalist%20design&width=48&height=48&seq=liked1&orientation=squarish" 
-                                    alt="UI/UX" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
+                                        alt="UI/UX" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
                             <span class="font-medium text-white">UI/UX Design</span>
                         </div>
                     </div>
                     <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all" style="animation: slideUp 0.6s ease-out 0.8s forwards;">
                         <div class="flex items-center space-x-3 rtl:space-x-reverse">
                             <img src="https://readdy.ai/api/search-image?query=Website%20development%20icon%20with%20code%20symbol%2C%20blue%20gradient%20background%2C%20modern%20digital%20design&width=48&height=48&seq=recent1&orientation=squarish" 
-                                    alt="تطوير" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
+                                        alt="تطوير" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
                             <span class="font-medium text-white">تطوير فرونت إند</span>
                         </div>
                     </div>
                     <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all" style="animation: slideUp 0.6s ease-out 0.9s forwards;">
                         <div class="flex items-center space-x-3 rtl:space-x-reverse">
                             <img src="https://readdy.ai/api/search-image?query=Branding%20icon%20with%20abstract%20shape%2C%20green%20gradient%20background%2C%20corporate%20identity%20theme&width=48&height=48&seq=download1&orientation=squarish" 
-                                    alt="هوية" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
+                                        alt="هوية" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
                             <span class="font-medium text-white">هوية بصرية</span>
                         </div>
                     </div>
                     <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all" style="animation: slideUp 0.6s ease-out 1.0s forwards;">
                         <div class="flex items-center space-x-3 rtl:space-x-reverse">
                             <img src="https://readdy.ai/api/search-image?query=3D%20modeling%20icon%20with%20geometric%20shape%2C%20purple%20gradient%20background%2C%20digital%20art%20theme&width=48&height=48&seq=discover1&orientation=squarish" 
-                                    alt="3D" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
+                                        alt="3D" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
                             <span class="font-medium text-white">تصميم 3D</span>
                         </div>
                     </div>
                     <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all" style="animation: slideUp 0.6s ease-out 1.1s forwards;">
                         <div class="flex items-center space-x-3 rtl:space-x-reverse">
                             <img src="https://readdy.ai/api/search-image?query=Motion%20graphics%20icon%20with%20moving%20lines%2C%20orange%20gradient%20background%2C%20video%20animation%20theme&width=48&height=48&seq=radio1&orientation=squarish" 
-                                    alt="موشن" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
+                                        alt="موشن" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
                             <span class="font-medium text-white">موشن جرافيكس</span>
                         </div>
                     </div>
                     <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all" style="animation: slideUp 0.6s ease-out 1.2s forwards;">
                         <div class="flex items-center space-x-3 rtl:space-x-reverse">
                             <img src="https://readdy.ai/api/search-image?query=Consulting%20icon%20with%20lightbulb%20and%20gear%2C%20teal%20gradient%20background%2C%20strategy%20theme&width=48&height=48&seq=podcast1&orientation=squarish" 
-                                    alt="استشارة" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
+                                        alt="استشارة" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
                             <span class="font-medium text-white">استشارات فنية</span>
                         </div>
                     </div>
