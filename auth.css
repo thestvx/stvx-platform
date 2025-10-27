@@ -1,5 +1,5 @@
 /*
-    ملف auth.css (مُعدَّل ليناسب تصميم STVX الداكن/الزجاجي/الذهبي)
+    ملف auth.css (الكود الكامل والمُصحح - يدعم RTL و Glassmorphism الذهبي الداكن)
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
@@ -9,14 +9,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Cairo', sans-serif; /* تم استبدال Montserrat بـ Cairo */
+    font-family: 'Cairo', sans-serif;
 }
 
-/* إزالة تنسيق الخلفية هنا والاعتماد على .dark-bg في HTML */
-/* جسم الصفحة تم تنسيقه بالفعل في <style> tag بملف auth.html */
-
 /* ---------------------------------------------------------------- */
-/* تنسيق الـ Glassmorphism الأساسي */
+/* تنسيق الـ Glassmorphism الأساسي للحاوية */
 /* ---------------------------------------------------------------- */
 
 .glass-card {
@@ -35,8 +32,8 @@
     position: relative;
     overflow: hidden;
     width: 768px;
-    max-width: 90%; /* تعديل ليتناسب بشكل أفضل مع الشاشات الصغيرة */
-    min-height: 550px; /* زيادة الارتفاع قليلاً */
+    max-width: 90%;
+    min-height: 550px;
     color: #fff; /* لون النص الافتراضي أبيض */
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -90,13 +87,6 @@
     transform: translateY(-1px);
 }
 
-.container button#login, .container button#register {
-    background-color: transparent;
-    border-color: #fff;
-    color: #fff;
-    box-shadow: none;
-}
-
 /* ---------------------------------------------------------------- */
 /* تنسيق النماذج وحقول الإدخال */
 /* ---------------------------------------------------------------- */
@@ -143,7 +133,7 @@
 }
 
 /* ---------------------------------------------------------------- */
-/* تنسيق الانزلاق والتبديل (Toggle) */
+/* تنسيق الانزلاق والتبديل (Toggle) - تم تعديله لـ RTL */
 /* ---------------------------------------------------------------- */
 
 .sign-in {
@@ -152,7 +142,6 @@
     z-index: 2;
 }
 
-/* في وضع النشاط، ينزلق تسجيل الدخول (Sign-in) نحو اليسار (مع RTL) */
 .container.active .sign-in {
     transform: translateX(-100%);
 }
@@ -164,7 +153,6 @@
     z-index: 1;
 }
 
-/* في وضع النشاط، ينزلق إنشاء الحساب (Sign-up) نحو اليمين (مع RTL) */
 .container.active .sign-up {
     transform: translateX(100%);
     opacity: 1;
@@ -183,23 +171,18 @@
     }
 }
 
-/* ---------------------------------------------------------------- */
-/* أيقونات التواصل الاجتماعي */
-/* ---------------------------------------------------------------- */
-
 .social-icons {
     margin: 20px 0;
 }
 
 .social-icons a {
-    /* أيقونات زجاجية */
     border: 1px solid rgba(255, 255, 255, 0.2);
     background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 50%; /* تم التعديل إلى 50% لجعله دائري بالكامل */
+    border-radius: 50%;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin: 0 8px; /* زيادة التباعد قليلاً */
+    margin: 0 8px;
     width: 45px;
     height: 45px;
     color: #ddd;
@@ -207,44 +190,34 @@
 }
 
 .social-icons a:hover {
-    background-color: #ffc72c; /* خلفية ذهبية عند التمرير */
+    background-color: #ffc72c;
     border-color: #ffc72c;
-    color: #000; /* لون الأيقونة أسود */
+    color: #000;
 }
-
-/* ---------------------------------------------------------------- */
-/* تنسيق لوحة التبديل (Toggle Panel) */
-/* ---------------------------------------------------------------- */
 
 .toggle-container {
     position: absolute;
     top: 0;
-    /* يتم عكس الاتجاه ليتناسب مع RTL */
     right: 0; 
     left: 50%; 
     width: 50%;
     height: 100%;
     overflow: hidden;
     transition: all 0.6s ease-in-out;
-    /* عكس الحدود الدائرية لـ RTL */
     border-radius: 0 150px 100px 0;
     z-index: 1000;
 }
 
 .container.active .toggle-container {
-    /* يتم عكس الانزلاق لـ RTL */
     transform: translateX(-100%);
-    /* عكس الحدود مرة أخرى عند النشاط */
     border-radius: 150px 0 0 100px;
 }
 
 .toggle {
-    /* خلفية متدرجة ذهبية داكنة للوحة التبديل */
     background: linear-gradient(to right, #cc9d00, #ffc72c); 
     height: 100%;
     color: #fff;
     position: relative;
-    /* يتم تعديل الاتجاهات لـ RTL */
     right: -100%; 
     height: 100%;
     width: 200%;
@@ -253,7 +226,6 @@
 }
 
 .container.active .toggle {
-    /* يتم عكس الانزلاق لـ RTL */
     transform: translateX(-50%);
 }
 
@@ -273,23 +245,22 @@
 }
 
 .toggle-left {
-    right: 0; /* تم عكس الاتجاه لـ RTL */
+    right: 0; 
     transform: translateX(0);
 }
 
 .container.active .toggle-left {
-    transform: translateX(200%); /* تم عكس الانزلاق لـ RTL */
+    transform: translateX(200%);
 }
 
 .toggle-right {
-    left: 0; /* تم عكس الاتجاه لـ RTL */
-    transform: translateX(-200%); /* تم عكس الانزلاق لـ RTL */
+    left: 0; 
+    transform: translateX(-200%);
 }
 
 .container.active .toggle-right {
     transform: translateX(0);
 }
-
 
 /* ---------------------------------------------------------------- */
 /* تنسيق النموذج متعدد الخطوات (Multi-Step Form) */
@@ -301,7 +272,6 @@
     position: relative;
 }
 #msform fieldset {
-    /* خلفية شفافة لـ Glassmorphism */
     background: transparent;
     border: 0 none;
     border-radius: 0.5rem;
@@ -317,7 +287,7 @@
 }
 
 .action-button {
-    width: 120px; /* زيادة العرض قليلاً */
+    width: 120px;
     margin: 10px 5px;
 }
 
@@ -358,9 +328,8 @@
     content: '';
     width: 100%;
     height: 2px;
-    background: #555; /* لون داكن للخط */
+    background: #555;
     position: absolute;
-    /* عكس الاتجاه لـ RTL */
     right: -50%; 
     top: 11px;
     z-index: -1;
@@ -372,7 +341,44 @@
 
 /* تنسيق الخطوة النشطة */
 #progressbar li.active:before, #progressbar li.active:after {
-    background: #ffc72c; /* اللون الذهبي */
+    background: #ffc72c;
     color: black;
-    box-shadow: 0 0 10px rgba(255, 199, 44, 0.8); /* ظل نيون ذهبي */
+    box-shadow: 0 0 10px rgba(255, 199, 44, 0.8);
+}
+
+/* ---------------------------------------------------------------- */
+/* *التعديل الإلزامي لحل مشكلة ظهور أزرار التبديل* */
+/* ---------------------------------------------------------------- */
+
+/* ضمان ظهور الأزرار وتنسيقها داخل اللوحة الذهبية بقوة */
+.toggle-panel button {
+    /* تجاوز أي إخفاء قسري */
+    display: inline-block !important; 
+    visibility: visible !important;
+    opacity: 1 !important;
+    
+    /* تنسيق خاص لزر التبديل لتمييزه */
+    background-color: transparent !important;
+    border: 2px solid #ffffff !important; /* إطار أبيض واضح */
+    color: #ffffff !important; /* نص أبيض */
+    padding: 10px 40px !important;
+    margin-top: 20px !important;
+    border-radius: 20px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    cursor: pointer;
+    box-shadow: none !important;
+    transition: all 0.3s ease;
+}
+
+.toggle-panel button:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* تنسيق خاص للنصوص داخل اللوحة الذهبية للتأكد من وضوحها */
+.toggle-panel h1 {
+    color: #0a0a0a !important; /* لون داكن أو أسود لزيادة التباين على الخلفية الذهبية */
+}
+.toggle-panel p {
+    color: #333333 !important;
 }
