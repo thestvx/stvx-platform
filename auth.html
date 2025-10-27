@@ -79,15 +79,15 @@
         </svg>
     </div>
 
-    <div class="stvx-legacy-container">
-        <div class="stvx-legacy-text line-1">STVX — not a label, a legacy STVX — not a label, a legacy</div>
-        <div class="stvx-legacy-text line-2">DESIGN IS HOW IT WORKS DESIGN IS HOW IT WORKS</div>
-        <div class="stvx-legacy-text line-3">QUALITY OVER QUANTITY QUALITY OVER QUANTITY</div>
+    <div class="auth-card-border-text-container">
+        <div class="scrolling-text-on-path">
+            <span>STVX — not a label, a legacy. DESIGN IS HOW IT WORKS. QUALITY OVER QUANTITY. STVX — not a label, a legacy. DESIGN IS HOW IT WORKS. QUALITY OVER QUANTITY.</span>
+        </div>
     </div>
-
+    
     <div class="flex items-center justify-center min-h-screen py-10 px-4 relative z-10">
         <div class="auth-container w-full max-w-lg">
-            <div class="glass-card rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
+            <div id="auth-card" class="glass-card rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
 
                 <div class="flex border-b border-white/10">
                     <button id="login-tab" class="tab-button flex-1 py-4 text-white font-medium text-center relative active">تسجيل الدخول</button>
@@ -165,13 +165,12 @@
             loginForm.classList.add('hidden');
         });
 
-        // 🛑 الانتقال المباشر بدون لودر 🛑
+        // 🛑 الانتقال المباشر بدون لودر عند الإرسال 🛑
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             window.location.href = 'index.html';
         });
 
-        // 🛑 الانتقال المباشر بدون لودر 🛑
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
             window.location.href = 'index.html';
