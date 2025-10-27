@@ -1,11 +1,65 @@
 /* auth.css */
 
-/* أكواد الـ Loader SVG الكاملة (الساعة الرملية) */
+/* -------------------------------------- */
+/* 1. الخلفية الثابتة لصفحة التسجيل (الاسم الجديد: loginbackground01.png) */
+/* -------------------------------------- */
+.auth-background {
+    /* تغيير الخلفية إلى الصورة المطلوبة */
+    background-image: url('images/loginbackground01.png'); /* ⬅️ تم التعديل هنا */
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    /* تأكد من أن الارتفاع يغطي الشاشة بالكامل */
+    min-height: 100vh; 
+}
 
-/* تعريف المتغيرات */
+/* -------------------------------------- */
+/* 2. خط Akira Expanded (محاكاة) */
+/* -------------------------------------- */
+@font-face {
+    font-family: 'Akira-Like';
+    src: local('Akira Expanded Super Bold'), 
+         local('Akira Expanded-SuperBold'),
+         /* بدائل الخطوط */
+         local('Arial Black'),
+         local('Impact');
+    font-weight: 900;
+}
+
+/* -------------------------------------- */
+/* 3. تنسيق ونص الانيميشن (STVX — not a label, a legacy) */
+/* -------------------------------------- */
+.stvx-legacy-text {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5; 
+    
+    white-space: nowrap;
+    
+    /* تطبيق الخط والمظهر المطلوب */
+    font-family: 'Akira-Like', sans-serif;
+    font-size: 8rem; 
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.05); /* لون شفاف جداً ليتناسب مع الـ Glassmorphism */
+    user-select: none;
+    
+    /* تشغيل الأنيميشن */
+    animation: scrollRightToLeft 25s linear infinite;
+}
+
+/* تعريف حركة الأنيميشن */
+@keyframes scrollRightToLeft {
+    0% { transform: translate(100%, -50%); } 
+    100% { transform: translate(-100%, -50%); } 
+}
+
+/* -------------------------------------- */
+/* أكواد الـ Loader SVG الكاملة (الساعة الرملية) - (بدون تغيير) */
+/* -------------------------------------- */
 :root {
-    --hue: 35; /* لون برتقالي/ذهبي للرمال */
-    --dur: 2s; /* مدة الرسوم المتحركة الأساسية */
+    --hue: 35; 
+    --dur: 2s; 
 }
 
 .loader {
@@ -28,7 +82,6 @@
     animation-iteration-count: infinite;
 }
 
-/* حركة النموذج الزجاجي (القلب) */
 .loader__model {
     animation-name: loaderModel;
 }
@@ -45,7 +98,6 @@
     100% { transform: translate(0, 0); }
 }
 
-/* حركة الرمال العلوية */
 .loader__sand-top {
     animation-name: loaderSandTop;
     transform-origin: 50% 50%;
@@ -61,7 +113,6 @@
     100% { transform: scaleY(1); }
 }
 
-/* حركة الرمال السفلية (الكومة) */
 .loader__sand-bottom {
     animation-name: loaderSandBottom;
     transform-origin: 50% 50%;
@@ -77,7 +128,6 @@
     100% { transform: scaleY(1); }
 }
 
-/* حركة انعكاس الضوء (لمسة Glassmorphism) */
 .loader__glare-top {
     animation-name: loaderGlareTop;
     transform-origin: 50% 50%;
