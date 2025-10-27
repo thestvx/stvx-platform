@@ -15,9 +15,10 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#A5B4FC', // لافندر فاتح
-                        secondary: '#6366F1', // بنفسجي أزرق داكن
-                        accent: '#EAB308', // كهرماني
+                        primary: '#FFD700', // ذهبي (Gold)
+                        secondary: '#EAB308', // كهرماني داكن (Accent Gold)
+                        accent: '#FACC15', // أصفر مشرق
+                        darkbg: '#1A1A1A', // لون خلفية داكن إضافي
                     },
                     fontFamily: {
                         sans: ['Cairo', 'sans-serif'],
@@ -32,29 +33,29 @@
             font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* لمنع ظهور شريط التمرير */
+            overflow: hidden;
         }
         
-        /* الحاوية الرئيسية للتطبيق بالكامل */
+        /* الحاوية الرئيسية (خلفية سوداء) */
         .app-wrapper {
             position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #000; /* خلفية احتياطية */
+            background: #000; /* خلفية سوداء خالصة */
         }
 
-        /* حاوية تأثير Liquid Ether (باستخدام الكود CSS الأخير) */
+        /* حاوية تأثير Liquid Ether */
         #liquid-ether-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1; /* لتكون خلف البطاقة */
+            z-index: 1; 
             overflow: hidden;
-            touch-action: none; /* لتكون تفاعلية مع اللمس */
+            touch-action: none;
         }
 
         /* حاوية بطاقة التسجيل - يجب أن تكون فوق التأثير */
@@ -63,23 +64,25 @@
             position: relative;
         }
         
-        /* تأثير الـ Glassmorphism للبطاقة */
+        /* تأثير الـ Glassmorphism (بطاقة شفافة داكنة) */
         .auth-card {
             backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.4); /* خلفية سوداء شفافة */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* إطار أبيض خفيف */
         }
         
         /* تحسينات حقول الإدخال */
         .form-input {
             transition: all 0.3s ease;
             text-align: right;
+            color: #fff; /* النص باللون الأبيض */
             border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05); /* خلفية داكنة جداً لحقل الإدخال */
         }
         
         .form-input:focus {
-            box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.5);
-            border-color: #A5B4FC;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.5); /* تركيز باللون الذهبي */
+            border-color: #FFD700; /* ذهبي */
         }
         
         .social-btn:hover {
@@ -89,7 +92,7 @@
         
         /* لون علامة التبويب النشطة */
         .tab-button.active {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1); /* خلفية رمادية شفافة للتبويب النشط */
         }
     </style>
 </head>
@@ -112,12 +115,12 @@
                     
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-white">البريد الإلكتروني</label>
-                        <input type="email" placeholder="بريدك الإلكتروني" class="form-input w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 text-white placeholder-white placeholder-opacity-70 focus:outline-none">
+                        <input type="email" placeholder="بريدك الإلكتروني" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
                     </div>
                     
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-white">كلمة المرور</label>
-                        <input type="password" placeholder="كلمة المرور" class="form-input w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 text-white placeholder-white placeholder-opacity-70 focus:outline-none">
+                        <input type="password" placeholder="كلمة المرور" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
                         <a href="#" class="block text-left text-sm text-primary text-opacity-80 hover:underline">نسيت كلمة المرور؟</a>
                     </div>
                     
@@ -152,28 +155,28 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div class="space-y-2">
                             <label class="block text-sm font-medium text-white">الاسم الأول</label>
-                            <input type="text" placeholder="اسمك الأول" class="form-input w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 text-white placeholder-white placeholder-opacity-70 focus:outline-none">
+                            <input type="text" placeholder="اسمك الأول" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
                         </div>
                         
                         <div class="space-y-2">
                             <label class="block text-sm font-medium text-white">اسم العائلة</label>
-                            <input type="text" placeholder="اسم عائلتك" class="form-input w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 text-white placeholder-white placeholder-opacity-70 focus:outline-none">
+                            <input type="text" placeholder="اسم عائلتك" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
                         </div>
                     </div>
                     
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-white">البريد الإلكتروني</label>
-                        <input type="email" placeholder="بريدك الإلكتروني" class="form-input w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 text-white placeholder-white placeholder-opacity-70 focus:outline-none">
+                        <input type="email" placeholder="بريدك الإلكتروني" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
                     </div>
                     
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-white">كلمة المرور</label>
-                        <input type="password" placeholder="كلمة المرور" class="form-input w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 text-white placeholder-white placeholder-opacity-70 focus:outline-none">
+                        <input type="password" placeholder="كلمة المرور" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
                     </div>
                     
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-white">تأكيد كلمة المرور</label>
-                        <input type="password" placeholder="أعد إدخال كلمة المرور" class="form-input w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 text-white placeholder-white placeholder-opacity-70 focus:outline-none">
+                        <input type="password" placeholder="أعد إدخال كلمة المرور" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
                     </div>
                     
                     <div class="flex items-center">
