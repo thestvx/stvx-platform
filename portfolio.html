@@ -22,7 +22,6 @@
                         'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
                     },
                     fontFamily: {
-                        // 💡 ملاحظة: يجب أن يكون Expo Arabic متاحاً عبر استيراد في style.css
                         sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
                         logo: ['Pacifico', 'cursive'],
                     },
@@ -124,14 +123,14 @@
         }
 
         /* توزيع الأنيميشن لتظهر البطاقات بالتتابع */
-        .project-card:nth-child(1) { animation: cardPop 0.6s ease-out 0.8s forwards; opacity: 0; }
-        .project-card:nth-child(2) { animation: cardPop 0.6s ease-out 0.9s forwards; opacity: 0; }
-        .project-card:nth-child(3) { animation: cardPop 0.6s ease-out 1.0s forwards; opacity: 0; }
-        .project-card:nth-child(4) { animation: cardPop 0.6s ease-out 1.1s forwards; opacity: 0; }
-        .project-card:nth-child(5) { animation: cardPop 0.6s ease-out 1.2s forwards; opacity: 0; }
+        .project-card:nth-child(1) { animation: cardPop 0.6s ease-out 1.2s forwards; opacity: 0; }
+        .project-card:nth-child(2) { animation: cardPop 0.6s ease-out 1.3s forwards; opacity: 0; }
+        .project-card:nth-child(3) { animation: cardPop 0.6s ease-out 1.4s forwards; opacity: 0; }
+        .project-card:nth-child(4) { animation: cardPop 0.6s ease-out 1.5s forwards; opacity: 0; }
+        .project-card:nth-child(5) { animation: cardPop 0.6s ease-out 1.6s forwards; opacity: 0; }
         /* استمرار التتابع */
-        .project-card:nth-child(6) { animation: cardPop 0.6s ease-out 1.3s forwards; opacity: 0; }
-        .project-card:nth-child(7) { animation: cardPop 0.6s ease-out 1.4s forwards; opacity: 0; }
+        .project-card:nth-child(6) { animation: cardPop 0.6s ease-out 1.7s forwards; opacity: 0; }
+        .project-card:nth-child(7) { animation: cardPop 0.6s ease-out 1.8s forwards; opacity: 0; }
         
     </style>
 </head>
@@ -158,7 +157,11 @@
                  <i class="ri-briefcase-4-line text-2xl"></i>
                  <span class="font-medium">معرض الأعمال</span>
              </a>
-             </nav>
+            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse text-gray-400 hover:text-primary transition-colors p-3 rounded-md">
+                 <i class="ri-service-line text-2xl"></i>
+                 <span class="font-medium">الخدمات</span>
+             </a>
+        </nav>
         
         <div class="mt-8 pt-4 border-t border-gray-700">
             <p class="text-sm text-gray-500">منصة STVX</p>
@@ -194,7 +197,7 @@
 
         <main class="py-12 px-4 md:px-8">
             
-            <header class="text-center mb-12" style="animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;">
+            <header class="text-center mb-16" style="animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;">
                 <h1 class="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
                     أرشيف الإبداع 🗃️
                 </h1>
@@ -203,9 +206,32 @@
                 </p>
             </header>
 
-            <section class="mb-16">
-                <div class="flex items-center justify-between mb-8" style="animation: slideUp 0.6s ease-out 0.6s forwards; opacity: 0;">
-                    <h2 class="text-3xl font-bold text-white border-r-4 border-primary pr-3">
+            <section class="mb-20">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    
+                    <a href="#graphics" class="glass-card p-8 rounded-3xl hover:border-primary border-transparent border-2 transition-all duration-300 transform hover:scale-[1.02] animate-fade-in" style="animation-delay: 0.8s;">
+                        <div class="text-center">
+                            <i class="ri-pen-nib-line text-6xl text-primary mb-4"></i>
+                            <h2 class="text-3xl font-bold mb-2">تصاميم الجرافيكس</h2>
+                            <p class="text-gray-400">هويات بصرية، موشن جرافيكس، ومنشورات إعلانية احترافية.</p>
+                            <span class="mt-4 inline-block text-sm font-medium text-white bg-primary/20 py-1 px-3 rounded-full">استكشف التصاميم <i class="ri-arrow-left-line mr-1"></i></span>
+                        </div>
+                    </a>
+
+                    <a href="#coding" class="glass-card p-8 rounded-3xl hover:border-primary border-transparent border-2 transition-all duration-300 transform hover:scale-[1.02] animate-fade-in" style="animation-delay: 1s;">
+                        <div class="text-center">
+                            <i class="ri-code-s-slash-line text-6xl text-primary mb-4"></i>
+                            <h2 class="text-3xl font-bold mb-2">تطوير الواجهات والبرمجة</h2>
+                            <p class="text-gray-400">مواقع تفاعلية، تطبيقات جوال، ولوحات تحكم باستخدام أحدث التقنيات.</p>
+                            <span class="mt-4 inline-block text-sm font-medium text-white bg-primary/20 py-1 px-3 rounded-full">شاهد المشاريع <i class="ri-arrow-left-line mr-1"></i></span>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
+            <section id="graphics" class="mb-16">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-3xl font-bold text-white border-r-4 border-primary pr-3" style="animation: slideUp 0.6s ease-out 1.2s forwards; opacity: 0;">
                         <i class="ri-palette-line text-primary ml-2"></i> تصاميم الجرافيكس
                     </h2>
                 </div>
@@ -223,7 +249,6 @@
                             </div>
                         </div>
                     </a>
-
                     <a href="#" class="glass-card rounded-2xl project-card">
                         <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
                             <img src="https://readdy.ai/api/search-image?query=3D%20motion%20graphics%20abstract%20animation%20still%2C%20dark%20futuristic%20design%2C%20glowing%20lines%2C%20professional%20look&width=400&height=300&seq=motion1&orientation=landscape" 
@@ -235,7 +260,6 @@
                             </div>
                         </div>
                     </a>
-
                     <a href="#" class="glass-card rounded-2xl project-card">
                         <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
                             <img src="https://readdy.ai/api/search-image?query=Creative%20book%20cover%20design%20mockup%2C%20abstract%20dark%20theme%2C%20minimalist%20typography%2C%20high%20quality%20print%20visual&width=400&height=300&seq=book1&orientation=landscape" 
@@ -247,7 +271,6 @@
                             </div>
                         </div>
                     </a>
-
                     <a href="#" class="glass-card rounded-2xl project-card">
                         <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
                             <img src="https://readdy.ai/api/search-image?query=Set%20of%20social%20media%20post%20templates%2C%20dark%20and%20gold%20theme%2C%20elegant%20design%2C%20creative%20marketing%20visuals&width=400&height=300&seq=social1&orientation=landscape" 
@@ -263,9 +286,9 @@
                 </div>
             </section>
 
-            <section class="mb-16">
-                <div class="flex items-center justify-between mb-8" style="animation: slideUp 0.6s ease-out 0.7s forwards; opacity: 0;">
-                    <h2 class="text-3xl font-bold text-white border-r-4 border-primary pr-3">
+            <section id="coding" class="mb-16">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-3xl font-bold text-white border-r-4 border-primary pr-3" style="animation: slideUp 0.6s ease-out 1.2s forwards; opacity: 0;">
                         <i class="ri-code-s-slash-line text-primary ml-2"></i> تطوير الواجهات والبرمجة
                     </h2>
                 </div>
@@ -283,7 +306,6 @@
                             </div>
                         </div>
                     </a>
-
                     <a href="#" class="glass-card rounded-2xl project-card">
                         <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
                             <img src="https://readdy.ai/api/search-image?query=Sleek%20e-commerce%20website%20front-end%20development%20mockup%2C%20dark%20theme%2C%20clean%20code%2C%20Tailwind%20CSS%20implementation&width=400&height=300&seq=web1&orientation=landscape" 
@@ -295,7 +317,6 @@
                             </div>
                         </div>
                     </a>
-
                     <a href="#" class="glass-card rounded-2xl project-card">
                         <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
                             <img src="https://readdy.ai/api/search-image?query=Mobile%20fitness%20app%20prototype%20design%2C%20dark%20mode%2C%20vibrant%20accents%2C%20Figma%20mockup%2C%20clean%20interface&width=400&height=300&seq=app1&orientation=landscape" 
@@ -307,7 +328,6 @@
                             </div>
                         </div>
                     </a>
-                    
                     <a href="#" class="glass-card rounded-2xl project-card">
                         <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
                             <img src="https://readdy.ai/api/search-image?query=Modern%20tech%20company%20landing%20page%20design%2C%20dark%20minimalist%20style%2C%20futuristic%20elements%2C%20clean%20typography&width=400&height=300&seq=landing1&orientation=landscape" 
@@ -342,7 +362,6 @@
                     sidebar.classList.remove('open');
                     mainContent.classList.remove('filter', 'blur-sm');
                     
-                    // تحديث أيقونة الزر المتحرك (إذا كان موجوداً، هنا زر الإغلاق ثابت)
                     const toggleButton = document.getElementById('sidebarToggle');
                     const icon = toggleButton ? toggleButton.querySelector('svg') : null;
                     if (icon) icon.classList.remove('rotate-180');
