@@ -102,9 +102,12 @@
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9); 
         }
         
-        /* 💡 تحسين بطاقات الخدمات الصغيرة (القسم الثاني) 💡 */
+        /* 💡 تحسين بطاقات الخدمات الصغيرة (تأثير الارتداد) 💡 */
+        .service-mini-card {
+             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* تأثير ارتداد سلس */
+        }
         .service-mini-card:hover {
-            transform: translateY(-5px) scale(1.02); /* رفع خفيف مع تأثير ارتداد */
+            transform: translateY(-5px) scale(1.03); /* رفع خفيف مع تأثير ارتداد واضح */
             box-shadow: 0 10px 20px rgba(255, 199, 44, 0.2);
             border-color: #ffc72c;
         }
@@ -114,12 +117,18 @@
              position: relative;
              overflow: hidden;
              transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
-             border: 1px solid rgba(255, 255, 255, 0.1); /* إعادة تعريف الحدود من أجل الـ hover */
+             border: 1px solid rgba(255, 255, 255, 0.1); 
         }
         .portfolio-card:hover {
-            transform: translateY(-5px); /* رفع واضح */
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); /* ظل أكبر */
+            transform: translateY(-5px) scale(1.02); /* رفع وتكبير خفيفين */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); 
             border-color: #ffc72c;
+        }
+        .portfolio-card:hover img {
+            transform: scale(1.1); /* تكبير الصورة داخل البطاقة */
+        }
+        .portfolio-card img {
+            transition: transform 0.5s ease-out;
         }
 
         .card-image-overlay {
@@ -130,15 +139,15 @@
             transition: opacity 0.3s ease;
         }
         
-        /* 🎯 تحسين بطاقات الخدمات المميزة (القسم الثالث) 🎯 */
+        /* 🎯 تحسين بطاقات الخدمات المميزة (تأثير 3D Tilt) 🎯 */
         .featured-service-card {
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* تأثير ارتداد سلس */
+            transition: all 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2); 
             transform-style: preserve-3d;
         }
 
         .featured-service-card:hover {
-            transform: scale(1.05) rotateX(2deg) rotateY(-2deg); /* إمالة ثلاثية الأبعاد خفيفة */
-            box-shadow: 0 15px 30px rgba(255, 199, 44, 0.3);
+            transform: scale(1.05) rotateX(1deg) rotateY(-3deg); /* إمالة ثلاثية الأبعاد خفيفة وواضحة */
+            box-shadow: 0 15px 40px rgba(255, 199, 44, 0.4);
             border-color: #ffc72c;
         }
     </style>
@@ -229,7 +238,7 @@
 
                 <div class="hero-content relative h-full flex flex-col justify-center">
                     <div class="text-white max-w-lg">
-                        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 hero-text-shadow">واجهات تُلهم، وتجارب تُحدث الفرق</h1>
+                        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 hero-text-shadow">واجهات تُلهم، وتجارب تُحدث الفرق 🎨</h1>
                         <p class="text-lg mb-6 text-gray-200 hero-text-shadow">أجمع بين فن التصميم ودقّة البرمجة، لأصنع هويات بصرية ومواقع تترك أثرًا، وتُحاكي روح الإبداع في كل تفصيلة.</p>
                         <button class="bg-primary hover:bg-primary/90 text-black px-8 py-3 rounded-full font-bold transition-colors !rounded-button whitespace-nowrap hover:scale-105">
                             لنصنع الإبداع معًا
@@ -296,21 +305,21 @@
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                     
                     <div class="glass-card rounded-xl portfolio-card cursor-pointer p-0">
-                        <div class="relative w-full aspect-square">
+                        <div class="relative w-full aspect-square overflow-hidden rounded-xl">
                             <img src="https://readdy.ai/api/search-image?query=Modern%20UI%20dashboard%20design%20with%20dark%20theme%2C%20minimalist%20style%2C%20gold%20accents%2C%20professional%20portfolio%20presentation&width=200&height=200&seq=album1&orientation=squarish" 
-                                 alt="لوحة تحكم" class="w-full h-full object-cover rounded-xl transition-transform duration-500">
+                                 alt="لوحة تحكم" class="w-full h-full object-cover rounded-xl">
                             <div class="card-image-overlay rounded-xl"></div>
                         </div>
                         <div class="p-4">
-                            <h3 class="font-semibold text-white mb-1 truncate">لوحة تحكم مالية</h3>
+                            <h3 class="font-semibold text-white mb-1 truncate">لوحة تحكم مالية متكاملة</h3>
                             <p class="text-sm text-gray-400 truncate">تصميم واجهة مستخدم (UI)</p>
                         </div>
                     </div>
 
                     <div class="glass-card rounded-xl portfolio-card cursor-pointer p-0">
-                        <div class="relative w-full aspect-square">
+                        <div class="relative w-full aspect-square overflow-hidden rounded-xl">
                             <img src="https://readdy.ai/api/search-image?query=E-commerce%20website%20UI%2FUX%20design%20for%20luxury%20brand%2C%20dark%20mode%2C%20sleek%20modern%20aesthetic%2C%20high%20quality%20mockup&width=200&height=200&seq=album2&orientation=squarish" 
-                                 alt="متجر" class="w-full h-full object-cover rounded-xl transition-transform duration-500">
+                                 alt="متجر" class="w-full h-full object-cover rounded-xl">
                             <div class="card-image-overlay rounded-xl"></div>
                         </div>
                         <div class="p-4">
@@ -320,9 +329,9 @@
                     </div>
                     
                     <div class="glass-card rounded-xl portfolio-card cursor-pointer p-0">
-                        <div class="relative w-full aspect-square">
+                        <div class="relative w-full aspect-square overflow-hidden rounded-xl">
                             <img src="https://readdy.ai/api/search-image?query=Mobile%20app%20design%20for%20a%20fitness%20tracker%2C%20dark%20theme%2C%20glassmorphism%20elements%2C%20vibrant%20accents%2C%20professional%20mockup&width=200&height=200&seq=album3&orientation=squarish" 
-                                 alt="تطبيق جوال" class="w-full h-full object-cover rounded-xl transition-transform duration-500">
+                                 alt="تطبيق جوال" class="w-full h-full object-cover rounded-xl">
                             <div class="card-image-overlay rounded-xl"></div>
                         </div>
                         <div class="p-4">
@@ -332,9 +341,9 @@
                     </div>
                     
                     <div class="glass-card rounded-xl portfolio-card cursor-pointer p-0">
-                        <div class="relative w-full aspect-square">
+                        <div class="relative w-full aspect-square overflow-hidden rounded-xl">
                             <img src="https://readdy.ai/api/search-image?query=Corporate%20website%20design%20with%20minimalist%20dark%20theme%2C%20elegant%20typography%2C%20clean%20layout%2C%20professional%20mockup&width=200&height=200&seq=album4&orientation=squarish" 
-                                 alt="موقع شركة" class="w-full h-full object-cover rounded-xl transition-transform duration-500">
+                                 alt="موقع شركة" class="w-full h-full object-cover rounded-xl">
                             <div class="card-image-overlay rounded-xl"></div>
                         </div>
                         <div class="p-4">
@@ -344,13 +353,13 @@
                     </div>
                     
                     <div class="glass-card rounded-xl portfolio-card cursor-pointer p-0">
-                        <div class="relative w-full aspect-square">
+                        <div class="relative w-full aspect-square overflow-hidden rounded-xl">
                             <img src="https://readdy.ai/api/search-image?query=Artistic%20portfolio%20website%20hero%20section%20with%20gold%20and%20black%20theme%2C%20abstract%20design%20event%20creative%20mockup&width=200&height=200&seq=album5&orientation=squarish" 
-                                 alt="بورتفوليو" class="w-full h-full object-cover rounded-xl transition-transform duration-500">
+                                 alt="بورتفوليو" class="w-full h-full object-cover rounded-xl">
                             <div class="card-image-overlay rounded-xl"></div>
                         </div>
                         <div class="p-4">
-                            <h3 class="font-semibold text-white mb-1 truncate">بورتفوليو فنان</h3>
+                            <h3 class="font-semibold text-white mb-1 truncate">بورتفوليو فنان رقمي</h3>
                             <p class="text-sm text-gray-400 truncate">تطوير شخصي</p>
                         </div>
                     </div>
