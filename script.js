@@ -2,36 +2,20 @@
 
 /**
  * وظيفة لإظهار الـ Loader.
- * (تضيف class 'active' لتشغيل الانتقال عبر CSS)
+ * 🛑 تم تعطيلها نهائياً 🛑
  */
 function showLoader() {
-    const loadingOverlay = document.getElementById('loading-overlay');
-    if (loadingOverlay) {
-        // نستخدم active لتشغيل الانتقال
-        loadingOverlay.classList.add('active');
-        // نضمن إزالة hidden إذا كانت موجودة
-        loadingOverlay.classList.remove('hidden');
-    }
+    // لا تقم بأي شيء
 }
 
 /**
  * وظيفة لإخفاء الـ Loader.
+ * 🛑 تم تعطيلها نهائياً 🛑
  */
 function hideLoader() {
-    const loadingOverlay = document.getElementById('loading-overlay');
-    if (loadingOverlay) {
-        // نبدأ إزالة الشفافية أولاً
-        loadingOverlay.classList.remove('active');
-        
-        // بعد انتهاء مدة الانتقال (0.5s)، نضيف hidden لإزالة العنصر تماماً من الـ Layout
-        setTimeout(() => {
-            loadingOverlay.classList.add('hidden');
-        }, 500); 
-    }
+    // لا تقم بأي شيء
 }
 
 // ----------------------------------------------------
 // 💡 يمكن إضافة أي منطق JavaScript إضافي هنا في المستقبل
 // ----------------------------------------------------
-
-// لا حاجة لـ window.onload هنا لأننا أضفنا الكود في <script> داخل auth.html للتحكم في الإخفاء الأولي.
