@@ -2,11 +2,7 @@
  * هذا الكود هو تكييف للـ Liquid Ether effect الذي يعتمد على THREE.js.
  * يتم تشغيله مباشرة بعد تحميل الصفحة لإعداد المشهد في #liquid-ether-canvas.
  *
- * *********************************************************************************
- * يرجى ملاحظة: هذا الكود معقد ويعتمد على مكتبة THREE.js.
- * قد تحتاج إلى تعديلات إضافية إذا كانت هناك أي أخطاء في تهيئة المتغيرات الأصلية.
- * تم تعديله لإزالة تبعيات React.
- * *********************************************************************************
+ * تم تحديث الألوان لتناسب المظهر الأسود والذهبي.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,11 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let material, mesh, mouse;
     let isInitialized = false;
 
-    // تهيئة الألوان
+    // تهيئة الألوان الذهبية والداكنة
     const COLORS = [
-        new THREE.Color(0x8C7AE6), // بنفسجي ناعم
-        new THREE.Color(0xA5B4FC), // لافندر (primary)
-        new THREE.Color(0xFF6B6B)  // أحمر خفيف
+        new THREE.Color(0x111111), // 1. أسود داكن جداً (Deep Black)
+        new THREE.Color(0xFFD700), // 2. ذهبي (Gold)
+        new THREE.Color(0xFFA500)  // 3. كهرماني/برتقالي مشرق (Orange Gold)
     ];
 
     const vertexShader = `
@@ -33,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     // ***************************************************************
-    // هذا هو كود Fragment Shader الذي يعطي التأثير السائل المعقد
+    // كود Fragment Shader (بدون تغيير باستثناء متغيرات الألوان)
     // ***************************************************************
     const fragmentShader = `
         uniform float time;
@@ -45,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         varying vec2 vUv;
 
         // وظيفة الضوضاء (Simplex Noise) المبسطة
-        // هذه وظيفة ضرورية ولكنها معقدة. يتم استخدامها لتحقيق الحركة السائلة.
         vec3 hash( vec3 p ) {
             p = vec3( dot(p,vec3(127.1,311.7, 74.7)),
                       dot(p,vec3(269.5,183.3,246.1)),
@@ -155,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fragmentShader: fragmentShader,
         });
 
-        // 7. الشبكة (Mesh) (تستخدم كـ Plane لتغطية الشاشة)
+        // 7. الشبكة (Mesh)
         const geometry = new THREE.PlaneGeometry(width, height);
         mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
@@ -174,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderer.setSize(width, height);
 
-        // تحديث الكاميرا Orthographic
+        // تحديث الكاميرا
         camera.left = width / -2;
         camera.right = width / 2;
         camera.top = height / 2;
@@ -201,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(animate);
 
         // تحديث يونيفورم الوقت
-        material.uniforms.time.value += clock.getDelta() * 0.5; // تسريع الحركة قليلاً
+        material.uniforms.time.value += clock.getDelta() * 0.5;
 
         renderer.render(scene, camera);
     }
