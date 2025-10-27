@@ -9,7 +9,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css"> 
-    <link rel="stylesheet" href="auth.css"> 
     
     <script>
         tailwind.config = {
@@ -23,7 +22,8 @@
                         'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
                     },
                     fontFamily: {
-                        sans: ['Expo Arabic', 'sans-serif'],
+                        // 💡 ملاحظة: يجب أن يكون Expo Arabic متاحاً عبر استيراد في style.css
+                        sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
                         logo: ['Pacifico', 'cursive'],
                     },
                     // تعريفات الأنيميشن (للحركة السلسة) 
@@ -58,6 +58,27 @@
         .dark-bg {
             background: linear-gradient(135deg, #0a0a0a, #111111);
             min-height: 100vh;
+        }
+
+        /* تنسيقات الشريط الجانبي (مهمة لعمل script.js) */
+        #sidebar {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            transform: translateX(100%); /* إخفاء الشريط من اليمين افتراضياً */
+            z-index: 60;
+            width: 80%; /* عرض مناسب للجوال */
+        }
+        #sidebar.open {
+            transform: translateX(0); /* إظهار الشريط عند إضافة فئة open */
+        }
+        @media (min-width: 1024px) {
+            #sidebar {
+                transform: translateX(0) !important; /* إظهار الشريط بشكل دائم على الشاشات الكبيرة */
+                width: 18rem;
+                min-width: 18rem;
+                position: sticky;
+                top: 0;
+                height: 100vh;
+            }
         }
 
         /* 🌟 بطاقة المشروع الرئيسية (Portfolio Card) 🌟 */
@@ -99,7 +120,7 @@
             left: 0;
             padding: 1.5rem;
             z-index: 20;
-            opacity: 1; /* إظهار المعلومات دائماً، ولكن يمكن تغييرها */
+            opacity: 1; 
         }
 
         /* توزيع الأنيميشن لتظهر البطاقات بالتتابع */
@@ -114,168 +135,221 @@
         
     </style>
 </head>
-<body class="dark-bg text-white font-sans">
+<body class="dark-bg text-white font-sans flex min-h-screen">
     
-    <nav class="glass-card px-6 py-4 fixed top-0 left-0 right-0 z-50 rounded-none md:rounded-lg md:mx-4 md:mt-4" 
-        style="animation: slideDown 0.7s ease-out 0.1s forwards;">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-8 rtl:space-x-reverse">
-                <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain">
+    <div id="app-loader" class="fixed inset-0 bg-neutral-900 flex items-center justify-center z-[100] transition-opacity duration-300">
+        <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-primary border-t-transparent"></div>
+    </div>
+    
+    <aside id="sidebar" class="fixed lg:relative top-0 right-0 h-full bg-neutral-900 lg:bg-transparent shadow-lg lg:shadow-none p-6 flex flex-col justify-between">
+        
+        <div class="flex justify-end lg:hidden mb-8">
+             <button id="sidebarClose" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110">
+                 <i class="ri-close-line text-gray-300 text-xl"></i>
+             </button>
+        </div>
+        
+        <nav class="space-y-4">
+            <a href="index.html" class="flex items-center space-x-3 rtl:space-x-reverse text-gray-400 hover:text-primary transition-colors p-3 rounded-md">
+                 <i class="ri-home-5-line text-2xl"></i>
+                 <span class="font-medium">الرئيسية</span>
+             </a>
+            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse text-primary bg-white/10 p-3 rounded-md">
+                 <i class="ri-briefcase-4-line text-2xl"></i>
+                 <span class="font-medium">معرض الأعمال</span>
+             </a>
+             </nav>
+        
+        <div class="mt-8 pt-4 border-t border-gray-700">
+            <p class="text-sm text-gray-500">منصة STVX</p>
+        </div>
+    </aside>
+
+    <div id="mainContent" class="flex-1 transition-filter duration-300">
+        
+        <nav class="glass-card px-6 py-4 sticky top-0 left-0 right-0 z-50 rounded-none lg:rounded-b-none lg:rounded-r-lg" 
+            style="animation: slideDown 0.7s ease-out 0.1s forwards;">
+            <div class="flex items-center justify-between">
+                
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                    <button id="sidebarToggle" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform lg:hidden">
+                        <i class="ri-menu-2-line text-gray-300 text-xl transition-transform duration-300"></i>
+                    </button>
+                    <img src="images/logos4you.png" alt="STVX Logo" class="w-32 h-8 object-contain">
                 </div>
+                
                 <div class="hidden lg:flex space-x-6 rtl:space-x-reverse text-sm font-medium">
                     <a href="index.html" class="text-gray-400 hover:text-primary transition-colors">الرئيسية</a>
                     <a href="#" class="text-primary border-b-2 border-primary pb-1">معرض الأعمال</a>
                     <a href="#" class="text-gray-400 hover:text-primary transition-colors">الخدمات</a>
                 </div>
+                
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                    <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110">
+                        <i class="ri-user-line text-gray-300 text-xl"></i>
+                    </a>
+                </div>
             </div>
-            
-            <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110">
-                    <i class="ri-home-5-line text-gray-300 text-xl"></i>
-                </a>
-            </div>
-        </div>
-    </nav>
+        </nav>
 
-    <main class="pt-28 md:pt-20 pb-24 px-4 md:px-8">
+        <main class="py-12 px-4 md:px-8">
+            
+            <header class="text-center mb-12" style="animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
+                    أرشيف الإبداع 🗃️
+                </h1>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    مجموعة من المشاريع التي تجمع بين دقة الكود وجمالية التصميم، مقسمة لخدمة رؤيتك.
+                </p>
+            </header>
+
+            <section class="mb-16">
+                <div class="flex items-center justify-between mb-8" style="animation: slideUp 0.6s ease-out 0.6s forwards; opacity: 0;">
+                    <h2 class="text-3xl font-bold text-white border-r-4 border-primary pr-3">
+                        <i class="ri-palette-line text-primary ml-2"></i> تصاميم الجرافيكس
+                    </h2>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    
+                    <a href="#" class="glass-card rounded-2xl project-card">
+                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="https://readdy.ai/api/search-image?query=Elegant%20corporate%20identity%20design%20mockup%20on%20dark%20background%2C%20logo%20and%20business%20card%20with%20gold%20foil%2C%20minimalist%20style&width=400&height=300&seq=graphic1&orientation=landscape" 
+                                alt="تصميم هوية" class="w-full h-full object-cover rounded-2xl">
+                            <div class="card-image-overlay rounded-2xl"></div>
+                            <div class="card-info">
+                                <h3 class="text-xl font-bold text-primary mb-1">هوية بصرية لشركة استثمارية</h3>
+                                <p class="text-sm text-gray-300">الشعار، الألوان، والمطبوعات.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="glass-card rounded-2xl project-card">
+                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="https://readdy.ai/api/search-image?query=3D%20motion%20graphics%20abstract%20animation%20still%2C%20dark%20futuristic%20design%2C%20glowing%20lines%2C%20professional%20look&width=400&height=300&seq=motion1&orientation=landscape" 
+                                alt="موشن جرافيكس" class="w-full h-full object-cover rounded-2xl">
+                            <div class="card-image-overlay rounded-2xl"></div>
+                            <div class="card-info">
+                                <h3 class="text-xl font-bold text-primary mb-1">فيديو موشن جرافيك إعلاني</h3>
+                                <p class="text-sm text-gray-300">رسوم متحركة ثلاثية الأبعاد للمنتجات.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="glass-card rounded-2xl project-card">
+                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="https://readdy.ai/api/search-image?query=Creative%20book%20cover%20design%20mockup%2C%20abstract%20dark%20theme%2C%20minimalist%20typography%2C%20high%20quality%20print%20visual&width=400&height=300&seq=book1&orientation=landscape" 
+                                alt="غلاف كتاب" class="w-full h-full object-cover rounded-2xl">
+                            <div class="card-image-overlay rounded-2xl"></div>
+                            <div class="card-info">
+                                <h3 class="text-xl font-bold text-primary mb-1">غلاف رواية رقمية</h3>
+                                <p class="text-sm text-gray-300">تصميم رقمي فني باستخدام الفوتوشوب.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="glass-card rounded-2xl project-card">
+                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="https://readdy.ai/api/search-image?query=Set%20of%20social%20media%20post%20templates%2C%20dark%20and%20gold%20theme%2C%20elegant%20design%2C%20creative%20marketing%20visuals&width=400&height=300&seq=social1&orientation=landscape" 
+                                alt="سوشيال ميديا" class="w-full h-full object-cover rounded-2xl">
+                            <div class="card-image-overlay rounded-2xl"></div>
+                            <div class="card-info">
+                                <h3 class="text-xl font-bold text-primary mb-1">حملة تسويقية لمنصة تقنية</h3>
+                                <p class="text-sm text-gray-300">15 تصميمًا لمنصات مختلفة.</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                </div>
+            </section>
+
+            <section class="mb-16">
+                <div class="flex items-center justify-between mb-8" style="animation: slideUp 0.6s ease-out 0.7s forwards; opacity: 0;">
+                    <h2 class="text-3xl font-bold text-white border-r-4 border-primary pr-3">
+                        <i class="ri-code-s-slash-line text-primary ml-2"></i> تطوير الواجهات والبرمجة
+                    </h2>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    
+                    <a href="#" class="glass-card rounded-2xl project-card">
+                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="https://readdy.ai/api/search-image?query=Modern%20dark%20dashboard%20UI%2FUX%20design%2C%20finance%20theme%2C%20minimalist%20charts%2C%20Figma%20mockup&width=400&height=300&seq=ui1&orientation=landscape" 
+                                alt="لوحة تحكم" class="w-full h-full object-cover rounded-2xl">
+                            <div class="card-image-overlay rounded-2xl"></div>
+                            <div class="card-info">
+                                <h3 class="text-xl font-bold text-primary mb-1">تصميم لوحة تحكم تحليلية</h3>
+                                <p class="text-sm text-gray-300">تصميم UX/UI في فيجما.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="glass-card rounded-2xl project-card">
+                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="https://readdy.ai/api/search-image?query=Sleek%20e-commerce%20website%20front-end%20development%20mockup%2C%20dark%20theme%2C%20clean%20code%2C%20Tailwind%20CSS%20implementation&width=400&height=300&seq=web1&orientation=landscape" 
+                                alt="تطوير واجهة" class="w-full h-full object-cover rounded-2xl">
+                            <div class="card-image-overlay rounded-2xl"></div>
+                            <div class="card-info">
+                                <h3 class="text-xl font-bold text-primary mb-1">تطوير واجهة متجر تقني</h3>
+                                <p class="text-sm text-gray-300">HTML, Tailwind CSS, JavaScript.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="glass-card rounded-2xl project-card">
+                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="https://readdy.ai/api/search-image?query=Mobile%20fitness%20app%20prototype%20design%2C%20dark%20mode%2C%20vibrant%20accents%2C%20Figma%20mockup%2C%20clean%20interface&width=400&height=300&seq=app1&orientation=landscape" 
+                                alt="تطبيق جوال" class="w-full h-full object-cover rounded-2xl">
+                            <div class="card-image-overlay rounded-2xl"></div>
+                            <div class="card-info">
+                                <h3 class="text-xl font-bold text-primary mb-1">تطبيق جوال لتتبع الصحة</h3>
+                                <p class="text-sm text-gray-300">نموذج تفاعلي (Prototyping).</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="glass-card rounded-2xl project-card">
+                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="https://readdy.ai/api/search-image?query=Modern%20tech%20company%20landing%20page%20design%2C%20dark%20minimalist%20style%2C%20futuristic%20elements%2C%20clean%20typography&width=400&height=300&seq=landing1&orientation=landscape" 
+                                alt="موقع تعريفي" class="w-full h-full object-cover rounded-2xl">
+                            <div class="card-image-overlay rounded-2xl"></div>
+                            <div class="card-info">
+                                <h3 class="text-xl font-bold text-primary mb-1">صفحة هبوط لخدمة سحابية</h3>
+                                <p class="text-sm text-gray-300">صفحة هبوط متجاوبة وسريعة.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
+
+        </main>
         
-        <header class="text-center mb-12" style="animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
-                أرشيف الإبداع 🗃️
-            </h1>
-            <p class="text-xl text-gray-300 max-w-2xl mx-auto">
-                مجموعة من المشاريع التي تجمع بين دقة الكود وجمالية التصميم، مقسمة لخدمة رؤيتك.
-            </p>
-        </header>
-
-        <section class="mb-16">
-            <div class="flex items-center justify-between mb-8" style="animation: slideUp 0.6s ease-out 0.6s forwards; opacity: 0;">
-                <h2 class="text-3xl font-bold text-white border-r-4 border-primary pr-3">
-                    <i class="ri-palette-line text-primary ml-2"></i> تصاميم الجرافيكس
-                </h2>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                
-                <a href="#" class="glass-card rounded-2xl project-card">
-                    <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                        <img src="https://readdy.ai/api/search-image?query=Elegant%20corporate%20identity%20design%20mockup%20on%20dark%20background%2C%20logo%20and%20business%20card%20with%20gold%20foil%2C%20minimalist%20style&width=400&height=300&seq=graphic1&orientation=landscape" 
-                            alt="تصميم هوية" class="w-full h-full object-cover rounded-2xl">
-                        <div class="card-image-overlay rounded-2xl"></div>
-                        <div class="card-info">
-                            <h3 class="text-xl font-bold text-primary mb-1">هوية بصرية لشركة استثمارية</h3>
-                            <p class="text-sm text-gray-300">الشعار، الألوان، والمطبوعات.</p>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="#" class="glass-card rounded-2xl project-card">
-                    <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                        <img src="https://readdy.ai/api/search-image?query=3D%20motion%20graphics%20abstract%20animation%20still%2C%20dark%20futuristic%20design%2C%20glowing%20lines%2C%20professional%20look&width=400&height=300&seq=motion1&orientation=landscape" 
-                            alt="موشن جرافيكس" class="w-full h-full object-cover rounded-2xl">
-                        <div class="card-image-overlay rounded-2xl"></div>
-                        <div class="card-info">
-                            <h3 class="text-xl font-bold text-primary mb-1">فيديو موشن جرافيك إعلاني</h3>
-                            <p class="text-sm text-gray-300">رسوم متحركة ثلاثية الأبعاد للمنتجات.</p>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="#" class="glass-card rounded-2xl project-card">
-                    <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                        <img src="https://readdy.ai/api/search-image?query=Creative%20book%20cover%20design%20mockup%2C%20abstract%20dark%20theme%2C%20minimalist%20typography%2C%20high%20quality%20print%20visual&width=400&height=300&seq=book1&orientation=landscape" 
-                            alt="غلاف كتاب" class="w-full h-full object-cover rounded-2xl">
-                        <div class="card-image-overlay rounded-2xl"></div>
-                        <div class="card-info">
-                            <h3 class="text-xl font-bold text-primary mb-1">غلاف رواية رقمية</h3>
-                            <p class="text-sm text-gray-300">تصميم رقمي فني باستخدام الفوتوشوب.</p>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="#" class="glass-card rounded-2xl project-card">
-                    <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                        <img src="https://readdy.ai/api/search-image?query=Set%20of%20social%20media%20post%20templates%2C%20dark%20and%20gold%20theme%2C%20elegant%20design%2C%20creative%20marketing%20visuals&width=400&height=300&seq=social1&orientation=landscape" 
-                            alt="سوشيال ميديا" class="w-full h-full object-cover rounded-2xl">
-                        <div class="card-image-overlay rounded-2xl"></div>
-                        <div class="card-info">
-                            <h3 class="text-xl font-bold text-primary mb-1">حملة تسويقية لمنصة تقنية</h3>
-                            <p class="text-sm text-gray-300">15 تصميمًا لمنصات مختلفة.</p>
-                        </div>
-                    </div>
-                </a>
-                
-            </div>
-        </section>
-
-        <section class="mb-16">
-            <div class="flex items-center justify-between mb-8" style="animation: slideUp 0.6s ease-out 0.7s forwards; opacity: 0;">
-                <h2 class="text-3xl font-bold text-white border-r-4 border-primary pr-3">
-                    <i class="ri-code-s-slash-line text-primary ml-2"></i> تطوير الواجهات والبرمجة
-                </h2>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                
-                <a href="#" class="glass-card rounded-2xl project-card">
-                    <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                        <img src="https://readdy.ai/api/search-image?query=Modern%20dark%20dashboard%20UI%2FUX%20design%2C%20finance%20theme%2C%20minimalist%20charts%2C%20Figma%20mockup&width=400&height=300&seq=ui1&orientation=landscape" 
-                            alt="لوحة تحكم" class="w-full h-full object-cover rounded-2xl">
-                        <div class="card-image-overlay rounded-2xl"></div>
-                        <div class="card-info">
-                            <h3 class="text-xl font-bold text-primary mb-1">تصميم لوحة تحكم تحليلية</h3>
-                            <p class="text-sm text-gray-300">تصميم UX/UI في فيجما.</p>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="#" class="glass-card rounded-2xl project-card">
-                    <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                        <img src="https://readdy.ai/api/search-image?query=Sleek%20e-commerce%20website%20front-end%20development%20mockup%2C%20dark%20theme%2C%20clean%20code%2C%20Tailwind%20CSS%20implementation&width=400&height=300&seq=web1&orientation=landscape" 
-                            alt="تطوير واجهة" class="w-full h-full object-cover rounded-2xl">
-                        <div class="card-image-overlay rounded-2xl"></div>
-                        <div class="card-info">
-                            <h3 class="text-xl font-bold text-primary mb-1">تطوير واجهة متجر تقني</h3>
-                            <p class="text-sm text-gray-300">HTML, Tailwind CSS, JavaScript.</p>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="#" class="glass-card rounded-2xl project-card">
-                    <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                        <img src="https://readdy.ai/api/search-image?query=Mobile%20fitness%20app%20prototype%20design%2C%20dark%20mode%2C%20vibrant%20accents%2C%20Figma%20mockup%2C%20clean%20interface&width=400&height=300&seq=app1&orientation=landscape" 
-                            alt="تطبيق جوال" class="w-full h-full object-cover rounded-2xl">
-                        <div class="card-image-overlay rounded-2xl"></div>
-                        <div class="card-info">
-                            <h3 class="text-xl font-bold text-primary mb-1">تطبيق جوال لتتبع الصحة</h3>
-                            <p class="text-sm text-gray-300">نموذج تفاعلي (Prototyping).</p>
-                        </div>
-                    </div>
-                </a>
-                
-                <a href="#" class="glass-card rounded-2xl project-card">
-                    <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                        <img src="https://readdy.ai/api/search-image?query=Modern%20tech%20company%20landing%20page%20design%2C%20dark%20minimalist%20style%2C%20futuristic%20elements%2C%20clean%20typography&width=400&height=300&seq=landing1&orientation=landscape" 
-                            alt="موقع تعريفي" class="w-full h-full object-cover rounded-2xl">
-                        <div class="card-image-overlay rounded-2xl"></div>
-                        <div class="card-info">
-                            <h3 class="text-xl font-bold text-primary mb-1">صفحة هبوط لخدمة سحابية</h3>
-                            <p class="text-sm text-gray-300">صفحة هبوط متجاوبة وسريعة.</p>
-                        </div>
-                    </div>
-                </a>
-
-            </div>
-        </section>
-
-    </main>
+        <footer class="glass-card mt-auto px-6 py-4 text-center text-gray-400">
+            <p>&copy; 2024 STVX Platform. جميع الحقوق محفوظة.</p>
+        </footer>
+        
+    </div> <script src="script.js"></script>
     
-    <footer class="glass-card mt-auto px-6 py-4 text-center text-gray-400">
-        <p>&copy; 2024 STVX Platform. جميع الحقوق محفوظة.</p>
-    </footer>
-    
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const closeButton = document.getElementById('sidebarClose');
+
+            if (sidebar && closeButton && mainContent) {
+                closeButton.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    mainContent.classList.remove('filter', 'blur-sm');
+                    
+                    // تحديث أيقونة الزر المتحرك (إذا كان موجوداً، هنا زر الإغلاق ثابت)
+                    const toggleButton = document.getElementById('sidebarToggle');
+                    const icon = toggleButton ? toggleButton.querySelector('svg') : null;
+                    if (icon) icon.classList.remove('rotate-180');
+                });
+            }
+        });
+    </script>
     
 </body>
 </html>
