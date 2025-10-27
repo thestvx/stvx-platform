@@ -3,256 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STVX - تسجيل الدخول وإنشاء حساب</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap">
-    
-    <link rel="stylesheet" href="./loader.css">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>STVX Portfolio | تسجيل الدخول</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="auth.css"> 
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#FFD700', // ذهبي (Gold)
-                        secondary: '#EAB308', // كهرماني داكن (Accent Gold)
-                        accent: '#FACC15', // أصفر مشرق
-                        darkbg: '#1A1A1A', 
+                        primary: '#ffc72c', 
+                        secondary: '#333333' 
+                    },
+                    borderRadius: {
+                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
                     },
                     fontFamily: {
                         sans: ['Cairo', 'sans-serif'],
+                        logo: ['Pacifico', 'cursive'],
                     },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-down': 'slideDown 0.5s ease-out forwards',
+                        'slide-up': 'slideUp 0.7s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                    }
                 }
             }
         }
     </script>
     
     <style>
-        body {
-            font-family: 'Cairo', 'sans-serif';
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        
-        /* الحاوية الرئيسية (خلفية سوداء) */
-        .app-wrapper {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-        }
-
-        /* حاوية تأثير Liquid Ether */
-        #liquid-ether-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1; 
-            overflow: hidden;
-            touch-action: none;
-        }
-
-        /* حاوية بطاقة التسجيل - يجب أن تكون فوق التأثير */
-        .auth-container {
-            z-index: 10; 
-            position: relative;
-        }
-        
-        /* تأثير الـ Glassmorphism (بطاقة شفافة داكنة) */
-        .auth-card {
-            backdrop-filter: blur(10px);
-            background: rgba(0, 0, 0, 0.4); 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-        }
-        
-        /* تحسينات حقول الإدخال */
-        .form-input {
+        /* يجب إضافة قواعد Glass-Card الأساسية هنا أو في style.css */
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
-            text-align: right;
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.05);
+        }
+        .dark-bg {
+            background: linear-gradient(135deg, #0a0a0a, #111111);
+            min-height: 100vh;
         }
         
-        .form-input:focus {
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.5); 
-            border-color: #FFD700; 
+        /* Loader Overlay Style (لإخفاء محتوى الصفحة أثناء التحميل) */
+        #loading-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-out;
         }
-        
-        .social-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        #loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
         }
-        
-        /* لون علامة التبويب النشطة */
-        .tab-button.active {
-            background: rgba(255, 255, 255, 0.1); 
-        }
+
+        /* ⚠️ يجب إضافة أكواد الـ Loader SVG CSS من ملف loader.css إلى ملف auth.css */
     </style>
 </head>
-<body>
+<body class="dark-bg text-white font-sans">
     
-    <div id="loading-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm transition-opacity duration-500 hidden">
-        <svg aria-label="loader being flipped clockwise and circled by three white curves fading in and out" role="img" height="56px" width="56px" viewBox="0 0 56 56" class="loader">
-          <clipPath id="sand-mound-top">
-            <path d="M 14.613 13.087 C 15.814 12.059 19.3 8.039 20.3 6.539 C 21.5 4.789 21.5 2.039 21.5 2.039 L 3 2.039 C 3 2.039 3 4.789 4.2 6.539 C 5.2 8.039 8.686 12.059 9.887 13.087 C 11 14.039 12.25 14.039 12.25 14.039 C 12.25 14.039 13.5 14.039 14.613 13.087 Z" class="loader__sand-mound-top"></path>
-          </clipPath>
-          <clipPath id="sand-mound-bottom">
-            <path d="M 14.613 20.452 C 15.814 21.48 19.3 25.5 20.3 27 C 21.5 28.75 21.5 31.5 21.5 31.5 L 3 31.5 C 3 31.5 3 28.75 4.2 27 C 5.2 25.5 8.686 21.48 9.887 20.452 C 11 19.5 12.25 19.5 12.25 19.5 C 12.25 19.5 13.5 19.5 14.613 20.452 Z" class="loader__sand-mound-bottom"></path>
-          </clipPath>
-          <g transform="translate(2,2)">
-            <g transform="rotate(-90,26,26)" stroke-linecap="round" stroke-dashoffset="153.94" stroke-dasharray="153.94 153.94" stroke="hsl(0,0%,100%)" fill="none">
-              <circle transform="rotate(0,26,26)" r="24.5" cy="26" cx="26" stroke-width="2.5" class="loader__motion-thick"></circle>
-              <circle transform="rotate(90,26,26)" r="24.5" cy="26" cx="26" stroke-width="1.75" class="loader__motion-medium"></circle>
-              <circle transform="rotate(180,26,26)" r="24.5" cy="26" cx="26" stroke-width="1" class="loader__motion-thin"></circle>
-            </g>
-            <g transform="translate(13.75,9.25)" class="loader__model">
-              <path d="M 1.5 2 L 23 2 C 23 2 22.5 8.5 19 12 C 16 15.5 13.5 13.5 13.5 16.75 C 13.5 20 16 18 19 21.5 C 22.5 25 23 31.5 23 31.5 L 1.5 31.5 C 1.5 31.5 2 25 5.5 21.5 C 8.5 18 11 20 11 16.75 C 11 13.5 8.5 15.5 5.5 12 C 2 8.5 1.5 2 1.5 2 Z" fill="hsl(var(--hue),90%,85%)"></path>
-              <g stroke-linecap="round" stroke="hsl(35,90%,90%)">
-                <line y2="20.75" x2="12" y1="15.75" x1="12" stroke-dasharray="0.25 33.75" stroke-width="1" class="loader__sand-grain-left"></line>
-                <line y2="21.75" x2="12.5" y1="16.75" x1="12.5" stroke-dasharray="0.25 33.75" stroke-width="1" class="loader__sand-grain-right"></line>
-                <line y2="31.5" x2="12.25" y1="18" x1="12.25" stroke-dasharray="0.5 107.5" stroke-width="1" class="loader__sand-drop"></line>
-                <line y2="31.5" x2="12.25" y1="14.75" x1="12.25" stroke-dasharray="54 54" stroke-width="1.5" class="loader__sand-fill"></line>
-                <line y2="31.5" x2="12" y1="16" x1="12" stroke-dasharray="1 107" stroke-width="1" stroke="hsl(35,90%,83%)" class="loader__sand-line-left"></line>
-                <line y2="31.5" x2="12.5" y1="16" x1="12.5" stroke-dasharray="12 96" stroke-width="1" stroke="hsl(35,90%,83%)" class="loader__sand-line-right"></line>
-                <g stroke-width="0" fill="hsl(35,90%,90%)">
-                  <path d="M 12.25 15 L 15.392 13.486 C 21.737 11.168 22.5 2 22.5 2 L 2 2.013 C 2 2.013 2.753 11.046 9.009 13.438 L 12.25 15 Z" clip-path="url(#sand-mound-top)"></path>
-                  <path d="M 12.25 18.5 L 15.392 20.014 C 21.737 22.332 22.5 31.5 22.5 31.5 L 2 31.487 C 2 31.487 2.753 22.454 9.009 20.062 Z" clip-path="url(#sand-mound-bottom)"></path>
-                </g>
-              </g>
-              <g stroke-width="2" stroke-linecap="round" opacity="0.7" fill="none">
-                <path d="M 19.437 3.421 C 19.437 3.421 19.671 6.454 17.914 8.846 C 16.157 11.238 14.5 11.5 14.5 11.5" stroke="hsl(0,0%,100%)" class="loader__glare-top"></path>
-                <path transform="rotate(180,12.25,16.75)" d="M 19.437 3.421 C 19.437 3.421 19.671 6.454 17.914 8.846 C 16.157 11.238 14.5 11.5 14.5 11.5" stroke="hsla(0,0%,100%,0)" class="loader__glare-bottom"></path>
-              </g>
-              <rect height="2" width="24.5" fill="hsl(var(--hue),90%,50%)"></rect>
-              <rect height="1" width="19.5" y="0.5" x="2.5" ry="0.5" rx="0.5" fill="hsl(var(--hue),90%,57.5%)"></rect>
-              <rect height="2" width="24.5" y="31.5" fill="hsl(var(--hue),90%,50%)"></rect>
-              <rect height="1" width="19.5" y="32" x="2.5" ry="0.5" rx="0.5" fill="hsl(var(--hue),90%,57.5%)"></rect>
-            </g>
-          </g>
-        </svg>
+    <div id="loading-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md">
+        <svg aria-label="Loader SVG" role="img" height="56px" width="56px" viewBox="0 0 56 56" class="loader">
+            </svg>
     </div>
 
-    <div class="app-wrapper">
-        <div id="liquid-ether-canvas"></div>
-        <div class="auth-container flex items-center justify-center p-4">
-            <div class="auth-card w-full max-w-md rounded-2xl overflow-hidden shadow-xl">
+    <div class="flex items-center justify-center min-h-screen py-10 px-4">
+        <div class="auth-container w-full max-w-lg">
+            <div class="glass-card rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
                 
-                <div class="flex border-b border-white border-opacity-20">
-                    <button id="login-tab" class="tab-button flex-1 py-4 text-white font-medium text-center active">تسجيل الدخول</button>
-                    <button id="register-tab" class="tab-button flex-1 py-4 text-white font-medium text-center">إنشاء حساب</button>
+                <div class="flex border-b border-white/10">
+                    <button id="login-tab" class="tab-button flex-1 py-4 text-white font-medium text-center relative active">تسجيل الدخول</button>
+                    <button id="register-tab" class="tab-button flex-1 py-4 text-white font-medium text-center relative">إنشاء حساب</button>
                 </div>
                 
-                <form id="login-form" class="p-8 space-y-6">
-                    <h2 class="text-2xl font-bold text-white text-center">سجّل الدخول إلى حسابك</h2>
-                    <div class="space-y-2">
-                        <label class="block text-sm font-medium text-white">البريد الإلكتروني</label>
-                        <input type="email" placeholder="بريدك الإلكتروني" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
-                    </div>
+                <form id="login-form" class="p-8 space-y-6 animate-slide-up">
+                    <h2 class="text-3xl font-bold text-white text-center">أهلاً بعودتك</h2>
+                    <input type="email" placeholder="البريد الإلكتروني" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
+                    <input type="password" placeholder="كلمة المرور" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
                     
-                    <div class="space-y-2">
-                        <label class="block text-sm font-medium text-white">كلمة المرور</label>
-                        <input type="password" placeholder="كلمة المرور" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
-                        <a href="#" class="block text-left text-sm text-primary text-opacity-80 hover:underline">نسيت كلمة المرور؟</a>
-                    </div>
+                    <a href="#" class="block text-left text-sm text-primary hover:text-white transition-colors">نسيت كلمة المرور؟</a>
                     
-                    <div class="flex items-center">
-                        <label for="remember" class="ml-2 block text-sm text-white">تذكرني</label>
-                        <input type="checkbox" id="remember" class="h-4 w-4 text-primary mr-2">
-                    </div>
+                    <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-black py-3 rounded-full font-bold transition-transform hover:scale-[1.02]">
+                        تسجيل الدخول
+                    </button>
                     
-                    <button type="submit" class="w-full bg-primary text-gray-900 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition">تسجيل الدخول</button>
-                    
-                    <div class="relative flex items-center justify-center">
-                        <div class="border-t border-white border-opacity-20 w-full"></div>
-                        <span class="bg-transparent px-3 text-sm text-white text-opacity-80">أو</span>
+                    <div class="text-center text-sm text-gray-400">
+                        <span class="bg-transparent px-3">أو سجل عبر</span>
                     </div>
                     
                     <div class="grid grid-cols-3 gap-4">
-                        <a href="#" class="social-btn bg-white text-gray-800 py-2 rounded-lg flex items-center justify-center">
-                            <i class="fab fa-google text-red-500"></i>
-                        </a>
-                        <a href="#" class="social-btn bg-white text-gray-800 py-2 rounded-lg flex items-center justify-center">
-                            <i class="fab fa-facebook-f text-blue-600"></i>
-                        </a>
-                        <a href="#" class="social-btn bg-white text-gray-800 py-2 rounded-lg flex items-center justify-center">
-                            <i class="fab fa-apple text-gray-900"></i>
-                        </a>
+                        <button type="button" class="glass-card py-3 rounded-lg flex items-center justify-center hover:bg-white/20 transition-all">
+                            <i class="ri-google-fill text-xl text-red-500"></i>
+                        </button>
+                        <button type="button" class="glass-card py-3 rounded-lg flex items-center justify-center hover:bg-white/20 transition-all">
+                            <i class="ri-facebook-fill text-xl text-blue-500"></i>
+                        </button>
+                        <button type="button" class="glass-card py-3 rounded-lg flex items-center justify-center hover:bg-white/20 transition-all">
+                            <i class="ri-apple-fill text-xl text-white"></i>
+                        </button>
                     </div>
                 </form>
                 
-                <form id="register-form" class="p-8 space-y-6 hidden">
-                    <h2 class="text-2xl font-bold text-white text-center">أنشئ حساباً جديداً</h2>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="space-y-2">
-                            <label class="block text-sm font-medium text-white">الاسم الأول</label>
-                            <input type="text" placeholder="اسمك الأول" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
-                        </div>
-                        
-                        <div class="space-y-2">
-                            <label class="block text-sm font-medium text-white">اسم العائلة</label>
-                            <input type="text" placeholder="اسم عائلتك" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-2">
-                        <label class="block text-sm font-medium text-white">البريد الإلكتروني</label>
-                        <input type="email" placeholder="بريدك الإلكتروني" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
-                    </div>
-                    
-                    <div class="space-y-2">
-                        <label class="block text-sm font-medium text-white">كلمة المرور</label>
-                        <input type="password" placeholder="كلمة المرور" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
-                    </div>
-                    
-                    <div class="space-y-2">
-                        <label class="block text-sm font-medium text-white">تأكيد كلمة المرور</label>
-                        <input type="password" placeholder="أعد إدخال كلمة المرور" class="form-input w-full px-4 py-3 rounded-lg placeholder-white placeholder-opacity-70 focus:outline-none">
-                    </div>
+                <form id="register-form" class="p-8 space-y-6 hidden animate-slide-up">
+                    <h2 class="text-3xl font-bold text-white text-center">ابـدأ رحلتك</h2>
+                    <input type="text" placeholder="الاسم الكامل" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
+                    <input type="email" placeholder="بريدك الإلكتروني" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
+                    <input type="password" placeholder="كلمة المرور" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
                     
                     <div class="flex items-center">
-                        <label for="terms" class="ml-2 block text-sm text-white">
-                            أوافق على 
-                            <a href="#" class="underline text-primary">شروط الاستخدام</a> و
-                            <a href="#" class="underline text-primary">سياسة الخصوصية</a>.
+                        <input type="checkbox" id="terms" class="h-4 w-4 text-primary bg-transparent border-white/30 rounded-sm mr-2 focus:ring-primary/50">
+                        <label for="terms" class="text-sm text-gray-300">
+                            أوافق على <a href="#" class="text-primary hover:underline">الشروط والأحكام</a>
                         </label>
-                        <input type="checkbox" id="terms" class="h-4 w-4 text-secondary mr-2">
                     </div>
                     
-                    <button type="submit" class="w-full bg-secondary text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition">إنشاء حساب</button>
-                    
-                    <div class="relative flex items-center justify-center">
-                        <div class="border-t border-white border-opacity-20 w-full"></div>
-                        <span class="bg-transparent px-3 text-sm text-white text-opacity-80">أو</span>
-                    </div>
-                    
-                    <div class="grid grid-cols-3 gap-4">
-                        <a href="#" class="social-btn bg-white text-gray-800 py-2 rounded-lg flex items-center justify-center">
-                            <i class="fab fa-google text-red-500"></i>
-                        </a>
-                        <a href="#" class="social-btn bg-white text-gray-800 py-2 rounded-lg flex items-center justify-center">
-                            <i class="fab fa-facebook-f text-blue-600"></i>
-                        </a>
-                        <a href="#" class="social-btn bg-white text-white py-2 rounded-lg flex items-center justify-center">
-                            <i class="fab fa-apple text-gray-900"></i>
-                        </a>
-                    </div>
+                    <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-black py-3 rounded-full font-bold transition-transform hover:scale-[1.02]">
+                        إنشاء حساب
+                    </button>
                 </form>
             </div>
         </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <script src="./global-scripts.js"></script>
+    
+    <script src="script.js"></script>
 
     <script>
         const loginTab = document.getElementById('login-tab');
@@ -260,7 +145,6 @@
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
         
-        // ... (منطق تبديل الألسنة) ...
         loginTab.addEventListener('click', () => {
             loginTab.classList.add('active');
             registerTab.classList.remove('active');
@@ -274,28 +158,23 @@
             registerForm.classList.remove('hidden');
             loginForm.classList.add('hidden');
         });
-        
-        // تشغيل الـ Loader عند محاولة تسجيل الدخول
+
+        // ⚠️ مهمة: نحتاج إلى تعريف دالتي showLoader و hideLoader في script.js
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            showLoader();
-            setTimeout(() => {
-                hideLoader();
-                // هنا يتم إضافة منطق إعادة التوجيه إلى index.html مثلاً
-            }, 3000);
+            if (typeof showLoader === 'function') {
+                showLoader();
+                setTimeout(() => { hideLoader(); window.location.href = 'index.html'; }, 3000);
+            }
         });
         
-        // تشغيل الـ Loader عند محاولة إنشاء حساب
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            showLoader();
-            setTimeout(() => {
-                hideLoader();
-                // هنا يتم إضافة منطق إعادة التوجيه إلى index.html مثلاً
-            }, 3000);
+            if (typeof showLoader === 'function') {
+                showLoader();
+                setTimeout(() => { hideLoader(); window.location.href = 'index.html'; }, 3000);
+            }
         });
     </script>
-    
-    <script src="./liquid-ether.js"></script>
 </body>
 </html>
