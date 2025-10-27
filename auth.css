@@ -1,15 +1,15 @@
 /* auth.css */
 
 /* -------------------------------------- */
-/* 1. الخلفية الثابتة لصفحة التسجيل (loginbackground01.png) */
+/* 1. الخلفية الثابتة لصفحة التسجيل */
 /* -------------------------------------- */
 .auth-background {
-    background-image: url('images/loginbackground004.png'); 
+    background-image: url('images/loginbackground01.png'); 
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
     min-height: 100vh; 
-    overflow-x: hidden; /* هام: لإخفاء أي شريط تمرير أفقي غير مرغوب فيه */
+    overflow-x: hidden;
 }
 
 /* -------------------------------------- */
@@ -19,7 +19,6 @@
     font-family: 'Akira-Like';
     src: local('Akira Expanded Super Bold'), 
          local('Akira Expanded-SuperBold'),
-         /* بدائل الخطوط */
          local('Arial Black'),
          local('Impact');
     font-weight: 900;
@@ -30,54 +29,39 @@
 /* -------------------------------------- */
 
 .stvx-legacy-container {
-    /* حاوية الأسطر الثلاثة التي تحدد الموقع في منتصف الشاشة */
+    /* 🛑 الحاوية الرئيسية: تحدد الموقع الرأسي الصحيح 🛑 */
     position: fixed;
     top: 50%; 
     z-index: 5; 
     width: 100%;
     overflow: hidden; 
-    transform: translateY(-50%); 
+    /* هذا التعديل يمنع تعارض الـ transform مع الأنماط الأخرى */
+    margin-top: -12rem; /* تم ضبط القيمة لتبدو متمركزة عمودياً */
 }
 
 .stvx-legacy-text {
     /* الأنماط الأساسية للحركة */
     white-space: nowrap;
+    display: block; /* لضمان أن كل نص يأخذ سطرًا مستقلاً */
+    
     font-family: 'Akira-Like', sans-serif;
     font-size: 8rem; 
     font-weight: 900;
     color: rgba(255, 255, 255, 0.05); 
     user-select: none;
-    line-height: 1; 
+    line-height: 1.2; /* التباعد بين الأسطر */
     
     /* تطبيق الأنيميشن */
-    display: inline-block; 
     animation: scrollSeamlessRight 8s linear infinite; 
     will-change: transform; 
     position: relative; 
 }
 
-/* 🛑 تحديد الموقع العمودي لكل سطر (مهم لجعله 3 أسطر) 🛑 */
-.line-1 {
-    display: block; 
-    margin-bottom: 0.5rem; 
-    transform: translateY(-8rem); /* السطر الأول (أعلى) */
-}
-.line-2 {
-    display: block; 
-    margin-bottom: 0.5rem;
-    transform: translateY(0); /* السطر الثاني (المنتصف) */
-}
-.line-3 {
-    display: block; 
-    transform: translateY(8rem); /* السطر الثالث (أسفل) */
-}
-
-
 /* 🛑 تعريف الحركة السلسة لليمين (scrollSeamlessRight) 🛑 */
-/* الحركة من -50% إلى 0% لضمان التكرار السلس للنص المكرر */
+/* الحركة من -50% إلى 0% تضمن التكرار السلس للنص المكرر في HTML */
 @keyframes scrollSeamlessRight {
-    0% { transform: translate(-50%, 0); } 
-    100% { transform: translate(0, 0); } 
+    0% { transform: translateX(-50%); } 
+    100% { transform: translateX(0); } 
 }
 
 
