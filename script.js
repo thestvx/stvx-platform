@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // تبديل فئة 'open' على الشريط الجانبي لإظهاره/إخفائه
             sidebar.classList.toggle('open');
             
-            // تبديل الأيقونة (إذا كانت تستخدم Tailwind classes)
-            const icon = toggleButton.querySelector('i'); // تم تغيير selector إلى i بدلاً من svg لأنه يتم استخدام Remix Icon
+            // تبديل الأيقونة (لأننا نستخدم Remix Icon <i>)
+            const icon = toggleButton.querySelector('i'); 
             if (icon) {
                 // Toggle between ri-menu-2-line and ri-close-line
                 if (sidebar.classList.contains('open')) {
@@ -29,8 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // لتمكين إغلاق الـ sidebar عند الضغط خارجها على الشاشات الصغيرة
             if (sidebar.classList.contains('open')) {
-                // إضافة فئة تظليل عند فتح الـ sidebar (مهم لعمل التنسيق الجديد في style.css)
-                // نستخدم flex هنا للتأكد من أن MainContent هو عنصر مرئي
+                // إضافة فئة تظليل عند فتح الـ sidebar 
                 mainContent.classList.add('lg:blur-none', 'filter', 'blur-sm'); 
             } else {
                 // إزالة فئة التظليل عند إغلاق الـ sidebar
@@ -41,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // إغلاق الـ Sidebar عند النقر على محتوى الصفحة الرئيسي (للشاشات الصغيرة)
         mainContent.addEventListener('click', (event) => {
             // تحقق من أن الشاشة صغيرة وأن الـ sidebar مفتوح
-            // window.innerWidth < 1024 يمثل شاشات الجوال (وفقًا لإعدادات Tailwind lg)
             if (window.innerWidth < 1024 && sidebar.classList.contains('open')) {
                 sidebar.classList.remove('open');
                 mainContent.classList.remove('filter', 'blur-sm');
@@ -57,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 🛠️ تحسين: إغلاق الشريط الجانبي عند تغيير حجم الشاشة من صغير إلى كبير
         window.addEventListener('resize', () => {
-            // إذا أصبح حجم الشاشة كبير (أكبر من 1024 بكسل) وقائمة sidebar مفتوحة (في وضع الشاشات الصغيرة)
             if (window.innerWidth >= 1024 && sidebar.classList.contains('open')) {
                 sidebar.classList.remove('open');
                 mainContent.classList.remove('filter', 'blur-sm');
@@ -76,8 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // تهيئة وظيفة تتبع حقول الإدخال (لإضافة تأثيرات التركيز)
     setupInputFocusEffect();
     
-    // 💡 تعديل جديد: تفعيل تأثير Glass Hover دائمًا لصفحات مثل Portfolio و Landing Page
-    setupGlassHover();
+    // 💡 التعديل الرئيسي: تفعيل تأثير Glass Hover فقط إذا كانت بطاقة Auth موجودة
+    const authCard = document.querySelector('.auth-card');
+    if (authCard) {
+        setupGlassHover();
+    }
     
     // إخفاء الـ Loader عند تحميل المحتوى بالكامل
     hideLoader();
@@ -103,13 +103,13 @@ function setupAuthTabs() {
             tabPanels.forEach(panel => {
                 panel.classList.add('hidden');
                 panel.classList.remove('flex');
-                panel.classList.remove('animate-fade-in'); // لإيقاف أي أنيميشن سابق
+                panel.classList.remove('animate-fade-in'); 
             });
 
             const targetPanel = document.getElementById(targetId);
             if (targetPanel) {
                 targetPanel.classList.remove('hidden');
-                targetPanel.classList.add('flex', 'animate-fade-in'); // إضافة أنيميشن بسيط
+                targetPanel.classList.add('flex', 'animate-fade-in'); 
             }
         });
     });
@@ -155,13 +155,13 @@ function hideLoader() {
 // ----------------------------------------------------
 
 /**
- * هذه الوظيفة تطبق تأثير إمالة (Tilt/Parallax) عند التمرير 
- * لجعل تأثير Glassmorphism يبدو أكثر تفاعلية.
+ * تطبق تأثير إمالة (Tilt/Parallax) عند التمرير
+ * ليعمل فقط على بطاقة Auth.
  */
 function setupGlassHover() {
-    // 🛠️ التعديل: استهداف البطاقات التي لا تحتوي على فئة 'project-card'
-    // لتجنب تعارض الـ Hover مع تأثير الـ CSS في بطاقات المشاريع الصغيرة.
-    const glassCards = document.querySelectorAll('.glass-card:not(.project-card)'); 
+    // 🛠️ التعديل: استهداف البطاقة الرئيسية لنموذج التسجيل/الدخول فقط
+    // (يجب إضافة فئة auth-card إلى البطاقة في ملف auth.html)
+    const glassCards = document.querySelectorAll('.glass-card.auth-card'); 
 
     glassCards.forEach(card => {
         // إضافة انتقال (transition) لضمان سلاسة حركة العودة
@@ -191,7 +191,7 @@ function setupGlassHover() {
         card.addEventListener('mouseleave', () => {
             // إعادة التنسيق إلى الوضع الأصلي عند إبعاد المؤشر
             card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
-            card.style.boxShadow = '0 8px 32px 0 rgba(0, 0, 0, 0.37)'; // ظل الـ Glassmorphism الافتراضي
+            card.style.boxShadow = '0 8px 32px 0 rgba(0, 0, 0, 0.37)'; 
         });
     });
 }
