@@ -1,16 +1,15 @@
 /* auth.css */
 
 /* -------------------------------------- */
-/* 1. الخلفية الثابتة لصفحة التسجيل (loginbackground01.png) */
+/* 1. الخلفية الثابتة لصفحة التسجيل */
 /* -------------------------------------- */
 .auth-background {
-    /* تغيير الخلفية إلى الصورة المطلوبة */
     background-image: url('images/loginbackground004.png'); 
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
     min-height: 100vh; 
-    overflow-x: hidden; /* إخفاء شريط التمرير الأفقي */
+    overflow-x: hidden; 
 }
 
 /* -------------------------------------- */
@@ -20,7 +19,6 @@
     font-family: 'Akira-Like';
     src: local('Akira Expanded Super Bold'), 
          local('Akira Expanded-SuperBold'),
-         /* بدائل الخطوط */
          local('Arial Black'),
          local('Impact');
     font-weight: 900;
@@ -33,51 +31,53 @@
 .stvx-legacy-container {
     position: fixed;
     top: 50%;
-    z-index: 5; 
+    z-index: 5;
     width: 100%;
-    overflow: hidden; /* هام لإخفاء النص خارج الحدود */
+    overflow: hidden; 
 }
 
 .stvx-legacy-text {
-    /* الخصائص الأساسية التي تطبق على الأسطر الثلاثة */
     white-space: nowrap;
     font-family: 'Akira-Like', sans-serif;
-    font-size: 8rem; 
+    font-size: 8rem;
     font-weight: 900;
-    color: rgba(255, 255, 255, 0.05); /* لون شفاف جداً ليتناسب مع الـ Glassmorphism */
+    color: rgba(255, 255, 255, 0.05); 
     user-select: none;
-    line-height: 1; /* تقليل التباعد بين الأسطر */
+    line-height: 1;
     
-    /* 🛑 التعديل هنا: تطبيق الأنيميشن الجديد لليمين 🛑 */
-    display: inline-block; 
-    animation: scrollSeamlessRight 8s linear infinite; /* ⬅️ الحركة السلسة لليمين بمدة 8 ثواني */
-    will-change: transform; 
-    position: relative; 
+    display: inline-block;
+    animation: scrollSeamlessRight 8s linear infinite; 
+    will-change: transform;
+    position: relative;
 }
 
-/* تحديد الموقع العمودي لكل سطر باستخدام translateY لضبطه في منتصف الشاشة */
 .line-1 {
-    transform: translateY(-160%); /* السطر الأول (أعلى) */
+    transform: translateY(-160%); 
 }
 .line-2 {
-    transform: translateY(-50%); /* السطر الثاني (المنتصف) */
+    transform: translateY(-50%); 
 }
 .line-3 {
-    transform: translateY(60%); /* السطر الثالث (أسفل) */
+    transform: translateY(60%); 
 }
 
-/* 🛑 تعريف الحركة السلسة النهائية لليمين (scrollSeamlessRight) 🛑 */
-/* تبدأ من اليسار (خارج الشاشة) وتتوقف قبل أن تختفي تماماً من اليمين، مما يسمح بالتكرار السلس. */
 @keyframes scrollSeamlessRight {
-    /* 🛑 يبدأ النص من اليسار بمقدار نصف عرضه ليظهر كأنه مكرر 🛑 */
-    0% { transform: translate(-50%, 0); } 
-    /* 🛑 ينتهي عند 0% (عند هذه النقطة يكون الجزء المكرر قد وصل لنهاية الشاشة) 🛑 */
-    100% { transform: translate(0, 0); } 
+    0% { transform: translate(-50%, 0); }
+    100% { transform: translate(0, 0); }
+}
+
+/* -------------------------------------- */
+/* 🛑 قاعدة الإخفاء القسري للـ Loader 🛑 */
+/* -------------------------------------- */
+#loading-overlay {
+    /* هذا يضمن إزالة العنصر من الشاشة تمامًا وتجاوز أي كود آخر */
+    display: none !important; 
 }
 
 
 /* -------------------------------------- */
 /* أكواد الـ Loader SVG الكاملة (الساعة الرملية) - (بدون تغيير) */
+/* تم إبقاؤها في حال أردت تفعيلها مستقبلاً */
 /* -------------------------------------- */
 :root {
     --hue: 35; 
