@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STVX Portfolio | تسجيل الدخول / إنشاء حساب</title>
+    <title>STVX | تسجيل الدخول وإنشاء حساب</title>
     
     <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet"> 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="auth.css">  
+    <link rel="stylesheet" href="auth.css">
     
     <script>
         tailwind.config = {
@@ -21,9 +21,6 @@
                     colors: {
                         primary: '#ffc72c', // لون التمييز الذهبي
                         secondary: '#333333' // لون ثانوي للتفاصيل 
-                    },
-                    borderRadius: {
-                        'button': '8px'
                     },
                     fontFamily: {
                         sans: ['Cairo', 'sans-serif'],
@@ -34,146 +31,106 @@
     </script>
     
     <style>
-        /* قاعدة Glassmorphism الأساسية */
-        .glass-card {
-            background-color: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
         .dark-bg {
-            /* خلفية مطابقة للخلفية الرئيسية */
             background: linear-gradient(135deg, #0a0a0a, #111111);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px 0;
+        }
+        
+        /* هذا التنسيق مهم للتعامل مع تصميم الـ Toggle */
+        body {
+            overflow-x: hidden;
         }
 
-        /* تنسيق الأزرار عند التمرير */
-        .glass-button-hover:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: scale(1.03);
-        }
+        /* ستضاف تفاصيل الـ Glassmorphism والتصميم الخاص في ملف auth.css */
     </style>
 </head>
 <body class="dark-bg text-white font-sans">
+
+<div class="container" id="container">
     
-    <div class="w-full max-w-md p-6 glass-card rounded-2xl">
-        <div class="flex flex-col items-center mb-8">
-            <img src="images/logo4stvx.png" alt="STVX Logo" class="w-20 h-12 object-contain mb-4">
-            <h2 class="text-3xl font-bold">مرحباً بعودتك!</h2>
-        </div>
-
-        <div class="flex mb-8 bg-black/30 p-1 rounded-full space-x-2 rtl:space-x-reverse" id="auth-switch">
-            <button id="login-tab" class="flex-1 py-2 font-semibold text-center rounded-full transition-colors bg-primary text-black">
-                تسجيل الدخول
-            </button>
-            <button id="register-tab" class="flex-1 py-2 font-semibold text-center rounded-full transition-colors text-gray-400 hover:bg-white/10">
-                إنشاء حساب جديد
-            </button>
-        </div>
-
-        <form id="login-form" class="space-y-6">
-            <div>
-                <label for="login-email" class="block text-sm font-medium text-gray-300 mb-2">البريد الإلكتروني</label>
-                <input type="email" id="login-email" placeholder="أدخل بريدك الإلكتروني" required
-                       class="w-full px-4 py-3 rounded-button glass-card border-none bg-black/10 text-white placeholder-gray-500 focus:ring-2 focus:ring-primary focus:outline-none">
-            </div>
-            <div>
-                <label for="login-password" class="block text-sm font-medium text-gray-300 mb-2">كلمة المرور</label>
-                <input type="password" id="login-password" placeholder="أدخل كلمة المرور" required
-                       class="w-full px-4 py-3 rounded-button glass-card border-none bg-black/10 text-white placeholder-gray-500 focus:ring-2 focus:ring-primary focus:outline-none">
-            </div>
+    <div class="form-container sign-up">
+        <form id="msform">
+            <ul id="progressbar" class="rtl">
+                <li class="active">الحساب</li>
+                <li>التفاصيل</li>
+                <li>الملف الشخصي</li>
+            </ul>
             
-            <div class="flex justify-between items-center text-sm">
-                <a href="#" class="text-primary hover:text-white transition-colors">هل نسيت كلمة المرور؟</a>
-            </div>
-
-            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-black py-3 rounded-full font-bold transition-colors shadow-lg shadow-primary/30">
-                تسجيل الدخول
-            </button>
-        </form>
-
-        <form id="register-form" class="space-y-6 hidden">
-            <div>
-                <label for="register-name" class="block text-sm font-medium text-gray-300 mb-2">الاسم الكامل</label>
-                <input type="text" id="register-name" placeholder="أدخل اسمك الكامل" required
-                       class="w-full px-4 py-3 rounded-button glass-card border-none bg-black/10 text-white placeholder-gray-500 focus:ring-2 focus:ring-primary focus:outline-none">
-            </div>
-            <div>
-                <label for="register-email" class="block text-sm font-medium text-gray-300 mb-2">البريد الإلكتروني</label>
-                <input type="email" id="register-email" placeholder="أدخل بريدك الإلكتروني" required
-                       class="w-full px-4 py-3 rounded-button glass-card border-none bg-black/10 text-white placeholder-gray-500 focus:ring-2 focus:ring-primary focus:outline-none">
-            </div>
-            <div>
-                <label for="register-password" class="block text-sm font-medium text-gray-300 mb-2">كلمة المرور</label>
-                <input type="password" id="register-password" placeholder="اختر كلمة مرور قوية" required
-                       class="w-full px-4 py-3 rounded-button glass-card border-none bg-black/10 text-white placeholder-gray-500 focus:ring-2 focus:ring-primary focus:outline-none">
-            </div>
+            <fieldset class="text-center">
+                <h1 class="text-3xl font-bold mb-4">إنشاء حساب</h1>
+                <div class="social-icons mb-6">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <span class="text-sm text-gray-400 mb-6 block">أو استخدم بريدك الإلكتروني للتسجيل</span>
+                <input type="email" name="email" placeholder="البريد الإلكتروني">
+                <input type="password" name="pass" placeholder="كلمة المرور">
+                <input type="password" name="cpass" placeholder="تأكيد كلمة المرور">
+                <input type="button" name="next" class="next action-button" value="التالي">
+            </fieldset>
             
-            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-black py-3 rounded-full font-bold transition-colors shadow-lg shadow-primary/30">
-                إنشاء حساب
-            </button>
+            <fieldset class="text-center">
+                <h1 class="text-3xl font-bold mb-8">التفاصيل الشخصية</h1>
+                <input type="text" name="fname" placeholder="الاسم الأول">
+                <input type="text" name="lname" placeholder="اسم العائلة">
+                <input type="text" name="phone" placeholder="رقم الهاتف">
+                <input type="button" name="previous" class="previous action-button" value="رجوع">
+                <input type="button" name="next" class="next action-button" value="التالي">
+            </fieldset>
+            
+            <fieldset class="text-center">
+                <h1 class="text-3xl font-bold mb-8">الروابط الاجتماعية</h1>
+                <input type="text" name="twitter" placeholder="رابط Twitter">
+                <input type="text" name="github" placeholder="رابط Github">
+                <input type="text" name="instagram" placeholder="رابط Instagram">
+                <input type="button" name="previous" class="previous action-button" value="رجوع">
+                <input type="submit" name="submit" class="action-button" value="إنهاء التسجيل">
+            </fieldset>
         </form>
-
-        <div class="mt-8 text-center">
-            <p class="text-gray-400 mb-4">أو سجل الدخول بواسطة</p>
-            <div class="flex justify-center space-x-4 rtl:space-x-reverse">
-                <button class="glass-card w-12 h-12 rounded-full flex items-center justify-center text-xl glass-button-hover transition-transform text-white">
-                    <i class="ri-google-fill"></i>
-                </button>
-                <button class="glass-card w-12 h-12 rounded-full flex items-center justify-center text-xl glass-button-hover transition-transform text-white">
-                    <i class="ri-apple-fill"></i>
-                </button>
-                <button class="glass-card w-12 h-12 rounded-full flex items-center justify-center text-xl glass-button-hover transition-transform text-white">
-                    <i class="ri-facebook-fill"></i>
-                </button>
-            </div>
-        </div>
-
     </div>
 
-    <script>
-        const loginTab = document.getElementById('login-tab');
-        const registerTab = document.getElementById('register-tab');
-        const loginForm = document.getElementById('login-form');
-        const registerForm = document.getElementById('register-form');
+    <div class="form-container sign-in">
+        <form class="text-center">
+            <h1 class="text-3xl font-bold mb-4">تسجيل الدخول</h1>
+            <div class="social-icons mb-6">
+                <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+            <span class="text-sm text-gray-400 mb-6 block">أو استخدم بريدك الإلكتروني لتسجيل الدخول</span>
+            <input type="email" placeholder="البريد الإلكتروني">
+            <input type="password" placeholder="كلمة المرور">
+            <a href="#" class="text-sm text-primary hover:underline block mb-4">هل نسيت كلمة المرور؟</a>
+            <button class="w-full">تسجيل الدخول</button>
+        </form>
+    </div>
 
-        loginTab.addEventListener('click', () => {
-            // تفعيل زر تسجيل الدخول
-            loginTab.classList.add('bg-primary', 'text-black');
-            loginTab.classList.remove('text-gray-400', 'hover:bg-white/10');
+    <div class="toggle-container">
+        <div class="toggle">
+            <div class="toggle-panel toggle-left">
+                <h1 class="text-3xl font-bold mb-4">أهلاً بعودتك!</h1>
+                <p class="mb-6">أدخل بياناتك الشخصية لمتابعة رحلتك معنا.</p>
+                <button class="hidden" id="login">تسجيل الدخول</button>
+            </div>
             
-            // إلغاء تفعيل زر إنشاء حساب
-            registerTab.classList.remove('bg-primary', 'text-black');
-            registerTab.classList.add('text-gray-400', 'hover:bg-white/10');
+            <div class="toggle-panel toggle-right">
+                <h1 class="text-3xl font-bold mb-4">مرحباً، صديقي!</h1>
+                <p class="mb-6">سجل بياناتك الشخصية لبدء رحلتك الإبداعية معنا.</p>
+                <button class="hidden" id="register">إنشاء حساب</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-            // إظهار نموذج تسجيل الدخول وإخفاء إنشاء حساب
-            loginForm.classList.remove('hidden');
-            registerForm.classList.add('hidden');
-        });
-
-        registerTab.addEventListener('click', () => {
-            // تفعيل زر إنشاء حساب
-            registerTab.classList.add('bg-primary', 'text-black');
-            registerTab.classList.remove('text-gray-400', 'hover:bg-white/10');
-
-            // إلغاء تفعيل زر تسجيل الدخول
-            loginTab.classList.remove('bg-primary', 'text-black');
-            loginTab.classList.add('text-gray-400', 'hover:bg-white/10');
-
-            // إظهار نموذج إنشاء حساب وإخفاء تسجيل الدخول
-            registerForm.classList.remove('hidden');
-            loginForm.classList.add('hidden');
-        });
-        
-        // التأكد من أن تسجيل الدخول هو التبويب الافتراضي عند تحميل الصفحة
-        loginTab.click(); 
-    </script>
-    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src="auth.js"></script>
 </body>
 </html>
