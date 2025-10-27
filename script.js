@@ -15,14 +15,22 @@ document.addEventListener('DOMContentLoaded', () => {
             sidebar.classList.toggle('open');
             
             // تبديل الأيقونة (إذا كانت تستخدم Tailwind classes)
-            const icon = toggleButton.querySelector('svg');
+            const icon = toggleButton.querySelector('i'); // تم تغيير selector إلى i بدلاً من svg لأنه يتم استخدام Remix Icon
             if (icon) {
-                icon.classList.toggle('rotate-180'); // تدوير الأيقونة عند الفتح/الإغلاق
+                // Toggle between ri-menu-2-line and ri-close-line
+                if (sidebar.classList.contains('open')) {
+                    icon.classList.remove('ri-menu-2-line');
+                    icon.classList.add('ri-close-line');
+                } else {
+                    icon.classList.remove('ri-close-line');
+                    icon.classList.add('ri-menu-2-line');
+                }
             }
 
             // لتمكين إغلاق الـ sidebar عند الضغط خارجها على الشاشات الصغيرة
             if (sidebar.classList.contains('open')) {
-                // إضافة فئة تظليل عند فتح الـ sidebar
+                // إضافة فئة تظليل عند فتح الـ sidebar (مهم لعمل التنسيق الجديد في style.css)
+                // نستخدم flex هنا للتأكد من أن MainContent هو عنصر مرئي
                 mainContent.classList.add('lg:blur-none', 'filter', 'blur-sm'); 
             } else {
                 // إزالة فئة التظليل عند إغلاق الـ sidebar
@@ -33,11 +41,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // إغلاق الـ Sidebar عند النقر على محتوى الصفحة الرئيسي (للشاشات الصغيرة)
         mainContent.addEventListener('click', (event) => {
             // تحقق من أن الشاشة صغيرة وأن الـ sidebar مفتوح
+            // window.innerWidth < 1024 يمثل شاشات الجوال (وفقًا لإعدادات Tailwind lg)
             if (window.innerWidth < 1024 && sidebar.classList.contains('open')) {
                 sidebar.classList.remove('open');
                 mainContent.classList.remove('filter', 'blur-sm');
-                const icon = toggleButton.querySelector('svg');
-                if (icon) icon.classList.remove('rotate-180');
+                
+                // إعادة الأيقونة إلى حالتها الأصلية
+                const icon = toggleButton.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('ri-close-line');
+                    icon.classList.add('ri-menu-2-line');
+                }
             }
         });
 
@@ -47,8 +61,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.innerWidth >= 1024 && sidebar.classList.contains('open')) {
                 sidebar.classList.remove('open');
                 mainContent.classList.remove('filter', 'blur-sm');
-                const icon = toggleButton.querySelector('svg');
-                if (icon) icon.classList.remove('rotate-180');
+                const icon = toggleButton.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('ri-close-line');
+                    icon.classList.add('ri-menu-2-line');
+                }
             }
         });
     }
@@ -59,11 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // تهيئة وظيفة تتبع حقول الإدخال (لإضافة تأثيرات التركيز)
     setupInputFocusEffect();
     
-    // 💡 الفحص الذكي: قم بتفعيل تأثير Glass Hover فقط إذا كانت الصفحة تحتوي على تبويبات التسجيل (Auth)
-    const isAuthPage = document.querySelector('.tab-button');
-    if (isAuthPage) {
-        setupGlassHover();
-    }
+    // 💡 تعديل جديد: تفعيل تأثير Glass Hover دائمًا لصفحات مثل Portfolio و Landing Page
+    setupGlassHover();
     
     // إخفاء الـ Loader عند تحميل المحتوى بالكامل
     hideLoader();
@@ -145,7 +159,9 @@ function hideLoader() {
  * لجعل تأثير Glassmorphism يبدو أكثر تفاعلية.
  */
 function setupGlassHover() {
-    const glassCards = document.querySelectorAll('.glass-card');
+    // 🛠️ التعديل: استهداف البطاقات التي لا تحتوي على فئة 'project-card'
+    // لتجنب تعارض الـ Hover مع تأثير الـ CSS في بطاقات المشاريع الصغيرة.
+    const glassCards = document.querySelectorAll('.glass-card:not(.project-card)'); 
 
     glassCards.forEach(card => {
         // إضافة انتقال (transition) لضمان سلاسة حركة العودة
@@ -155,7 +171,7 @@ function setupGlassHover() {
             const rect = card.getBoundingClientRect();
             // حساب الإحداثيات بالنسبة لمركز العنصر
             const x = e.clientX - rect.left; 
-            const y = e.clientY - rect.top;  
+            const y = e.clientY - rect.top; 
             
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
