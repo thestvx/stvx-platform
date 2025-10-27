@@ -41,3 +41,5 @@
 .glass-card input:focus {
     box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.3), 0 0 10px rgba(255, 199, 44, 0.1);
 }
+
+/* ⚠️ ملاحظة: تم إزالة تعريف .dark-bg من هنا (بقي في index.html فقط كـ inline style) */
