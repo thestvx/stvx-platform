@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap">
     
+    <link rel="stylesheet" href="./loader.css">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script>
@@ -18,7 +20,7 @@
                         primary: '#FFD700', // ذهبي (Gold)
                         secondary: '#EAB308', // كهرماني داكن (Accent Gold)
                         accent: '#FACC15', // أصفر مشرق
-                        darkbg: '#1A1A1A', // لون خلفية داكن إضافي
+                        darkbg: '#1A1A1A', 
                     },
                     fontFamily: {
                         sans: ['Cairo', 'sans-serif'],
@@ -43,7 +45,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #000; /* خلفية سوداء خالصة */
+            background: #000;
         }
 
         /* حاوية تأثير Liquid Ether */
@@ -67,22 +69,22 @@
         /* تأثير الـ Glassmorphism (بطاقة شفافة داكنة) */
         .auth-card {
             backdrop-filter: blur(10px);
-            background: rgba(0, 0, 0, 0.4); /* خلفية سوداء شفافة */
-            border: 1px solid rgba(255, 255, 255, 0.2); /* إطار أبيض خفيف */
+            background: rgba(0, 0, 0, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
         }
         
         /* تحسينات حقول الإدخال */
         .form-input {
             transition: all 0.3s ease;
             text-align: right;
-            color: #fff; /* النص باللون الأبيض */
+            color: #fff;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.05); /* خلفية داكنة جداً لحقل الإدخال */
+            background: rgba(255, 255, 255, 0.05);
         }
         
         .form-input:focus {
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.5); /* تركيز باللون الذهبي */
-            border-color: #FFD700; /* ذهبي */
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.5); 
+            border-color: #FFD700; 
         }
         
         .social-btn:hover {
@@ -92,15 +94,15 @@
         
         /* لون علامة التبويب النشطة */
         .tab-button.active {
-            background: rgba(255, 255, 255, 0.1); /* خلفية رمادية شفافة للتبويب النشط */
+            background: rgba(255, 255, 255, 0.1); 
         }
     </style>
 </head>
 <body>
+    
     <div class="app-wrapper">
         
-        <div id="liquid-ether-canvas">
-            </div>
+        <div id="liquid-ether-canvas"></div>
 
         <div class="auth-container flex items-center justify-center p-4">
             <div class="auth-card w-full max-w-md rounded-2xl overflow-hidden shadow-xl">
@@ -208,16 +210,22 @@
                     </div>
                 </form>
             </div>
+
+
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script src="./global-scripts.js"></script>
 
     <script>
         const loginTab = document.getElementById('login-tab');
         const registerTab = document.getElementById('register-tab');
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
+        
+        // استخدام دالة showLoader() و hideLoader() من global-scripts.js
         
         loginTab.addEventListener('click', () => {
             loginTab.classList.add('active');
@@ -233,15 +241,26 @@
             loginForm.classList.add('hidden');
         });
         
-        // منع الإرسال الافتراضي للنموذج
+        // تشغيل الـ Loader عند محاولة تسجيل الدخول
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            console.log('Login attempt');
+            showLoader();
+            // محاكاة تحميل وانتقال (للتطبيق الفعلي، استبدل هذا بمنطق إرسال البيانات)
+            setTimeout(() => {
+                hideLoader();
+                console.log('Login logic complete.');
+            }, 3000);
         });
         
+        // تشغيل الـ Loader عند محاولة إنشاء حساب
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            console.log('Register attempt');
+            showLoader();
+            // محاكاة تحميل وانتقال
+            setTimeout(() => {
+                hideLoader();
+                console.log('Register logic complete.');
+            }, 3000);
         });
     </script>
     
