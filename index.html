@@ -71,6 +71,41 @@
             background-color: rgba(255, 255, 255, 0.1);
             transform: scale(1.05);
         }
+        
+        /* 🚀 التعديلات الجديدة للـ Hero Section 🚀 */
+        /* العنصر الذي يحمل الصورة والضبابية */
+        .hero-image-container {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            filter: blur(2.5px); /* تطبيق قيمة الضبابية المطلوبة */
+            -webkit-filter: blur(2.5px);
+            transition: filter 0.3s ease;
+            z-index: 1;
+            border-radius: inherit;
+        }
+
+        /* طبقة تراكب (Overlay) لجعل النص أكثر وضوحًا */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            /* تدرج من الأسود الشفاف للشفافية، مع زيادة في التعتيم */
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)); 
+            z-index: 2; /* فوق الصورة الضبابية */
+            border-radius: inherit;
+        }
+
+        /* محتوى النص والأزرار */
+        .hero-content {
+            position: relative;
+            z-index: 3; /* للتأكد من أن المحتوى فوق الـ overlay */
+        }
+        
+        /* ظل النص لتحسين القراءة */
+        .hero-text-shadow {
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9); /* زيادة قوة الظل */
+        }
     </style>
 </head>
 <body class="dark-bg text-white font-sans">
@@ -80,7 +115,8 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-8 rtl:space-x-reverse">
                 <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain"> </div>
+                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain">
+                </div>
                 <div class="relative hidden lg:block">
                     <input type="text" placeholder="البحث عن مشاريع، خدمات، أو مقالات..." 
                             class="pl-12 pr-4 py-3 w-96 glass-card border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 bg-black/20" 
@@ -148,16 +184,24 @@
         <main class="flex-1 lg:mr-64 pb-24 px-4 md:px-8 py-6 ml-4">
             
             <section class="mb-8 rounded-2xl overflow-hidden relative glass-card p-10 h-auto" 
-                            style="background-image: url('https://readdy.ai/api/search-image?query=Dark%20abstract%20gradient%20background%20with%20subtle%20gold%20waves%2C%20futuristic%20design%2C%20suitable%20for%20text%20overlay%2C%20professional%20look&width=1200&height=320&seq=hero1&orientation=landscape'); animation: fadeIn 1s ease-out 0.5s forwards;">
-                <div class="relative h-full flex flex-col justify-center">
+                     style="animation: fadeIn 1s ease-out 0.5s forwards;">
+                
+                <div class="hero-image-container"
+                     style="background-image: url('https://readdy.ai/api/search-image?query=Dark%20abstract%20gradient%20background%20with%20subtle%20gold%20waves%2C%20futuristic%20design%2C%20suitable%20for%20text%20overlay%2C%20professional%20look&width=1200&height=320&seq=hero1&orientation=landscape');">
+                </div>
+                
+                <div class="hero-overlay"></div>
+
+                <div class="hero-content relative h-full flex flex-col justify-center">
                     <div class="text-white max-w-lg">
-                        <h1 class="text-4xl md:text-5xl font-extrabold mb-4">نحو الكمال الرقمي 🚀</h1>
-                        <p class="text-lg mb-6 text-gray-200">أقدم حلول تصميم واجهات المستخدم (UI/UX) وتطوير المواقع، بلمسة إبداعية فريدة وموثوقية عالية.</p>
+                        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 hero-text-shadow">نحو الكمال الرقمي 🚀</h1>
+                        <p class="text-lg mb-6 text-gray-200 hero-text-shadow">أقدم حلول تصميم واجهات المستخدم (UI/UX) وتطوير المواقع، بلمسة إبداعية فريدة وموثوقية عالية.</p>
                         <button class="bg-primary hover:bg-primary/90 text-black px-8 py-3 rounded-full font-bold transition-colors !rounded-button whitespace-nowrap hover:scale-105">
                             اطلب خدمتك الآن
                         </button>
                     </div>
                 </div>
+                
             </section>
 
             <section class="mb-12">
