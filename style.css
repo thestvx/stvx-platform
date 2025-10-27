@@ -1,6 +1,8 @@
 /* style.css */
 
+/* -------------------------------------- */
 /* 1. تنسيق شريط التبويب النشط في Auth.html */
+/* -------------------------------------- */
 .tab-button.active::after {
     content: '';
     position: absolute;
@@ -18,7 +20,11 @@
     to { transform: translateY(0); opacity: 1; }
 }
 
+/* -------------------------------------- */
 /* 2. تنسيق شريط التمرير (Sidebar Scrollbar) */
+/* -------------------------------------- */
+
+/* تنسيق شريط التمرير لمتصفحات Webkit (Chrome, Safari, Edge) */
 .sidebar-scroll::-webkit-scrollbar {
     width: 6px;
 }
@@ -37,9 +43,16 @@
     background: #e6b222; /* ذهبي أغمق قليلاً عند التمرير */
 }
 
-/* 3. تطبيق Glass-Card على حقول الإدخال لتناسق المظهر */
-.glass-card input:focus {
-    box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.3), 0 0 10px rgba(255, 199, 44, 0.1);
+/* تنسيق شريط التمرير لمتصفح Firefox */
+.sidebar-scroll {
+    scrollbar-width: thin; /* يجعل الشريط نحيفًا */
+    scrollbar-color: #ffc72c rgba(255, 255, 255, 0.05); /* لون الإبهام ولون المسار */
 }
 
-/* ⚠️ ملاحظة: تم إزالة تعريف .dark-bg من هنا (بقي في index.html فقط كـ inline style) */
+/* -------------------------------------- */
+/* 3. تطبيق Glass-Card على حقول الإدخال للتركيز */
+/* -------------------------------------- */
+.glass-card input:focus {
+    /* يضمن أن حقول الإدخال داخل أي عنصر يحمل فئة glass-card تظهر ظل تركيز ذهبي */
+    box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.3), 0 0 10px rgba(255, 199, 44, 0.1);
+}
