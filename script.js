@@ -42,8 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // تهيئة الوظائف الأخرى
+    // تهيئة وظائف التبويبات (لصفحة Auth)
     setupAuthTabs();
+    
+    // 💡 الفحص الذكي: قم بتفعيل تأثير Glass Hover فقط إذا كانت الصفحة تحتوي على تبويبات التسجيل (Auth)
+    const isAuthPage = document.querySelector('.tab-button');
+    if (isAuthPage) {
+        setupGlassHover();
+    }
 });
 
 // ----------------------------------------------------
@@ -88,33 +94,16 @@ function setupAuthTabs() {
 
 /**
  * وظيفة لإظهار الـ Loader.
- * (يمكن تفعيلها بإزالة الـ 'return')
  */
 function showLoader() {
-    // إيقاف التنفيذ مؤقتاً
-    // return; 
-    
-    const loaderOverlay = document.getElementById('loading-overlay');
-    if (loaderOverlay) {
-        // نستخدم 'block' مؤقتاً إذا قمت بإزالة 'display: none !important' من CSS
-        // loaderOverlay.style.display = 'flex';
-        // loaderOverlay.classList.remove('hidden'); 
-    }
+    // ... (الكود الخاص بـ Loader)
 }
 
 /**
  * وظيفة لإخفاء الـ Loader.
- * (يمكن تفعيلها بإزالة الـ 'return')
  */
 function hideLoader() {
-    // إيقاف التنفيذ مؤقتاً
-    // return; 
-
-    const loaderOverlay = document.getElementById('loading-overlay');
-    if (loaderOverlay) {
-        // loaderOverlay.style.display = 'none';
-        // loaderOverlay.classList.add('hidden'); 
-    }
+    // ... (الكود الخاص بـ Loader)
 }
 
 // ----------------------------------------------------
@@ -123,20 +112,20 @@ function hideLoader() {
 
 /* * هذه الوظيفة تطبق تأثير إمالة (Tilt/Parallax) عند التمرير 
  * لجعل تأثير Glassmorphism يبدو أكثر تفاعلية.
- *
- * 🛑 ملاحظة: تم تعطيل استدعاء هذه الدالة أدناه لمنع تضاربها مع تأثيرات CSS، 
- * مما يزيل مشكلة "الرعشة".
  */
 function setupGlassHover() {
     const glassCards = document.querySelectorAll('.glass-card');
 
     glassCards.forEach(card => {
+        // إضافة انتقال (transition) لضمان سلاسة حركة العودة
+        card.style.transition = 'transform 0.5s ease, box-shadow 0.5s ease';
+
         card.addEventListener('mousemove', (e) => {
             // الحصول على أبعاد العنصر
             const rect = card.getBoundingClientRect();
-            // حساب الإحداثيات بالنسبة لمركز العنصر (بين -50 و 50)
-            const x = e.clientX - rect.left; // x position within the element.
-            const y = e.clientY - rect.top;  // y position within the element.
+            // حساب الإحداثيات بالنسبة لمركز العنصر
+            const x = e.clientX - rect.left; 
+            const y = e.clientY - rect.top;  
             
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
@@ -160,6 +149,3 @@ function setupGlassHover() {
         });
     });
 }
-
-// ❌ تم تعطيل تفعيل وظيفة Glass Hover لمنع تضاربها مع تأثيرات الـ CSS وحل مشكلة "الرعشة".
-// setupGlassHover();
