@@ -65,6 +65,12 @@
             opacity: 1;
             pointer-events: all;
         }
+
+        /* قاعدة للحاوية الأفقية الجديدة */
+        .scrolling-wrapper {
+            width: 100%;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="text-white font-sans auth-background">
@@ -91,9 +97,19 @@
     </div>
 
     <div class="stvx-legacy-container">
-        <div class="stvx-legacy-text line-1">STVX — not a label, a legacy STVX — not a label, a legacy</div>
-        <div class="stvx-legacy-text line-2">DESIGN IS HOW IT WORKS DESIGN IS HOW IT WORKS</div>
-        <div class="stvx-legacy-text line-3">QUALITY OVER QUANTITY QUALITY OVER QUANTITY</div>
+        
+        <div class="scrolling-wrapper">
+            <div class="stvx-legacy-text line-1">STVX — not a label, a legacy STVX — not a label, a legacy</div>
+        </div>
+        
+        <div class="scrolling-wrapper">
+            <div class="stvx-legacy-text line-2">DESIGN IS HOW IT WORKS DESIGN IS HOW IT WORKS</div>
+        </div>
+        
+        <div class="scrolling-wrapper">
+            <div class="stvx-legacy-text line-3">QUALITY OVER QUANTITY QUALITY OVER QUANTITY</div>
+        </div>
+        
     </div>
     
     <div class="flex items-center justify-center min-h-screen py-10 px-4 relative z-10">
