@@ -90,7 +90,7 @@
     transform: translateY(-1px);
 }
 
-.container button.hidden {
+.container button#login, .container button#register {
     background-color: transparent;
     border-color: #fff;
     color: #fff;
