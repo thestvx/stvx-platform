@@ -55,11 +55,11 @@
             transition: all 0.3s ease;
         }
         
-        /* Loader Overlay Style - تم إلغاء تأثيرات الـ Loader CSS هنا */
+        /* Loader Overlay Style - تم تعطيله */
         #loading-overlay {
             opacity: 0;
             pointer-events: none;
-            transition: none; /* إيقاف أي انتقال قد يتسبب في ظهورها للحظة */
+            transition: none;
         }
     </style>
 </head>
@@ -172,19 +172,17 @@
             loginForm.classList.add('hidden');
         });
 
-        // 🛑 الانتقال المباشر بدلاً من استخدام اللودر 🛑
+        // 🛑 إلغاء اللودر: الانتقال المباشر عند الإرسال 🛑
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             window.location.href = 'index.html';
         });
         
-        // 🛑 الانتقال المباشر بدلاً من استخدام اللودر 🛑
+        // 🛑 إلغاء اللودر: الانتقال المباشر عند الإرسال 🛑
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
             window.location.href = 'index.html';
         });
-
-        // 🛑 تم إلغاء Listener الخاص بـ window.load 🛑
     </script>
 </body>
 </html>
