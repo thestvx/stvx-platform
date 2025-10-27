@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STVX Portfolio | تسجيل الدخول</title>
 
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css"> 
-    <link rel="stylesheet" href="auth.css"> 
-    
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#ffc72c', 
-                        secondary: '#333333' 
+                        primary: '#ffc72c',
+                        secondary: '#333333'
                     },
                     borderRadius: {
                         'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
@@ -43,7 +43,7 @@
             }
         }
     </script>
-    
+
     <style>
         /* قاعدة Glassmorphism الأساسية */
         .glass-card {
@@ -55,21 +55,13 @@
             transition: all 0.3s ease;
         }
         
-        /* Loader Overlay Style */
-        #loading-overlay {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease-out;
-        }
-        #loading-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
+        /* 🛑 تم إزالة أنماط Loader Overlay من هنا 🛑 */
+        /* سيتم إخفاؤه بالكامل عبر auth.css */
     </style>
 </head>
 <body class="text-white font-sans auth-background">
-    
-    <div id="loading-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md active">
+
+    <div id="loading-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md">
         <svg aria-label="Loader SVG" role="img" height="56px" width="56px" viewBox="0 0 56 56" class="loader">
             <g class="loader__glare-top" stroke="#ffc72c" fill="none">
                 <path d="M41,18 C41,18 40.5,23.5 37,27 C32.5,31.5 25,31.5 25,31.5 C25,31.5 24,31.5 20,27 C15.5,22.5 15,18 15,18 L41,18 Z"></path>
@@ -95,31 +87,31 @@
         <div class="stvx-legacy-text line-2">DESIGN IS HOW IT WORKS DESIGN IS HOW IT WORKS</div>
         <div class="stvx-legacy-text line-3">QUALITY OVER QUANTITY QUALITY OVER QUANTITY</div>
     </div>
-    
+
     <div class="flex items-center justify-center min-h-screen py-10 px-4 relative z-10">
         <div class="auth-container w-full max-w-lg">
             <div class="glass-card rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
-                
+
                 <div class="flex border-b border-white/10">
                     <button id="login-tab" class="tab-button flex-1 py-4 text-white font-medium text-center relative active">تسجيل الدخول</button>
                     <button id="register-tab" class="tab-button flex-1 py-4 text-white font-medium text-center relative">إنشاء حساب</button>
                 </div>
-                
+
                 <form id="login-form" class="p-8 space-y-6 animate-slide-up">
                     <h2 class="text-3xl font-bold text-white text-center">أهلاً بعودتك</h2>
                     <input type="email" placeholder="البريد الإلكتروني" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
                     <input type="password" placeholder="كلمة المرور" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
-                    
+
                     <a href="#" class="block text-left text-sm text-primary hover:text-white transition-colors">نسيت كلمة المرور؟</a>
-                    
+
                     <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-black py-3 rounded-full font-bold transition-transform hover:scale-[1.02]">
                         تسجيل الدخول
                     </button>
-                    
+
                     <div class="text-center text-sm text-gray-400">
                         <span class="bg-transparent px-3">أو سجل عبر</span>
                     </div>
-                    
+
                     <div class="grid grid-cols-3 gap-4">
                         <button type="button" class="glass-card py-3 rounded-lg flex items-center justify-center hover:bg-white/20 transition-all">
                             <i class="ri-google-fill text-xl text-red-500"></i>
@@ -132,20 +124,20 @@
                         </button>
                     </div>
                 </form>
-                
+
                 <form id="register-form" class="p-8 space-y-6 hidden animate-slide-up">
                     <h2 class="text-3xl font-bold text-white text-center">ابـدأ رحلتك</h2>
                     <input type="text" placeholder="الاسم الكامل" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
                     <input type="email" placeholder="بريدك الإلكتروني" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
                     <input type="password" placeholder="كلمة المرور" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
-                    
+
                     <div class="flex items-center">
                         <input type="checkbox" id="terms" class="h-4 w-4 text-primary bg-transparent border-white/30 rounded-sm mr-2 focus:ring-primary/50">
                         <label for="terms" class="text-sm text-gray-300">
                             أوافق على <a href="#" class="text-primary hover:underline">الشروط والأحكام</a>
                         </label>
                     </div>
-                    
+
                     <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-black py-3 rounded-full font-bold transition-transform hover:scale-[1.02]">
                         إنشاء حساب
                     </button>
@@ -153,7 +145,7 @@
             </div>
         </div>
     </div>
-    
+
     <script src="script.js"></script>
 
     <script>
@@ -161,14 +153,14 @@
         const registerTab = document.getElementById('register-tab');
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
-        
+
         loginTab.addEventListener('click', () => {
             loginTab.classList.add('active');
             registerTab.classList.remove('active');
             loginForm.classList.remove('hidden');
             registerForm.classList.add('hidden');
         });
-        
+
         registerTab.addEventListener('click', () => {
             registerTab.classList.add('active');
             loginTab.classList.remove('active');
@@ -176,25 +168,24 @@
             loginForm.classList.add('hidden');
         });
 
+        // 🛑 تم تعديل هذا الجزء: الانتقال المباشر بدون استدعاء showLoader() 🛑
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            if (typeof showLoader === 'function') {
-                showLoader();
-                setTimeout(() => { hideLoader(); window.location.href = 'index.html'; }, 3000);
-            }
-        });
-        
-        registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (typeof showLoader === 'function') {
-                showLoader();
-                setTimeout(() => { hideLoader(); window.location.href = 'index.html'; }, 3000);
-            }
+            window.location.href = 'index.html';
         });
 
+        // 🛑 تم تعديل هذا الجزء: الانتقال المباشر بدون استدعاء showLoader() 🛑
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.location.href = 'index.html';
+        });
+
+        // 🛑 تم حذف هذا الكود لأنه كان يستدعي hideLoader() عند تحميل الصفحة 🛑
+        /*
         window.addEventListener('load', () => {
             setTimeout(() => { hideLoader(); }, 100);
         });
+        */
     </script>
 </body>
 </html>
