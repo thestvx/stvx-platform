@@ -32,7 +32,7 @@
                         'slide-down': 'slideDown 0.5s ease-out forwards',
                         'slide-up': 'slideUp 0.7s ease-out forwards',
                         'card-pop': 'cardPop 0.6s ease-out forwards',
-                        // 🛠️ إضافة حركات البطاقة الجديدة (لأنها تستخدم animation-bounce و animation-ping) 🛠️
+                        // 🛠️ حركات البطاقة الجديدة 🛠️
                         'bounce': 'bounce 1s infinite',
                         'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
                         'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -62,7 +62,6 @@
     
     <style>
         /* قاعدة Glassmorphism الأساسية */
-        /* ⚠️ تم ترك هذا الجزء كنسخة احتياطية، لكن البطاقات الجديدة لا تستخدم فئة glass-card هنا */
         .glass-card {
             background-color: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px);
@@ -79,7 +78,6 @@
 
         /* 🌟 بطاقة المشروع الرئيسية (Portfolio Card) 🌟 */
         .project-card {
-            /* تم الإبقاء على تنسيق بطاقات المشاريع الصغيرة */
             position: relative;
             overflow: hidden;
             transition: transform 0.4s ease-out, box-shadow 0.4s ease-out, border 0.4s ease-out;
@@ -160,7 +158,7 @@
 
         <main class="py-12 px-4 md:px-8 max-w-6xl mx-auto">
             
-            <header class="text-center mb-16" style="animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;">
+            <header class="text-center mb-12" style="animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;">
                 <h1 class="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
                     أرشيف الإبداع 🗃️
                 </h1>
@@ -169,7 +167,7 @@
                 </p>
             </header>
 
-            <section class="mb-20">
+            <section class="mb-16"> 
                 <div class="flex flex-col md:flex-row justify-center items-center gap-12">
                     
                     <a href="#graphics" 
@@ -384,7 +382,7 @@
 
                 </div>
             </section>
-            <section id="graphics" class="mb-16">
+            <section id="graphics" class="py-8"> 
                 <div class="flex items-center justify-between mb-8">
                     <h2 class="text-3xl font-bold text-white border-r-4 border-primary pr-3" style="animation: slideUp 0.6s ease-out 1.2s forwards; opacity: 0;">
                         <i class="ri-palette-line text-primary ml-2"></i> تصاميم الجرافيكس
@@ -441,7 +439,7 @@
                 </div>
             </section>
 
-            <section id="coding" class="mb-16">
+            <section id="coding" class="py-8"> 
                 <div class="flex items-center justify-between mb-8">
                     <h2 class="text-3xl font-bold text-white border-r-4 border-primary pr-3" style="animation: slideUp 0.6s ease-out 1.2s forwards; opacity: 0;">
                         <i class="ri-code-s-slash-line text-primary ml-2"></i> تطوير الواجهات والبرمجة
@@ -502,19 +500,66 @@
         
         <footer class="glass-card mt-auto px-6 py-8 text-center border-t border-gray-800">
             <div class="max-w-7xl mx-auto">
-                <div class="flex justify-center space-x-6 rtl:space-x-reverse mb-4">
-                    <a href="#" class="text-gray-400 hover:text-primary transition-colors text-2xl" aria-label="LinkedIn">
-                        <i class="ri-linkedin-fill"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-primary transition-colors text-2xl" aria-label="Twitter">
-                        <i class="ri-twitter-x-fill"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-primary transition-colors text-2xl" aria-label="Instagram">
-                        <i class="ri-instagram-line"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-primary transition-colors text-2xl" aria-label="Email">
-                        <i class="ri-mail-line"></i>
-                    </a>
+                <div class="flex justify-center space-x-4 rtl:space-x-reverse mb-6">
+                    
+                    <button
+                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#3b5998] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#3b5998]/40"
+                        href="#"
+                        aria-label="Facebook"
+                    >
+                        <svg class="w-5" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1.1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z"></path>
+                        </svg>
+                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#3b5998] px-2 py-1 rounded-md drop-shadow-lg">
+                            Facebook
+                        </span>
+                    </button>
+                    
+                    <button
+                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#000000] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-white/40"
+                        href="#"
+                        aria-label="Twitter X"
+                    >
+                        <i class="ri-twitter-x-fill text-xl"></i>
+                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-black px-2 py-1 rounded-md drop-shadow-lg">
+                            Twitter/X
+                        </span>
+                    </button>
+
+                    <button
+                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-pink-600/40"
+                        style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);"
+                        href="#"
+                        aria-label="Instagram"
+                    >
+                        <i class="ri-instagram-line text-xl"></i>
+                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-pink-600 px-2 py-1 rounded-md drop-shadow-lg">
+                            Instagram
+                        </span>
+                    </button>
+                    
+                    <button
+                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#0077B5] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#0077B5]/40"
+                        href="#"
+                        aria-label="LinkedIn"
+                    >
+                        <i class="ri-linkedin-fill text-xl"></i>
+                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#0077B5] px-2 py-1 rounded-md drop-shadow-lg">
+                            LinkedIn
+                        </span>
+                    </button>
+
+                    <button
+                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-primary text-gray-900 font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-primary/40"
+                        href="mailto:info@yourdomain.com"
+                        aria-label="Email"
+                    >
+                        <i class="ri-mail-line text-xl"></i>
+                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-gray-900 bg-primary px-2 py-1 rounded-md drop-shadow-lg">
+                            البريد الإلكتروني
+                        </span>
+                    </button>
+                    
                 </div>
                 
                 <p class="text-base text-gray-400">&copy; 2024 STVX Platform. جميع الحقوق محفوظة.</p>
