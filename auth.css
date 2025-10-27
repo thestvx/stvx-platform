@@ -1,15 +1,15 @@
 /* auth.css */
 
 /* -------------------------------------- */
-/* 1. الخلفية الثابتة لصفحة التسجيل */
+/* 1. الخلفية الثابتة لصفحة التسجيل (loginbackground01.png) */
 /* -------------------------------------- */
 .auth-background {
-    background-image: url('images/loginbackground004.png'); 
+    background-image: url('images/loginbackground01.png'); 
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
     min-height: 100vh; 
-    overflow-x: hidden; /* هام: لإخفاء أي شريط تمرير أفقي */
+    overflow-x: hidden; /* هام: لإخفاء أي شريط تمرير أفقي غير مرغوب فيه */
 }
 
 /* -------------------------------------- */
@@ -19,6 +19,7 @@
     font-family: 'Akira-Like';
     src: local('Akira Expanded Super Bold'), 
          local('Akira Expanded-SuperBold'),
+         /* بدائل الخطوط */
          local('Arial Black'),
          local('Impact');
     font-weight: 900;
@@ -28,19 +29,18 @@
 /* 3. تنسيق وحركة النصوص المتعددة (3 أسطر - حركة سلسة لليمين) */
 /* -------------------------------------- */
 
-/* 🛑 حاوية الأسطر الثلاثة 🛑 */
 .stvx-legacy-container {
+    /* حاوية الأسطر الثلاثة التي تحدد الموقع في منتصف الشاشة */
     position: fixed;
     top: 50%; 
     z-index: 5; 
     width: 100%;
     overflow: hidden; 
-    /* إزاحة الحاوية بالكامل لضبط نقطة المنتصف */
     transform: translateY(-50%); 
 }
 
 .stvx-legacy-text {
-    /* الخصائص الأساسية التي تطبق على الأسطر الثلاثة */
+    /* الأنماط الأساسية للحركة */
     white-space: nowrap;
     font-family: 'Akira-Like', sans-serif;
     font-size: 8rem; 
@@ -49,9 +49,9 @@
     user-select: none;
     line-height: 1; 
     
-    /* 🛑 الأنيميشن الصحيح لليسار لليمين 🛑 */
+    /* تطبيق الأنيميشن */
     display: inline-block; 
-    animation: scrollSeamlessRight 8s linear infinite; /* ⬅️ غيرنا المدة إلى 8 ثواني لجعلها أسرع قليلاً، يمكنك تعديلها */
+    animation: scrollSeamlessRight 8s linear infinite; 
     will-change: transform; 
     position: relative; 
 }
@@ -74,7 +74,7 @@
 
 
 /* 🛑 تعريف الحركة السلسة لليمين (scrollSeamlessRight) 🛑 */
-/* تبدأ من أقصى اليسار بحيث يظهر النص المكرر، وتنتهي عند الصفر لتكرر اللوب بسلاسة. */
+/* الحركة من -50% إلى 0% لضمان التكرار السلس للنص المكرر */
 @keyframes scrollSeamlessRight {
     0% { transform: translate(-50%, 0); } 
     100% { transform: translate(0, 0); } 
