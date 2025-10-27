@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexShop - تسجيل الدخول وإنشاء حساب</title>
+    <title>STVX - تسجيل الدخول وإنشاء حساب</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -14,11 +14,11 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#3B82F6', // أزرق
-                        secondary: '#10B981', // أخضر
-                        accent: '#8B5CF6', // بنفسجي
+                        // الألوان الجديدة المقترحة للتناسق العام
+                        primary: '#A5B4FC', // لافندر فاتح: لأزرار تسجيل الدخول والروابط
+                        secondary: '#6366F1', // بنفسجي أزرق داكن: لأزرار إنشاء الحساب
+                        accent: '#EAB308', // كهرماني: لون إضافي يمكن استخدامه للـ Hover أو الآيكونات
                     },
-                    // استخدام خط عربي مناسب
                     fontFamily: {
                         sans: ['Cairo', 'sans-serif'],
                     },
@@ -34,11 +34,10 @@
             font-family: 'Cairo', sans-serif;
         }
         
-        /* الخلفية الداكنة وتأثير الصورة (تم الاحتفاظ بالصورة التركية كمثال) */
+        /* تم تحديث مسار صورة الخلفية إلى الملف المحلي */
         .auth-container {
             min-height: 100vh;
-            /* يمكنك تغيير الرابط هنا بصورة من اختيارك */
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://images.pexels.com/photos/18136911/pexels-photo-18136911/free-photo-of-doga-moda-kadin-sanat.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('images/background4stvx.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -50,14 +49,16 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        /* حقول الإدخال */
+        /* حقول الإدخال - تحسين المظهر */
         .form-input {
             transition: all 0.3s ease;
-            text-align: right; /* محاذاة النص لليمين */
+            text-align: right;
+            border: 1px solid rgba(255, 255, 255, 0.3); /* زيادة وضوح الإطار */
         }
         
         .form-input:focus {
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.5); /* ظل يتطابق مع Primary Color */
+            border-color: #A5B4FC; /* لون Primary Color */
         }
         
         .social-btn {
@@ -98,7 +99,7 @@
                 <div class="space-y-2">
                     <label class="block text-sm font-medium text-white">كلمة المرور</label>
                     <input type="password" placeholder="كلمة المرور" class="form-input w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 text-white placeholder-white placeholder-opacity-70 focus:outline-none">
-                    <a href="#" class="block text-left text-sm text-white text-opacity-80 hover:underline">نسيت كلمة المرور؟</a>
+                    <a href="#" class="block text-left text-sm text-primary text-opacity-80 hover:underline">نسيت كلمة المرور؟</a>
                 </div>
                 
                 <div class="flex items-center">
@@ -106,7 +107,7 @@
                     <input type="checkbox" id="remember" class="h-4 w-4 text-primary mr-2">
                 </div>
                 
-                <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition">تسجيل الدخول</button>
+                <button type="submit" class="w-full bg-primary text-gray-900 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition">تسجيل الدخول</button>
                 
                 <div class="relative flex items-center justify-center">
                     <div class="border-t border-white border-opacity-20 w-full"></div>
@@ -159,13 +160,13 @@
                 <div class="flex items-center">
                     <label for="terms" class="ml-2 block text-sm text-white">
                         أوافق على 
-                        <a href="#" class="underline">شروط الاستخدام</a> و
-                        <a href="#" class="underline">سياسة الخصوصية</a>.
+                        <a href="#" class="underline text-primary">شروط الاستخدام</a> و
+                        <a href="#" class="underline text-primary">سياسة الخصوصية</a>.
                     </label>
-                    <input type="checkbox" id="terms" class="h-4 w-4 text-primary mr-2">
+                    <input type="checkbox" id="terms" class="h-4 w-4 text-secondary mr-2">
                 </div>
                 
-                <button type="submit" class="w-full bg-secondary text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition">إنشاء حساب</button>
+                <button type="submit" class="w-full bg-secondary text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition">إنشاء حساب</button>
                 
                 <div class="relative flex items-center justify-center">
                     <div class="border-t border-white border-opacity-20 w-full"></div>
