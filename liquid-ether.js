@@ -1,7 +1,6 @@
+// liquid-ether.js
 /**
  * هذا الكود هو تكييف للـ Liquid Ether effect الذي يعتمد على THREE.js.
- * يتم تشغيله مباشرة بعد تحميل الصفحة لإعداد المشهد في #liquid-ether-canvas.
- *
  * تم تحديث الألوان لتناسب المظهر الأسود والذهبي.
  */
 
@@ -17,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const COLORS = [
         new THREE.Color(0x111111), // 1. أسود داكن جداً (Deep Black)
         new THREE.Color(0xFFD700), // 2. ذهبي (Gold)
-        new THREE.Color(0xFFA500)  // 3. كهرماني/برتقالي مشرق (Orange Gold)
+        new THREE.Color(0xFFA500)  // 3. كهرماني داكن (Orange Gold)
     ];
 
     const vertexShader = `
@@ -28,9 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     `;
 
-    // ***************************************************************
-    // كود Fragment Shader (بدون تغيير باستثناء متغيرات الألوان)
-    // ***************************************************************
     const fragmentShader = `
         uniform float time;
         uniform vec2 resolution;
@@ -82,16 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
             vec2 aspectUv = vUv - 0.5;
             aspectUv.x *= resolution.x / resolution.y;
 
-            // تحديد موقع النقطة في الفضاء ثلاثي الأبعاد
             vec3 p = vec3(aspectUv * 5.0, 0.0);
-            
-            // إضافة حركة الماوس للتحريك التفاعلي
             p.z += mouse.x * 2.0; 
             p.y += mouse.y * 2.0;
 
             float field = fluidField(p);
 
-            // تدرج الألوان بناءً على قيمة المجال (field)
+            // تدرج الألوان
             vec3 color;
             if (field < -0.3) {
                 color = mix(color1, color2, (field + 0.5) * 2.0);
@@ -103,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // تطبيق تأثير توهج بسيط
             float glow = smoothstep(0.0, 0.5, field * field * field + 0.2);
-            color = mix(color, vec3(1.0), glow * 0.2); // توهج أبيض خفيف
+            color = mix(color, vec3(1.0), glow * 0.2); 
 
             gl_FragColor = vec4(color, 1.0);
         }
@@ -130,13 +123,13 @@ document.addEventListener('DOMContentLoaded', () => {
         renderer.setPixelRatio(window.devicePixelRatio);
         container.appendChild(renderer.domElement);
 
-        // 4. الساعة (Clock) لتتبع الوقت
+        // 4. الساعة (Clock)
         clock = new THREE.Clock();
 
-        // 5. الماوس (Mouse) للحركة التفاعلية
+        // 5. الماوس (Mouse)
         mouse = new THREE.Vector2(0, 0);
 
-        // 6. المادة (Material) باستخدام الشيدر (Shader)
+        // 6. المادة (Material)
         material = new THREE.ShaderMaterial({
             uniforms: {
                 time: { value: 0.0 },
@@ -159,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', onWindowResize, false);
         container.addEventListener('mousemove', onMouseMove, false);
 
-        // بدء حلقة الرسوم المتحركة
         animate();
     }
 
@@ -168,18 +160,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const height = container.clientHeight;
 
         renderer.setSize(width, height);
-
-        // تحديث الكاميرا
         camera.left = width / -2;
         camera.right = width / 2;
         camera.top = height / 2;
         camera.bottom = height / -2;
         camera.updateProjectionMatrix();
 
-        // تحديث يونيفورم الدقة (Resolution)
         material.uniforms.resolution.value.set(width, height);
         
-        // إعادة إنشاء الـ Mesh لتغيير حجمها
         scene.remove(mesh);
         const geometry = new THREE.PlaneGeometry(width, height);
         mesh = new THREE.Mesh(geometry, material);
@@ -187,19 +175,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function onMouseMove(event) {
-        // تحويل إحداثيات الماوس إلى قيم تتراوح بين -1 و 1
         mouse.x = (event.clientX / container.clientWidth) * 2 - 1;
         mouse.y = -(event.clientY / container.clientHeight) * 2 + 1;
     }
 
     function animate() {
         requestAnimationFrame(animate);
-
-        // تحديث يونيفورم الوقت
         material.uniforms.time.value += clock.getDelta() * 0.5;
-
         renderer.render(scene, camera);
     }
 
-    init(); // بدء التهيئة عند تحميل الصفحة
+    init();
 });
