@@ -1,8 +1,8 @@
 /* auth.css */
 
-/* 1. تنسيق الـ Loader (الساعة الرملية) - يتم نقله من loader.css القديم */
+/* أكواد الـ Loader SVG الكاملة (الساعة الرملية) */
 
-/* إضافة متغير اللون والمدة (نستخدمه للون الرمال/الزجاج) */
+/* تعريف المتغيرات */
 :root {
     --hue: 35; /* لون برتقالي/ذهبي للرمال */
     --dur: 2s; /* مدة الرسوم المتحركة الأساسية */
@@ -14,20 +14,98 @@
     margin: auto;
     width: 56px; 
     height: auto;
+    overflow: visible;
 }
 
-/* ⚠️ ملاحظة: يجب نسخ كافة الأكواد الخاصة بـ .loader__* وتعريفات @keyframes 
-   التي تم تقديمها سابقاً في ملف loader.css بالكامل ولصقها هنا ليعمل الـ Loader بشكل صحيح.
-   (تم حذف الكود الطويل هنا لتجنب التكرار في الإجابة)
-*/
 .loader__glare-top,
 .loader__glare-bottom,
 .loader__model,
-/* ... باقي العناصر ... */
-.loader__sand-mound-bottom {
+.loader__bevel,
+.loader__sand-top,
+.loader__sand-bottom {
     animation-duration: var(--dur);
     animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
     animation-iteration-count: infinite;
 }
 
-/* ... هنا يتم وضع كل تعريفات الرسوم المتحركة (@keyframes) ... */
+/* حركة النموذج الزجاجي (القلب) */
+.loader__model {
+    animation-name: loaderModel;
+}
+
+@keyframes loaderModel {
+    0%, 10% { transform: translate(0, 0); }
+    10% { transform: translate(0, 0) scale(1, 1); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1); }
+    30% { transform: translate(0, 56px) scale(1.0, 0.01); }
+    40% { transform: translate(0, 56px) scale(1.0, 0.01); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1); }
+    50% { transform: translate(0, 56px) scale(1.0, 0.01); }
+    50.001% { transform: translate(0, -56px) scale(1.0, 0.01); }
+    70% { transform: translate(0, 0) scale(1, 1); }
+    90% { transform: translate(0, 0) scale(1, 1); }
+    100% { transform: translate(0, 0); }
+}
+
+/* حركة الرمال العلوية */
+.loader__sand-top {
+    animation-name: loaderSandTop;
+    transform-origin: 50% 50%;
+}
+
+@keyframes loaderSandTop {
+    0%, 10% { transform: scaleY(1); }
+    30% { transform: scaleY(0.001); }
+    50% { transform: scaleY(0.001); }
+    50.001% { transform: scaleY(0.001); }
+    70% { transform: scaleY(1); }
+    90% { transform: scaleY(1); }
+    100% { transform: scaleY(1); }
+}
+
+/* حركة الرمال السفلية (الكومة) */
+.loader__sand-bottom {
+    animation-name: loaderSandBottom;
+    transform-origin: 50% 50%;
+}
+
+@keyframes loaderSandBottom {
+    0%, 10% { transform: scaleY(1); }
+    30% { transform: scaleY(0.001); }
+    50% { transform: scaleY(0.001); }
+    50.001% { transform: scaleY(0.001); }
+    70% { transform: scaleY(1); }
+    90% { transform: scaleY(1); }
+    100% { transform: scaleY(1); }
+}
+
+/* حركة انعكاس الضوء (لمسة Glassmorphism) */
+.loader__glare-top {
+    animation-name: loaderGlareTop;
+    transform-origin: 50% 50%;
+}
+
+@keyframes loaderGlareTop {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(0, 0); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1); }
+    30% { transform: translate(0, 56px); }
+    50% { transform: translate(0, 56px); }
+    50.001% { transform: translate(0, -56px); }
+    70% { transform: translate(0, 0); }
+    90% { transform: translate(0, 0); }
+    100% { transform: translate(0, 0); }
+}
+
+.loader__glare-bottom {
+    animation-name: loaderGlareBottom;
+    transform-origin: 50% 50%;
+}
+
+@keyframes loaderGlareBottom {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(0, 0); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1); }
+    30% { transform: translate(0, 56px); }
+    50% { transform: translate(0, 56px); }
+    50.001% { transform: translate(0, -56px); }
+    70% { transform: translate(0, 0); }
+    90% { transform: translate(0, 0); }
+    100% { transform: translate(0, 0); }
+}
