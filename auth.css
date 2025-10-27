@@ -1,15 +1,14 @@
 /* auth.css */
 
 /* -------------------------------------- */
-/* 1. الخلفية الثابتة لصفحة التسجيل (الاسم الجديد: loginbackground01.png) */
+/* 1. الخلفية الثابتة لصفحة التسجيل (loginbackground01.png) */
 /* -------------------------------------- */
 .auth-background {
     /* تغيير الخلفية إلى الصورة المطلوبة */
-    background-image: url('images/loginbackground004.png'); /* ⬅️ تم التعديل هنا */
+    background-image: url('images/loginbackground004.png'); 
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
-    /* تأكد من أن الارتفاع يغطي الشاشة بالكامل */
     min-height: 100vh; 
 }
 
@@ -27,31 +26,48 @@
 }
 
 /* -------------------------------------- */
-/* 3. تنسيق ونص الانيميشن (STVX — not a label, a legacy) */
+/* 3. تنسيق وحركة النصوص المتعددة (3 أسطر) */
 /* -------------------------------------- */
-.stvx-legacy-text {
+
+.stvx-legacy-container {
     position: fixed;
     top: 50%;
-    transform: translateY(-50%);
     z-index: 5; 
-    
+    width: 100%;
+}
+
+.stvx-legacy-text {
+    /* الخصائص الأساسية التي تطبق على الأسطر الثلاثة */
     white-space: nowrap;
-    
-    /* تطبيق الخط والمظهر المطلوب */
     font-family: 'Akira-Like', sans-serif;
     font-size: 8rem; 
     font-weight: 900;
     color: rgba(255, 255, 255, 0.05); /* لون شفاف جداً ليتناسب مع الـ Glassmorphism */
     user-select: none;
+    line-height: 1; /* تقليل التباعد بين الأسطر */
     
-    /* تشغيل الأنيميشن */
-    animation: scrollRightToLeft 25s linear infinite;
+    /* تطبيق الأنيميشن والمدة الجديدة */
+    animation: scrollRightToLeft 8s linear infinite; /* ⬅️ السرعة الجديدة: 8 ثوانٍ */
+    will-change: transform; 
+    position: relative; 
+}
+
+/* تحديد الموقع العمودي لكل سطر باستخدام translateY لضبطه في منتصف الشاشة */
+/* تم تعديل الـ translateY ليتناسب مع عدم وجود حاوية مركزية */
+.line-1 {
+    transform: translateY(-160%); /* السطر الأول (أعلى) */
+}
+.line-2 {
+    transform: translateY(-50%); /* السطر الثاني (المنتصف) */
+}
+.line-3 {
+    transform: translateY(60%); /* السطر الثالث (أسفل) */
 }
 
 /* تعريف حركة الأنيميشن */
 @keyframes scrollRightToLeft {
-    0% { transform: translate(100%, -50%); } 
-    100% { transform: translate(-100%, -50%); } 
+    0% { transform: translate(100%, 0); } /* يبدأ من أقصى اليمين (خارج الشاشة) */
+    100% { transform: translate(-100%, 0); } /* يذهب إلى أقصى اليسار (خارج الشاشة) */
 }
 
 /* -------------------------------------- */
