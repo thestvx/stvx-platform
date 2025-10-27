@@ -1,0 +1,56 @@
+/* ملف: rotating-text.css */
+
+/* حاوية النص الدوار - تحدد الحجم وتخفي الحركة */
+.rotating-text-container {
+    display: inline-block;
+    height: 1.3em; /* ارتفاع مناسب لحجم الخط */
+    overflow: hidden; /* **مفتاح الحركة**: إخفاء الكلمات أثناء الانتقال */
+    vertical-align: top; 
+    margin: 0 5px;
+    position: relative;
+    font-weight: bold;
+    color: #4A90E2; /* لون بارز للنص الدوار */
+}
+
+/* حاوية الكلمات التي تدور */
+#rotatingTextDisplay {
+    display: inline-block;
+    position: relative;
+    height: 100%;
+}
+
+/* تنسيق الكلمة الواحدة داخل الحاوية */
+.rotating-text-element {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    /* تحديد دالة الحركة والانتقال */
+    transition: transform 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 0.5s ease;
+}
+
+/* حركة الدخول (تأتي من الأسفل) */
+.rotating-text-element.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    animation: slideIn 0.6s ease-out forwards; 
+}
+
+/* حركة الخروج (تذهب إلى الأعلى) */
+.rotating-text-element.animate-out {
+    opacity: 0;
+    transform: translateY(-100%);
+    animation: slideOut 0.5s ease-in forwards;
+}
+
+/* Keyframes للحركة */
+@keyframes slideIn {
+    0% { transform: translateY(100%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100%); opacity: 0; }
+}

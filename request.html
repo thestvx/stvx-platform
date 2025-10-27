@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STVX | طلب خدمة</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <h2>STVX</h2>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> <span>الرئيسية</span></a></li>
+                    <li><a href="projects.html"><i class="fas fa-project-diagram"></i> <span>معرض المشاريع</span></a></li>
+                    <li class="active"><a href="request.html"><i class="fas fa-file-contract"></i> <span>طلب خدمة</span></a></li>
+                    <li><a href="auth.html"><i class="fas fa-sign-in-alt"></i> <span>تسجيل الدخول</span></a></li>
+                </ul>
+            </nav>
+            <div class="profile">
+                <div class="avatar">
+                    <img src="your-profile-image.jpg" alt="Profile">
+                </div>
+                <div class="user-info">
+                    <h3>أهلاً بك!</h3>
+                    <p>زائر</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <header class="hidden-section">
+                <h1>اطلب مشروعك الآن</h1>
+                <p>شاركنا تفاصيل مشروعك وسنتواصل معك بأسرع وقت لبدء العمل.</p>
+            </header>
+
+            <section id="request" class="request-form-section hidden-section">
+                <h2 class="hidden-section">نموذج طلب الخدمة</h2>
+                <form class="request-form">
+                    <div class="form-group">
+                        <label for="name">الاسم كاملاً</label>
+                        <input type="text" id="name" name="name" placeholder="أدخل اسمك الكريم" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" name="email" placeholder="أدخل بريدك الإلكتروني للتواصل" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service-type">نوع الخدمة المطلوبة</label>
+                        <select id="service-type" name="service-type" required>
+                            <option value="" disabled selected>-- اختر نوع المشروع --</option>
+                            <option value="website">تطوير موقع ويب كامل</option>
+                            <option value="ecommerce">متجر إلكتروني (تجارة)</option>
+                            <option value="app">تطبيق ويب أو لوحة تحكم</option>
+                            <option value="design">تصميم واجهات مستخدم فقط</option>
+                            <option value="consulting">استشارة تقنية</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="details">تفاصيل المشروع/الخدمة</label>
+                        <textarea id="details" name="details" rows="6" placeholder="اذكر أهم المميزات، الميزانية المتوقعة، وأي ملاحظات أخرى." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">إرسال الطلب</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

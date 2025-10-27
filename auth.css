@@ -1,0 +1,655 @@
+/*
+ * Forest Login Design
+ * Created by: TheDoc - Updated to RTL by خبير/ة البرمجة
+ * Green Theme
+ * Crafted with precision and style
+ */
+
+/* -------------------- 0. الخطوط المخصصة -------------------- */
+@font-face {
+    font-family: 'Expo-Bold';
+    src: url('fonts/Expo-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Expo-Regular';
+    src: url('fonts/Expo-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* -------------------- متغيرات الألوان الخضراء الأصلية -------------------- */
+    --primary-color: #4CAF50; /* أخضر سادة */
+    --primary-gradient: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%); /* أخضر أساسي */
+    --secondary-gradient: linear-gradient(135deg, #8BC34A 0%, #689F38 100%); /* أخضر ثانوي */
+    --success-gradient: linear-gradient(135deg, #8BC34A 0%, #4CAF50 100%); /* أخضر للنجاح */
+    
+    --glass-bg: rgba(255, 255, 255, 0.25); /* خلفية زجاجية شفافة */
+    --glass-border: rgba(255, 255, 255, 0.4); /* حدود زجاجية */
+    
+    --text-primary: #ffffff; /* نص أبيض */
+    --text-secondary: rgba(255, 255, 255, 0.8); /* نص أبيض شبه شفاف */
+    
+    --input-bg: rgba(255, 255, 255, 0.1); /* خلفية حقل الإدخال */
+    --input-border: rgba(255, 255, 255, 0.5); /* حدود حقل الإدخال */
+    
+    --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); /* ظل غامق */
+    
+    --creator: "TheDoc";
+    --signature: "TheDoc";
+    --watermark: "VGhlRG9j";
+    --architect: "TheDoc-2025-07-06";
+}
+
+body {
+    font-family: 'Expo-Regular', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    direction: rtl; 
+}
+
+/* Forest Background */
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    
+    /* تم التعديل على مسار صورة الخلفية حسب طلبك */
+    background-image: url('images/AUTH-BACKGROUND.jpg'); 
+    
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    animation: forestMovement 15s ease infinite; 
+}
+
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(20, 50, 20, 0.35) 25%,
+        rgba(30, 60, 30, 0.25) 50%,
+        rgba(20, 50, 20, 0.35) 75%,
+        rgba(0, 0, 0, 0.5) 100%
+    );
+    backdrop-filter: blur(3px);
+}
+
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Keyframes تبقى كما هي */
+@keyframes forestMovement { 
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Glaseffekt Card */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow);
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary-gradient);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Toggle Buttons */
+.toggle-container {
+    display: flex;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 5px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.toggle-btn {
+    font-family: 'Expo-Bold', sans-serif; 
+    flex: 1;
+    padding: 15px 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.toggle-btn.active {
+    color: var(--text-primary);
+    background: var(--primary-gradient);
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.5); /* ظل أخضر */
+}
+
+.toggle-btn:hover:not(.active) {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Form Container */
+.form-container {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.form-container.active {
+    display: block;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-header h2 {
+    font-family: 'Expo-Bold', sans-serif; 
+    color: var(--text-primary);
+    font-size: 2rem;
+    font-weight: bold; 
+    margin-bottom: 10px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.form-header p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Input Styles */
+.input-row {
+    display: flex;
+    gap: 15px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+#registerForm .input-group {
+    margin-bottom: 16px;
+}
+
+.input-container {
+    position: relative;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 18px 45px 18px 50px; 
+    background: var(--input-bg);
+    border: 2px solid transparent;
+    border-radius: 15px;
+    color: var(--text-primary);
+    font-family: 'Expo-Regular', sans-serif; 
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    text-align: right; 
+}
+
+#registerForm .input-container input {
+    padding: 15px 45px 15px 50px;
+}
+
+.input-container input::placeholder {
+    color: var(--text-secondary);
+}
+
+.input-container input:focus {
+    outline: none;
+    border-color: var(--input-border);
+    background: rgba(255, 255, 255, 0.15); 
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3); /* ظل أخضر */
+}
+
+.input-icon {
+    position: absolute;
+    right: 15px; 
+    left: auto; 
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.input-container input:focus + .input-icon,
+.input-container input:focus ~ .input-icon {
+    color: #4CAF50; /* أيقونة خضراء عند التركيز */
+}
+
+.input-border {
+    position: absolute;
+    bottom: 0;
+    right: 0; 
+    left: auto;
+    width: 0;
+    height: 2px;
+    background: var(--primary-gradient);
+    transition: width 0.3s ease;
+}
+
+.input-container input:focus ~ .input-border {
+    width: 100%;
+}
+
+.password-toggle {
+    position: absolute;
+    left: 15px; 
+    right: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: var(--text-primary);
+}
+
+/* Form Options */
+.form-options {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#registerForm .form-options {
+    margin-bottom: 20px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.checkbox-container input {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    background: var(--input-bg);
+    border: 2px solid var(--input-border);
+    border-radius: 6px;
+    margin-right: 0;
+    margin-left: 12px; 
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.checkbox-container:hover .checkmark {
+    border-color: #4CAF50; 
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.4); 
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 50%, #388E3C 100%); 
+    border-color: transparent;
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.5); 
+}
+
+.checkbox-container a {
+    color: #4CAF50; 
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.checkbox-container a:hover {
+    color: #8BC34A; 
+}
+
+.forgot-password {
+    color: #4CAF50; 
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #8BC34A; 
+    text-decoration: underline;
+}
+
+/* Submit Button */
+.submit-btn {
+    font-family: 'Expo-Bold', sans-serif; 
+    width: 100%;
+    padding: 18px;
+    background: var(--primary-gradient);
+    border: none;
+    border-radius: 15px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: bold; 
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+#registerForm .submit-btn {
+    margin-bottom: 20px;
+    padding: 16px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(76, 175, 80, 0.5); 
+}
+
+.register-btn {
+    background: var(--secondary-gradient);
+}
+
+.register-btn:hover {
+    box-shadow: 0 10px 30px rgba(139, 195, 74, 0.5); 
+}
+
+/* Social Login */
+.social-login {
+    text-align: center;
+}
+
+.social-login p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.social-login p::before,
+.social-login p::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background: var(--input-border);
+}
+
+.social-login p::before {
+    right: 0;
+    left: auto;
+}
+
+.social-login p::after {
+    left: 0;
+    right: auto;
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    background: var(--input-bg);
+    backdrop-filter: blur(10px);
+    color: var(--text-primary);
+}
+
+/* Success Message */
+.success-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.success-content i {
+    font-size: 4rem;
+    color: #8BC34A; 
+    margin-bottom: 20px;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .glass-card {
+        padding: 30px 20px;
+        max-width: 100%;
+    }
+    
+    .form-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .input-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .social-buttons {
+        gap: 10px;
+    }
+}
+
+
+/* -------------------- 7. تصميم زر العودة الجديد (Dots Grid Button) -------------------- */
+
+.Btn-Container.back-to-home-new {
+    /* الموقع في الزاوية اليسرى العليا */
+    position: absolute;
+    top: 30px;
+    left: 30px; 
+    z-index: 100;
+
+    /* التنسيقات الأساسية المطبقة والمكيفة */
+    display: flex;
+    width: 170px;
+    height: fit-content;
+    /* تم تغيير الخلفية لتناسب الثيم الأخضر/الزجاجي */
+    background-color: var(--glass-bg); 
+    border-radius: 40px;
+    /* تم تكييف الظل */
+    box-shadow: var(--shadow); 
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    text-decoration: none; /* مهم للروابط */
+    transition: all 0.3s ease;
+}
+
+.Btn-Container.back-to-home-new:hover {
+    /* تأثير طفيف عند التمرير */
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(76, 175, 80, 0.5); 
+}
+
+.icon-Container {
+    width: 45px;
+    height: 45px;
+    /* تم تغيير الخلفية إلى لون الثيم الأساسي */
+    background-color: var(--primary-color); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    /* تم تغيير لون الحدود ليتناسب مع الخلفية الزجاجية */
+    border: 3px solid var(--text-primary); 
+}
+
+.text {
+    width: calc(170px - 45px);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary); /* نص أبيض */
+    font-size: 1.1em;
+    letter-spacing: 1.2px;
+}
+
+.icon-Container svg {
+    transition-duration: 1.5s;
+}
+
+/* حركة الأيقونة النقطية عند التمرير */
+.Btn-Container:hover .icon-Container svg {
+    transition-duration: 1.5s;
+    animation: arrow 1s linear infinite;
+}
+/* تم تعديل الحركة لتكون مناسبة للزر كنقطة دخول/عودة، بدلاً من حركة سهم (arrow) */
+@keyframes arrow {
+    0% {
+        transform: rotate(0deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: rotate(360deg);
+        opacity: 1;
+    }
+}
+
+/* تعديل متجاوب لزر العودة */
+@media (max-width: 768px) {
+    .Btn-Container.back-to-home-new {
+        top: 15px;
+        left: 15px; 
+        width: 140px;
+    }
+    .icon-Container {
+        width: 40px;
+        height: 40px;
+    }
+    .text {
+        width: calc(140px - 40px);
+        font-size: 1em;
+    }
+}

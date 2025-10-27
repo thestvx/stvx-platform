@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STVX Portfolio | تصميم الواجهات والثيم الزجاجي</title>
+    
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ffc72c', // لون التمييز الذهبي
+                        secondary: '#333333' // لون ثانوي للتفاصيل 
+                    },
+                    borderRadius: {
+                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        logo: ['Pacifico', 'cursive'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-down': 'slideDown 0.5s ease-out forwards',
+                        'slide-up': 'slideUp 0.7s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: #ffc72c; 
+            box-shadow: 0 0 10px rgba(255, 199, 44, 0.3), 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px); 
+        }
+        
+        .dark-bg {
+            background: linear-gradient(135deg, #0a0a0a, #111111);
+            min-height: 100vh;
+        }
+
+        .glass-button-hover:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+        
+        .animate-on-load {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="dark-bg text-white font-sans">
+    
+    <nav class="glass-card px-6 py-4 fixed top-0 left-0 right-0 z-50 rounded-none md:rounded-lg md:mx-4 md:mt-4 animate-on-load" 
+         style="animation: slideDown 0.7s ease-out 0.1s forwards;">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-8 rtl:space-x-reverse">
+                <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <span class="text-xl font-logo text-primary">STVX</span>
+                </div>
+                <div class="relative hidden lg:block">
+                    <input type="text" placeholder="البحث عن مشاريع، خدمات، أو مقالات..." 
+                           class="pl-12 pr-4 py-3 w-96 glass-card border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 bg-black/20" 
+                           style="background-color: rgba(0,0,0,0.1);">
+                    <i class="ri-search-line text-gray-400 text-xl absolute top-1/2 -translate-y-1/2 right-4"></i>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                 <button class="w-10 h-10 flex items-center justify-center rounded-full glass-button-hover !rounded-button whitespace-nowrap">
+                    <i class="ri-notification-line text-gray-300 text-xl"></i>
+                </button>
+                <a href="auth.html" class="bg-primary hover:bg-primary/90 text-black px-4 py-2 rounded-full font-bold text-sm transition-colors whitespace-nowrap">
+                    تسجيل الدخول
+                </a>
+                <div class="flex items-center space-x-3 rtl:space-x-reverse hidden md:flex">
+                    <img src="https://readdy.ai/api/search-image?query=Professional%20UI%2FUX%20designer%20avatar%20portrait%2C%20modern%20style%2C%20dark%20background%2C%20high%20quality%20headshot&width=40&height=40&seq=user1&orientation=squarish" 
+                         alt="Profil" class="w-10 h-10 rounded-full object-cover border-2 border-primary">
+                    <span class="text-sm font-medium">خالد العبيد</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex pt-28 md:pt-20">
+        <aside class="w-64 glass-card fixed right-0 top-24 bottom-24 overflow-y-auto sidebar-scroll hidden lg:block animate-on-load"
+               style="animation: slideUp 0.7s ease-out 0.3s forwards;">
+             <div class="p-6 space-y-6">
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg bg-primary/20 text-primary transition-all glass-button-hover">
+                        <div class="w-5 h-5 flex items-center justify-center"><i class="ri-home-5-line"></i></div>
+                        <span class="font-medium">الرئيسية</span>
+                    </div>
+                    <div class="flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer glass-button-hover">
+                        <div class="w-5 h-5 flex items-center justify-center"><i class="ri-folder-open-line text-gray-300"></i></div>
+                        <span class="text-gray-300">معرض الأعمال (Portfolio)</span>
+                    </div>
+                    <div class="flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer glass-button-hover">
+                        <div class="w-5 h-5 flex items-center justify-center"><i class="ri-brush-line text-gray-300"></i></div>
+                        <span class="text-gray-300">الخدمات الإبداعية</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">الموارد</h3>
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer glass-button-hover">
+                            <div class="w-5 h-5 flex items-center justify-center"><i class="ri-heart-line text-gray-300"></i></div>
+                            <span class="text-gray-300">المشاريع المفضلة</span>
+                        </div>
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer glass-button-hover">
+                            <div class="w-5 h-5 flex items-center justify-center"><i class="ri-book-open-line text-gray-300"></i></div>
+                            <span class="text-gray-300">مقالات ومدونات</span>
+                        </div>
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer glass-button-hover">
+                            <div class="w-5 h-5 flex items-center justify-center"><i class="ri-chat-3-line text-gray-300"></i></div>
+                            <span class="text-gray-300">تواصل معنا</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 lg:mr-64 pb-24 px-4 md:px-8 py-6">
+            
+            <section class="mb-8 rounded-2xl overflow-hidden relative glass-card p-10 h-auto animate-on-load" 
+                     style="background-image: url('https://readdy.ai/api/search-image?query=Dark%20abstract%20gradient%20background%20with%20subtle%20gold%20waves%2C%20futuristic%20design%2C%20suitable%20for%20text%20overlay%2C%20professional%20look&width=1200&height=320&seq=hero1&orientation=landscape'); animation: fadeIn 1s ease-out 0.5s forwards;">
+                <div class="relative h-full flex flex-col justify-center">
+                    <div class="text-white max-w-lg">
+                        <h1 class="text-4xl md:text-5xl font-extrabold mb-4">نحو الكمال الرقمي 🚀</h1>
+                        <p class="text-lg mb-6 text-gray-200">أقدم حلول تصميم واجهات المستخدم (UI/UX) وتطوير المواقع، بلمسة إبداعية فريدة وموثوقية عالية.</p>
+                        <button class="bg-primary hover:bg-primary/90 text-black px-8 py-3 rounded-full font-bold transition-colors !rounded-button whitespace-nowrap hover:scale-105">
+                            اطلب خدمتك الآن
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-8">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all animate-on-load" style="animation: slideUp 0.6s ease-out 0.7s forwards;">
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                            <img src="https://readdy.ai/api/search-image?query=UI%2FUX%20icon%20with%20screen%20and%20mouse%2C%20gold%20gradient%20background%2C%20modern%20minimalist%20design&width=48&height=48&seq=liked1&orientation=squarish" 
+                                 alt="UI/UX" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
+                            <span class="font-medium text-white">UI/UX Design</span>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all animate-on-load" style="animation: slideUp 0.6s ease-out 0.8s forwards;">
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                            <img src="https://readdy.ai/api/search-image?query=Website%20development%20icon%20with%20code%20symbol%2C%20blue%20gradient%20background%2C%20modern%20digital%20design&width=48&height=48&seq=recent1&orientation=squarish" 
+                                 alt="تطوير" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
+                            <span class="font-medium text-white">تطوير فرونت إند</span>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all animate-on-load" style="animation: slideUp 0.6s ease-out 0.9s forwards;">
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                            <img src="https://readdy.ai/api/search-image?query=Branding%20icon%20with%20abstract%20shape%2C%20green%20gradient%20background%2C%20corporate%20identity%20theme&width=48&height=48&seq=download1&orientation=squarish" 
+                                 alt="هوية" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
+                            <span class="font-medium text-white">هوية بصرية</span>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all animate-on-load" style="animation: slideUp 0.6s ease-out 1.0s forwards;">
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                            <img src="https://readdy.ai/api/search-image?query=3D%20modeling%20icon%20with%20geometric%20shape%2C%20purple%20gradient%20background%2C%20digital%20art%20theme&width=48&height=48&seq=discover1&orientation=squarish" 
+                                 alt="3D" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
+                            <span class="font-medium text-white">تصميم 3D</span>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all animate-on-load" style="animation: slideUp 0.6s ease-out 1.1s forwards;">
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                            <img src="https://readdy.ai/api/search-image?query=Motion%20graphics%20icon%20with%20moving%20lines%2C%20orange%20gradient%20background%2C%20video%20animation%20theme&width=48&height=48&seq=radio1&orientation=squarish" 
+                                 alt="موشن" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
+                            <span class="font-medium text-white">موشن جرافيكس</span>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all animate-on-load" style="animation: slideUp 0.6s ease-out 1.2s forwards;">
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                            <img src="https://readdy.ai/api/search-image?query=Consulting%20icon%20with%20lightbulb%20and%20gear%2C%20teal%20gradient%20background%2C%20strategy%20theme&width=48&height=48&seq=podcast1&orientation=squarish" 
+                                 alt="استشارة" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
+                            <span class="font-medium text-white">استشارات فنية</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-8 animate-on-load" style="animation: fadeIn 0.8s ease-out 1.4s forwards;">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-white">أعمال مختارة (Portfolio)</h2>
+                    <button class="text-primary hover:text-white font-medium !rounded-button whitespace-nowrap transition-transform hover:translate-x-1">
+                        شاهد الكل <i class="ri-arrow-left-line align-middle"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    <div class="glass-card rounded-xl p-4 hover:shadow-2xl transition-shadow cursor-pointer">
+                        <img src="https://readdy.ai/api/search-image?query=Modern%20UI%20dashboard%20design%20with%20dark%20theme%2C%20minimalist%20style%2C%20gold%20accents%2C%20professional%20portfolio%20presentation&width=200&height=200&seq=album1&orientation=squarish" 
+                             alt="لوحة تحكم" class="w-full aspect-square rounded-lg object-cover mb-4 border border-primary/30 transition-transform hover:scale-[1.02]">
+                        <h3 class="font-semibold text-white mb-1 truncate">لوحة تحكم مالية</h3>
+                        <p class="text-sm text-gray-400 truncate">تصميم واجهة مستخدم (UI)</p>
+                    </div>
+                    <div class="glass-card rounded-xl p-4 hover:shadow-2xl transition-shadow cursor-pointer">
+                        <img src="https://readdy.ai/api/search-image?query=E-commerce%20website%20UI%2FUX%20design%20for%20luxury%20brand%2C%20dark%20mode%2C%20sleek%20modern%20aesthetic%2C%20high%20quality%20mockup&width=200&height=200&seq=album2&orientation=squarish" 
+                             alt="متجر" class="w-full aspect-square rounded-lg object-cover mb-4 border border-primary/30 transition-transform hover:scale-[1.02]">
+                        <h3 class="font-semibold text-white mb-1 truncate">متجر إلكتروني فاخر</h3>
+                        <p class="text-sm text-gray-400 truncate">تطوير الواجهة الأمامية</p>
+                    </div>
+                    <div class="glass-card rounded-xl p-4 hover:shadow-2xl transition-shadow cursor-pointer">
+                        <img src="https://readdy.ai/api/search-image?query=Mobile%20app%20design%20for%20a%20fitness%20tracker%2C%20dark%20theme%2C%20glassmorphism%20elements%2C%20vibrant%20accents%2C%20professional%20mockup&width=200&height=200&seq=album3&orientation=squarish" 
+                             alt="تطبيق جوال" class="w-full aspect-square rounded-lg object-cover mb-4 border border-primary/30 transition-transform hover:scale-[1.02]">
+                        <h3 class="font-semibold text-white mb-1 truncate">تطبيق تتبع اللياقة</h3>
+                        <p class="text-sm text-gray-400 truncate">تجربة المستخدم (UX)</p>
+                    </div>
+                    <div class="glass-card rounded-xl p-4 hover:shadow-2xl transition-shadow cursor-pointer">
+                        <img src="https://readdy.ai/api/search-image?query=Corporate%20website%20design%20with%20minimalist%20dark%20theme%2C%20elegant%20typography%2C%20clean%20layout%2C%20professional%20mockup&width=200&height=200&seq=album4&orientation=squarish" 
+                             alt="موقع شركة" class="w-full aspect-square rounded-lg object-cover mb-4 border border-primary/30 transition-transform hover:scale-[1.02]">
+                        <h3 class="font-semibold text-white mb-1 truncate">موقع تعريفي لشركة</h3>
+                        <p class="text-sm text-gray-400 truncate">تصميم متكامل</p>
+                    </div>
+                    <div class="glass-card rounded-xl p-4 hover:shadow-2xl transition-shadow cursor-pointer">
+                        <img src="https://readdy.ai/api/search-image?query=Artistic%20portfolio%20website%20hero%20section%20with%20gold%20and%20black%20theme%2C%20abstract%20design%2C%20creative%20mockup&width=200&height=200&seq=album5&orientation=squarish" 
+                             alt="بورتفوليو" class="w-full aspect-square rounded-lg object-cover mb-4 border border-primary/30 transition-transform hover:scale-[1.02]">
+                        <h3 class="font-semibold text-white mb-1 truncate">بورتفوليو فنان</h3>
+                        <p class="text-sm text-gray-400 truncate">تطوير شخصي</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-8 animate-on-load" style="animation: fadeIn 0.8s ease-out 1.6s forwards;">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-white">خدماتنا المميزة</h2>
+                    <button class="text-primary hover:text-white font-medium !rounded-button whitespace-nowrap transition-transform hover:translate-x-1">
+                        شاهد قائمة الخدمات <i class="ri-arrow-left-line align-middle"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="glass-card rounded-xl p-4 hover:shadow-2xl transition-shadow cursor-pointer">
+                         <h3 class="font-semibold text-white mb-1">تصميم UX/UI</h3>
+                         <p class="text-sm text-gray-400">واجهات سهلة الاستخدام.</p>
+                    </div>
+                    <div class="glass-card rounded-xl p-4 hover:shadow-2xl transition-shadow cursor-pointer">
+                         <h3 class="font-semibold text-white mb-1">تطوير الواجهة الأمامية</h3>
+                         <p class="text-sm text-gray-400">كود نظيف وفعّال.</p>
+                    </div>
+                    <div class="glass-card rounded-xl p-4 hover:shadow-2xl transition-shadow cursor-pointer">
+                         <h3 class="font-semibold text-white mb-1">تصميم العلامات التجارية</h3>
+                         <p class="text-sm text-gray-400">هوية بصرية متكاملة.</p>
+                    </div>
+                    <div class="glass-card rounded-xl p-4 hover:shadow-2xl transition-shadow cursor-pointer">
+                         <h3 class="font-semibold text-white mb-1">رسوم متحركة (Motion)</h3>
+                         <p class="text-sm text-gray-400">تأثيرات حركية احترافية.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="animate-on-load" style="animation: fadeIn 0.8s ease-out 1.8s forwards;">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-white">ماذا يقول العملاء؟</h2>
+                    <button class="text-primary hover:text-white font-medium !rounded-button whitespace-nowrap transition-transform hover:translate-x-1">
+                        المزيد من الآراء <i class="ri-arrow-left-line align-middle"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-xl hover:ring-2 ring-primary transition-all">
+                        <p class="text-gray-300 mb-4">"احترافية عالية وتواصل ممتاز. النتيجة النهائية فاقت التوقعات!"</p>
+                        <p class="font-semibold text-white">- محمد الأحمد</p>
+                        <p class="text-sm text-gray-400">رائد أعمال</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl hover:ring-2 ring-primary transition-all">
+                        <p class="text-gray-300 mb-4">"التصميم الزجاجي المذهل جعل واجهتنا تبدو عصرية وحديثة جداً."</p>
+                        <p class="font-semibold text-white">- فاطمة الزهراني</p>
+                        <p class="text-sm text-gray-400">مديرة تسويق</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl hover:ring-2 ring-primary transition-all">
+                        <p class="text-gray-300 mb-4">"مشاريع سابقة مبهرة وتفانٍ في العمل. أوصي بشدة بخدماتهم."</p>
+                        <p class="font-semibold text-white">- خالد الحارثي</p>
+                        <p class="text-sm text-gray-400">مطوّر برامج</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="fixed bottom-0 left-0 right-0 glass-card z-50 rounded-none md:rounded-t-lg animate-on-load" 
+            style="animation: slideUp 0.7s ease-out 0.2s forwards;">
+        <div class="px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                <div class="w-12 h-12 bg-primary rounded flex items-center justify-center">
+                    <i class="ri-briefcase-4-line text-black text-2xl"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">هل أنت جاهز للمشروع القادم؟</h4>
+                    <p class="text-sm text-gray-400">لنصنع شيئًا مذهلاً معًا.</p>
+                </div>
+            </div>
+            <button class="bg-primary hover:bg-primary/90 text-black px-6 py-2 rounded-full font-bold transition-transform hover:scale-105">
+                تواصل الآن
+            </button>
+        </div>
+    </footer>
+    
+    </body>
+</html>
