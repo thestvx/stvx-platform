@@ -356,7 +356,7 @@ class Media {
         this.width = this.plane.scale.x + this.padding;
         
         // العرض الإجمالي لمجموعة البطاقات الأصلية (بدون التكرار)
-        this.widthTotal = this.width * (this.length / 2);
+        this.widthTotal = this.width * (this.length / 2); 
         
         // موضع البطاقة في المعرض اللانهائي
         this.x = this.width * this.index; 
@@ -446,10 +446,11 @@ class CircularGalleryApp {
     }
 
     createMedias(items, bend = 1, textColor, borderRadius, font) {
+        // 🚨 تعديل المسارات الافتراضية هنا لتجنب أخطاء 404 إذا لم يتم تمرير عناصر
         const defaultItems = [
-            { image: 'images/default-1.jpg', text: 'المشروع الافتراضي الأول' },
-            { image: 'images/default-2.jpg', text: 'المشروع الافتراضي الثاني' },
-            { image: 'images/default-3.jpg', text: 'المشروع الافتراضي الثالث' },
+            { image: 'images/default-project-1.png', text: 'المشروع الافتراضي الأول' },
+            { image: 'images/default-project-2.png', text: 'المشروع الافتراضي الثاني' },
+            { image: 'images/default-project-3.png', text: 'المشروع الافتراضي الثالث' },
         ];
         const galleryItems = items && items.length ? items : defaultItems;
         
