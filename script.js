@@ -3,31 +3,32 @@
 // ----------------------------------------------------
 // 1. تهيئة الشريط الجانبي (Sidebar Toggle)
 // ----------------------------------------------------
-// (وظيفة initSidebarToggle لم تتغير - تم حذفها هنا للاختصار، لكنها موجودة في النهاية)
 function initSidebarToggle() {
     const sidebar = document.getElementById('sidebar');
     const toggleButton = document.getElementById('sidebar-toggle');
-    const mainContent = document.getElementById('mainContent');
+    const mainContent = document.getElementById('mainContent'); // ملاحظة: لم يتم استخدام mainContent في الوظيفة، لكن الاحتفاظ به جيد
     const backdrop = document.getElementById('sidebar-backdrop');
     
     if (!sidebar || !toggleButton || !mainContent || !backdrop) {
+        // الخروج إذا كانت العناصر المطلوبة غير موجودة في الصفحة
         return; 
     }
 
     const openSidebar = () => {
         sidebar.classList.remove('-translate-x-full');
         backdrop.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; 
+        document.body.style.overflow = 'hidden'; // لمنع التمرير عندما تكون القائمة الجانبية مفتوحة
     };
 
     const closeSidebar = () => {
         sidebar.classList.add('-translate-x-full');
         backdrop.classList.add('hidden');
-        document.body.style.overflow = '';
+        document.body.style.overflow = ''; // استعادة التمرير
     };
 
     toggleButton.addEventListener('click', openSidebar);
     backdrop.addEventListener('click', closeSidebar);
+    // إغلاق الشريط الجانبي عند النقر على أي رابط داخله
     sidebar.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', closeSidebar);
     });
@@ -36,7 +37,6 @@ function initSidebarToggle() {
 // ----------------------------------------------------
 // 2. تهيئة تبديل علامات التبويب في صفحة المصادقة (Auth Tabs)
 // ----------------------------------------------------
-// (وظيفة initAuthTabs لم تتغير - تم حذفها هنا للاختصار، لكنها موجودة في النهاية)
 function initAuthTabs() {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanels = document.querySelectorAll('.tab-panel');
@@ -47,8 +47,11 @@ function initAuthTabs() {
 
     const switchTab = (targetId) => {
         tabButtons.forEach(btn => {
+            // إزالة حالة التفعيل من جميع الأزرار
             btn.classList.remove('active', 'text-primary', 'font-bold');
             btn.classList.add('text-gray-400', 'font-medium');
+            
+            // تفعيل الزر المستهدف
             if (btn.getAttribute('data-target') === targetId) {
                 btn.classList.add('active', 'text-primary', 'font-bold');
                 btn.classList.remove('text-gray-400', 'font-medium');
@@ -56,7 +59,10 @@ function initAuthTabs() {
         });
 
         tabPanels.forEach(panel => {
+            // إخفاء جميع اللوحات
             panel.classList.add('hidden');
+            
+            // إظهار اللوحة المستهدفة مع تأثير حركي
             if (panel.id === targetId) {
                 panel.classList.remove('hidden');
                 panel.classList.add('animate-slide-down'); 
@@ -72,6 +78,7 @@ function initAuthTabs() {
         });
     });
 
+    // تفعيل أول تبويب عند التحميل
     if (tabButtons.length > 0) {
         switchTab(tabButtons[0].getAttribute('data-target'));
     }
@@ -85,6 +92,7 @@ function initAuthTabs() {
 /**
  * تهيئة تأثير عرض الصورة بشكل عائم وبأبعادها الأصلية في منتصف الشاشة عند التحويم.
  * يجب إضافة الكلاس 'lightbox-trigger' إلى عنصر الصورة (img) داخل البطاقة.
+ * ملاحظة: تعتمد هذه الوظيفة بشكل كبير على تعريف كلاسات مثل 'floating-image-wrapper' و 'cloned-image.is-centered' في ملفات CSS/Tailwind.
  */
 function initImageLightboxOnHover() {
     const triggers = document.querySelectorAll('.lightbox-trigger'); 
@@ -125,6 +133,8 @@ function initImageLightboxOnHover() {
             height: `${rect.height}px`,
             opacity: '0', // تبدأ شفافة
             transform: 'scale(1)',
+            // إضافة خاصية الانتقال (transition) هنا قد تكون أكثر مرونة من CSS
+            transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)' // مثال لتسريع وتسهيل التحكم بالحركة
         });
 
         // إفراغ الحاوية وإضافة النسخة
@@ -160,12 +170,14 @@ function initImageLightboxOnHover() {
         clonedImage.classList.remove('is-centered'); 
         
         // 2. إزالة الصورة العائمة وإظهار الأصلية بعد انتهاء الانتقال
+        // يجب أن تتطابق المدة مع مدة الانتقال (transition) المطبقة
+        const transitionDuration = 600; // 600ms = 0.6s (كما في Transition أعلاه)
         setTimeout(() => {
             if (floatingImageContainer.contains(clonedImage)) {
                 floatingImageContainer.removeChild(clonedImage);
             }
             originalImage.style.opacity = '1'; 
-        }, 600); // 600ms تتوافق مع مدة الانتقال في CSS
+        }, transitionDuration); 
     };
     
     // إنشاء الحاوية مرة واحدة
@@ -179,8 +191,7 @@ function initImageLightboxOnHover() {
         });
 
         trigger.addEventListener('mouseleave', () => {
-            // يجب التأكد من أن الماوس لم يدخل إلى الصورة العائمة مباشرة
-            // ولكن في هذا السيناريو، يجب أن نعتمد فقط على ترك الصورة الأصلية
+            // إخفاء الصورة العائمة والعودة إلى الأصلية
             hideImage(clonedImg, trigger);
         });
     });
