@@ -11,6 +11,8 @@
     
     <link rel="stylesheet" href="style.css"> 
     
+    <script src="https://unpkg.com/ogl@latest/dist/ogl.min.js"></script>
+
     <script>
         // إعدادات Tailwind (مهمة لتعريف الألوان والأنيميشن)
         tailwind.config = {
@@ -69,21 +71,7 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        /* تأثير Glassmorphism للمشاريع */
-        .project-card {
-            background-color: rgba(255, 255, 255, 0.05); /* خلفية شبه شفافة */
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease-in-out;
-        }
-        .project-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 12px 40px 0 rgba(255, 199, 44, 0.2);
-            border-color: rgba(255, 199, 44, 0.5);
-        }
+        /* لا نحتاج لـ .project-card لأننا سنستخدم معرض OGL */
     </style>
 </head>
 <body class="text-white font-sans flex flex-col min-h-screen 
@@ -122,49 +110,20 @@
                     ✨ معرض تصاميم الجرافيكس
                 </h1>
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    استكشف أحدث مشاريع الهويات البصرية، الموشن جرافيكس، والإعلانات الرقمية التي صنعناها بشغف.
+                    استكشف أحدث مشاريع الهويات البصرية، الموشن جرافيكس، والإعلانات الرقمية بتأثير **الانحناء ثلاثي الأبعاد** المذهل.
                 </p>
                 <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full animate-pulse"></div>
             </header>
 
-            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <div class="project-card overflow-hidden animate-card-pop" style="animation-delay: 0.6s;">
-                    <img src="graphics/project-graphic-01.jpg" alt="هوية بصرية لشركة تقنية" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110 cursor-pointer">
-                    <div class="p-5">
-                        <h3 class="text-2xl font-bold mb-2 text-primary">هوية شركة سكايلينك</h3>
-                        <p class="text-gray-400 text-sm">تصميم شعار متكامل، دليل استخدام العلامة التجارية، ومجموعة من المطبوعات الرقمية.</p>
-                        <a href="#" class="mt-4 inline-flex items-center text-primary hover:text-yellow-300 transition-colors font-semibold">
-                            شاهد التفاصيل <i class="ri-arrow-left-line mr-1"></i>
-                        </a>
+            <section class="w-full h-[60vh] min-h-[500px] mt-16 relative bg-black/20 rounded-2xl overflow-hidden shadow-2xl glass-hover-effect">
+                <div id="graphics-gallery-container" class="w-full h-full relative">
+                    <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-lg z-10 pointer-events-none">
+                        جاري تحميل المعرض ثلاثي الأبعاد... (استخدم الفأرة/اللمس للتمرير)
                     </div>
                 </div>
-
-                <div class="project-card overflow-hidden animate-card-pop" style="animation-delay: 0.8s;">
-                    <img src="graphics/project-graphic-02.jpg" alt="موشن جرافيكس إعلاني" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110 cursor-pointer">
-                    <div class="p-5">
-                        <h3 class="text-2xl font-bold mb-2 text-primary">إعلان موشن لخدمة جديدة</h3>
-                        <p class="text-gray-400 text-sm">فيديو موشن جرافيكس إبداعي مدته 45 ثانية لشرح خدمة اشتراكات شهرية، استخدمنا فيه ألوان مبهجة.</p>
-                        <a href="#" class="mt-4 inline-flex items-center text-primary hover:text-yellow-300 transition-colors font-semibold">
-                            شاهد الفيديو <i class="ri-arrow-left-line mr-1"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card overflow-hidden animate-card-pop" style="animation-delay: 1.0s;">
-                    <img src="graphics/project-graphic-03.jpg" alt="تصاميم سوشيال ميديا" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110 cursor-pointer">
-                    <div class="p-5">
-                        <h3 class="text-2xl font-bold mb-2 text-primary">حملة تسويقية رقمية</h3>
-                        <p class="text-gray-400 text-sm">تصميم 20 بوست ومنشور لمنصات التواصل الاجتماعي (تويتر، انستغرام) بتصاميم متناسقة وجذابة.</p>
-                        <a href="#" class="mt-4 inline-flex items-center text-primary hover:text-yellow-300 transition-colors font-semibold">
-                            استعراض البوستات <i class="ri-arrow-left-line mr-1"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                </section>
+            </section>
             
-            <div class="text-center mt-12 animate-fade-in" style="animation-delay: 1.2s;">
+            <div class="text-center mt-24 animate-fade-in" style="animation-delay: 1.2s;">
                 <p class="text-gray-400 text-lg border-t border-gray-800 pt-6">
                     هل لديك مشروع جرافيكي في ذهنك؟ <a href="index.html" class="text-primary hover:text-yellow-300 font-bold transition-colors">تواصل معنا الآن</a>.
                 </p>
@@ -173,6 +132,29 @@
         </main>
         
     </div>
+    
+    <script src="script.js"></script> 
+    
+    <script>
+        // بيانات المشاريع الخاصة بصفحة الجرافيكس
+        const graphicsItems = [
+            // ملاحظة: تأكد من وجود هذه الصور في مسار 'graphics/'
+            { image: 'graphics/project-graphic-01.jpg', text: 'هوية شركة سكايلينك' },
+            { image: 'graphics/project-graphic-02.jpg', text: 'إعلان موشن لخدمة جديدة' },
+            { image: 'graphics/project-graphic-03.jpg', text: 'حملة تسويقية رقمية' },
+            { image: 'graphics/project-graphic-04.jpg', text: 'غلاف كتاب إلكتروني' },
+            { image: 'graphics/project-graphic-05.jpg', text: 'بناء العلامة التجارية' },
+            // أضف المزيد لتجربة حلقة التكرار اللانهائية
+        ];
+
+        // تهيئة المعرض الدائري عند تحميل المحتوى
+        document.addEventListener('DOMContentLoaded', () => {
+             // 💡 شرط للتأكد من أن الدالة initCircularGallery موجودة بعد تحميل script.js
+             if (window.initCircularGallery) {
+                window.initCircularGallery('graphics-gallery-container', graphicsItems);
+             }
+        });
+    </script>
     
     </body>
 </html>
