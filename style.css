@@ -5,8 +5,7 @@
 /* -------------------------------------- */
 
 /*
-    ملاحظة هامة: بما أن "Expo Arabic" ليس متوفراً عبر Google Fonts،
-    يفترض أنه موجود كملف خط محلي في مسار محدد (مثل fonts/ExpoArabic.woff2).
+    ملاحظة: يفترض أن خط 'Expo Arabic' متوفر محلياً في مسار 'fonts/'
     
     @font-face {
         font-family: 'Expo Arabic';
@@ -225,17 +224,18 @@ a {
 }
 
 /* تم تحديث هذا ليتوافق مع وسم <img> مباشرة إذا كان يحمل الكلاس lightbox-trigger */
-.lightbox-trigger, .card-image-placeholder img {
+.lightbox-trigger img, .card-image-placeholder img, img.lightbox-trigger {
     width: 100%;
     height: 100%;
     background-color: #222;
     object-fit: cover; /* تم استخدام cover لملء البطاقة */
     /* يجب أن تكون transition موجودة لتطبيقها عند مغادرة الـ Lightbox */
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease; /* 💡 تعديل: إضافة opacity للتحكم في الإخفاء عند Hover */
 }
 
-.project-card:hover .lightbox-trigger {
-    /* ترك هذا الفارغ لضمان أن JavaScript هي من تتحكم في التحويل عند التحويم/النقر */
+/* 💡 إضافة تنسيق لضمان أن الصورة المخبأة (عند Hover) لا تزال بنفس الأبعاد */
+.project-card:hover .lightbox-hover-trigger {
+    /* هذا الجزء سيتم التحكم فيه بواسطة JavaScript عند الـ Hover */
 }
 
 .card-content {
@@ -362,10 +362,9 @@ a {
 }
 
 /* -------------------------------------- */
-/* 10. 🚨 تنسيقات Lightbox على النقر (Lightbox Modal) 🚨 */
+/* 10. تنسيقات Lightbox على النقر (Lightbox Modal) */
 /* -------------------------------------- */
 
-/* تم تعديل selector من .lightbox-overlay إلى #lightbox ليتوافق مع الـ ID في JS */
 #lightbox { 
     position: fixed;
     top: 0;
@@ -426,7 +425,6 @@ a {
 
 /* الصورة المكبرة داخل Lightbox */
 #lightbox-image {
-    /* 🚨 هذا هو الجزء الذي يحل مشكلة الأبعاد 🚨 */
     display: block;
     max-width: 100%; 
     max-height: 100%; 
@@ -452,7 +450,7 @@ a {
 }
 
 /* -------------------------------------- */
-/* 11. 🆕 تنسيقات Programs Image Modal 🆕 */
+/* 11. تنسيقات Programs Image Modal */
 /* -------------------------------------- */
 
 #image-modal {
