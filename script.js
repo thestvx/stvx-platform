@@ -27,22 +27,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // لتمكين إغلاق الـ sidebar عند الضغط خارجها على الشاشات الصغيرة
+            // 🛠️ تعديل: التحكم بفئة 'filter' فقط لتطبيق/إزالة تأثير التعتيم 🛠️
+            // فئة 'filter' هي التي تطبق التعتيم (blur) والـ grayscale في CSS
             if (sidebar.classList.contains('open')) {
                 // إضافة فئة تظليل عند فتح الـ sidebar 
-                mainContent.classList.add('lg:blur-none', 'filter', 'blur-sm'); 
+                mainContent.classList.add('filter'); 
             } else {
                 // إزالة فئة التظليل عند إغلاق الـ sidebar
-                mainContent.classList.remove('filter', 'blur-sm');
+                mainContent.classList.remove('filter');
             }
         });
         
         // إغلاق الـ Sidebar عند النقر على محتوى الصفحة الرئيسي (للشاشات الصغيرة)
         mainContent.addEventListener('click', (event) => {
             // تحقق من أن الشاشة صغيرة وأن الـ sidebar مفتوح
-            if (window.innerWidth < 1024 && sidebar.classList.contains('open')) {
+            // نضيف تحققاً للتأكد أن المستخدم لم يضغط على عنصر تفاعلي داخل mainContent
+            if (window.innerWidth < 1024 && sidebar.classList.contains('open') && !event.target.closest('a, button, input')) {
                 sidebar.classList.remove('open');
-                mainContent.classList.remove('filter', 'blur-sm');
+                // 🛠️ تعديل: إزالة فئة filter فقط 🛠️
+                mainContent.classList.remove('filter');
                 
                 // إعادة الأيقونة إلى حالتها الأصلية
                 const icon = toggleButton.querySelector('i');
@@ -57,7 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 1024 && sidebar.classList.contains('open')) {
                 sidebar.classList.remove('open');
-                mainContent.classList.remove('filter', 'blur-sm');
+                // 🛠️ تعديل: إزالة فئة filter فقط 🛠️
+                mainContent.classList.remove('filter');
                 const icon = toggleButton.querySelector('i');
                 if (icon) {
                     icon.classList.remove('ri-close-line');
