@@ -3,395 +3,506 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشاريع التصميم الجرافيكي - اسم المصمم</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>تصاميم الجرافيكس | STVX Platform</title>
+    
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css"> 
+    
+    <script>
+        // إعدادات Tailwind (مهمة لتعريف الألوان والأنيميشن)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ffc72c', // لون التمييز الذهبي
+                        secondary: '#333333' // لون ثانوي للتفاصيل 
+                    },
+                    borderRadius: {
+                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
+                    },
+                    fontFamily: {
+                        // يجب أن يكون "Expo Arabic" معرّفاً في ملف style.css
+                        sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
+                        logo: ['Pacifico', 'cursive'],
+                    },
+                    // تعريفات الأنيميشن (كما هي)
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-down': 'slideDown 0.5s ease-out forwards',
+                        'slide-up': 'slideUp 0.7s ease-out forwards',
+                        'card-pop': 'cardPop 0.6s ease-out forwards',
+                        'bounce': 'bounce 1s infinite',
+                        'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+                        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        cardPop: { '0%': { opacity: '0', transform: 'scale(0.9) translateY(20px)' }, '100%': { opacity: '1', transform: 'scale(1) translateY(0)' } },
+                        ping: {
+                            '75%, 100%': { transform: 'scale(2)', opacity: '0' },
+                        },
+                        bounce: {
+                            '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
+                        },
+                        pulse: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: .5 },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* تعريف Glass Card - ليعمل بشكل سليم */
+        .glass-card {
+            background-color: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 🚨 تم إضافة/تعديل هذه التنسيقات لـ Card-Link-Wrapper و Img 🚨 */
+        .card-link-wrapper {
+            display: block;
+            height: 250px; /* ارتفاع ثابت لـ Image Container */
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px; /* تدوير حواف الصورة */
+            margin-bottom: 1rem; /* مسافة تحت الصورة */
+        }
+        
+        .card-link-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .project-card:hover .card-link-wrapper img {
+            transform: scale(1.1);
+        }
+        
+        /* تنسيقات البطاقة نفسها */
+        .project-card {
+            background-color: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        /* تنسيقات العنوان والوصف والـ Tags */
+        .card-title { font-size: 1.25rem; font-weight: 700; color: #ffc72c; margin-bottom: 0.5rem; }
+        .card-description { color: #ccc; font-size: 0.9rem; margin-bottom: 1rem; height: 4.5rem; overflow: hidden; }
+        .card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .card-tag { background-color: rgba(255, 199, 44, 0.1); color: #ffc72c; padding: 0.25rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1rem; }
+        .card-stats { display: flex; gap: 1rem; font-size: 0.9rem; color: #888; }
+        .card-stat { display: flex; align-items: center; }
+        .card-stat-icon { width: 1.1rem; height: 1.1rem; margin-left: 0.3rem; color: #ffc72c; }
+        .card-button { background-color: #ffc72c; color: #111; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; transition: background-color 0.3s; }
+        .card-button:hover { background-color: #ffd966; }
+        
+    </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen">
+<body class="text-white font-sans flex flex-col min-h-screen 
+    bg-[url('images/loginbackground006.png')] bg-cover bg-fixed bg-center">
+    
+    <div class="flex-1">
+        
+        <nav class="glass-card px-6 py-4 sticky top-0 left-0 right-0 z-50 rounded-none">
+            <div class="flex items-center justify-between max-w-7xl mx-auto">
+                
+                <a href="portfolio.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" title="العودة إلى معرض الأعمال">
+                    <i class="ri-arrow-left-line text-primary text-xl"></i> 
+                </a>
 
-    <div id="sidebar-backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
-    <aside id="sidebar" class="fixed top-0 right-0 h-full w-64 bg-gray-800 transform -translate-x-full transition-transform duration-300 ease-in-out z-50 lg:translate-x-0 lg:w-72 border-l border-gray-700">
-        <div class="p-6 flex flex-col h-full">
-            <div class="mb-10 text-center">
-                <h1 class="text-3xl font-black text-primary border-b border-gray-700 pb-4">Portfolio</h1>
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
+                </div>
+                
+                <div class="hidden md:flex space-x-8 rtl:space-x-reverse text-lg font-medium">
+                    <a href="index.html" class="text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
+                    <span class="text-primary border-b-2 border-primary pb-1">الجرافيكس</span>
+                </div>
+                
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                    <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110">
+                        <i class="ri-user-line text-gray-300 text-xl"></i>
+                    </a>
+                </div>
             </div>
-            
-            <nav id="sidebar-nav" class="flex-grow sidebar-scroll overflow-y-auto pr-2">
-                <ul class="space-y-4">
-                    <li><a href="index.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-gray-400 hover:bg-gray-700 hover:text-white transition duration-200">
-                        <i class="fas fa-home w-6 h-6 ml-3"></i>
-                        الرئيسية
-                    </a></li>
-                    <li><a href="about.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-gray-400 hover:bg-gray-700 hover:text-white transition duration-200">
-                        <i class="fas fa-user w-6 h-6 ml-3"></i>
-                        عني
-                    </a></li>
-                    <li><a href="graphics.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-primary bg-gray-700 transition duration-200">
-                        <i class="fas fa-image w-6 h-6 ml-3"></i>
-                        تصميم جرافيك
-                    </a></li>
-                    <li><a href="programs.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-gray-400 hover:bg-gray-700 hover:text-white transition duration-200">
-                        <i class="fas fa-code w-6 h-6 ml-3"></i>
-                        برمجة وواجهات
-                    </a></li>
-                    <li><a href="photography.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-gray-400 hover:bg-gray-700 hover:text-white transition duration-200">
-                        <i class="fas fa-camera w-6 h-6 ml-3"></i>
-                        تصوير فوتوغرافي
-                    </a></li>
-                    <li><a href="contact.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-gray-400 hover:bg-gray-700 hover:text-white transition duration-200">
-                        <i class="fas fa-envelope w-6 h-6 ml-3"></i>
-                        اتصل بي
-                    </a></li>
-                    <li><a href="auth.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-gray-400 hover:bg-gray-700 hover:text-white transition duration-200">
-                        <i class="fas fa-sign-in-alt w-6 h-6 ml-3"></i>
-                        تسجيل الدخول
-                    </a></li>
-                </ul>
-            </nav>
+        </nav>
 
-            <div class="mt-auto pt-4 border-t border-gray-700">
-                <a href="#" class="flex items-center justify-center p-3 rounded-lg bg-primary text-gray-900 font-bold hover:bg-yellow-300 transition duration-200">
-                    <i class="fas fa-download w-5 h-5 ml-2"></i>
-                    تحميل السيرة الذاتية
-                </a>
+        <main class="py-12 px-4 md:px-8 max-w-7xl mx-auto flex-1"> 
+            
+            <header class="text-center mb-12 animate-slide-down" style="animation-delay: 0.3s;">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
+                    ✨ معرض تصاميم الجرافيكس
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    استكشف أحدث مشاريع الهويات البصرية، الموشن جرافيكس، والإعلانات الرقمية التي تعكس إبداعنا في التصميم.
+                </p>
+                <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full animate-pulse"></div>
+            </header>
+
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
+                
+                <div class="project-card animate-card-pop" style="animation-delay: 0.5s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع هوية بصرية لشركة تقنية" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-01.jpg" alt="صورة مشروع هوية بصرية لشركة تقنية" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">هوية العلامة التجارية 'رواد'</p>
+                        <p class="card-description">
+                            تصميم شعار متكامل، وتحديد الألوان والخطوط، وإعداد دليل الهوية البصرية لشركة ناشئة في مجال التكنولوجيا المالية.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">هوية بصرية</span>
+                            <span class="card-tag">Branding</span>
+                            <span class="card-tag">Illustrator</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i>
+                                    2.5K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i>
+                                    510
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">شاهد المشروع</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card animate-card-pop" style="animation-delay: 0.7s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع تصميم منشورات سوشيال ميديا" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-02.jpg" alt="صورة مشروع تصميم منشورات سوشيال ميديا" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">سلسلة منشورات سوشيال ميديا</p>
+                        <p class="card-description">
+                            سلسلة من التصاميم الجذابة لمنصات التواصل الاجتماعي (انستغرام وتويتر) لحملة تسويقية لمنتج جديد.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">سوشيال ميديا</span>
+                            <span class="card-tag">Marketing</span>
+                            <span class="card-tag">Photoshop</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i>
+                                    5.8K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i>
+                                    890
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض المجموعة</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card animate-card-pop" style="animation-delay: 0.9s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع غلاف كتاب ورقي إبداعي" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-03.jpg" alt="صورة مشروع غلاف كتاب ورقي إبداعي" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">غلاف كتاب "صيف أزرق"</p>
+                        <p class="card-description">
+                            تصميم غلاف جذاب لكتاب خيال علمي، مع استخدام تقنيات الدمج والتلاعب بالصور لإظهار المشاعر.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">غلاف كتاب</span>
+                            <span class="card-tag">تلاعب بالصور</span>
+                            <span class="card-tag">Photoshop</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i>
+                                    1.9K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i>
+                                    340
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض الغلاف</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card animate-card-pop" style="animation-delay: 1.1s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع تصميم ملصق إعلاني" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-04.jpg" alt="صورة مشروع تصميم ملصق إعلاني" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">ملصق إعلاني "حفل جاز"</p>
+                        <p class="card-description">
+                            تصميم بوستر إعلاني ديناميكي بألوان زاهية وخطوط عصرية للترويج لحدث فني كبير (حفل موسيقي).
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">بوستر</span>
+                            <span class="card-tag">Typography</span>
+                            <span class="card-tag">InDesign</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i>
+                                    1.2K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i>
+                                    210
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض الملصق</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card animate-card-pop" style="animation-delay: 1.3s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع تصميم أيقونات تطبيق" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-05.jpg" alt="صورة مشروع تصميم أيقونات تطبيق" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">مجموعة أيقونات للتطبيقات</p>
+                        <p class="card-description">
+                            تصميم مجموعة متناسقة من الأيقونات المسطحة (Flat Icons) لاستخدامها في واجهة تطبيق محمول حديث.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Iconography</span>
+                            <span class="card-tag">Vector Art</span>
+                            <span class="card-tag">Illustrator</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i>
+                                    3.1K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i>
+                                    650
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض الأيقونات</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card animate-card-pop" style="animation-delay: 1.5s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع تصميم كتيب تعريفي رقمي" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-06.jpg" alt="صورة مشروع تصميم كتيب تعريفي رقمي" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">كتيب تعريفي لشركة استشارات</p>
+                        <p class="card-description">
+                            تصميم كتيب إلكتروني من 10 صفحات لشركة استشارات، مع التركيز على التوزيع الطباعي والرقمي بشكل متناسق.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Print Design</span>
+                            <span class="card-tag">Layout</span>
+                            <span class="card-tag">InDesign</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i>
+                                    980
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i>
+                                    190
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">تصفح الكتيب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card animate-card-pop" style="animation-delay: 1.7s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع تصميم انفوجرافيك" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-07.jpg" alt="صورة مشروع تصميم انفوجرافيك" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">انفوجرافيك "إحصاءات التسويق"</p>
+                        <p class="card-description">
+                            تحويل مجموعة معقدة من البيانات الإحصائية الخاصة بالتسويق إلى انفوجرافيك مرئي واضح ومقروء.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Infographics</span>
+                            <span class="card-tag">Data Vis.</span>
+                            <span class="card-tag">Illustrator</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i>
+                                    2.0K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i>
+                                    420
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">شاهد الانفوجرافيك</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card animate-card-pop" style="animation-delay: 1.9s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع تصميم بطاقة عمل" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-08.jpg" alt="صورة مشروع تصميم بطاقة عمل" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">بطاقة عمل لعلامة تجارية فاخرة</p>
+                        <p class="card-description">
+                            تصميم بطاقة عمل ذات وجهين تعكس الهوية البصرية لعلامة تجارية فاخرة، مع اختيار مواد طباعة مميزة.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Branding</span>
+                            <span class="card-tag">Print</span>
+                            <span class="card-tag">InDesign</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i>
+                                    750
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i>
+                                    150
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض التصميم</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card animate-card-pop" style="animation-delay: 2.1s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع تصميم أغلفة منتجات تجميل" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-09.jpg" alt="صورة مشروع تصميم أغلفة منتجات تجميل" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">أغلفة منتجات العناية بالبشرة</p>
+                        <p class="card-description">
+                            تصميم سلسلة من العبوات الأنيقة لمجموعة منتجات العناية بالبشرة، مع التركيز على الجاذبية في الرفوف.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Packaging</span>
+                            <span class="card-tag">3D Mockup</span>
+                            <span class="card-tag">Photoshop</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i>
+                                    1.5K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i>
+                                    300
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض العبوات</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card animate-card-pop" style="animation-delay: 2.3s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع ملصق متحرك (Motion Graphic)" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-10.jpg" alt="صورة مشروع ملصق متحرك (Motion Graphic)" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">ملصق متحرك لـ "تخفيضات 50%"</p>
+                        <p class="card-description">
+                            تصميم ملصق إعلاني مع إضافة عناصر حركية بسيطة (Motion Graphics) لزيادة التفاعل على الويب وإعلانات القصص.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">موشن</span>
+                            <span class="card-tag">GIF/Video</span>
+                            <span class="card-tag">After Effects</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i>
+                                    4.0K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i>
+                                    780
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">شاهد الملصق</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card animate-card-pop" style="animation-delay: 2.5s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع رسم رقمي للرسوم المتحركة" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-11.jpg" alt="صورة مشروع رسم رقمي للرسوم المتحركة" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">خلفية رسم رقمي كرتوني</p>
+                        <p class="card-description">
+                            عمل فني رقمي بتفاصيل معقدة يستخدم كخلفية لمشهد في سلسلة رسوم متحركة قصيرة بأسلوب فني مميز.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Digital Art</span>
+                            <span class="card-tag">Illustration</span>
+                            <span class="card-tag">Procreate</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i>
+                                    1.0K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i>
+                                    250
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض الرسم</a>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            
+            <div class="text-center mt-24 animate-fade-in" style="animation-delay: 2.7s;">
+                <p class="text-gray-400 text-lg border-t border-gray-800 pt-6">
+                    هل لديك مشروع جرافيكي في ذهنك؟ <a href="index.html" class="text-primary hover:text-yellow-300 font-bold transition-colors">تواصل معنا الآن</a>.
+                </p>
             </div>
-        </div>
-    </aside>
 
-    <main id="mainContent" class="lg:mr-72 p-4 md:p-8 transition-all duration-300 ease-in-out">
+        </main>
         
-        <button id="sidebar-toggle" class="fixed top-4 right-4 z-30 p-3 bg-gray-800 rounded-lg lg:hidden focus:outline-none focus:ring-2 focus:ring-primary">
-            <i class="fas fa-bars text-xl text-white"></i>
-        </button>
-
-        <header class="mb-10 mt-6 lg:mt-0">
-            <h2 class="text-4xl font-extrabold text-white mb-2">مشاريع التصميم الجرافيكي</h2>
-            <p class="text-xl text-gray-400">تصميم الهويات البصرية، منشورات السوشيال ميديا، والرسوم الرقمية المبتكرة.</p>
-        </header>
-
-        <div class="flex flex-wrap gap-3 mb-10">
-            <button class="icon-button px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-gray-900">الكل</button>
-            <button class="icon-button px-4 py-2 rounded-lg text-sm font-semibold text-gray-400 hover:text-white">Branding</button>
-            <button class="icon-button px-4 py-2 rounded-lg text-sm font-semibold text-gray-400 hover:text-white">Social Media</button>
-            <button class="icon-button px-4 py-2 rounded-lg text-sm font-semibold text-gray-400 hover:text-white">Illustration</button>
-        </div>
-        
-        <div id="graphics-projects-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 mt-10">
-            
-            <article class="project-card">
-                <a href="project-details.html?id=1" class="card-link-wrapper">
-                    <img src="graphics/project-graphic-01.jpg" alt="صورة مشروع هوية بصرية لشركة تقنية" class="card-image-actual">
-                </a>
-                <div class="card-content">
-                    <h3 class="card-title">هوية بصرية لشركة تقنية</h3>
-                    <p class="card-description">تصميم شعار متكامل وكافة العناصر البصرية الأساسية لشركة ناشئة في مجال تطوير البرمجيات.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Branding</span>
-                        <span class="card-tag">Logo Design</span>
-                        <span class="card-tag">Adobe Illustrator</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-stats">
-                            <span class="card-stat">
-                                <i class="fa-solid fa-palette card-stat-icon"></i>
-                                <span>Illustrator</span>
-                            </span>
-                            <span class="card-stat">
-                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
-                                <span>يناير 2024</span>
-                            </span>
-                        </div>
-                        <a href="project-details.html?id=1" class="card-button">عرض التفاصيل</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="project-card">
-                <a href="project-details.html?id=2" class="card-link-wrapper">
-                    <img src="graphics/project-graphic-02.jpg" alt="صورة مشروع تصميم منشورات سوشيال ميديا" class="card-image-actual">
-                </a>
-                <div class="card-content">
-                    <h3 class="card-title">تصميم منشورات سوشيال ميديا</h3>
-                    <p class="card-description">سلسلة من التصاميم الجذابة لمنصات التواصل الاجتماعي (انستغرام وتويتر) لحملة تسويقية.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Social Media</span>
-                        <span class="card-tag">Marketing</span>
-                        <span class="card-tag">Photoshop</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-stats">
-                            <span class="card-stat">
-                                <i class="fa-solid fa-palette card-stat-icon"></i>
-                                <span>Photoshop</span>
-                            </span>
-                            <span class="card-stat">
-                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
-                                <span>فبراير 2024</span>
-                            </span>
-                        </div>
-                        <a href="project-details.html?id=2" class="card-button">عرض التفاصيل</a>
-                    </div>
-                </div>
-            </article>
-            
-            <article class="project-card">
-                <a href="project-details.html?id=3" class="card-link-wrapper">
-                    <img src="graphics/project-graphic-03.jpg" alt="صورة مشروع غلاف كتاب ورقي" class="card-image-actual">
-                </a>
-                <div class="card-content">
-                    <h3 class="card-title">غلاف كتاب ورقي إبداعي</h3>
-                    <p class="card-description">تصميم غلاف جذاب لكتاب خيال علمي، مع استخدام تقنيات الدمج والتلاعب بالصور.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Book Cover</span>
-                        <span class="card-tag">Photo Manipulation</span>
-                        <span class="card-tag">Photoshop</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-stats">
-                            <span class="card-stat">
-                                <i class="fa-solid fa-palette card-stat-icon"></i>
-                                <span>Photoshop</span>
-                            </span>
-                            <span class="card-stat">
-                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
-                                <span>مارس 2024</span>
-                            </span>
-                        </div>
-                        <a href="project-details.html?id=3" class="card-button">عرض التفاصيل</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="project-card">
-                <a href="project-details.html?id=4" class="card-link-wrapper">
-                    <img src="graphics/project-graphic-04.jpg" alt="صورة مشروع تصميم ملصق إعلاني" class="card-image-actual">
-                </a>
-                <div class="card-content">
-                    <h3 class="card-title">ملصق إعلاني لحفل موسيقي</h3>
-                    <p class="card-description">تصميم بوستر إعلاني ديناميكي بألوان زاهية وخطوط عصرية للترويج لحدث فني كبير.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Poster Design</span>
-                        <span class="card-tag">Typography</span>
-                        <span class="card-tag">InDesign</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-stats">
-                            <span class="card-stat">
-                                <i class="fa-solid fa-palette card-stat-icon"></i>
-                                <span>InDesign</span>
-                            </span>
-                            <span class="card-stat">
-                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
-                                <span>أبريل 2024</span>
-                            </span>
-                        </div>
-                        <a href="project-details.html?id=4" class="card-button">عرض التفاصيل</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="project-card">
-                <a href="project-details.html?id=5" class="card-link-wrapper">
-                    <img src="graphics/project-graphic-05.jpg" alt="صورة مشروع تصميم أيقونات تطبيق" class="card-image-actual">
-                </a>
-                <div class="card-content">
-                    <h3 class="card-title">مجموعة أيقونات للتطبيقات</h3>
-                    <p class="card-description">تصميم مجموعة متناسقة من الأيقونات المسطحة (Flat Icons) لاستخدامها في واجهة تطبيق محمول.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Iconography</span>
-                        <span class="card-tag">Vector Art</span>
-                        <span class="card-tag">Illustrator</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-stats">
-                            <span class="card-stat">
-                                <i class="fa-solid fa-palette card-stat-icon"></i>
-                                <span>Illustrator</span>
-                            </span>
-                            <span class="card-stat">
-                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
-                                <span>مايو 2024</span>
-                            </span>
-                        </div>
-                        <a href="project-details.html?id=5" class="card-button">عرض التفاصيل</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="project-card">
-                <a href="project-details.html?id=6" class="card-link-wrapper">
-                    <img src="graphics/project-graphic-06.jpg" alt="صورة مشروع تصميم كتيب تعريفي" class="card-image-actual">
-                </a>
-                <div class="card-content">
-                    <h3 class="card-title">كتيب تعريفي رقمي (Brochure)</h3>
-                    <p class="card-description">تصميم كتيب إلكتروني من 10 صفحات لشركة استشارات، مع التركيز على التوزيع الطباعي والرقمي.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Print Design</span>
-                        <span class="card-tag">Layout</span>
-                        <span class="card-tag">InDesign</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-stats">
-                            <span class="card-stat">
-                                <i class="fa-solid fa-palette card-stat-icon"></i>
-                                <span>InDesign</span>
-                            </span>
-                            <span class="card-stat">
-                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
-                                <span>يونيو 2024</span>
-                            </span>
-                        </div>
-                        <a href="project-details.html?id=6" class="card-button">عرض التفاصيل</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="project-card">
-                <a href="project-details.html?id=7" class="card-link-wrapper">
-                    <img src="graphics/project-graphic-07.jpg" alt="صورة مشروع تصميم انفوجرافيك" class="card-image-actual">
-                </a>
-                <div class="card-content">
-                    <h3 class="card-title">تصميم انفوجرافيك إحصائي</h3>
-                    <p class="card-description">تحويل مجموعة معقدة من البيانات الإحصائية إلى انفوجرافيك مرئي واضح ومقروء.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Infographics</span>
-                        <span class="card-tag">Data Vis.</span>
-                        <span class="card-tag">Illustrator</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-stats">
-                            <span class="card-stat">
-                                <i class="fa-solid fa-palette card-stat-icon"></i>
-                                <span>Illustrator</span>
-                            </span>
-                            <span class="card-stat">
-                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
-                                <span>يوليو 2024</span>
-                            </span>
-                        </div>
-                        <a href="project-details.html?id=7" class="card-button">عرض التفاصيل</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="project-card">
-                <a href="project-details.html?id=8" class="card-link-wrapper">
-                    <img src="graphics/project-graphic-08.jpg" alt="صورة مشروع تصميم بطاقة عمل" class="card-image-actual">
-                </a>
-                <div class="card-content">
-                    <h3 class="card-title">بطاقة عمل احترافية (Business Card)</h3>
-                    <p class="card-description">تصميم بطاقة عمل ذات وجهين تعكس الهوية البصرية لعلامة تجارية فاخرة.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Branding</span>
-                        <span class="card-tag">Print</span>
-                        <span class="card-tag">InDesign</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-stats">
-                            <span class="card-stat">
-                                <i class="fa-solid fa-palette card-stat-icon"></i>
-                                <span>InDesign</span>
-                            </span>
-                            <span class="card-stat">
-                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
-                                <span>سبتمبر 2024</span>
-                            </span>
-                        </div>
-                        <a href="project-details.html?id=8" class="card-button">عرض التفاصيل</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="project-card">
-                <a href="project-details.html?id=9" class="card-link-wrapper">
-                    <img src="graphics/project-graphic-09.jpg" alt="صورة مشروع تصميم أغلفة منتجات" class="card-image-actual">
-                </a>
-                <div class="card-content">
-                    <h3 class="card-title">تصميم أغلفة منتجات تجميل</h3>
-                    <p class="card-description">تصميم سلسلة من العبوات الأنيقة لمجموعة منتجات العناية بالبشرة، مع التركيز على الجاذبية في الرفوف.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Packaging</span>
-                        <span class="card-tag">3D Mockup</span>
-                        <span class="card-tag">Photoshop</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-stats">
-                            <span class="card-stat">
-                                <i class="fa-solid fa-palette card-stat-icon"></i>
-                                <span>Photoshop</span>
-                            </span>
-                            <span class="card-stat">
-                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
-                                <span>أكتوبر 2024</span>
-                            </span>
-                        </div>
-                        <a href="project-details.html?id=9" class="card-button">عرض التفاصيل</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="project-card">
-                <a href="project-details.html?id=10" class="card-link-wrapper">
-                    <img src="graphics/project-graphic-10.jpg" alt="صورة مشروع ملصق متحرك (Motion Graphic)" class="card-image-actual">
-                </a>
-                <div class="card-content">
-                    <h3 class="card-title">تصميم ملصق متحرك قصير</h3>
-                    <p class="card-description">تصميم ملصق إعلاني مع إضافة عناصر حركية بسيطة (Motion Graphics) لزيادة التفاعل على الويب.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Motion</span>
-                        <span class="card-tag">GIF/Video</span>
-                        <span class="card-tag">After Effects</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-stats">
-                            <span class="card-stat">
-                                <i class="fa-solid fa-palette card-stat-icon"></i>
-                                <span>After Effects</span>
-                            </span>
-                            <span class="card-stat">
-                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
-                                <span>نوفمبر 2024</span>
-                            </span>
-                        </div>
-                        <a href="project-details.html?id=10" class="card-button">عرض التفاصيل</a>
-                    </div>
-                </div>
-            </article>
-            
-            <article class="project-card">
-                <a href="project-details.html?id=11" class="card-link-wrapper">
-                    <img src="graphics/project-graphic-11.jpg" alt="صورة مشروع رسم رقمي للرسوم المتحركة" class="card-image-actual">
-                </a>
-                <div class="card-content">
-                    <h3 class="card-title">رسم رقمي لرسوم متحركة</h3>
-                    <p class="card-description">عمل فني رقمي بتفاصيل معقدة يستخدم كخلفية لمشهد في سلسلة رسوم متحركة قصيرة.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Digital Art</span>
-                        <span class="card-tag">Illustration</span>
-                        <span class="card-tag">Procreate</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-stats">
-                            <span class="card-stat">
-                                <i class="fa-solid fa-palette card-stat-icon"></i>
-                                <span>Procreate</span>
-                            </span>
-                            <span class="card-stat">
-                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
-                                <span>ديسمبر 2024</span>
-                            </span>
-                        </div>
-                        <a href="project-details.html?id=11" class="card-button">عرض التفاصيل</a>
-                    </div>
-                </div>
-            </article>
-
-        </div>
-        
-    </main>
-
-    <script>const primaryColor = '#ffc72c';</script>
-    <script src="script.js"></script>
+    </div>
+    
+    <script src="script.js"></script> 
+    
 </body>
 </html>
