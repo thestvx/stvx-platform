@@ -80,7 +80,7 @@
             <div class="flex items-center justify-between max-w-7xl mx-auto">
                 
                 <a href="portfolio.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" title="العودة إلى معرض الأعمال">
-                    <i class="ri-arrow-right-line text-primary text-xl"></i> 
+                    <i class="ri-arrow-left-line text-primary text-xl"></i> 
                 </a>
 
                 <div class="flex items-center space-x-4 rtl:space-x-reverse">
@@ -107,19 +107,119 @@
                     ✨ معرض تصاميم الجرافيكس
                 </h1>
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    استكشف أحدث مشاريع الهويات البصرية، الموشن جرافيكس، والإعلانات الرقمية بتأثير **الانحناء ثلاثي الأبعاد** المذهل.
+                    استكشف أحدث مشاريع الهويات البصرية، الموشن جرافيكس، والإعلانات الرقمية التي تعكس إبداعنا في التصميم.
                 </p>
                 <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full animate-pulse"></div>
             </header>
 
-            <section class="w-full h-[60vh] min-h-[500px] mt-16 relative bg-black/20 rounded-2xl overflow-hidden shadow-2xl glass-hover-effect">
-                <div id="graphics-gallery-container" class="w-full h-full relative">
-                    <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-lg z-10 pointer-events-none">
-                        جاري تحميل المعرض ثلاثي الأبعاد... (استخدم الفأرة/اللمس للتمرير)
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
+                
+                <div class="project-card animate-card-pop" style="animation-delay: 0.5s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع الهوية البصرية" class="card-link-wrapper">
+                        <div
+                            aria-label="خلفية تدرج لونية تجريدية للمشروع"
+                            role="img"
+                            class="card-image-placeholder"
+                            style="background-image: url('images/placeholder-graphic-1.jpg');"
+                        ></div>
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">هوية العلامة التجارية 'رواد'</p>
+                        <p class="card-description">
+                            تصميم شعار متكامل، وتحديد الألوان والخطوط، وإعداد دليل الهوية البصرية لشركة ناشئة في مجال التكنولوجيا المالية.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">هوية بصرية</span>
+                            <span class="card-tag">Branding</span>
+                            <span class="card-tag">Illustrator</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+                                    2.5K
+                                </span>
+                                <span class="card-stat">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                    510
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">شاهد المشروع</a>
+                        </div>
                     </div>
                 </div>
+
+                <div class="project-card animate-card-pop" style="animation-delay: 0.7s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع الموشن جرافيكس" class="card-link-wrapper">
+                        <div
+                            aria-label="خلفية تدرج لونية تجريدية للمشروع"
+                            role="img"
+                            class="card-image-placeholder"
+                            style="background-image: url('images/placeholder-graphic-2.jpg');"
+                        ></div>
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">مقطع ترويجي لخدمة 'كويك كاش'</p>
+                        <p class="card-description">
+                            فيديو موشن جرافيكس تسويقي مدته 45 ثانية يشرح مزايا الخدمة المالية الجديدة بأسلوب جذاب وسريع.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">موشن جرافيكس</span>
+                            <span class="card-tag">فيديو</span>
+                            <span class="card-tag">After Effects</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+                                    5.8K
+                                </span>
+                                <span class="card-stat">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                    890
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">شاهد الفيديو</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card animate-card-pop" style="animation-delay: 0.9s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع الإعلان الرقمي" class="card-link-wrapper">
+                        <div
+                            aria-label="خلفية تدرج لونية تجريدية للمشروع"
+                            role="img"
+                            class="card-image-placeholder"
+                            style="background-image: url('images/placeholder-graphic-3.jpg');"
+                        ></div>
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">إعلان حملة "صيف أزرق"</p>
+                        <p class="card-description">
+                            مجموعة من التصاميم الإعلانية الموجهة لمنصات التواصل الاجتماعي (انستجرام، سناب شات) لمنتجات صيفية.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">إعلانات رقمية</span>
+                            <span class="card-tag">تسويق</span>
+                            <span class="card-tag">Photoshop</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+                                    1.9K
+                                </span>
+                                <span class="card-stat">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                    340
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض المجموعة</a>
+                        </div>
+                    </div>
+                </div>
+
             </section>
-            
             <div class="text-center mt-24 animate-fade-in" style="animation-delay: 1.2s;">
                 <p class="text-gray-400 text-lg border-t border-gray-800 pt-6">
                     هل لديك مشروع جرافيكي في ذهنك؟ <a href="index.html" class="text-primary hover:text-yellow-300 font-bold transition-colors">تواصل معنا الآن</a>.
@@ -130,31 +230,7 @@
         
     </div>
     
-    <script src="https://unpkg.com/ogl@latest/dist/ogl.min.js"></script>
-    
     <script src="script.js"></script> 
-    
-    <script>
-        // بيانات المشاريع الخاصة بصفحة الجرافيكس
-        const graphicsItems = [
-            // مسارات الصور تعكس مجلد 'graphics/' الذي ذكرته
-            { image: 'graphics/project-graphic-01.jpg', text: 'هوية شركة سكايلينك' },
-            { image: 'graphics/project-graphic-02.jpg', text: 'إعلان موشن لخدمة جديدة' },
-            { image: 'graphics/project-graphic-03.jpg', text: 'حملة تسويقية رقمية' },
-            { image: 'graphics/project-graphic-04.jpg', text: 'غلاف كتاب إلكتروني' },
-            { image: 'graphics/project-graphic-05.jpg', text: 'بناء العلامة التجارية' },
-        ];
-
-        // تهيئة المعرض الدائري عند تحميل المحتوى
-        document.addEventListener('DOMContentLoaded', () => {
-             // 💡 شرط للتأكد من أن الدالة initCircularGallery موجودة
-             if (window.initCircularGallery) {
-                 window.initCircularGallery('graphics-gallery-container', graphicsItems);
-             } else {
-                 console.error("initCircularGallery is not defined. Ensure script.js loaded correctly.");
-             }
-        });
-    </script>
     
 </body>
 </html>
