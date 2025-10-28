@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تصاميم الجرافيكس | معرض الأعمال</title>
+    <title>تصاميم الجرافيكس | STVX Platform</title>
     
     <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
     
@@ -12,21 +12,56 @@
     <link rel="stylesheet" href="style.css"> 
     
     <script>
-        // إعدادات Tailwind (نفس الإعدادات لضمان التناسق)
+        // إعدادات Tailwind (مهمة لتعريف الألوان والأنيميشن)
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { primary: '#ffc72c', secondary: '#333333' },
-                    borderRadius: { 'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px' },
-                    fontFamily: { sans: ['Expo Arabic', 'Cairo', 'sans-serif'], logo: ['Pacifico', 'cursive'] },
-                    animation: { 'fade-in': 'fadeIn 0.6s ease-out forwards', 'slide-down': 'slideDown 0.5s ease-out forwards', 'slide-up': 'slideUp 0.7s ease-out forwards', 'card-pop': 'cardPop 0.6s ease-out forwards', 'bounce': 'bounce 1s infinite', 'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite', 'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite', },
-                    keyframes: { fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } }, slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }, slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }, cardPop: { '0%': { opacity: '0', transform: 'scale(0.9) translateY(20px)' }, '100%': { opacity: '1', transform: 'scale(1) translateY(0)' } }, ping: { '75%, 100%': { transform: 'scale(2)', opacity: '0' }, }, bounce: { '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' }, '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' }, }, pulse: { '0%, 100%': { opacity: 1 }, '50%': { opacity: .5 }, } }
+                    colors: {
+                        primary: '#ffc72c', // لون التمييز الذهبي
+                        secondary: '#333333' // لون ثانوي للتفاصيل 
+                    },
+                    borderRadius: {
+                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
+                    },
+                    fontFamily: {
+                        // يجب أن يكون "Expo Arabic" معرّفاً في ملف style.css
+                        sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
+                        logo: ['Pacifico', 'cursive'],
+                    },
+                    // تعريفات الأنيميشن (كما هي)
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-down': 'slideDown 0.5s ease-out forwards',
+                        'slide-up': 'slideUp 0.7s ease-out forwards',
+                        'card-pop': 'cardPop 0.6s ease-out forwards',
+                        'bounce': 'bounce 1s infinite',
+                        'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+                        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        cardPop: { '0%': { opacity: '0', transform: 'scale(0.9) translateY(20px)' }, '100%': { opacity: '1', transform: 'scale(1) translateY(0)' } },
+                        ping: {
+                            '75%, 100%': { transform: 'scale(2)', opacity: '0' },
+                        },
+                        bounce: {
+                            '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
+                        },
+                        pulse: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: .5 },
+                        }
+                    }
                 }
             }
         }
     </script>
     
     <style>
+        /* تعريف Glass Card - ليعمل بشكل سليم */
         .glass-card {
             background-color: rgba(17, 17, 17, 0.8);
             backdrop-filter: blur(10px);
@@ -34,32 +69,44 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .portfolio-image {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* تأثير Glassmorphism للمشاريع */
+        .project-card {
+            background-color: rgba(255, 255, 255, 0.05); /* خلفية شبه شفافة */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease-in-out;
         }
-        .portfolio-image:hover {
-            transform: scale(1.03) rotate(-1deg);
-            box-shadow: 0 10px 40px rgba(255, 199, 44, 0.4);
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 40px 0 rgba(255, 199, 44, 0.2);
+            border-color: rgba(255, 199, 44, 0.5);
         }
     </style>
 </head>
-<body class="text-white font-sans flex flex-col min-h-screen bg-[url('images/loginbackground006.png')] bg-cover bg-fixed bg-center">
-    
-    <div id="app-loader" class="fixed inset-0 bg-neutral-900 flex items-center justify-center z-[100] transition-opacity duration-300">
-        <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-primary border-t-transparent"></div>
-    </div>
+<body class="text-white font-sans flex flex-col min-h-screen 
+    bg-[url('images/loginbackground006.png')] bg-cover bg-fixed bg-center">
     
     <div id="mainContent" class="flex-1 transition-filter duration-300">
         
         <nav class="glass-card px-6 py-4 sticky top-0 left-0 right-0 z-50 rounded-none">
             <div class="flex items-center justify-between max-w-7xl mx-auto">
+                
+                <a href="portfolio.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" title="العودة إلى معرض الأعمال">
+                    <i class="ri-arrow-right-line text-primary text-xl"></i> 
+                </a>
+
                 <div class="flex items-center space-x-4 rtl:space-x-reverse">
                     <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
                 </div>
+                
                 <div class="hidden md:flex space-x-8 rtl:space-x-reverse text-lg font-medium">
                     <a href="index.html" class="text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
-                    <a href="portfolio.html" class="text-primary border-b-2 border-primary pb-1">معرض الأعمال</a>
+                    <span class="text-primary border-b-2 border-primary pb-1">الجرافيكس</span>
                 </div>
+                
                 <div class="flex items-center space-x-4 rtl:space-x-reverse">
                     <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110">
                         <i class="ri-user-line text-gray-300 text-xl"></i>
@@ -68,77 +115,64 @@
             </div>
         </nav>
 
-        <main class="py-6 px-4 md:px-8 max-w-6xl mx-auto flex-1"> 
+        <main class="py-12 px-4 md:px-8 max-w-7xl mx-auto flex-1"> 
             
-            <header class="text-center mb-10" style="animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;">
-                <h1 class="text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
-                    تصاميم الجرافيكس ✏️
+            <header class="text-center mb-12 animate-slide-down" style="animation-delay: 0.3s;">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
+                    ✨ معرض تصاميم الجرافيكس
                 </h1>
-                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-                    إليك مختارات من أحدث تصاميمي: هويات بصرية، إعلانات، وموشن جرافيكس.
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    استكشف أحدث مشاريع الهويات البصرية، الموشن جرافيكس، والإعلانات الرقمية التي صنعناها بشغف.
                 </p>
-                <div class="mt-6 flex justify-center space-x-4 rtl:space-x-reverse">
-                    <a href="portfolio.html" class="text-primary hover:text-yellow-400 transition-colors flex items-center">
-                        <i class="ri-arrow-right-line mr-1 rtl:mr-0 rtl:ml-1"></i>
-                        العودة للأقسام
-                    </a>
-                </div>
+                <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full animate-pulse"></div>
             </header>
 
-            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" style="animation: slideUp 1s ease-out 0.6s forwards; opacity: 0;">
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <div class="glass-card rounded-xl overflow-hidden transform hover:shadow-primary/50 portfolio-image">
-                    <img src="graphics/project-logo-1.jpg" alt="تصميم شعار لشركة ناشئة" class="w-full h-48 object-cover object-center" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400/0a0a0a/ffc72c?text=Project+1+Graphic';" />
-                    <div class="p-4">
-                        <h3 class="text-xl font-bold text-primary mb-1">هوية بصرية كاملة</h3>
-                        <p class="text-sm text-gray-300">تصميم شعار، ألوان، وخطوط لشركة "إزدهار" - مشروع متكامل 2024.</p>
-                        <span class="inline-block mt-3 px-3 py-1 text-xs font-semibold bg-primary/20 text-primary rounded-full">#Branding</span>
+                <div class="project-card overflow-hidden animate-card-pop" style="animation-delay: 0.6s;">
+                    <img src="images/project-graphic-01.jpg" alt="هوية بصرية لشركة تقنية" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110 cursor-pointer">
+                    <div class="p-5">
+                        <h3 class="text-2xl font-bold mb-2 text-primary">هوية شركة سكايلينك</h3>
+                        <p class="text-gray-400 text-sm">تصميم شعار متكامل، دليل استخدام العلامة التجارية، ومجموعة من المطبوعات الرقمية.</p>
+                        <a href="#" class="mt-4 inline-flex items-center text-primary hover:text-yellow-300 transition-colors font-semibold">
+                            شاهد التفاصيل <i class="ri-arrow-left-line mr-1"></i>
+                        </a>
                     </div>
                 </div>
 
-                <div class="glass-card rounded-xl overflow-hidden transform hover:shadow-primary/50 portfolio-image">
-                    <img src="graphics/project-social-2.png" alt="تصميم منشور سوشيال ميديا" class="w-full h-48 object-cover object-center" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400/0a0a0a/ffc72c?text=Project+2+Social';" />
-                    <div class="p-4">
-                        <h3 class="text-xl font-bold text-primary mb-1">منشورات تفاعلية</h3>
-                        <p class="text-sm text-gray-300">تصاميم سوشيال ميديا (10 بوستات) لحملة إعلانية لمطعم راقي.</p>
-                        <span class="inline-block mt-3 px-3 py-1 text-xs font-semibold bg-primary/20 text-primary rounded-full">#SocialMedia</span>
+                <div class="project-card overflow-hidden animate-card-pop" style="animation-delay: 0.8s;">
+                    <img src="images/project-graphic-02.jpg" alt="موشن جرافيكس إعلاني" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110 cursor-pointer">
+                    <div class="p-5">
+                        <h3 class="text-2xl font-bold mb-2 text-primary">إعلان موشن لخدمة جديدة</h3>
+                        <p class="text-gray-400 text-sm">فيديو موشن جرافيكس إبداعي مدته 45 ثانية لشرح خدمة اشتراكات شهرية، استخدمنا فيه ألوان مبهجة.</p>
+                        <a href="#" class="mt-4 inline-flex items-center text-primary hover:text-yellow-300 transition-colors font-semibold">
+                            شاهد الفيديو <i class="ri-arrow-left-line mr-1"></i>
+                        </a>
                     </div>
                 </div>
 
-                <div class="glass-card rounded-xl overflow-hidden transform hover:shadow-primary/50 portfolio-image">
-                    <img src="graphics/project-motion-3.gif" alt="موشن جرافيكس" class="w-full h-48 object-cover object-center" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400/0a0a0a/ffc72c?text=Project+3+Motion';" />
-                    <div class="p-4">
-                        <h3 class="text-xl font-bold text-primary mb-1">فيديو موشن جرافيكس</h3>
-                        <p class="text-sm text-gray-300">شرح خدمات تطبيق جديد (فيديو 30 ثانية) بألوان جريئة وجذابة.</p>
-                        <span class="inline-block mt-3 px-3 py-1 text-xs font-semibold bg-primary/20 text-primary rounded-full">#Motion</span>
+                <div class="project-card overflow-hidden animate-card-pop" style="animation-delay: 1.0s;">
+                    <img src="images/project-graphic-03.jpg" alt="تصاميم سوشيال ميديا" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110 cursor-pointer">
+                    <div class="p-5">
+                        <h3 class="text-2xl font-bold mb-2 text-primary">حملة تسويقية رقمية</h3>
+                        <p class="text-gray-400 text-sm">تصميم 20 بوست ومنشور لمنصات التواصل الاجتماعي (تويتر، انستغرام) بتصاميم متناسقة وجذابة.</p>
+                        <a href="#" class="mt-4 inline-flex items-center text-primary hover:text-yellow-300 transition-colors font-semibold">
+                            استعراض البوستات <i class="ri-arrow-left-line mr-1"></i>
+                        </a>
                     </div>
                 </div>
                 
                 </section>
+            
+            <div class="text-center mt-12 animate-fade-in" style="animation-delay: 1.2s;">
+                <p class="text-gray-400 text-lg border-t border-gray-800 pt-6">
+                    هل لديك مشروع جرافيكي في ذهنك؟ <a href="index.html" class="text-primary hover:text-yellow-300 font-bold transition-colors">تواصل معنا الآن</a>.
+                </p>
+            </div>
 
         </main>
         
-        <footer class="glass-card mt-auto px-6 py-8 text-center border-t border-gray-800">
-             <div class="max-w-7xl mx-auto">
-                <div class="flex justify-center space-x-4 rtl:space-x-reverse mb-6">
-                                    </div>
-                <p class="text-base text-gray-400">&copy; 2024 STVX Platform. جميع الحقوق محفوظة.</p>
-            </div>
-        </footer>
-        
-    </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const loader = document.getElementById('app-loader');
-                if (loader) {
-                    loader.style.opacity = '0';
-                    setTimeout(() => loader.style.display = 'none', 300);
-                }
-            }, 500);
-        });
-    </script>
+        </div>
     
     </body>
 </html>
