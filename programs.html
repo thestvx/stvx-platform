@@ -70,7 +70,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* 🚨 تنسيقات البطاقة والصورة (مُعدَّلة لتناسب حركة التكبير باستخدام JS) 🚨 */
+        /* 🚨 تنسيقات البطاقة والصورة (مُعدَّلة لتناسب حركة التكبير باستخدام JS) 🚨 */
         .card-link-wrapper {
             display: block;
             height: 250px; 
@@ -92,7 +92,7 @@
         
         /* إزالة تأثير التحويم القديم لعدم تضاربه مع الـ Modal */
         .project-card:hover .card-link-wrapper img {
-            transform: scale(1); 
+            transform: scale(1.05); /* إضافة تحويم خفيف للفت الانتباه */
         }
         
         /* تنسيقات البطاقة نفسها */
@@ -169,8 +169,7 @@
             <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
                 
                 <div class="project-card animate-card-pop" style="animation-delay: 0.5s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع المتجر الرقمي" class="card-link-wrapper">
-                        <img src="programs/project-program-01.png" alt="صورة مشروع واجهة متجر إلكتروني React" data-image-src="programs/project-program-01.png" class="project-image" />
+                    <a href="#" aria-label="عرض تفاصيل مشروع المتجر الرقمي" class="card-link-wrapper" data-image-url="programs/project-program-01.png"> <img src="programs/project-program-01.png" alt="صورة مشروع واجهة متجر إلكتروني React" class="project-image" />
                     </a>
                     <div class="card-content">
                         <p class="card-title">واجهة متجر إلكتروني (React)</p>
@@ -197,8 +196,8 @@
                 </div>
 
                 <div class="project-card animate-card-pop" style="animation-delay: 0.7s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع صفحة الهبوط" class="card-link-wrapper">
-                        <img src="programs/project-program-02.png" alt="صورة مشروع صفحة هبوط لمؤتمر تقني Vue" data-image-src="programs/project-program-02.png" class="project-image" />
+                    <a href="#" aria-label="عرض تفاصيل مشروع صفحة الهبوط" class="card-link-wrapper" data-image-url="programs/project-program-02.png">
+                        <img src="programs/project-program-02.png" alt="صورة مشروع صفحة هبوط لمؤتمر تقني Vue" class="project-image" />
                     </a>
                     <div class="card-content">
                         <p class="card-title">صفحة هبوط لمؤتمر تقني (Vue)</p>
@@ -225,8 +224,8 @@
                 </div>
                 
                 <div class="project-card animate-card-pop" style="animation-delay: 0.9s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع لوحة التحكم" class="card-link-wrapper">
-                        <img src="programs/project-program-03.png" alt="صورة مشروع لوحة تحكم إدارية Bootstrap" data-image-src="programs/project-program-03.png" class="project-image" />
+                    <a href="#" aria-label="عرض تفاصيل مشروع لوحة التحكم" class="card-link-wrapper" data-image-url="programs/project-program-03.png">
+                        <img src="programs/project-program-03.png" alt="صورة مشروع لوحة تحكم إدارية Bootstrap" class="project-image" />
                     </a>
                     <div class="card-content">
                         <p class="card-title">لوحة تحكم (Dashboard) متجاوبة</p>
@@ -253,8 +252,8 @@
                 </div>
 
                 <div class="project-card animate-card-pop" style="animation-delay: 1.1s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع معرض أعمال تفاعلي" class="card-link-wrapper">
-                        <img src="programs/project-program-04.png" alt="صورة مشروع معرض أعمال شخصي تفاعلي" data-image-src="programs/project-program-04.png" class="project-image" />
+                    <a href="#" aria-label="عرض تفاصيل مشروع معرض أعمال تفاعلي" class="card-link-wrapper" data-image-url="programs/project-program-04.png">
+                        <img src="programs/project-program-04.png" alt="صورة مشروع معرض أعمال شخصي تفاعلي" class="project-image" />
                     </a>
                     <div class="card-content">
                         <p class="card-title">معرض أعمال شخصي (Svelte)</p>
@@ -281,8 +280,8 @@
                 </div>
 
                 <div class="project-card animate-card-pop" style="animation-delay: 1.3s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع واجهة تطبيق جوال" class="card-link-wrapper">
-                        <img src="programs/project-program-05.png" alt="صورة مشروع واجهة مستخدم تطبيق جوال" data-image-src="programs/project-program-05.png" class="project-image" />
+                    <a href="#" aria-label="عرض تفاصيل مشروع واجهة تطبيق جوال" class="card-link-wrapper" data-image-url="programs/project-program-05.png">
+                        <img src="programs/project-program-05.png" alt="صورة مشروع واجهة مستخدم تطبيق جوال" class="project-image" />
                     </a>
                     <div class="card-content">
                         <p class="card-title">واجهة تطبيق جوال (NativeScript)</p>
@@ -309,8 +308,8 @@
                 </div>
 
                 <div class="project-card animate-card-pop" style="animation-delay: 1.5s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع مدونة فنية" class="card-link-wrapper">
-                        <img src="programs/project-program-06.png" alt="صورة مشروع مدونة فنية بتصميم عصري" data-image-src="programs/project-program-06.png" class="project-image" />
+                    <a href="#" aria-label="عرض تفاصيل مشروع مدونة فنية" class="card-link-wrapper" data-image-url="programs/project-program-06.png">
+                        <img src="programs/project-program-06.png" alt="صورة مشروع مدونة فنية بتصميم عصري" class="project-image" />
                     </a>
                     <div class="card-content">
                         <p class="card-title">مدونة فنية بتصميم عصري (Gatsby)</p>
@@ -337,8 +336,8 @@
                 </div>
 
                 <div class="project-card animate-card-pop" style="animation-delay: 1.7s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع خارطة تفاعلية" class="card-link-wrapper">
-                        <img src="programs/project-program-07.png" alt="صورة مشروع خارطة تفاعلية لعرض البيانات" data-image-src="programs/project-program-07.png" class="project-image" />
+                    <a href="#" aria-label="عرض تفاصيل مشروع خارطة تفاعلية" class="card-link-wrapper" data-image-url="programs/project-program-07.png">
+                        <img src="programs/project-program-07.png" alt="صورة مشروع خارطة تفاعلية لعرض البيانات" class="project-image" />
                     </a>
                     <div class="card-content">
                         <p class="card-title">خارطة تفاعلية لعرض البيانات</p>
@@ -365,8 +364,8 @@
                 </div>
 
                 <div class="project-card animate-card-pop" style="animation-delay: 1.9s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع نماذج تسجيل دخول" class="card-link-wrapper">
-                        <img src="programs/project-program-08.png" alt="صورة مشروع نماذج تسجيل دخول وتوثيق" data-image-src="programs/project-program-08.png" class="project-image" />
+                    <a href="#" aria-label="عرض تفاصيل مشروع نماذج تسجيل دخول" class="card-link-wrapper" data-image-url="programs/project-program-08.png">
+                        <img src="programs/project-program-08.png" alt="صورة مشروع نماذج تسجيل دخول وتوثيق" class="project-image" />
                     </a>
                     <div class="card-content">
                         <p class="card-title">نماذج تسجيل دخول وتوثيق (Next.js)</p>
@@ -393,8 +392,8 @@
                 </div>
 
                 <div class="project-card animate-card-pop" style="animation-delay: 2.1s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع تطبيق ويب متقدم (PWA)" class="card-link-wrapper">
-                        <img src="programs/project-program-09.png" alt="صورة مشروع تطبيق ويب متقدم PWA" data-image-src="programs/project-program-09.png" class="project-image" />
+                    <a href="#" aria-label="عرض تفاصيل مشروع تطبيق ويب متقدم (PWA)" class="card-link-wrapper" data-image-url="programs/project-program-09.png">
+                        <img src="programs/project-program-09.png" alt="صورة مشروع تطبيق ويب متقدم PWA" class="project-image" />
                     </a>
                     <div class="card-content">
                         <p class="card-title">تطبيق ويب متقدم (PWA) للأخبار</p>
@@ -421,8 +420,8 @@
                 </div>
 
                 <div class="project-card animate-card-pop" style="animation-delay: 2.3s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع الرسوم البيانية التفاعلية" class="card-link-wrapper">
-                        <img src="programs/project-program-10.png" alt="صورة مشروع رسوم بيانية تفاعلية للبيانات" data-image-src="programs/project-program-10.png" class="project-image" />
+                    <a href="#" aria-label="عرض تفاصيل مشروع الرسوم البيانية التفاعلية" class="card-link-wrapper" data-image-url="programs/project-program-10.png">
+                        <img src="programs/project-program-10.png" alt="صورة مشروع رسوم بيانية تفاعلية للبيانات" class="project-image" />
                     </a>
                     <div class="card-content">
                         <p class="card-title">رسوم بيانية تفاعلية (D3.js)</p>
@@ -449,8 +448,8 @@
                 </div>
                 
                 <div class="project-card animate-card-pop" style="animation-delay: 2.5s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع موقع تعريفي بسيط" class="card-link-wrapper">
-                        <img src="programs/project-program-11.png" alt="صورة مشروع موقع تعريفي بسيط HTML/CSS" data-image-src="programs/project-program-11.png" class="project-image" />
+                    <a href="#" aria-label="عرض تفاصيل مشروع موقع تعريفي بسيط" class="card-link-wrapper" data-image-url="programs/project-program-11.png">
+                        <img src="programs/project-program-11.png" alt="صورة مشروع موقع تعريفي بسيط HTML/CSS" class="project-image" />
                     </a>
                     <div class="card-content">
                         <p class="card-title">موقع تعريفي بسيط (HTML/CSS)</p>
@@ -476,11 +475,20 @@
                     </div>
                 </div>
 
+                <div class="project-card animate-card-pop flex items-center justify-center p-8 border-2 border-dashed border-primary/50" style="animation-delay: 2.7s;">
+                    <div class="text-center">
+                        <i class="ri-rocket-line text-primary text-4xl mb-4 animate-bounce"></i>
+                        <p class="text-xl font-bold text-primary mb-2">هل لديك فكرة جديدة؟</p>
+                        <p class="text-gray-300">دعنا نبني الواجهة الأمامية لمشروعك التالي بآخر التقنيات.</p>
+                        <a href="index.html" class="mt-4 inline-block px-4 py-2 bg-primary text-black font-bold rounded-lg hover:bg-yellow-300 transition-colors">ابدأ مشروعك الآن</a>
+                    </div>
+                </div>
+
             </section>
             
-            <div class="text-center mt-24 animate-fade-in" style="animation-delay: 2.7s;">
+            <div class="text-center mt-24 animate-fade-in" style="animation-delay: 2.9s;">
                 <p class="text-gray-400 text-lg border-t border-gray-800 pt-6">
-                    ابدأ مشروعك البرمجي التالي معنا. <a href="index.html" class="text-primary hover:text-yellow-300 font-bold transition-colors">اطلب عرض سعر</a>.
+                    ابداً مشروعك البرمجي التالي معنا. <a href="index.html" class="text-primary hover:text-yellow-300 font-bold transition-colors">اطلب عرض سعر</a>.
                 </p>
             </div>
 
@@ -498,7 +506,54 @@
         </button>
     </div>
     
-    <script src="script.js"></script> 
+    <script>
+        const modal = document.getElementById('image-modal');
+        const fullImage = document.getElementById('full-image');
+        const closeModal = document.getElementById('close-modal');
+        const cardLinkWrappers = document.querySelectorAll('.card-link-wrapper');
+
+        cardLinkWrappers.forEach(wrapper => {
+            wrapper.addEventListener('click', (e) => {
+                e.preventDefault(); // منع الانتقال إلى #
+
+                const imageUrl = wrapper.getAttribute('data-image-url'); // استخدام الخاصية الجديدة
+                
+                if (imageUrl) {
+                    fullImage.src = imageUrl;
+
+                    // إظهار الـ Modal
+                    modal.classList.remove('opacity-0', 'invisible');
+                    modal.classList.add('opacity-100', 'visible');
+                }
+            });
+        });
+
+        // وظيفة إخفاء الـ Modal
+        function hideModal() {
+            modal.classList.remove('opacity-100', 'visible');
+            modal.classList.add('opacity-0', 'invisible');
+            // تأخير إزالة مصدر الصورة حتى انتهاء الانتقال
+            setTimeout(() => { fullImage.src = ''; }, 500);
+        }
+
+        // إغلاق الـ Modal عند النقر على زر الإغلاق
+        closeModal.addEventListener('click', hideModal);
+
+        // إغلاق الـ Modal عند النقر خارج الصورة (على الخلفية السوداء)
+        modal.addEventListener('click', (e) => {
+            // تحقق ما إذا كان النقر على الـ modal نفسه وليس على الـ content (الصورة)
+            if (e.target.id === 'image-modal') { 
+                hideModal();
+            }
+        });
+
+        // إغلاق الـ Modal عند الضغط على مفتاح ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape" && modal.classList.contains('opacity-100')) {
+                hideModal();
+            }
+        });
+    </script>
     
 </body>
 </html>
