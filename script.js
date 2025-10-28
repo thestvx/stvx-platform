@@ -4,7 +4,7 @@
 // 0. تهيئة متطلبات OGL الأساسية (يجب توفر مكتبة OGL عبر CDN)
 // ----------------------------------------------------
 // لتقليل التعقيد في الكود النقي، سنفترض أن OGL موجودة في النطاق العام بعد استيرادها عبر CDN
-const { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } = window.OGL;
+const { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } = window.OGL || {};
 
 // ----------------------------------------------------
 // وظائف المساعدة العامة (Helper Functions)
@@ -35,17 +35,23 @@ function createTextTexture(gl, text, font = 'bold 30px monospace', color = 'blac
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     context.font = font;
+    // نستخدم قياس مبدئي لحجم الخط
     const metrics = context.measureText(text);
     const textWidth = Math.ceil(metrics.width);
-    const textHeight = Math.ceil(parseInt(font, 10) * 1.2);
-    canvas.width = textWidth + 20;
-    canvas.height = textHeight + 20;
-    context.font = font;
+    const textHeight = Math.ceil(parseInt(font, 10) * 1.5); // زيادة الارتفاع قليلاً لتجنب القطع
+    
+    // يجب أن تكون أبعاد Canvas قوة للعدد 2 (مثل 256، 512، 1024) لبعض متصفحات WebGL القديمة، لكننا هنا نستخدم أحجام دقيقة
+    canvas.width = textWidth + 40; // زيادة الهامش الأفقي
+    canvas.height = textHeight + 20; // زيادة الهامش العمودي
+    
+    // إعادة تعيين الخط بعد تغيير أبعاد Canvas
+    context.font = font; 
     context.fillStyle = color;
     context.textBaseline = 'middle';
     context.textAlign = 'center';
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillText(text, canvas.width / 2, canvas.height / 2);
+    context.fillText(text, canvas.width / 2, canvas.height / 2 + 2); // إضافة إزاحة بسيطة للوسط
+    
     const texture = new Texture(gl, { generateMipmaps: false });
     texture.image = canvas;
     return { texture, width: canvas.width, height: canvas.height };
@@ -68,6 +74,9 @@ class Title {
     }
     createMesh() {
         const { texture, width, height } = createTextTexture(this.gl, this.text, this.font, this.textColor);
+        this.width = width;
+        this.height = height;
+
         const geometry = new Plane(this.gl);
         const program = new Program(this.gl, {
             vertex: `
@@ -93,18 +102,23 @@ class Title {
             `,
             uniforms: { tMap: { value: texture } },
             transparent: true,
-            // 💡 إضافة عمق لضمان عدم تداخل النص مع التأثيرات الأخرى
             depthTest: false,
             depthWrite: false, 
         });
         this.mesh = new Mesh(this.gl, { geometry, program });
-        const aspect = width / height;
+        this.onResize();
+        this.mesh.setParent(this.plane);
+    }
+
+    onResize() {
+        if (!this.mesh) return;
+        const aspect = this.width / this.height;
+        // يتم تحديد ارتفاع النص بالنسبة لحجم البطاقة 
         const textHeight = this.plane.scale.y * 0.15;
         const textWidth = textHeight * aspect;
         this.mesh.scale.set(textWidth, textHeight, 1);
         // تم تعديل الموضع ليصبح أسفل البطاقة
         this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeight * 0.5 - 0.05; 
-        this.mesh.setParent(this.plane);
     }
 }
 
@@ -114,8 +128,9 @@ class Title {
 
 class Media {
     constructor({
-        geometry, gl, image, index, length, renderer, scene, screen, text, viewport, bend, textColor, borderRadius = 0, font
+        geometry, gl, image, index, length, renderer, scene, screen, text, viewport, bend, textColor, borderRadius = 0, font, 
     }) {
+        autoBind(this);
         this.extra = 0;
         this.geometry = geometry;
         this.gl = gl;
@@ -129,13 +144,20 @@ class Media {
         this.viewport = viewport;
         this.bend = bend;
         this.textColor = textColor;
-        this.borderRadius = borderRadius;
+        // تحويل قيمة BorderRadius من نسبة مئوية (0.05) إلى مقياس في WebGL
+        this.borderRadius = borderRadius; 
         this.font = font;
+
+        this.x = 0;
+        this.width = 0;
+        this.widthTotal = 0;
+        
         this.createShader();
         this.createMesh();
         this.createTitle();
         this.onResize();
     }
+
     createShader() {
         const texture = new Texture(this.gl, {
             generateMipmaps: true
@@ -157,6 +179,7 @@ class Media {
                     vUv = uv;
                     vec3 p = position;
                     // تأثير التموج الخفيف (Wave effect)
+                    // يتم تعديل قوة التموج بناءً على سرعة التمرير
                     p.z = (sin(p.x * 4.0 + uTime * 0.5) * 0.3 + cos(p.y * 2.0 + uTime * 0.5) * 0.3) * (0.1 + abs(uSpeed) * 1.5);
                     gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
                 }
@@ -189,11 +212,11 @@ class Media {
                     vec4 color = texture2D(tMap, uv);
                     
                     // تطبيق الحواف الدائرية
-                    // تحويل vUv من [0, 1] إلى موضع مركزي [ -0.5, 0.5 ]
                     vec2 centeredUv = vUv - 0.5;
                     // حساب نصف حجم البطاقة
                     vec2 halfSize = vec2(0.5, 0.5);
                     // تحديد حجم الحافة الدائرية بالنسبة لحجم البطاقة
+                    // نستخدم uBorderRadius كنسبة من halfSize.y
                     float radius = uBorderRadius * halfSize.y; 
                     
                     float d = roundedBoxSDF(centeredUv, halfSize - radius, radius);
@@ -216,6 +239,8 @@ class Media {
             },
             transparent: true
         });
+
+        // تحميل الصورة
         const img = new Image();
         img.crossOrigin = 'anonymous';
         img.src = this.image;
@@ -224,6 +249,7 @@ class Media {
             this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
         };
     }
+    
     createMesh() {
         this.plane = new Mesh(this.gl, {
             geometry: this.geometry,
@@ -231,6 +257,7 @@ class Media {
         });
         this.plane.setParent(this.scene);
     }
+
     createTitle() {
         this.title = new Title({
             gl: this.gl,
@@ -238,9 +265,10 @@ class Media {
             renderer: this.renderer,
             text: this.text,
             textColor: this.textColor,
-            fontFamily: this.font
+            font: this.font
         });
     }
+
     update(scroll, direction) {
         // تحديث موضع البطاقة بناءً على التمرير
         this.plane.position.x = this.x - scroll.current - this.extra;
@@ -257,13 +285,21 @@ class Media {
             const R = (H * H + B_abs * B_abs) / (2 * B_abs);
             const effectiveX = Math.min(Math.abs(x), H);
 
-            const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
-            if (this.bend > 0) {
-                this.plane.position.y = -arc;
-                this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
+            // التأكد من أن القيمة داخل الجذر التربيعي موجبة
+            const sqrtArg = R * R - effectiveX * effectiveX;
+            if (sqrtArg >= 0) {
+                const arc = R - Math.sqrt(sqrtArg);
+                if (this.bend > 0) {
+                    this.plane.position.y = -arc;
+                    this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
+                } else {
+                    this.plane.position.y = arc;
+                    this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
+                }
             } else {
-                this.plane.position.y = arc;
-                this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
+                 // في حالة جذر سالب، نثبت الموضع والدوران لتجنب الأخطاء
+                this.plane.position.y = 0;
+                this.plane.rotation.z = 0;
             }
         }
 
@@ -278,7 +314,8 @@ class Media {
         this.isBefore = this.plane.position.x + planeOffset < -viewportOffset;
         this.isAfter = this.plane.position.x - planeOffset > viewportOffset;
         
-        const loopWidth = this.widthTotal / 2; // نقسم على 2 لأننا ضاعفنا عدد العناصر مسبقًا
+        // استخدام عرض المجموعة الأصلية للحلقة اللانهائية
+        const loopWidth = this.widthTotal; 
         
         if (direction === 'right' && this.isBefore) {
             this.extra -= loopWidth;
@@ -289,6 +326,7 @@ class Media {
             this.isBefore = this.isAfter = false;
         }
     }
+
     onResize({ screen, viewport } = {}) {
         if (screen) this.screen = screen;
         if (viewport) {
@@ -303,12 +341,13 @@ class Media {
             scaleFactor = 0.7;
         }
         
-        const cardHeightScale = 800 * scaleFactor;
-        const cardWidthScale = 600 * scaleFactor;
+        // تحديد حجم ثابت للبطاقة (بالبكسل مثلاً) ثم تحويله إلى وحدات WebGL
+        const cardHeightPixels = 600 * scaleFactor;
+        const cardWidthPixels = 450 * scaleFactor;
         
-        // حساب مقاييس البطاقة
-        this.plane.scale.y = (this.viewport.height * cardHeightScale) / this.screen.height;
-        this.plane.scale.x = (this.viewport.width * cardWidthScale) / this.screen.width;
+        // حساب مقاييس البطاقة باستخدام نسبة الشاشة
+        this.plane.scale.y = (this.viewport.height * cardHeightPixels) / this.screen.height;
+        this.plane.scale.x = (this.viewport.width * cardWidthPixels) / this.screen.width;
         
         this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
         
@@ -324,10 +363,7 @@ class Media {
         
         // إعادة حساب مقاييس النص بعد تغيير مقياس البطاقة
         if (this.title) {
-            const textHeight = this.plane.scale.y * 0.15;
-            this.title.mesh.scale.y = textHeight;
-            this.title.mesh.scale.x = textHeight * (this.title.width / this.title.height);
-            this.title.mesh.position.y = -this.plane.scale.y * 0.5 - textHeight * 0.5 - 0.05;
+            this.title.onResize();
         }
     }
 }
@@ -351,8 +387,9 @@ class CircularGalleryApp {
     ) {
         autoBind(this); // لربط وظائف الكلاس بشكل تلقائي
         this.container = document.getElementById(containerId);
-        if (!this.container) {
-            console.error(`Circular Gallery container with ID ${containerId} not found.`);
+        if (!this.container || !window.OGL) {
+             // إظهار رسالة إذا لم يتم العثور على الحاوية أو مكتبة OGL 
+            console.error(`Circular Gallery failed: Container ID ${containerId} not found or OGL library is missing.`);
             return;
         }
         
@@ -363,7 +400,7 @@ class CircularGalleryApp {
         this.createRenderer();
         this.createCamera();
         this.createScene();
-        this.onResize();
+        this.onResize(); // يجب استدعاؤها أولاً لتهيئة this.screen و this.viewport
         this.createGeometry();
         this.createMedias(items, bend, textColor, borderRadius, font);
         this.addEventListeners();
@@ -385,29 +422,34 @@ class CircularGalleryApp {
         this.gl.canvas.style.left = '0';
         this.gl.canvas.style.width = '100%';
         this.gl.canvas.style.height = '100%';
-        this.gl.canvas.style.pointerEvents = 'none'; // لتمكين النقر على المحتوى الأساسي إذا لزم الأمر
+        this.gl.canvas.style.pointerEvents = 'none'; // لتمكين النقر على المحتوى الأساسي
         
         this.container.appendChild(this.gl.canvas);
     }
+
     createCamera() {
         this.camera = new Camera(this.gl);
         this.camera.fov = 45;
         this.camera.position.z = 20;
     }
+
     createScene() {
         this.scene = new Transform();
     }
+
     createGeometry() {
         this.planeGeometry = new Plane(this.gl, {
+            // زيادة عدد التقسيمات للحصول على تأثير انحناء وتموج سلس
             heightSegments: 50,
             widthSegments: 100
         });
     }
+
     createMedias(items, bend = 1, textColor, borderRadius, font) {
         const defaultItems = [
-            { image: 'graphics/project-graphic-01.jpg', text: 'المشروع الأول' },
-            { image: 'graphics/project-graphic-02.jpg', text: 'المشروع الثاني' },
-            { image: 'graphics/project-graphic-03.jpg', text: 'المشروع الثالث' },
+            { image: 'images/default-1.jpg', text: 'المشروع الافتراضي الأول' },
+            { image: 'images/default-2.jpg', text: 'المشروع الافتراضي الثاني' },
+            { image: 'images/default-3.jpg', text: 'المشروع الافتراضي الثالث' },
         ];
         const galleryItems = items && items.length ? items : defaultItems;
         
@@ -433,7 +475,7 @@ class CircularGalleryApp {
             });
         });
     }
-    
+
     // ----------------------
     // إدارة التفاعلات
     // ----------------------
@@ -443,40 +485,43 @@ class CircularGalleryApp {
         this.start = e.touches ? e.touches[0].clientX : e.clientX;
         this.container.style.cursor = 'grabbing';
     }
+
     onTouchMove(e) {
         if (!this.isDown) return;
         const x = e.touches ? e.touches[0].clientX : e.clientX;
-        const distance = (this.start - x) * (this.scrollSpeed * 0.05);
+        // زيادة قيمة scrollSpeed للتحكم بسرعة التمرير
+        const distance = (this.start - x) * (this.scrollSpeed * 0.05); 
         this.scroll.target = this.scroll.position + distance;
     }
+
     onTouchUp() {
         this.isDown = false;
         this.container.style.cursor = 'grab';
-        // لا نحتاج لـ onCheck إذا كنا نريد تمرير حر
+        // يمكنك تفعيل onCheck هنا لتفعيل خاصية التوقف (Snap) على أقرب بطاقة
         // this.onCheck(); 
     }
+
     onWheel(e) {
-        const delta = e.deltaY || e.wheelDelta || e.detail;
+        // نستخدم deltaX للتمرير الأفقي أو deltaY إذا لم يكن هناك تمرير أفقي
+        const delta = e.deltaX || e.deltaY || e.wheelDelta || e.detail;
         this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.5;
-        // لا نحتاج لـ onCheckDebounce إذا كنا نريد تمرير حر
+        e.preventDefault(); // منع التمرير الافتراضي للصفحة عند التمرير داخل المعرض
+        // يمكنك تفعيل onCheckDebounce هنا لتفعيل خاصية التوقف (Snap) 
         // this.onCheckDebounce();
     }
     
-    // وظيفة لاصق التوقف (Snap)
+    // وظيفة لاصق التوقف (Snap) - حالياً معطلة لتمكين التمرير الحر
     onCheck() {
         if (!this.medias || !this.medias[0]) return;
         const width = this.medias[0].width;
-        // نستخدم widthTotal / 2 لتمثيل طول مجموعة واحدة من البطاقات الأصلية
-        const loopWidth = this.medias[0].widthTotal; 
         
-        // حساب الفهرس بالنسبة للمجموعة الأصلية (للتوقف على البطاقة)
-        const itemIndex = Math.round(Math.abs(this.scroll.target) / width); 
-        const item = width * itemIndex;
+        // تحديد موقع التوقف بناءً على أقرب بطاقة
+        const itemIndex = Math.round(this.scroll.target / width); 
+        const snapTarget = width * itemIndex;
         
-        // التوقف على أقرب بطاقة مع الحفاظ على حلقة التكرار
-        this.scroll.target = this.scroll.target < 0 ? -item : item;
+        this.scroll.target = snapTarget;
     }
-    
+
     onResize() {
         this.screen = {
             width: this.container.clientWidth,
@@ -486,6 +531,7 @@ class CircularGalleryApp {
         this.camera.perspective({
             aspect: this.screen.width / this.screen.height
         });
+        // حساب حجم Viewport (المساحة المرئية في WebGL)
         const fov = (this.camera.fov * Math.PI) / 180;
         const height = 2 * Math.tan(fov / 2) * this.camera.position.z;
         const width = height * this.camera.aspect;
@@ -494,15 +540,10 @@ class CircularGalleryApp {
         if (this.medias) {
             this.medias.forEach(media => media.onResize({ screen: this.screen, viewport: this.viewport }));
         }
-        
-        // إذا كنا نستخدم التوقف (Snap)، فسنعيد التوقف بعد تغيير الحجم
-        // this.onCheck(); 
     }
+
     update() {
         this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
-        
-        // منع التمرير الزائد (Clamp scroll)
-        // يتم التمرير بحرية داخل الدائرة، لذلك قد لا نحتاج إلى clamping
         
         const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
         
@@ -517,13 +558,15 @@ class CircularGalleryApp {
     
     addEventListeners() {
         window.addEventListener('resize', this.onResize);
-        window.addEventListener('mousewheel', this.onWheel);
-        window.addEventListener('wheel', this.onWheel);
         
-        // استبدال المستمعين على window بالمستمعين على الحاوية (container)
+        // استبدال المستمعين على window بالمستمعين على الحاوية (container) للتفاعلات
+        this.container.addEventListener('wheel', this.onWheel, { passive: false });
+        this.container.addEventListener('mousewheel', this.onWheel, { passive: false });
+        
         this.container.addEventListener('mousedown', this.onTouchDown);
         this.container.addEventListener('mousemove', this.onTouchMove);
         this.container.addEventListener('mouseup', this.onTouchUp);
+        
         this.container.addEventListener('touchstart', this.onTouchDown, { passive: true });
         this.container.addEventListener('touchmove', this.onTouchMove, { passive: true });
         this.container.addEventListener('touchend', this.onTouchUp);
@@ -533,10 +576,13 @@ class CircularGalleryApp {
     }
     
     destroy() {
+        // ... (وظيفة التنظيف كما هي)
         window.cancelAnimationFrame(this.raf);
         window.removeEventListener('resize', this.onResize);
-        window.removeEventListener('mousewheel', this.onWheel);
-        window.removeEventListener('wheel', this.onWheel);
+        
+        // إزالة مستمعات التفاعل من الحاوية
+        this.container.removeEventListener('wheel', this.onWheel);
+        this.container.removeEventListener('mousewheel', this.onWheel);
         this.container.removeEventListener('mousedown', this.onTouchDown);
         this.container.removeEventListener('mousemove', this.onTouchMove);
         this.container.removeEventListener('mouseup', this.onTouchUp);
@@ -551,14 +597,107 @@ class CircularGalleryApp {
 }
 
 // ----------------------------------------------------
-// 6. تهيئة المعرض عند تحميل الصفحة (Global Init)
+// 6. تهيئة النظام العام (Global Init)
 // ----------------------------------------------------
 
-// تهيئة Sidebar و Tabs (نتركها كما هي لتتم تهيئتها لاحقاً في ملف script.js)
+/**
+ * 6.1. تهيئة الشريط الجانبي (Sidebar Toggle)
+ */
+function initSidebarToggle() {
+    const sidebar = document.getElementById('sidebar');
+    const toggleButton = document.getElementById('sidebar-toggle');
+    const mainContent = document.getElementById('mainContent');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    
+    if (!sidebar || !toggleButton || !mainContent || !backdrop) {
+        // ليست كل الصفحات تحتوي على شريط جانبي (مثل auth.html)
+        return; 
+    }
+
+    const openSidebar = () => {
+        sidebar.classList.remove('-translate-x-full');
+        mainContent.classList.add('filter');
+        backdrop.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // منع تمرير الجسم أثناء فتح الشريط
+    };
+
+    const closeSidebar = () => {
+        sidebar.classList.add('-translate-x-full');
+        mainContent.classList.remove('filter');
+        backdrop.classList.add('hidden');
+        document.body.style.overflow = '';
+    };
+
+    toggleButton.addEventListener('click', openSidebar);
+    backdrop.addEventListener('click', closeSidebar);
+
+    // إضافة مستمع لإغلاق الشريط عند النقر على رابط بداخله (لتجنب بقاء الشريط مفتوحاً)
+    sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeSidebar);
+    });
+}
+
+/**
+ * 6.2. تهيئة تبديل علامات التبويب في صفحة المصادقة (Auth Tabs)
+ */
+function initAuthTabs() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    if (tabButtons.length === 0 || tabPanels.length === 0) {
+        return; // ليست صفحة المصادقة
+    }
+
+    const switchTab = (targetId) => {
+        tabButtons.forEach(btn => {
+            btn.classList.remove('active', 'text-primary', 'font-bold');
+            btn.classList.add('text-gray-400', 'font-medium');
+            if (btn.getAttribute('data-target') === targetId) {
+                btn.classList.add('active', 'text-primary', 'font-bold');
+                btn.classList.remove('text-gray-400', 'font-medium');
+            }
+        });
+
+        tabPanels.forEach(panel => {
+            panel.classList.add('hidden');
+            if (panel.id === targetId) {
+                panel.classList.remove('hidden');
+                panel.classList.add('animate-slide-down'); // تطبيق الأنيميشن عند التبديل
+            }
+        });
+    };
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = button.getAttribute('data-target');
+            switchTab(targetId);
+        });
+    });
+
+    // تعيين علامة التبويب الافتراضية عند التحميل
+    if (tabButtons.length > 0) {
+        switchTab(tabButtons[0].getAttribute('data-target'));
+    }
+}
+
+
+// ----------------------------------------------------
+// 7. وظيفة التهيئة الشاملة (Window Global Function)
+// ----------------------------------------------------
 
 // تهيئة المعرض الدائري (يجب أن يتم استدعاؤه في نهاية ملف HTML بعد تحميل العناصر)
 window.initCircularGallery = function(containerId, items) {
-    new CircularGalleryApp(containerId, {
+    if (!window.OGL) {
+        console.error("OGL library is not loaded. Cannot initialize CircularGallery.");
+        return;
+    }
+    // نقوم بإنشاء مثيل جديد للتطبيق وإتلاف أي مثيل سابق
+    if (window.galleryApp && window.galleryApp.destroy) {
+        window.galleryApp.destroy();
+    }
+
+    window.galleryApp = new CircularGalleryApp(containerId, {
         items: items,
         // يمكن تعديل هذه القيم لضبط شكل المعرض
         bend: 3, 
@@ -569,3 +708,9 @@ window.initCircularGallery = function(containerId, items) {
         scrollEase: 0.1
     });
 }
+
+// تشغيل وظائف التهيئة العامة عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+    initSidebarToggle();
+    initAuthTabs();
+});
