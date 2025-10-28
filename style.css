@@ -360,7 +360,8 @@ a {
 /* 10. 🚨 تنسيقات Lightbox على النقر (Lightbox Modal) 🚨 */
 /* -------------------------------------- */
 
-.lightbox-overlay {
+/* تم تعديل selector من .lightbox-overlay إلى #lightbox ليتوافق مع الـ ID في JS */
+#lightbox { 
     position: fixed;
     top: 0;
     left: 0;
@@ -368,7 +369,7 @@ a {
     height: 100%;
     /* خلفية شفافة ومظلمة */
     background: rgba(0, 0, 0, 0.9);
-    z-index: 9998; /* أسفل الـ floating-image-wrapper */
+    z-index: 9998; 
     
     /* تنسيقات الإخفاء الافتراضية */
     display: none;
@@ -376,13 +377,12 @@ a {
     transition: opacity 0.3s ease;
 
     /* لتوسيط المحتوى */
-    display: flex;
     justify-content: center;
     align-items: center;
 }
 
 /* حالة الظهور (يتم إضافتها بواسطة JavaScript) */
-.lightbox-overlay.active {
+#lightbox.active {
     display: flex; /* إظهار الـ flex لتمكين التوسيط */
     opacity: 1;
 }
@@ -439,7 +439,7 @@ a {
 }
 
 /* تطبيق حركة الظهور النهائية للصورة */
-.lightbox-overlay.active #lightbox-image {
+#lightbox.active #lightbox-image {
     transform: scale(1);
     opacity: 1;
 }
