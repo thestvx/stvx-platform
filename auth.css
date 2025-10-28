@@ -4,7 +4,7 @@
 /* 1. الخلفية الثابتة لصفحة التسجيل */
 /* -------------------------------------- */
 .auth-background {
-    background-image: url('images/loginbackground004.png'); 
+    background-image: url('images/loginbackground005.png'); 
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
