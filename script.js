@@ -1,18 +1,9 @@
 // script.js (وظائف عامة وتهيئة للعناصر)
 
 // ----------------------------------------------------
-// 1. وظائف المساعدة العامة (Helper Functions)
+// 1. تهيئة الشريط الجانبي (Sidebar Toggle)
 // ----------------------------------------------------
-
-// الوظائف القديمة تم حذفها لتنظيف الكود كما أشرت في تعليقك.
-
-// ----------------------------------------------------
-// 2. تهيئة الشريط الجانبي (Sidebar Toggle)
-// ----------------------------------------------------
-
-/**
- * تهيئة آلية فتح وإغلاق الشريط الجانبي (Sidebar)
- */
+// (وظيفة initSidebarToggle لم تتغير - تم حذفها هنا للاختصار، لكنها موجودة في النهاية)
 function initSidebarToggle() {
     const sidebar = document.getElementById('sidebar');
     const toggleButton = document.getElementById('sidebar-toggle');
@@ -20,46 +11,38 @@ function initSidebarToggle() {
     const backdrop = document.getElementById('sidebar-backdrop');
     
     if (!sidebar || !toggleButton || !mainContent || !backdrop) {
-        // ليست كل الصفحات تحتوي على شريط جانبي (مثل auth.html)
         return; 
     }
 
     const openSidebar = () => {
         sidebar.classList.remove('-translate-x-full');
-        // تم إزالة 'filter'
         backdrop.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; // منع تمرير الجسم أثناء فتح الشريط
+        document.body.style.overflow = 'hidden'; 
     };
 
     const closeSidebar = () => {
         sidebar.classList.add('-translate-x-full');
-        // mainContent.classList.remove('filter');
         backdrop.classList.add('hidden');
         document.body.style.overflow = '';
     };
 
     toggleButton.addEventListener('click', openSidebar);
     backdrop.addEventListener('click', closeSidebar);
-
-    // إضافة مستمع لإغلاق الشريط عند النقر على رابط بداخله
     sidebar.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', closeSidebar);
     });
 }
 
 // ----------------------------------------------------
-// 3. تهيئة تبديل علامات التبويب في صفحة المصادقة (Auth Tabs)
+// 2. تهيئة تبديل علامات التبويب في صفحة المصادقة (Auth Tabs)
 // ----------------------------------------------------
-
-/**
- * تهيئة تبديل علامات التبويب في صفحة المصادقة (Auth Tabs)
- */
+// (وظيفة initAuthTabs لم تتغير - تم حذفها هنا للاختصار، لكنها موجودة في النهاية)
 function initAuthTabs() {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanels = document.querySelectorAll('.tab-panel');
 
     if (tabButtons.length === 0 || tabPanels.length === 0) {
-        return; // ليست صفحة المصادقة
+        return; 
     }
 
     const switchTab = (targetId) => {
@@ -76,7 +59,7 @@ function initAuthTabs() {
             panel.classList.add('hidden');
             if (panel.id === targetId) {
                 panel.classList.remove('hidden');
-                panel.classList.add('animate-slide-down'); // تطبيق الأنيميشن عند التبديل
+                panel.classList.add('animate-slide-down'); 
             }
         });
     };
@@ -89,59 +72,131 @@ function initAuthTabs() {
         });
     });
 
-    // تعيين علامة التبويب الافتراضية عند التحميل
     if (tabButtons.length > 0) {
         switchTab(tabButtons[0].getAttribute('data-target'));
     }
 }
 
+
 // ----------------------------------------------------
-// 4. وظيفة تأثير التكبير السلس عند التحويم (Smooth Zoom) 🆕
+// 3. 🆕 وظيفة Lightbox On Hover (الصورة تطفو وتظهر في المنتصف) 🆕
 // ----------------------------------------------------
 
 /**
- * تهيئة تأثير التكبير السلس على العناصر المحددة (يفترض وجود كلاسات CSS/Tailwind جاهزة: 
- * 'transition-transform duration-300 ease-in-out' و 'scale-110').
- * يجب إضافة الكلاس 'zoom-target' إلى العناصر التي تريد تطبيق التأثير عليها.
+ * تهيئة تأثير عرض الصورة بشكل عائم وبأبعادها الأصلية في منتصف الشاشة عند التحويم.
+ * يجب إضافة الكلاس 'lightbox-trigger' إلى عنصر الصورة (img) داخل البطاقة.
  */
-function initImageHoverZoom() {
-    // العناصر المراد تطبيق التكبير عليها.
-    // يجب أن تكون هذه العناصر هي الصور أو الحاويات التي تحويها.
-    const zoomTargets = document.querySelectorAll('.zoom-target'); 
+function initImageLightboxOnHover() {
+    const triggers = document.querySelectorAll('.lightbox-trigger'); 
 
-    if (zoomTargets.length === 0) {
+    if (triggers.length === 0) {
         return;
     }
 
-    zoomTargets.forEach(target => {
-        // إضافة كلاسات الانتقال (Transition) الأساسية لضمان السلاسة
-        // (إذا لم تكن مضافة بالفعل في HTML/CSS).
-        target.classList.add('transition-transform', 'duration-300', 'ease-in-out');
+    // عنصر حاوية للعرض العائم سيتم إنشاؤه لمرة واحدة
+    let floatingImageContainer = null;
 
-        // عند التحويم (mouseover)
-        target.addEventListener('mouseenter', () => {
-            // إضافة كلاس التكبير (يجب أن يكون 'scale-110' أو ما يعادله في CSS)
-            target.classList.add('scale-110'); 
+    const createContainer = () => {
+        if (!floatingImageContainer) {
+            floatingImageContainer = document.createElement('div');
+            floatingImageContainer.id = 'floating-image-container';
+            // تطبيق كلاسات التحكم في المظهر والتمركز (يجب تعريفها في CSS)
+            floatingImageContainer.classList.add('floating-image-wrapper'); 
+            document.body.appendChild(floatingImageContainer);
+        }
+    };
+
+    const showImage = (originalImage) => {
+        if (!floatingImageContainer) return;
+
+        // 1. حساب موضع الصورة الأصلية
+        const rect = originalImage.getBoundingClientRect();
+
+        // 2. إنشاء نسخة طبق الأصل من الصورة
+        const clonedImage = originalImage.cloneNode(true);
+        clonedImage.classList.add('cloned-image');
+        
+        // 3. إعداد الأبعاد والموقع الأولي (مطابق للأصلية)
+        Object.assign(clonedImage.style, {
+            position: 'absolute',
+            top: `${rect.top}px`,
+            left: `${rect.left}px`,
+            width: `${rect.width}px`,
+            height: `${rect.height}px`,
+            opacity: '0', // تبدأ شفافة
+            transform: 'scale(1)',
         });
 
-        // عند مغادرة التحويم (mouseout)
-        target.addEventListener('mouseleave', () => {
-            // إزالة كلاس التكبير للعودة إلى الحجم الأصلي (scale-100 أو بدون scale)
-            target.classList.remove('scale-110');
+        // إفراغ الحاوية وإضافة النسخة
+        floatingImageContainer.innerHTML = '';
+        floatingImageContainer.appendChild(clonedImage);
+        
+        // إظهار النسخة المزدوجة وتفعيل الانتقال إلى المنتصف (بعد مهلة قصيرة للسماح بـ DOM Update)
+        setTimeout(() => {
+            // إخفاء الصورة الأصلية مؤقتاً
+            originalImage.style.opacity = '0'; 
+
+            clonedImage.style.opacity = '1';
+            clonedImage.classList.add('is-centered'); // كلاس يطبق التمركز والأبعاد الأصلية في CSS
+        }, 10); // مهلة قصيرة جداً
+
+        return clonedImage;
+    };
+
+    const hideImage = (clonedImage, originalImage) => {
+        if (!clonedImage || !originalImage || !floatingImageContainer) return;
+
+        const rect = originalImage.getBoundingClientRect();
+        
+        // 1. إعادة الصورة العائمة إلى موقع الصورة الأصلية
+        Object.assign(clonedImage.style, {
+            top: `${rect.top}px`,
+            left: `${rect.left}px`,
+            width: `${rect.width}px`,
+            height: `${rect.height}px`,
+            opacity: '0', 
+            transform: 'scale(1)',
+        });
+        clonedImage.classList.remove('is-centered'); 
+        
+        // 2. إزالة الصورة العائمة وإظهار الأصلية بعد انتهاء الانتقال
+        setTimeout(() => {
+            if (floatingImageContainer.contains(clonedImage)) {
+                floatingImageContainer.removeChild(clonedImage);
+            }
+            originalImage.style.opacity = '1'; 
+        }, 600); // 600ms تتوافق مع مدة الانتقال في CSS
+    };
+    
+    // إنشاء الحاوية مرة واحدة
+    createContainer();
+
+    triggers.forEach(trigger => {
+        let clonedImg = null;
+
+        trigger.addEventListener('mouseenter', () => {
+            clonedImg = showImage(trigger);
+        });
+
+        trigger.addEventListener('mouseleave', () => {
+            // يجب التأكد من أن الماوس لم يدخل إلى الصورة العائمة مباشرة
+            // ولكن في هذا السيناريو، يجب أن نعتمد فقط على ترك الصورة الأصلية
+            hideImage(clonedImg, trigger);
         });
     });
 }
 
 
 // ----------------------------------------------------
-// 5. التشغيل العام (Global Execution)
+// 4. التشغيل العام (Global Execution)
 // ----------------------------------------------------
 
-/**
- * تشغيل وظائف التهيئة العامة عند تحميل الصفحة
- */
 document.addEventListener('DOMContentLoaded', () => {
     initSidebarToggle();
     initAuthTabs();
-    initImageHoverZoom(); // 🆕 إضافة وظيفة التكبير السلس
+    initImageLightboxOnHover(); // 🆕 تشغيل وظيفة Lightbox
 });
+
+// ----------------------------------------------------
+// * إزالة وظيفة initImageHoverZoom القديمة إذا كانت موجودة *
+// ----------------------------------------------------
