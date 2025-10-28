@@ -28,7 +28,7 @@
                         sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
                         logo: ['Pacifico', 'cursive'],
                     },
-                    // تعريفات الأنيميشن (كما هي)
+                    // تعريفات الأنيميشن
                     animation: {
                         'fade-in': 'fadeIn 0.6s ease-out forwards',
                         'slide-down': 'slideDown 0.5s ease-out forwards',
@@ -37,6 +37,7 @@
                         'bounce': 'bounce 1s infinite',
                         'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
                         'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 3s linear infinite', // إضافة حركة دوران بطيئة
                     },
                     keyframes: {
                         fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
@@ -70,7 +71,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* 🚨 تنسيقات البطاقة والصورة (مُعدَّلة لتناسب حركة التكبير باستخدام JS) 🚨 */
+        /* تنسيقات البطاقة والصورة */
         .card-link-wrapper {
             display: block;
             height: 250px; 
@@ -78,24 +79,21 @@
             overflow: hidden;
             border-radius: 8px; 
             margin-bottom: 1rem; 
-            cursor: pointer; /* للإشارة إلى أنها قابلة للتفاعل */
+            cursor: pointer; 
         }
         
-        /* تم إزالة transform: scale(1.1) من هنا، والاعتماد على JS للحركة السلسة */
         .card-link-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* يمكن إبقاء التحويل هنا إذا أردت تحريك خفيف قبل ظهور الـ modal، لكن يتم تجاهله الآن */
             transition: transform 0.3s ease-out; 
         }
         
-        /* إزالة تأثير التحويم القديم لعدم تضاربه مع الـ Modal */
+        /* تأثير التحويم الخفيف */
         .project-card:hover .card-link-wrapper img {
-            transform: scale(1.05); /* إضافة تحويم خفيف للفت الانتباه */
+            transform: scale(1.05); 
         }
         
-        /* تنسيقات البطاقة نفسها */
         .project-card {
             background-color: rgba(17, 17, 17, 0.8);
             backdrop-filter: blur(8px);
@@ -107,7 +105,7 @@
             transition: box-shadow 0.3s, transform 0.3s;
         }
 
-        /* تنسيقات الـ Modal الجديدة (تستخدم في JavaScript) */
+        /* تنسيقات الـ Modal */
         .image-modal {
             transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
         }
@@ -123,6 +121,16 @@
         .card-button { background-color: #ffc72c; color: #111; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; transition: background-color 0.3s; }
         .card-button:hover { background-color: #ffd966; }
         
+        /* تنسيق زر العودة للأعلى */
+        #back-to-top {
+            transition: opacity 0.3s, transform 0.3s;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        #back-to-top.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="text-white font-sans flex flex-col min-h-screen 
@@ -147,7 +155,7 @@
                 </div>
                 
                 <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110">
+                    <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" title="ملفي الشخصي">
                         <i class="ri-user-line text-gray-300 text-xl"></i>
                     </a>
                 </div>
@@ -183,14 +191,14 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-stats">
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد المشاهدات">
                                     <i class="ri-eye-line card-stat-icon"></i> 3.1K
                                 </span>
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد الإعجابات">
                                     <i class="ri-heart-line card-stat-icon"></i> 620
                                 </span>
                             </div>
-                            <a class="card-button" href="#">شاهد الكود</a>
+                            <a class="card-button" href="#" title="شاهد الكود على GitHub">شاهد الكود</a>
                         </div>
                     </div>
                 </div>
@@ -211,10 +219,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-stats">
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد المشاهدات">
                                     <i class="ri-eye-line card-stat-icon"></i> 4.5K
                                 </span>
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد الإعجابات">
                                     <i class="ri-heart-line card-stat-icon"></i> 780
                                 </span>
                             </div>
@@ -239,10 +247,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-stats">
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد المشاهدات">
                                     <i class="ri-eye-line card-stat-icon"></i> 2.8K
                                 </span>
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد الإعجابات">
                                     <i class="ri-heart-line card-stat-icon"></i> 410
                                 </span>
                             </div>
@@ -267,10 +275,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-stats">
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد المشاهدات">
                                     <i class="ri-eye-line card-stat-icon"></i> 1.9K
                                 </span>
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد الإعجابات">
                                     <i class="ri-heart-line card-stat-icon"></i> 330
                                 </span>
                             </div>
@@ -295,10 +303,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-stats">
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد المشاهدات">
                                     <i class="ri-eye-line card-stat-icon"></i> 2.5K
                                 </span>
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد الإعجابات">
                                     <i class="ri-heart-line card-stat-icon"></i> 500
                                 </span>
                             </div>
@@ -323,10 +331,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-stats">
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد المشاهدات">
                                     <i class="ri-eye-line card-stat-icon"></i> 1.2K
                                 </span>
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد الإعجابات">
                                     <i class="ri-heart-line card-stat-icon"></i> 220
                                 </span>
                             </div>
@@ -351,10 +359,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-stats">
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد المشاهدات">
                                     <i class="ri-eye-line card-stat-icon"></i> 3.5K
                                 </span>
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد الإعجابات">
                                     <i class="ri-heart-line card-stat-icon"></i> 580
                                 </span>
                             </div>
@@ -379,10 +387,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-stats">
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد المشاهدات">
                                     <i class="ri-eye-line card-stat-icon"></i> 1.8K
                                 </span>
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد الإعجابات">
                                     <i class="ri-heart-line card-stat-icon"></i> 390
                                 </span>
                             </div>
@@ -407,10 +415,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-stats">
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد المشاهدات">
                                     <i class="ri-eye-line card-stat-icon"></i> 4.9K
                                 </span>
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد الإعجابات">
                                     <i class="ri-heart-line card-stat-icon"></i> 910
                                 </span>
                             </div>
@@ -435,10 +443,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-stats">
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد المشاهدات">
                                     <i class="ri-eye-line card-stat-icon"></i> 2.3K
                                 </span>
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد الإعجابات">
                                     <i class="ri-heart-line card-stat-icon"></i> 450
                                 </span>
                             </div>
@@ -463,10 +471,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-stats">
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد المشاهدات">
                                     <i class="ri-eye-line card-stat-icon"></i> 1.5K
                                 </span>
-                                <span class="card-stat">
+                                <span class="card-stat" title="عدد الإعجابات">
                                     <i class="ri-heart-line card-stat-icon"></i> 280
                                 </span>
                             </div>
@@ -475,12 +483,12 @@
                     </div>
                 </div>
 
-                <div class="project-card animate-card-pop flex items-center justify-center p-8 border-2 border-dashed border-primary/50" style="animation-delay: 2.7s;">
+                <div class="project-card animate-card-pop flex items-center justify-center p-8 border-2 border-dashed border-primary/50 hover:border-primary transition-all duration-300" style="animation-delay: 2.7s;">
                     <div class="text-center">
                         <i class="ri-rocket-line text-primary text-4xl mb-4 animate-bounce"></i>
-                        <p class="text-xl font-bold text-primary mb-2">هل لديك فكرة جديدة؟</p>
+                        <p class="text-xl font-bold text-primary mb-2">🚀 هل لديك فكرة جديدة؟</p>
                         <p class="text-gray-300">دعنا نبني الواجهة الأمامية لمشروعك التالي بآخر التقنيات.</p>
-                        <a href="index.html" class="mt-4 inline-block px-4 py-2 bg-primary text-black font-bold rounded-lg hover:bg-yellow-300 transition-colors">ابدأ مشروعك الآن</a>
+                        <a href="index.html" class="mt-4 inline-block px-6 py-3 bg-primary text-black font-bold rounded-full hover:bg-yellow-300 transition-all duration-300 shadow-lg hover:shadow-primary/50">ابدأ مشروعك الآن</a>
                     </div>
                 </div>
 
@@ -495,7 +503,50 @@
         </main>
         
     </div>
-    
+
+    <footer class="glass-card mt-12 py-10 px-4 rounded-none border-t border-gray-800">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="md:col-span-2">
+                <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain mb-4" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
+                <p class="text-gray-400 text-sm max-w-sm">
+                    منصة STVX هي بوابتك لخدمات التصميم وتطوير الويب المتكاملة، ملتزمون بتقديم حلول تقنية مبتكرة وعالية الأداء.
+                </p>
+            </div>
+            
+            <div>
+                <h3 class="text-primary text-lg font-bold mb-4">روابط سريعة</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="index.html" class="text-gray-400 hover:text-primary transition-colors">الرئيسية</a></li>
+                    <li><a href="portfolio.html" class="text-gray-400 hover:text-primary transition-colors">معرض الأعمال</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">اتصل بنا</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">المدونة</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-primary text-lg font-bold mb-4">خدماتنا</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><span class="text-primary">تطوير الواجهات (Front-end)</span></li>
+                    <li><a href="backend.html" class="text-gray-400 hover:text-primary transition-colors">تطوير الخلفيات (Back-end)</a></li>
+                    <li><a href="design.html" class="text-gray-400 hover:text-primary transition-colors">خدمات التصميم</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">استشارات تقنية</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="mt-8 pt-6 border-t border-gray-800 text-center">
+            <p class="text-gray-500 text-xs">
+                &copy; 2025 STVX Platform. جميع الحقوق محفوظة.
+            </p>
+            <div class="flex justify-center space-x-4 rtl:space-x-reverse mt-4">
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="فيسبوك"><i class="ri-facebook-fill text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="تويتر"><i class="ri-twitter-x-fill text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="لينكد إن"><i class="ri-linkedin-fill text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="جيت هاب"><i class="ri-github-fill text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
     <div id="image-modal" class="image-modal fixed inset-0 bg-black/80 z-[100] flex items-center justify-center opacity-0 invisible" aria-hidden="true" role="dialog" aria-modal="true">
         <div id="modal-content" class="relative max-w-5xl mx-auto p-4">
             <img id="full-image" src="" alt="صورة مكبرة للمشروع" class="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-2xl">
@@ -505,18 +556,24 @@
             <i class="ri-close-line"></i>
         </button>
     </div>
+
+    <button id="back-to-top" class="fixed bottom-6 left-6 w-12 h-12 glass-card flex items-center justify-center rounded-full text-primary shadow-lg hover:bg-white/10 z-40" aria-label="العودة للأعلى">
+        <i class="ri-arrow-up-line text-xl font-bold"></i>
+    </button>
     
     <script>
         const modal = document.getElementById('image-modal');
         const fullImage = document.getElementById('full-image');
         const closeModal = document.getElementById('close-modal');
         const cardLinkWrappers = document.querySelectorAll('.card-link-wrapper');
+        const backToTopButton = document.getElementById('back-to-top');
 
+        // 1. منطق عرض المودال (Popup) للصور
         cardLinkWrappers.forEach(wrapper => {
             wrapper.addEventListener('click', (e) => {
-                e.preventDefault(); // منع الانتقال إلى #
+                e.preventDefault(); 
 
-                const imageUrl = wrapper.getAttribute('data-image-url'); // استخدام الخاصية الجديدة
+                const imageUrl = wrapper.getAttribute('data-image-url'); 
                 
                 if (imageUrl) {
                     fullImage.src = imageUrl;
@@ -541,7 +598,6 @@
 
         // إغلاق الـ Modal عند النقر خارج الصورة (على الخلفية السوداء)
         modal.addEventListener('click', (e) => {
-            // تحقق ما إذا كان النقر على الـ modal نفسه وليس على الـ content (الصورة)
             if (e.target.id === 'image-modal') { 
                 hideModal();
             }
@@ -552,6 +608,22 @@
             if (e.key === "Escape" && modal.classList.contains('opacity-100')) {
                 hideModal();
             }
+        });
+
+        // 2. منطق زر العودة للأعلى (Back to Top)
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // أظهر الزر بعد التمرير 300 بكسل
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     </script>
     
