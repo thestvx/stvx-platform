@@ -105,7 +105,7 @@
             transition: box-shadow 0.3s, transform 0.3s;
         }
 
-        /* 🌟🌟 التعديل هنا: تنسيقات الـ Modal لتظهر في منتصف الشاشة 🌟🌟 */
+        /* 🌟🌟 تنسيقات الـ Modal لتظهر في منتصف الشاشة 🌟🌟 */
         .image-modal {
             transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
             /* الحالة الافتراضية: مخفية */
@@ -124,13 +124,23 @@
             overflow: hidden; 
         }
         
-        /* 💡 إصلاح ظهور الصورة: تأكد من أن الـ Img نفسها لها تنسيقات عرض صحيحة */
+        /* 💡 إصلاح ظهور الصورة: تم إضافة تنسيقات إضافية لضمان العرض */
         #modal-image {
             max-width: 100%;
-            max-height: 90vh; /* تحديد أقصى ارتفاع لضمان ظهروها في المنتصف */
-            width: auto; /* مهم للسماح للصورة بأخذ حجمها الطبيعي */
-            height: auto; /* مهم للسماح للصورة بأخذ حجمها الطبيعي */
-            object-fit: contain; /* التأكد من أن الصورة كاملة تظهر */
+            /* زيادة أقصى ارتفاع قليلاً */
+            max-height: 95vh; 
+            width: auto; 
+            height: auto; 
+            object-fit: contain; 
+            /* هام: التأكد من أن الصورة لديها كلاسات العرض الصحيحة */
+            display: block; 
+            margin: auto;
+        }
+
+        /* التعديل لضمان أن الحاوية الداخلية لا تخفي الصورة */
+        #modal-content {
+            max-width: 90vw; /* السماح بعرض أكبر */
+            max-height: 95vh; /* السماح بارتفاع أكبر */
         }
         /* 🌟🌟 نهاية تعديل الـ Modal 🌟🌟 */
 
@@ -202,7 +212,7 @@
             <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
                 
                 <div class="project-card animate-card-pop" style="animation-delay: 0.5s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع المتجر الرقمي" class="card-link-wrapper" data-image-url="programs/project-program-01.png"> <img src="programs/project-program-01.png" alt="صورة مشروع واجهة متجر إلكتروني React" class="project-image" />
+                    <a href="#" aria-label="عرض تفاصيل مشروع المتجر الرقمي" class="card-link-wrapper" **data-image-url="programs/project-program-01.png"**> <img src="programs/project-program-01.png" alt="صورة مشروع واجهة متجر إلكتروني React" class="project-image" />
                     </a>
                     <div class="card-content">
                         <p class="card-title">واجهة متجر إلكتروني (React)</p>
@@ -227,287 +237,76 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="project-card animate-card-pop" style="animation-delay: 0.7s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع صفحة الهبوط" class="card-link-wrapper" data-image-url="programs/project-program-02.png">
+                    <a href="#" aria-label="عرض تفاصيل مشروع صفحة الهبوط" class="card-link-wrapper" **data-image-url="programs/project-program-02.png"**>
                         <img src="programs/project-program-02.png" alt="صورة مشروع صفحة هبوط لمؤتمر تقني Vue" class="project-image" />
                     </a>
                     <div class="card-content">
-                        <p class="card-title">صفحة هبوط لمؤتمر تقني (Vue)</p>
-                        <p class="card-description">
-                            إنشاء صفحة هبوط عالية الأداء ومحسّنة لمحركات البحث (SEO)، لجمع الاشتراكات في مؤتمر تقني رائد.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">Vue.js</span>
-                            <span class="card-tag">HTML/CSS</span>
-                            <span class="card-tag">SEO</span>
                         </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat" title="عدد المشاهدات">
-                                    <i class="ri-eye-line card-stat-icon"></i> 4.5K
-                                </span>
-                                <span class="card-stat" title="عدد الإعجابات">
-                                    <i class="ri-heart-line card-stat-icon"></i> 780
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">شاهد الموقع</a>
-                        </div>
-                    </div>
                 </div>
-                
                 <div class="project-card animate-card-pop" style="animation-delay: 0.9s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع لوحة التحكم" class="card-link-wrapper" data-image-url="programs/project-program-03.png">
+                    <a href="#" aria-label="عرض تفاصيل مشروع لوحة التحكم" class="card-link-wrapper" **data-image-url="programs/project-program-03.png"**>
                         <img src="programs/project-program-03.png" alt="صورة مشروع لوحة تحكم إدارية Bootstrap" class="project-image" />
                     </a>
                     <div class="card-content">
-                        <p class="card-title">لوحة تحكم (Dashboard) متجاوبة</p>
-                        <p class="card-description">
-                            تطوير واجهة مستخدم إدارية لعرض البيانات والإحصائيات بشكل واضح ومتجاوب مع جميع أحجام الشاشات.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">لوحة تحكم</span>
-                            <span class="card-tag">JavaScript</span>
-                            <span class="card-tag">Bootstrap</span>
                         </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat" title="عدد المشاهدات">
-                                    <i class="ri-eye-line card-stat-icon"></i> 2.8K
-                                </span>
-                                <span class="card-stat" title="عدد الإعجابات">
-                                    <i class="ri-heart-line card-stat-icon"></i> 410
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">عرض الواجهة</a>
-                        </div>
-                    </div>
                 </div>
-
                 <div class="project-card animate-card-pop" style="animation-delay: 1.1s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع معرض أعمال تفاعلي" class="card-link-wrapper" data-image-url="programs/project-program-04.png">
+                    <a href="#" aria-label="عرض تفاصيل مشروع معرض أعمال تفاعلي" class="card-link-wrapper" **data-image-url="programs/project-program-04.png"**>
                         <img src="programs/project-program-04.png" alt="صورة مشروع معرض أعمال شخصي تفاعلي" class="project-image" />
                     </a>
                     <div class="card-content">
-                        <p class="card-title">معرض أعمال شخصي (Svelte)</p>
-                        <p class="card-description">
-                            تصميم وتطوير معرض أعمال شخصي فائق السرعة والأداء باستخدام إطار عمل Svelte، مع تأثيرات حركية خفيفة.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">Svelte</span>
-                            <span class="card-tag">Animation</span>
-                            <span class="card-tag">Front-end</span>
                         </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat" title="عدد المشاهدات">
-                                    <i class="ri-eye-line card-stat-icon"></i> 1.9K
-                                </span>
-                                <span class="card-stat" title="عدد الإعجابات">
-                                    <i class="ri-heart-line card-stat-icon"></i> 330
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">شاهد المعرض</a>
-                        </div>
-                    </div>
                 </div>
-
                 <div class="project-card animate-card-pop" style="animation-delay: 1.3s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع واجهة تطبيق جوال" class="card-link-wrapper" data-image-url="programs/project-program-05.png">
+                    <a href="#" aria-label="عرض تفاصيل مشروع واجهة تطبيق جوال" class="card-link-wrapper" **data-image-url="programs/project-program-05.png"**>
                         <img src="programs/project-program-05.png" alt="صورة مشروع واجهة مستخدم تطبيق جوال" class="project-image" />
                     </a>
                     <div class="card-content">
-                        <p class="card-title">واجهة تطبيق جوال (NativeScript)</p>
-                        <p class="card-description">
-                            بناء واجهة مستخدم متكاملة لتطبيق مالي عبر NativeScript (أو React Native/Flutter)، لضمان تجربة مستخدم سلسة.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">NativeScript</span>
-                            <span class="card-tag">Mobile UI</span>
-                            <span class="card-tag">TypeScript</span>
                         </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat" title="عدد المشاهدات">
-                                    <i class="ri-eye-line card-stat-icon"></i> 2.5K
-                                </span>
-                                <span class="card-stat" title="عدد الإعجابات">
-                                    <i class="ri-heart-line card-stat-icon"></i> 500
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">عرض التطبيق</a>
-                        </div>
-                    </div>
                 </div>
-
                 <div class="project-card animate-card-pop" style="animation-delay: 1.5s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع مدونة فنية" class="card-link-wrapper" data-image-url="programs/project-program-06.png">
+                    <a href="#" aria-label="عرض تفاصيل مشروع مدونة فنية" class="card-link-wrapper" **data-image-url="programs/project-program-06.png"**>
                         <img src="programs/project-program-06.png" alt="صورة مشروع مدونة فنية بتصميم عصري" class="project-image" />
                     </a>
                     <div class="card-content">
-                        <p class="card-title">مدونة فنية بتصميم عصري (Gatsby)</p>
-                        <p class="card-description">
-                            تطوير مدونة ثابتة (Static Site) باستخدام Gatsby.js لتحقيق سرعة تحميل فائقة وتجربة قراءة ممتازة.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">Gatsby.js</span>
-                            <span class="card-tag">Static Site</span>
-                            <span class="card-tag">GraphQL</span>
                         </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat" title="عدد المشاهدات">
-                                    <i class="ri-eye-line card-stat-icon"></i> 1.2K
-                                </span>
-                                <span class="card-stat" title="عدد الإعجابات">
-                                    <i class="ri-heart-line card-stat-icon"></i> 220
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">تصفح المدونة</a>
-                        </div>
-                    </div>
                 </div>
-
                 <div class="project-card animate-card-pop" style="animation-delay: 1.7s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع خارطة تفاعلية" class="card-link-wrapper" data-image-url="programs/project-program-07.png">
+                    <a href="#" aria-label="عرض تفاصيل مشروع خارطة تفاعلية" class="card-link-wrapper" **data-image-url="programs/project-program-07.png"**>
                         <img src="programs/project-program-07.png" alt="صورة مشروع خارطة تفاعلية لعرض البيانات" class="project-image" />
                     </a>
                     <div class="card-content">
-                        <p class="card-title">خارطة تفاعلية لعرض البيانات</p>
-                        <p class="card-description">
-                            تطوير واجهة تعرض البيانات الإحصائية على خارطة تفاعلية باستخدام مكتبة Leaflet.js و AJAX لتحميل البيانات.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">Leaflet.js</span>
-                            <span class="card-tag">API Integration</span>
-                            <span class="card-tag">JavaScript</span>
                         </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat" title="عدد المشاهدات">
-                                    <i class="ri-eye-line card-stat-icon"></i> 3.5K
-                                </span>
-                                <span class="card-stat" title="عدد الإعجابات">
-                                    <i class="ri-heart-line card-stat-icon"></i> 580
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">شاهد الخارطة</a>
-                        </div>
-                    </div>
                 </div>
-
                 <div class="project-card animate-card-pop" style="animation-delay: 1.9s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع نماذج تسجيل دخول" class="card-link-wrapper" data-image-url="programs/project-program-08.png">
+                    <a href="#" aria-label="عرض تفاصيل مشروع نماذج تسجيل دخول" class="card-link-wrapper" **data-image-url="programs/project-program-08.png"**>
                         <img src="programs/project-program-08.png" alt="صورة مشروع نماذج تسجيل دخول وتوثيق" class="project-image" />
                     </a>
                     <div class="card-content">
-                        <p class="card-title">نماذج تسجيل دخول وتوثيق (Next.js)</p>
-                        <p class="card-description">
-                            تطوير مجموعة نماذج (Forms) للتوثيق (Login, Register) متكاملة ومؤمنة باستخدام Next.js و Firebase.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">Next.js</span>
-                            <span class="card-tag">Forms</span>
-                            <span class="card-tag">Firebase</span>
                         </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat" title="عدد المشاهدات">
-                                    <i class="ri-eye-line card-stat-icon"></i> 1.8K
-                                </span>
-                                <span class="card-stat" title="عدد الإعجابات">
-                                    <i class="ri-heart-line card-stat-icon"></i> 390
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">عرض النماذج</a>
-                        </div>
-                    </div>
                 </div>
-
                 <div class="project-card animate-card-pop" style="animation-delay: 2.1s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع تطبيق ويب متقدم (PWA)" class="card-link-wrapper" data-image-url="programs/project-program-09.png">
+                    <a href="#" aria-label="عرض تفاصيل مشروع تطبيق ويب متقدم (PWA)" class="card-link-wrapper" **data-image-url="programs/project-program-09.png"**>
                         <img src="programs/project-program-09.png" alt="صورة مشروع تطبيق ويب متقدم PWA" class="project-image" />
                     </a>
                     <div class="card-content">
-                        <p class="card-title">تطبيق ويب متقدم (PWA) للأخبار</p>
-                        <p class="card-description">
-                            تحويل موقع إخباري تقليدي إلى PWA لتحقيق التخزين المؤقت، وتجربة الأوفلاين، وإرسال الإشعارات.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">PWA</span>
-                            <span class="card-tag">Service Workers</span>
-                            <span class="card-tag">Caching</span>
                         </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat" title="عدد المشاهدات">
-                                    <i class="ri-eye-line card-stat-icon"></i> 4.9K
-                                </span>
-                                <span class="card-stat" title="عدد الإعجابات">
-                                    <i class="ri-heart-line card-stat-icon"></i> 910
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">شاهد التطبيق</a>
-                        </div>
-                    </div>
                 </div>
-
                 <div class="project-card animate-card-pop" style="animation-delay: 2.3s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع الرسوم البيانية التفاعلية" class="card-link-wrapper" data-image-url="programs/project-program-10.png">
+                    <a href="#" aria-label="عرض تفاصيل مشروع الرسوم البيانية التفاعلية" class="card-link-wrapper" **data-image-url="programs/project-program-10.png"**>
                         <img src="programs/project-program-10.png" alt="صورة مشروع رسوم بيانية تفاعلية للبيانات" class="project-image" />
                     </a>
                     <div class="card-content">
-                        <p class="card-title">رسوم بيانية تفاعلية (D3.js)</p>
-                        <p class="card-description">
-                            تطوير واجهة لعرض البيانات المالية المعقدة باستخدام رسوم بيانية تفاعلية ومكتبة D3.js المتقدمة.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">D3.js</span>
-                            <span class="card-tag">Data Vis.</span>
-                            <span class="card-tag">React</span>
                         </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat" title="عدد المشاهدات">
-                                    <i class="ri-eye-line card-stat-icon"></i> 2.3K
-                                </span>
-                                <span class="card-stat" title="عدد الإعجابات">
-                                    <i class="ri-heart-line card-stat-icon"></i> 450
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">عرض الرسوم</a>
-                        </div>
-                    </div>
                 </div>
-                
                 <div class="project-card animate-card-pop" style="animation-delay: 2.5s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع موقع تعريفي بسيط" class="card-link-wrapper" data-image-url="programs/project-program-11.png">
+                    <a href="#" aria-label="عرض تفاصيل مشروع موقع تعريفي بسيط" class="card-link-wrapper" **data-image-url="programs/project-program-11.png"**>
                         <img src="programs/project-program-11.png" alt="صورة مشروع موقع تعريفي بسيط HTML/CSS" class="project-image" />
                     </a>
                     <div class="card-content">
-                        <p class="card-title">موقع تعريفي بسيط (HTML/CSS)</p>
-                        <p class="card-description">
-                            تصميم وتكويد موقع تعريفي من صفحة واحدة لشركة ناشئة، مع التركيز على النظافة والتحميل السريع.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">HTML5</span>
-                            <span class="card-tag">CSS3</span>
-                            <span class="card-tag">Responsive</span>
                         </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat" title="عدد المشاهدات">
-                                    <i class="ri-eye-line card-stat-icon"></i> 1.5K
-                                </span>
-                                <span class="card-stat" title="عدد الإعجابات">
-                                    <i class="ri-heart-line card-stat-icon"></i> 280
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">شاهد الموقع</a>
-                        </div>
-                    </div>
                 </div>
-
                 <div class="project-card animate-card-pop" style="animation-delay: 2.7s;">
                     <div class="text-center">
                         <i class="ri-rocket-line text-primary text-4xl mb-4 animate-bounce"></i>
@@ -516,6 +315,7 @@
                         <a href="index.html" class="mt-4 inline-block px-6 py-3 bg-primary text-black font-bold rounded-full hover:bg-yellow-300 transition-all duration-300 shadow-lg hover:shadow-primary/50">ابدأ مشروعك الآن</a>
                     </div>
                 </div>
+
 
             </section>
             
@@ -579,11 +379,10 @@
                 <i class="ri-close-line"></i>
             </button>
             
-            <img id="modal-image" src="" alt="صورة مكبرة للمشروع" class="max-w-full max-h-[95vh] object-contain rounded-lg shadow-2xl transition-all duration-300">
+            <img id="modal-image" src="" alt="صورة مكبرة للمشروع" class="rounded-lg shadow-2xl transition-all duration-300">
         </div>
     </div>
     <script>
-        // 🌟🌟 التعديل هنا: كود تشغيل النافذة المنبثقة (Modal) عند الضغط على الصورة 🌟🌟
         document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById('image-modal');
             const modalImage = document.getElementById('modal-image');
@@ -596,14 +395,17 @@
                 modal.classList.remove('active');
                 modalContent.classList.remove('scale-100');
                 modalContent.classList.add('scale-90');
-                body.classList.remove('modal-open-body'); // إزالة إخفاء السكرول
+                body.classList.remove('modal-open-body'); 
             };
 
             // الاستماع لجميع الصور في البطاقات
             document.querySelectorAll('.card-link-wrapper').forEach(link => {
                 link.addEventListener('click', (e) => {
-                    e.preventDefault(); // منع انتقال الرابط
-                    const imageUrl = link.getAttribute('data-image-url');
+                    e.preventDefault(); 
+                    
+                    // المسار هنا حيوي: تأكد من أن الصور موجودة فعلاً في مجلد programs
+                    const imageUrl = link.getAttribute('data-image-url'); 
+                    console.log('Attempting to load image:', imageUrl); // للمساعدة في تتبع الأخطاء في المتصفح
 
                     // عرض الصورة في الـ Modal
                     modalImage.src = imageUrl;
@@ -611,13 +413,12 @@
                     // إظهار الـ Modal وتفعيل التأثيرات
                     modal.classList.add('active');
                     
-                    // لإضافة تأثير التكبير (Pop-in effect)
                     setTimeout(() => {
                         modalContent.classList.add('scale-100');
                         modalContent.classList.remove('scale-90');
                     }, 10); 
                     
-                    body.classList.add('modal-open-body'); // إخفاء السكرول لمنع التمرير خلف الـ Modal
+                    body.classList.add('modal-open-body'); 
                 });
             });
 
@@ -638,7 +439,6 @@
                 }
             });
         });
-        // 🌟🌟 نهاية كود JavaScript 🌟🌟
     </script>
 </body>
 </html>
