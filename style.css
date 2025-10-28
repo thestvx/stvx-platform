@@ -1,4 +1,6 @@
-/* style.css (تنسيقات عامة وموحدة لجميع صفحات الموقع) */
+/* style.css (تنسيقات عامة وموحدة لجميع صفحات الموقع)
+   + إضافات أنيميشن مخصصة لملفات index, graphics, programs
+*/
 
 /* -------------------------------------- */
 /* 0. المتغيرات والألوان الأساسية (CSS Variables) 🎨 */
@@ -15,8 +17,12 @@
     --font-primary: 'Expo Arabic', 'Cairo', sans-serif;
     
     /* انتقالات/حركات */
-    --transition-fast: 0.3s ease;
+    --transition-fast: 0.28s ease;
     --transition-slow: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* ظلال وخلفيات للأنيميشن */
+    --glass-shadow: 0 8px 32px rgba(0,0,0,0.28);
+    --glow: 0 0 18px rgba(255,199,44,0.12);
 }
 
 /* -------------------------------------- */
@@ -42,15 +48,12 @@
 body {
     min-height: 100vh; 
     transform-style: preserve-3d;
-    
-    /* توحيد الخطوط باستخدام المتغيرات */
     font-family: var(--font-primary);
-    
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    
     scroll-behavior: smooth; 
-    color: var(--color-text-light); /* تطبيق لون النص الأساسي */
+    color: var(--color-text-light);
+    background-color: var(--color-background-dark);
 }
 
 /* 💡 كلاس لمنع التمرير عند ظهور الـ Sidebar/Modal (مطلوب لملف script.js) */
@@ -89,21 +92,21 @@ a {
     height: 3px;
     background-color: var(--color-primary); 
     border-radius: 2px 2px 0 0;
-    animation: slideInBottom 0.3s ease-out forwards;
+    animation: slideInBottom 0.28s ease-out forwards;
 }
 
 /* حركة ظهور اللوحة عند التبديل (مطلوب لملف script.js) */
 .animate-slide-down {
-    animation: slideInTop 0.4s ease-out forwards;
+    animation: slideInTop 0.36s ease-out forwards;
 }
 
 @keyframes slideInBottom {
-    from { transform: translateY(10px); opacity: 0; }
+    from { transform: translateY(8px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
 @keyframes slideInTop {
-    from { transform: translateY(-15px); opacity: 0; }
+    from { transform: translateY(-12px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
@@ -117,12 +120,12 @@ a {
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-primary); 
+    background: linear-gradient(180deg, var(--color-primary), var(--color-primary-dark));
     border-radius: 10px;
     border: 2px solid transparent; 
     background-clip: content-box; 
@@ -144,29 +147,25 @@ a {
 
 .dropdown-menu {
     position: absolute;
-    z-index: 50; /* تأكد من ظهورها فوق العناصر الأخرى */
-    min-width: 12rem; /* عرض افتراضي */
+    z-index: 50;
+    min-width: 12rem;
     padding: 0.5rem;
-    
-    /* تصميم Glassmorphism خفيف متناسق مع البطاقات */
-    background-color: rgba(17, 17, 17, 0.9);
+    background-color: rgba(17, 17, 17, 0.92);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    
-    /* إخفاء افتراضي يتم التحكم به بواسطة JS */
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
     display: none; 
     opacity: 0;
-    transform: scale(0.95) translateY(-10px);
+    transform: translateY(-6px) scale(.99);
     transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
 
 .dropdown-menu.block {
     display: block;
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: translateY(0) scale(1);
 }
 
 .dropdown-menu a {
@@ -178,14 +177,13 @@ a {
 }
 
 .dropdown-menu a:hover {
-    background-color: rgba(255, 199, 44, 0.1);
+    background-color: rgba(255, 199, 44, 0.08);
     color: var(--color-primary);
 }
 
 /* -------------------------------------- */
 /* 5. تنسيق الشريط الجانبي الثابت (Sidebar Fix) */
 /* -------------------------------------- */
-
 @media (min-width: 1024px) { 
     .sidebar-scroll {
         max-height: calc(100vh - 12rem); 
@@ -193,173 +191,37 @@ a {
     }
 }
 
-
 /* -------------------------------------- */
-/* 6. تنسيق تأثير الـ Overlay عند فتح الـ Sidebar في الجوال */
+/* 6. تأثير التعتيم عند فتح الشريط الجانبي */
 /* -------------------------------------- */
-
-/* تأكيد أن الخلفية لا تتفاعل */
 #sidebar-backdrop {
     pointer-events: auto;
 }
-
-/* تطبيق تأثير التعتيم (blur) على المحتوى الرئيسي عند تفعيل فئة filter */
 #mainContent.filter {
     filter: blur(4px) grayscale(70%); 
-    pointer-events: none; /* تعطيل التفاعل مع المحتوى خلف الـ sidebar */
+    pointer-events: none;
     transition: filter var(--transition-fast); 
 }
 
 /* -------------------------------------- */
-/* 7. تطبيق Glass-Card على حقول الإدخال للتركيز */
+/* 7. حقول التركيز (Glass inputs) */
 /* -------------------------------------- */
 .glass-card input:focus, 
 .glass-card textarea:focus,
 .glass-card select:focus {
-    box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.3), 0 0 10px rgba(255, 199, 44, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.26), 0 0 14px rgba(255, 199, 44, 0.08);
     outline: none; 
     border-color: var(--color-primary) !important; 
 }
 
 /* -------------------------------------- */
-/* 8. تنسيقات خاصة بـ Portfolio.html والمشاريع */
+/* 8. بطاقات المشاريع: تأثيرات وأنيميشنات جديدة */
 /* -------------------------------------- */
 
-/* تحسين مظهر الأزرار المربعة (للأيقونات/الفلاتر) */
-.icon-button {
-    transition: all var(--transition-fast);
-    background-color: rgba(255, 255, 255, 0.05); 
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.icon-button:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px) scale(1.05); 
-    border-color: var(--color-primary);
-}
-
-/* تحسين التباعد بين العناصر في وضع الأجهزة الكبيرة */
-@media (min-width: 1280px) {
-    .xl\:gap-8 {
-        gap: 2rem !important; 
-    }
-}
-
-/* -------------------------------------- */
-/* 9. تنسيقات بطاقات المشاريع الجديدة (.project-card) */
-/* -------------------------------------- */
-
+/* البنية الأساسية محافظين عليها كما هي */
 .project-card {
-    background-color: rgba(17, 17, 17, 0.7);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    color: var(--color-text-light);
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease; 
-    cursor: pointer;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-}
-
-.project-card:hover {
-    transform: translateY(-8px); 
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 199, 44, 0.2);
-}
-
-.card-link-wrapper {
-    display: block;
-    height: 250px; 
-    position: relative;
-    overflow: hidden;
-}
-
-.card-link-wrapper img {
-    width: 100%;
-    height: 100%;
-    background-color: #222;
-    object-fit: cover; 
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
-}
-
-.card-content {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.card-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: var(--color-primary); 
-}
-
-.card-description {
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-    margin-bottom: 1rem;
-    flex-grow: 1; 
-}
-
-.card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-.card-tag {
-    background-color: rgba(255, 199, 44, 0.15);
-    color: var(--color-primary);
-    padding: 0.3rem 0.7rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 1rem;
-    margin-top: 0.5rem;
-}
-
-.card-stats {
-    display: flex;
-    gap: 1rem;
-    color: #888;
-    font-size: 0.9rem;
-}
-
-.card-stat {
-    display: flex;
-    align-items: center;
-}
-
-.card-stat-icon {
-    width: 18px;
-    height: 18px;
-    margin-left: 0.3rem;
-    color: var(--color-primary);
-}
-
-.card-button {
-    padding: 0.6rem 1.2rem;
-    background: var(--color-primary);
-    color: var(--color-background-dark);
-    font-weight: 700;
-    border-radius: 6px;
-    transition: background-color var(--transition-fast), transform 0.2s ease;
-}
-
-.card-button:hover {
-    background: var(--color-primary-dark);
-    transform: scale(1.05);
-}
+    background-color: rgba(17, 17, 17, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px
