@@ -92,6 +92,7 @@ function initAuthTabs() {
 /**
  * تهيئة Lightbox لفتح صورة المشروع عند النقر عليها.
  * يعتمد على وجود العناصر في الـ HTML: #lightbox و #lightbox-image.
+ * @NOTE: هذا هو القسم الذي تم تحسين طريقة استخراج مصدر الصورة فيه.
  */
 function initClickLightbox() {
     const lightbox = document.getElementById('lightbox');
@@ -124,7 +125,7 @@ function initClickLightbox() {
 
     // ربط الحدث بجميع العناصر التي تحمل الكلاس .lightbox-trigger
     triggers.forEach(trigger => {
-        trigger.addEventListener('click', (e) => { // تم تبسيط الاستماع للنقر مباشرة على trigger
+        trigger.addEventListener('click', (e) => { 
             // منع السلوك الافتراضي للرابط (#) إذا كان trigger رابطاً
             if (trigger.tagName === 'A') {
                 e.preventDefault(); 
@@ -132,12 +133,29 @@ function initClickLightbox() {
             
             // === الحل والتعديل: تحديد وسم الصورة بشكل صحيح ===
             // 1. البحث عن وسم <img> داخل العنصر trigger، أو استخدام trigger نفسه إذا كان هو <img>.
-            const imageElement = trigger.tagName === 'IMG' ? trigger : trigger.querySelector('img');
+            let imageElement = null;
+            if (trigger.tagName === 'IMG') {
+                 imageElement = trigger;
+            } else if (trigger.tagName === 'A' || trigger.tagName === 'DIV' || trigger.tagName === 'BUTTON') {
+                 imageElement = trigger.querySelector('img');
+            }
             
             if (imageElement) {
                 const imageSrc = imageElement.getAttribute('src');
                 if (imageSrc) {
                     openLightbox(imageSrc);
+                } else {
+                    // إذا لم يتم العثور على src في وسم img، تحقق من بيانات الرابط مباشرة
+                    const dataSrc = trigger.getAttribute('data-src'); // قد تكون الصورة في data-src إذا كان الكلاس على الرابط
+                    if (dataSrc) {
+                        openLightbox(dataSrc);
+                    }
+                }
+            } else {
+                // محاولة أخيرة: التحقق من مصدر الصورة مباشرة من الـ trigger إذا لم يكن img ولكنه يحمل data-src
+                const dataSrc = trigger.getAttribute('data-src');
+                 if (dataSrc) {
+                    openLightbox(dataSrc);
                 }
             }
             // ===============================================
@@ -262,7 +280,6 @@ function initImageLightboxOnHover() {
 // ----------------------------------------------------
 /**
  * وظيفة خاصة بصفحة programs.html للتحكم في ظهور الـ modal الخاصة بالصور.
- * تم جلبها من الكود الذي أرسلته سابقًا مع التعديلات اللازمة لمنع التمرير وضمان الظهور في الأعلى.
  */
 function initImageModalGallery() {
     const imageModal = document.getElementById('image-modal'); // تم تغيير اسم المتغير
@@ -292,7 +309,8 @@ function initImageModalGallery() {
         wrapper.addEventListener('click', (e) => {
             e.preventDefault(); // منع الانتقال إلى #
 
-            const imageUrl = wrapper.getAttribute('data-image-url');
+            // ✅ التأكد من الحصول على مصدر الصورة ✅
+            const imageUrl = wrapper.getAttribute('data-image-url') || wrapper.querySelector('img')?.getAttribute('src');
             
             if (imageUrl) {
                 fullImage.src = imageUrl;
