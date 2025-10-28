@@ -3,234 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطوير الواجهات | STVX Platform</title>
-    
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
-    
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css"> 
-    
-    <script>
-        // إعدادات Tailwind (مهمة لتعريف الألوان والأنيميشن)
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#ffc72c', // لون التمييز الذهبي
-                        secondary: '#333333' // لون ثانوي للتفاصيل 
-                    },
-                    borderRadius: {
-                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
-                    },
-                    fontFamily: {
-                        // يجب أن يكون "Expo Arabic" معرّفاً في ملف style.css
-                        sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
-                        logo: ['Pacifico', 'cursive'],
-                    },
-                    // تعريفات الأنيميشن (كما هي)
-                    animation: {
-                        'fade-in': 'fadeIn 0.6s ease-out forwards',
-                        'slide-down': 'slideDown 0.5s ease-out forwards',
-                        'slide-up': 'slideUp 0.7s ease-out forwards',
-                        'card-pop': 'cardPop 0.6s ease-out forwards',
-                        'bounce': 'bounce 1s infinite',
-                        'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
-                        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-                        slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                        cardPop: { '0%': { opacity: '0', transform: 'scale(0.9) translateY(20px)' }, '100%': { opacity: '1', transform: 'scale(1) translateY(0)' } },
-                        ping: {
-                            '75%, 100%': { transform: 'scale(2)', opacity: '0' },
-                        },
-                        bounce: {
-                            '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
-                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
-                        },
-                        pulse: {
-                            '0%, 100%': { opacity: 1 },
-                            '50%': { opacity: .5 },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        /* تعريف Glass Card - ليعمل بشكل سليم */
-        .glass-card {
-            background-color: rgba(17, 17, 17, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-    </style>
+    <title>المشاريع البرمجية وواجهات المستخدم - اسم المصمم</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="text-white font-sans flex flex-col min-h-screen 
-    bg-[url('images/loginbackground006.png')] bg-cover bg-fixed bg-center">
-    
-    <div class="flex-1">
-        
-        <nav class="glass-card px-6 py-4 sticky top-0 left-0 right-0 z-50 rounded-none">
-            <div class="flex items-center justify-between max-w-7xl mx-auto">
-                
-                <a href="portfolio.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" title="العودة إلى معرض الأعمال">
-                    <i class="ri-arrow-left-line text-primary text-xl"></i> 
-                </a>
+<body class="bg-gray-900 text-white min-h-screen">
 
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
-                </div>
-                
-                <div class="hidden md:flex space-x-8 rtl:space-x-reverse text-lg font-medium">
-                    <a href="index.html" class="text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
-                    <span class="text-primary border-b-2 border-primary pb-1">تطوير الواجهات</span>
-                </div>
-                
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110">
-                        <i class="ri-user-line text-gray-300 text-xl"></i>
-                    </a>
-                </div>
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
+    <aside id="sidebar" class="fixed top-0 right-0 h-full w-64 bg-gray-800 transform -translate-x-full transition-transform duration-300 ease-in-out z-50 lg:translate-x-0 lg:w-72 border-l border-gray-700">
+        <div class="p-6 flex flex-col h-full">
+            <div class="mb-10 text-center">
+                <h1 class="text-3xl font-black text-primary border-b border-gray-700 pb-4">Portfolio</h1>
             </div>
-        </nav>
-
-        <main class="py-12 px-4 md:px-8 max-w-7xl mx-auto flex-1"> 
             
-            <header class="text-center mb-12 animate-slide-down" style="animation-delay: 0.3s;">
-                <h1 class="text-4xl md:text-5xl font-extrabold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
-                    💻 معرض تطوير الواجهات (Front-end)
-                </h1>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    نحول التصميم إلى واقع تفاعلي ومواقع سريعة الاستجابة باستخدام **React.js**، **Vue.js** وأحدث التقنيات البرمجية.
-                </p>
-                <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full animate-pulse"></div>
-            </header>
+            <nav id="sidebar-nav" class="flex-grow sidebar-scroll overflow-y-auto pr-2">
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-gray-400 hover:bg-gray-700 hover:text-white transition duration-200">
+                        <i class="fas fa-home w-6 h-6 ml-3"></i>
+                        الرئيسية
+                    </a></li>
+                    <li><a href="about.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-gray-400 hover:bg-gray-700 hover:text-white transition duration-200">
+                        <i class="fas fa-user w-6 h-6 ml-3"></i>
+                        عني
+                    </a></li>
+                    <li><a href="graphics.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-gray-400 hover:bg-gray-700 hover:text-white transition duration-200">
+                        <i class="fas fa-image w-6 h-6 ml-3"></i>
+                        تصميم جرافيك
+                    </a></li>
+                    <li><a href="programs.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-primary bg-gray-700 transition duration-200">
+                        <i class="fas fa-code w-6 h-6 ml-3"></i>
+                        برمجة وواجهات
+                    </a></li>
+                    <li><a href="photography.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-gray-400 hover:bg-gray-700 hover:text-white transition duration-200">
+                        <i class="fas fa-camera w-6 h-6 ml-3"></i>
+                        تصوير فوتوغرافي
+                    </a></li>
+                    <li><a href="contact.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-gray-400 hover:bg-gray-700 hover:text-white transition duration-200">
+                        <i class="fas fa-envelope w-6 h-6 ml-3"></i>
+                        اتصل بي
+                    </a></li>
+                    <li><a href="auth.html" class="flex items-center p-3 rounded-lg text-lg font-medium text-gray-400 hover:bg-gray-700 hover:text-white transition duration-200">
+                        <i class="fas fa-sign-in-alt w-6 h-6 ml-3"></i>
+                        تسجيل الدخول
+                    </a></li>
+                </ul>
+            </nav>
 
-            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
-                
-                <div class="project-card animate-card-pop" style="animation-delay: 0.5s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع المتجر الرقمي" class="card-link-wrapper">
-                        <div
-                            aria-label="صورة مشروع واجهة متجر إلكتروني"
-                            role="img"
-                            class="card-image-placeholder"
-                            style="background-image: url('images/placeholder-program-1.jpg');"
-                        ></div>
-                    </a>
-                    <div class="card-content">
-                        <p class="card-title">واجهة متجر إلكتروني (React)</p>
-                        <p class="card-description">
-                            تطوير واجهة مستخدم متكاملة لمتجر رقمي عصري، مع ميزات البحث والتصفية السريعة باستخدام React و Tailwind CSS.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">React.js</span>
-                            <span class="card-tag">Tailwind</span>
-                            <span class="card-tag">Front-end</span>
-                        </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
-                                    3.1K
-                                </span>
-                                <span class="card-stat">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                                    620
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">شاهد الكود</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card animate-card-pop" style="animation-delay: 0.7s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع صفحة الهبوط" class="card-link-wrapper">
-                        <div
-                            aria-label="صورة مشروع صفحة هبوط"
-                            role="img"
-                            class="card-image-placeholder"
-                            style="background-image: url('images/placeholder-program-2.jpg');"
-                        ></div>
-                    </a>
-                    <div class="card-content">
-                        <p class="card-title">صفحة هبوط لمؤتمر تقني (Vue)</p>
-                        <p class="card-description">
-                            إنشاء صفحة هبوط عالية الأداء ومحسّنة لمحركات البحث (SEO)، لجمع الاشتراكات في مؤتمر تقني رائد.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">Vue.js</span>
-                            <span class="card-tag">HTML/CSS</span>
-                            <span class="card-tag">SEO</span>
-                        </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
-                                    4.5K
-                                </span>
-                                <span class="card-stat">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                                    780
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">شاهد الموقع</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="project-card animate-card-pop" style="animation-delay: 0.9s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع لوحة التحكم" class="card-link-wrapper">
-                        <div
-                            aria-label="صورة مشروع لوحة تحكم إدارية"
-                            role="img"
-                            class="card-image-placeholder"
-                            style="background-image: url('images/placeholder-program-3.jpg');"
-                        ></div>
-                    </a>
-                    <div class="card-content">
-                        <p class="card-title">لوحة تحكم (Dashboard) متجاوبة</p>
-                        <p class="card-description">
-                            تطوير واجهة مستخدم إدارية لعرض البيانات والإحصائيات بشكل واضح ومتجاوب مع جميع أحجام الشاشات.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">لوحة تحكم</span>
-                            <span class="card-tag">JavaScript</span>
-                            <span class="card-tag">Bootstrap</span>
-                        </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
-                                    2.8K
-                                </span>
-                                <span class="card-stat">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                                    410
-                                </span>
-                            </div>
-                            <a class="card-button" href="#">عرض الواجهة</a>
-                        </div>
-                    </div>
-                </div>
-
-            </section>
-            <div class="text-center mt-24 animate-fade-in" style="animation-delay: 1.2s;">
-                <p class="text-gray-400 text-lg border-t border-gray-800 pt-6">
-                    ابدأ مشروعك البرمجي التالي معنا. <a href="index.html" class="text-primary hover:text-yellow-300 font-bold transition-colors">اطلب عرض سعر</a>.
-                </p>
+            <div class="mt-auto pt-4 border-t border-gray-700">
+                <a href="#" class="flex items-center justify-center p-3 rounded-lg bg-primary text-gray-900 font-bold hover:bg-yellow-300 transition duration-200">
+                    <i class="fas fa-download w-5 h-5 ml-2"></i>
+                    تحميل السيرة الذاتية
+                </a>
             </div>
+        </div>
+    </aside>
 
-        </main>
+    <main id="mainContent" class="lg:mr-72 p-4 md:p-8 transition-all duration-300 ease-in-out">
         
-    </div>
-    
-    <script src="script.js"></script> 
-    
+        <button id="sidebar-toggle" class="fixed top-4 right-4 z-30 p-3 bg-gray-800 rounded-lg lg:hidden focus:outline-none focus:ring-2 focus:ring-primary">
+            <i class="fas fa-bars text-xl text-white"></i>
+        </button>
+
+        <header class="mb-10 mt-6 lg:mt-0">
+            <h2 class="text-4xl font-extrabold text-white mb-2">مشاريع البرمجة وواجهات المستخدم</h2>
+            <p class="text-xl text-gray-400">تصميم وتطوير واجهات المستخدم (UI/UX) والمواقع الإلكترونية المتجاوبة.</p>
+        </header>
+
+        <div class="flex flex-wrap gap-3 mb-10">
+            <button class="icon-button px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-gray-900">الكل</button>
+            <button class="icon-button px-4 py-2 rounded-lg text-sm font-semibold text-gray-400 hover:text-white">UI/UX Design</button>
+            <button class="icon-button px-4 py-2 rounded-lg text-sm font-semibold text-gray-400 hover:text-white">Front-End Dev</button>
+            <button class="icon-button px-4 py-2 rounded-lg text-sm font-semibold text-gray-400 hover:text-white">Full-Stack</button>
+        </div>
+        
+        <div id="programs-projects-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 mt-10">
+            
+            <article class="project-card">
+                <a href="project-details.html?id=1" class="card-link-wrapper">
+                    <img src="programs/project-program-01.png" alt="صورة مشروع واجهة تطبيق إدارة المهام" class="card-image-actual">
+                </a>
+                <div class="card-content">
+                    <h3 class="card-title">واجهة تطبيق إدارة المهام</h3>
+                    <p class="card-description">تصميم واجهة مستخدم (UI) لتطبيق متكامل لإدارة المشاريع والمهام اليومية باستخدام Figma.</p>
+                    <div class="card-tags">
+                        <span class="card-tag">UI/UX</span>
+                        <span class="card-tag">Figma</span>
+                        <span class="card-tag">Mobile App</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="card-stat">
+                                <i class="fa-solid fa-code card-stat-icon"></i>
+                                <span>Figma</span>
+                            </span>
+                            <span class="card-stat">
+                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
+                                <span>يناير 2024</span>
+                            </span>
+                        </div>
+                        <a href="project-details.html?id=1" class="card-button">عرض التفاصيل</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <a href="project-details.html?id=2" class="card-link-wrapper">
+                    <img src="programs/project-program-02.png" alt="صورة مشروع تطوير موقع ويب شخصي" class="card-image-actual">
+                </a>
+                <div class="card-content">
+                    <h3 class="card-title">موقع ويب شخصي متجاوب</h3>
+                    <p class="card-description">تطوير موقع Portfolio احترافي ومتجاوب باستخدام HTML5, CSS3, و JavaScript (Vanilla).</p>
+                    <div class="card-tags">
+                        <span class="card-tag">Front-End</span>
+                        <span class="card-tag">HTML/CSS</span>
+                        <span class="card-tag">JavaScript</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="card-stat">
+                                <i class="fa-solid fa-code card-stat-icon"></i>
+                                <span>Vanilla JS</span>
+                            </span>
+                            <span class="card-stat">
+                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
+                                <span>فبراير 2024</span>
+                            </span>
+                        </div>
+                        <a href="project-details.html?id=2" class="card-button">عرض التفاصيل</a>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="project-card">
+                <a href="project-details.html?id=3" class="card-link-wrapper">
+                    <img src="programs/project-program-03.png" alt="صورة مشروع لوحة تحكم ذكية" class="card-image-actual">
+                </a>
+                <div class="card-content">
+                    <h3 class="card-title">لوحة تحكم ذكية (Dashboard)</h3>
+                    <p class="card-description">تصميم لوحة تحكم إدارية حديثة توفر نظرة عامة شاملة على بيانات المستخدم وأداء النظام.</p>
+                    <div class="card-tags">
+                        <span class="card-tag">UI Design</span>
+                        <span class="card-tag">Dashboard</span>
+                        <span class="card-tag">Data Visualization</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="card-stat">
+                                <i class="fa-solid fa-code card-stat-icon"></i>
+                                <span>Sketch/Figma</span>
+                            </span>
+                            <span class="card-stat">
+                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
+                                <span>مارس 2024</span>
+                            </span>
+                        </div>
+                        <a href="project-details.html?id=3" class="card-button">عرض التفاصيل</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <a href="project-details.html?id=4" class="card-link-wrapper">
+                    <img src="programs/project-program-04.png" alt="صورة مشروع تطوير تطبيق ويب للطقس" class="card-image-actual">
+                </a>
+                <div class="card-content">
+                    <h3 class="card-title">تطبيق ويب للطقس في الوقت الفعلي</h3>
+                    <p class="card-description">بناء تطبيق متجاوب يعرض بيانات الطقس باستخدام واجهة API خارجية والتعامل مع البيانات JSON.</p>
+                    <div class="card-tags">
+                        <span class="card-tag">API Integration</span>
+                        <span class="card-tag">JavaScript</span>
+                        <span class="card-tag">Front-End</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="card-stat">
+                                <i class="fa-solid fa-code card-stat-icon"></i>
+                                <span>ReactJS</span>
+                            </span>
+                            <span class="card-stat">
+                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
+                                <span>أبريل 2024</span>
+                            </span>
+                        </div>
+                        <a href="project-details.html?id=4" class="card-button">عرض التفاصيل</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <a href="project-details.html?id=5" class="card-link-wrapper">
+                    <img src="programs/project-program-05.png" alt="صورة مشروع تصميم واجهة منصة تعليمية" class="card-image-actual">
+                </a>
+                <div class="card-content">
+                    <h3 class="card-title">واجهة منصة تعليمية إلكترونية</h3>
+                    <p class="card-description">تصميم منصة متكاملة للتعلم عن بعد، تركز على سهولة التنقل وتقديم المحتوى بشكل جذاب.</p>
+                    <div class="card-tags">
+                        <span class="card-tag">E-Learning</span>
+                        <span class="card-tag">UX Research</span>
+                        <span class="card-tag">Wireframing</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="card-stat">
+                                <i class="fa-solid fa-code card-stat-icon"></i>
+                                <span>Adobe XD</span>
+                            </span>
+                            <span class="card-stat">
+                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
+                                <span>مايو 2024</span>
+                            </span>
+                        </div>
+                        <a href="project-details.html?id=5" class="card-button">عرض التفاصيل</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <a href="project-details.html?id=6" class="card-link-wrapper">
+                    <img src="programs/project-program-06.png" alt="صورة مشروع تطوير صفحة هبوط لمنتج" class="card-image-actual">
+                </a>
+                <div class="card-content">
+                    <h3 class="card-title">صفحة هبوط لمنتج جديد</h3>
+                    <p class="card-description">تصميم وتطوير صفحة هبوط ذات معدل تحويل عالٍ، معززة بالرسوم المتحركة الـ CSS الجذابة.</p>
+                    <div class="card-tags">
+                        <span class="card-tag">Landing Page</span>
+                        <span class="card-tag">Conversion</span>
+                        <span class="card-tag">CSS Animation</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="card-stat">
+                                <i class="fa-solid fa-code card-stat-icon"></i>
+                                <span>Tailwind CSS</span>
+                            </span>
+                            <span class="card-stat">
+                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
+                                <span>يونيو 2024</span>
+                            </span>
+                        </div>
+                        <a href="project-details.html?id=6" class="card-button">عرض التفاصيل</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <a href="project-details.html?id=7" class="card-link-wrapper">
+                    <img src="programs/project-program-07.png" alt="صورة مشروع نموذج موقع التجارة الإلكترونية" class="card-image-actual">
+                </a>
+                <div class="card-content">
+                    <h3 class="card-title">نموذج موقع التجارة الإلكترونية</h3>
+                    <p class="card-description">تصميم وتطوير واجهة متجر إلكتروني أنيق ومتكامل، مع التركيز على تجربة التسوق السلسة.</p>
+                    <div class="card-tags">
+                        <span class="card-tag">E-Commerce</span>
+                        <span class="card-tag">UI/UX</span>
+                        <span class="card-tag">Tailwind</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-stats">
+                            <span class="card-stat">
+                                <i class="fa-solid fa-code card-stat-icon"></i>
+                                <span>React/Next</span>
+                            </span>
+                            <span class="card-stat">
+                                <i class="fa-solid fa-calendar-alt card-stat-icon"></i>
+                                <span>أغسطس 2024</span>
+                            </span>
+                        </div>
+                        <a href="project-details.html?id=7" class="card-button">عرض التفاصيل</a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+        
+    </main>
+
+    <script>const primaryColor = '#ffc72c';</script>
+    <script src="script.js"></script>
 </body>
 </html>
