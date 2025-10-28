@@ -27,8 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // 🛠️ تعديل: التحكم بفئة 'filter' فقط لتطبيق/إزالة تأثير التعتيم 🛠️
-            // فئة 'filter' هي التي تطبق التعتيم (blur) والـ grayscale في CSS
+            // التحكم بفئة 'filter' فقط لتطبيق/إزالة تأثير التعتيم
             if (sidebar.classList.contains('open')) {
                 // إضافة فئة تظليل عند فتح الـ sidebar 
                 mainContent.classList.add('filter'); 
@@ -41,10 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // إغلاق الـ Sidebar عند النقر على محتوى الصفحة الرئيسي (للشاشات الصغيرة)
         mainContent.addEventListener('click', (event) => {
             // تحقق من أن الشاشة صغيرة وأن الـ sidebar مفتوح
-            // نضيف تحققاً للتأكد أن المستخدم لم يضغط على عنصر تفاعلي داخل mainContent
-            if (window.innerWidth < 1024 && sidebar.classList.contains('open') && !event.target.closest('a, button, input')) {
+            // ونضمن أن النقر لم يكن على رابط أو زر أو حقل إدخال (لتجنب تعطيل التفاعل)
+            const isSmallScreen = window.innerWidth < 1024;
+            const isSidebarOpen = sidebar.classList.contains('open');
+            const isInteractive = event.target.closest('a, button, input, textarea, select');
+
+            if (isSmallScreen && isSidebarOpen && !isInteractive) {
                 sidebar.classList.remove('open');
-                // 🛠️ تعديل: إزالة فئة filter فقط 🛠️
                 mainContent.classList.remove('filter');
                 
                 // إعادة الأيقونة إلى حالتها الأصلية
@@ -56,11 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // 🛠️ تحسين: إغلاق الشريط الجانبي عند تغيير حجم الشاشة من صغير إلى كبير
+        // تحسين: إغلاق الشريط الجانبي عند تغيير حجم الشاشة من صغير إلى كبير
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 1024 && sidebar.classList.contains('open')) {
                 sidebar.classList.remove('open');
-                // 🛠️ تعديل: إزالة فئة filter فقط 🛠️
                 mainContent.classList.remove('filter');
                 const icon = toggleButton.querySelector('i');
                 if (icon) {
@@ -77,11 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // تهيئة وظيفة تتبع حقول الإدخال (لإضافة تأثيرات التركيز)
     setupInputFocusEffect();
     
-    // 💡 التعديل الرئيسي: تفعيل تأثير Glass Hover فقط إذا كانت بطاقة Auth موجودة
-    const authCard = document.querySelector('.auth-card');
-    if (authCard) {
-        setupGlassHover();
-    }
+    // التعديل الرئيسي: تفعيل تأثير Glass Hover على جميع العناصر التي تحمل الفئة المحددة
+    setupGlassHover();
     
     // إخفاء الـ Loader عند تحميل المحتوى بالكامل
     hideLoader();
@@ -119,7 +117,8 @@ function setupAuthTabs() {
     });
 
     // 3. التأكد من أن التبويب الأول هو النشط عند تحميل الصفحة
-    if (tabButtons.length > 0) {
+    // هذا يحل مشكلة أن تظل جميع الأقسام مخفية عند التحميل
+    if (tabButtons.length > 0 && !document.querySelector('.tab-button.active')) {
         tabButtons[0].click(); 
     }
 }
@@ -146,11 +145,15 @@ function showLoader() {
  */
 function hideLoader() {
     if (loader) {
-        // نستخدم setTimeout لضمان اكتمال تحميل الصفحة ورؤية Loader لثواني معدودة (اختياري)
+        // تم زيادة المهلة إلى 500ms لضمان رؤية تأثير التحميل
         setTimeout(() => {
-            loader.classList.add('hidden');
-            loader.classList.remove('flex');
-        }, 300); // 300ms مهلة بسيطة
+            // نستخدم فئة CSS لعمل تأثير انتقال (opacity) قبل إخفائه نهائياً بـ display: none (أو hidden في Tailwind)
+            loader.style.opacity = '0'; 
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
+            }, 300); // 300ms مدة الانتقال
+        }, 500); // 500ms مهلة بسيطة لعرض اللودر
     }
 }
 
@@ -159,15 +162,14 @@ function hideLoader() {
 // ----------------------------------------------------
 
 /**
- * تطبق تأثير إمالة (Tilt/Parallax) عند التمرير
- * ليعمل فقط على بطاقة Auth.
+ * تطبق تأثير إمالة (Tilt/Parallax) عند التمرير على العناصر التي تحمل فئة 'glass-hover-effect'.
+ * 💡 يجب إضافة فئة 'glass-hover-effect' إلى البطاقة في HTML لتفعيل التأثير عليها.
  */
 function setupGlassHover() {
-    // 🛠️ التعديل: استهداف البطاقة الرئيسية لنموذج التسجيل/الدخول فقط
-    // (يجب إضافة فئة auth-card إلى البطاقة في ملف auth.html)
-    const glassCards = document.querySelectorAll('.glass-card.auth-card'); 
+    // استهداف جميع العناصر التي تحمل الفئة المخصصة للتأثير
+    const hoverTargets = document.querySelectorAll('.glass-hover-effect'); 
 
-    glassCards.forEach(card => {
+    hoverTargets.forEach(card => {
         // إضافة انتقال (transition) لضمان سلاسة حركة العودة
         card.style.transition = 'transform 0.5s ease, box-shadow 0.5s ease';
 
@@ -209,6 +211,7 @@ function setupGlassHover() {
  * يمكن استخدام هذه الفئة لتطبيق تنسيقات مخصصة (مثل Tailwind) عند التركيز.
  */
 function setupInputFocusEffect() {
+    // 🛠️ إضافة select و textarea
     const inputs = document.querySelectorAll('input, textarea, select');
 
     inputs.forEach(input => {
