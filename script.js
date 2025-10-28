@@ -297,7 +297,7 @@ class Media {
                     this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
                 }
             } else {
-                 // في حالة جذر سالب، نثبت الموضع والدوران لتجنب الأخطاء
+                // في حالة جذر سالب، نثبت الموضع والدوران لتجنب الأخطاء
                 this.plane.position.y = 0;
                 this.plane.rotation.z = 0;
             }
@@ -388,9 +388,15 @@ class CircularGalleryApp {
         autoBind(this); // لربط وظائف الكلاس بشكل تلقائي
         this.container = document.getElementById(containerId);
         if (!this.container || !window.OGL) {
-             // إظهار رسالة إذا لم يتم العثور على الحاوية أو مكتبة OGL 
+            // إظهار رسالة إذا لم يتم العثور على الحاوية أو مكتبة OGL 
             console.error(`Circular Gallery failed: Container ID ${containerId} not found or OGL library is missing.`);
             return;
+        }
+        
+        // 🚨 التعديل الأول: إخفاء رسالة التحميل الافتراضية بمجرد بدء تهيئة الكلاس بنجاح
+        const loadingMessage = this.container.querySelector('.absolute.inset-0');
+        if (loadingMessage) {
+            loadingMessage.classList.add('hidden');
         }
         
         this.scrollSpeed = scrollSpeed;
@@ -422,7 +428,11 @@ class CircularGalleryApp {
         this.gl.canvas.style.left = '0';
         this.gl.canvas.style.width = '100%';
         this.gl.canvas.style.height = '100%';
-        this.gl.canvas.style.pointerEvents = 'none'; // لتمكين النقر على المحتوى الأساسي
+        
+        // 🚨 التعديل الثاني: ضمان أن الـ Canvas يظهر فوق رسالة التحميل القديمة (مع أننا قمنا بإخفائها)
+        this.gl.canvas.style.zIndex = '20'; 
+
+        this.gl.canvas.style.pointerEvents = 'none'; // لتمكين النقر على المحتوى الأساسي (مثل الروابط)
         
         this.container.appendChild(this.gl.canvas);
     }
@@ -696,6 +706,13 @@ window.initCircularGallery = function(containerId, items) {
     // نقوم بإنشاء مثيل جديد للتطبيق وإتلاف أي مثيل سابق
     if (window.galleryApp && window.galleryApp.destroy) {
         window.galleryApp.destroy();
+    }
+    
+    // 🚨 التعديل الثالث: التأكد من إزالة رسالة التحميل في هذه الوظيفة أيضاً كإجراء احتياطي
+    const container = document.getElementById(containerId);
+    const loadingMessage = container ? container.querySelector('.absolute.inset-0') : null;
+    if (loadingMessage) {
+        loadingMessage.classList.add('hidden');
     }
 
     window.galleryApp = new CircularGalleryApp(containerId, {
