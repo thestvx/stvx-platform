@@ -1,444 +1,648 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطوير الواجهات | STVX Platform</title>
-    
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
-    
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css"> 
-    
-    <script>
-        // إعدادات Tailwind (مهمة لتعريف الألوان والأنيميشن)
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#ffc72c', // لون التمييز الذهبي
-                        secondary: '#333333' // لون ثانوي للتفاصيل 
-                    },
-                    borderRadius: {
-                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
-                    },
-                    fontFamily: {
-                        // يجب أن يكون "Expo Arabic" معرّفاً في ملف style.css
-                        sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
-                        logo: ['Pacifico', 'cursive'],
-                    },
-                    // تعريفات الأنيميشن
-                    animation: {
-                        'fade-in': 'fadeIn 0.6s ease-out forwards',
-                        'slide-down': 'slideDown 0.5s ease-out forwards',
-                        'slide-up': 'slideUp 0.7s ease-out forwards',
-                        'card-pop': 'cardPop 0.6s ease-out forwards',
-                        'bounce': 'bounce 1s infinite',
-                        'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
-                        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'spin-slow': 'spin 3s linear infinite', // إضافة حركة دوران بطيئة
-                    },
-                    keyframes: {
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-                        slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                        cardPop: { '0%': { opacity: '0', transform: 'scale(0.9) translateY(20px)' }, '100%': { opacity: '1', transform: 'scale(1) translateY(0)' } },
-                        ping: {
-                            '75%, 100%': { transform: 'scale(2)', opacity: '0' },
-                        },
-                        bounce: {
-                            '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
-                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
-                        },
-                        pulse: {
-                            '0%, 100%': { opacity: 1 },
-                            '50%': { opacity: .5 },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        /* تعريف Glass Card - ليعمل بشكل سليم */
-        .glass-card {
-            background-color: rgba(17, 17, 17, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطوير الواجهات | STVX Platform</title>
+    
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css"> 
+    
+    <script>
+        // إعدادات Tailwind (مهمة لتعريف الألوان والأنيميشن)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ffc72c', // لون التمييز الذهبي
+                        secondary: '#333333' // لون ثانوي للتفاصيل 
+                    },
+                    borderRadius: {
+                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
+                    },
+                    fontFamily: {
+                        // يجب أن يكون "Expo Arabic" معرّفاً في ملف style.css
+                        sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
+                        logo: ['Pacifico', 'cursive'],
+                    },
+                    // تعريفات الأنيميشن
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-down': 'slideDown 0.5s ease-out forwards',
+                        'slide-up': 'slideUp 0.7s ease-out forwards',
+                        'card-pop': 'cardPop 0.6s ease-out forwards',
+                        'bounce': 'bounce 1s infinite',
+                        'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+                        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 3s linear infinite', // إضافة حركة دوران بطيئة
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        cardPop: { '0%': { opacity: '0', transform: 'scale(0.9) translateY(20px)' }, '100%': { opacity: '1', transform: 'scale(1) translateY(0)' } },
+                        ping: {
+                            '75%, 100%': { transform: 'scale(2)', opacity: '0' },
+                        },
+                        bounce: {
+                            '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
+                        },
+                        pulse: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: .5 },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* تعريف Glass Card - ليعمل بشكل سليم */
+        .glass-card {
+            background-color: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-        /* تنسيقات البطاقة والصورة */
-        .card-link-wrapper {
-            display: block;
-            height: 250px; 
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px; 
-            margin-bottom: 1rem; 
-            cursor: pointer; 
-        }
-        
-        .card-link-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease-out; 
-        }
-        
-        /* تأثير التحويم الخفيف */
-        .project-card:hover .card-link-wrapper img {
-            transform: scale(1.05); 
-        }
-        
-        .project-card {
-            background-color: rgba(17, 17, 17, 0.8);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
+        /* تنسيقات البطاقة والصورة */
+        .card-link-wrapper {
+            display: block;
+            height: 250px; 
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px; 
+            margin-bottom: 1rem; 
+            cursor: pointer; 
+        }
+        
+        .card-link-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-out; 
+        }
+        
+        /* تأثير التحويم الخفيف */
+        .project-card:hover .card-link-wrapper img {
+            transform: scale(1.05); 
+        }
+        
+        .project-card {
+            background-color: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
 
-        /* 🌟🌟 تنسيقات الـ Modal لتظهر في منتصف الشاشة 🌟🌟 */
-        .image-modal {
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-            /* الحالة الافتراضية: مخفية */
-            opacity: 0;
-            visibility: hidden;
-        }
+        /* 🌟🌟 تنسيقات الـ Modal لتظهر في منتصف الشاشة 🌟🌟 */
+        .image-modal {
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            /* الحالة الافتراضية: مخفية */
+            opacity: 0;
+            visibility: hidden;
+        }
 
-        /* حالة ظهور المودال */
-        .image-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        /* حالة ظهور المودال */
+        .image-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
-        /* إخفاء السكرول بار عند ظهور النافذة المنبثقة */
-        .modal-open-body {
-            overflow: hidden; 
-        }
-        
-        /* 💡 إصلاح ظهور الصورة: تم إضافة تنسيقات إضافية لضمان العرض */
-        #modal-image {
-            max-width: 100%;
-            /* زيادة أقصى ارتفاع قليلاً */
-            max-height: 95vh; 
-            width: auto; 
-            height: auto; 
-            object-fit: contain; 
-            /* هام: التأكد من أن الصورة لديها كلاسات العرض الصحيحة */
-            display: block; 
-            margin: auto;
-        }
+        /* 💡 إصلاح مشكلة السكرول: إخفاء شريط التمرير عند ظهور النافذة المنبثقة */
+        .modal-open-body {
+            **overflow: hidden;**         }
+        
+        /* إصلاح ظهور الصورة: تم ضبط أبعاد الصورة لتناسب الشاشة دون الحاجة لسكرول داخلي */
+        #modal-image {
+            max-width: 100%;
+            **max-height: 90vh;** /* تقليل أقصى ارتفاع قليلاً لترك مساحة لزر الإغلاق */
+            width: auto; 
+            height: auto; 
+            object-fit: contain; 
+            display: block; 
+            margin: auto;
+        }
 
-        /* التعديل لضمان أن الحاوية الداخلية لا تخفي الصورة */
-        #modal-content {
-            max-width: 90vw; /* السماح بعرض أكبر */
-            max-height: 95vh; /* السماح بارتفاع أكبر */
-        }
-        /* 🌟🌟 نهاية تعديل الـ Modal 🌟🌟 */
+        /* لضمان أن الحاوية الداخلية لا تخفي الصورة */
+        #modal-content {
+            max-width: 95vw; 
+            max-height: 95vh; 
+        }
+        /* 🌟🌟 نهاية تعديل الـ Modal 🌟🌟 */
 
 
-        /* تنسيقات العنوان والوصف والـ Tags */
-        .card-title { font-size: 1.25rem; font-weight: 700; color: #ffc72c; margin-bottom: 0.5rem; }
-        .card-description { color: #ccc; font-size: 0.9rem; margin-bottom: 1rem; height: 4.5rem; overflow: hidden; }
-        .card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-        .card-tag { background-color: rgba(255, 199, 44, 0.1); color: #ffc72c; padding: 0.25rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1rem; }
-        .card-stats { display: flex; gap: 1rem; font-size: 0.9rem; color: #888; }
-        .card-stat-icon { width: 1.1rem; height: 1.1rem; margin-left: 0.3rem; color: #ffc72c; } 
-        .card-button { background-color: #ffc72c; color: #111; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; transition: background-color 0.3s; }
-        .card-button:hover { background-color: #ffd966; }
-        
-        /* تنسيق زر العودة للأعلى */
-        #back-to-top {
-            transition: opacity 0.3s, transform 0.3s;
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        #back-to-top.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+        /* تنسيقات العنوان والوصف والـ Tags */
+        .card-title { font-size: 1.25rem; font-weight: 700; color: #ffc72c; margin-bottom: 0.5rem; }
+        .card-description { color: #ccc; font-size: 0.9rem; margin-bottom: 1rem; height: 4.5rem; overflow: hidden; }
+        .card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .card-tag { background-color: rgba(255, 199, 44, 0.1); color: #ffc72c; padding: 0.25rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1rem; }
+        .card-stats { display: flex; gap: 1rem; font-size: 0.9rem; color: #888; }
+        .card-stat-icon { width: 1.1rem; height: 1.1rem; margin-left: 0.3rem; color: #ffc72c; } 
+        .card-button { background-color: #ffc72c; color: #111; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; transition: background-color 0.3s; }
+        .card-button:hover { background-color: #ffd966; }
+        
+        /* تنسيق زر العودة للأعلى */
+        #back-to-top {
+            transition: opacity 0.3s, transform 0.3s;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        #back-to-top.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body class="text-white font-sans flex flex-col min-h-screen 
-    bg-[url('images/loginbackground006.png')] bg-cover bg-fixed bg-center">
-    
-    <div class="flex-1">
-        
-        <nav class="glass-card px-6 py-4 sticky top-0 left-0 right-0 z-50 rounded-none">
-            <div class="flex items-center justify-between max-w-7xl mx-auto">
-                
-                <a href="portfolio.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" title="العودة إلى معرض الأعمال">
-                    <i class="ri-arrow-left-line text-primary text-xl"></i> 
-                </a>
+    bg-[url('images/loginbackground006.png')] bg-cover bg-fixed bg-center">
+    
+    <div class="flex-1">
+        
+        <nav class="glass-card px-6 py-4 sticky top-0 left-0 right-0 z-50 rounded-none">
+            <div class="flex items-center justify-between max-w-7xl mx-auto">
+                
+                <a href="portfolio.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" title="العودة إلى معرض الأعمال">
+                    <i class="ri-arrow-left-line text-primary text-xl"></i> 
+                </a>
 
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
-                </div>
-                
-                <div class="hidden md:flex space-x-8 rtl:space-x-reverse text-lg font-medium">
-                    <a href="index.html" class="text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
-                    <span class="text-primary border-b-2 border-primary pb-1">تطوير الواجهات</span>
-                </div>
-                
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" title="ملفي الشخصي">
-                        <i class="ri-user-line text-gray-300 text-xl"></i>
-                    </a>
-                </div>
-            </div>
-        </nav>
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
+                </div>
+                
+                <div class="hidden md:flex space-x-8 rtl:space-x-reverse text-lg font-medium">
+                    <a href="index.html" class="text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
+                    <span class="text-primary border-b-2 border-primary pb-1">تطوير الواجهات</span>
+                </div>
+                
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                    <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" title="ملفي الشخصي">
+                        <i class="ri-user-line text-gray-300 text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
 
-        <main class="py-12 px-4 md:px-8 max-w-7xl mx-auto flex-1"> 
-            
-            <header class="text-center mb-12 animate-slide-down" style="animation-delay: 0.3s;">
-                <h1 class="text-4xl md:text-5xl font-extrabold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
-                    💻 معرض تطوير الواجهات (Front-end)
-                </h1>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    نحول التصميم إلى واقع تفاعلي ومواقع سريعة الاستجابة باستخدام **React.js**، **Vue.js** وأحدث التقنيات البرمجية.
-                </p>
-                <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full animate-pulse"></div>
-            </header>
+        <main class="py-12 px-4 md:px-8 max-w-7xl mx-auto flex-1"> 
+            
+            <header class="text-center mb-12 animate-slide-down" style="animation-delay: 0.3s;">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
+                    💻 معرض تطوير الواجهات (Front-end)
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    نحول التصميم إلى واقع تفاعلي ومواقع سريعة الاستجابة باستخدام **React.js**، **Vue.js** وأحدث التقنيات البرمجية.
+                </p>
+                <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full animate-pulse"></div>
+            </header>
 
-            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
-                
-                <div class="project-card animate-card-pop" style="animation-delay: 0.5s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع المتجر الرقمي" class="card-link-wrapper" **data-image-url="programs/project-program-01.png"**> <img src="programs/project-program-01.png" alt="صورة مشروع واجهة متجر إلكتروني React" class="project-image" />
-                    </a>
-                    <div class="card-content">
-                        <p class="card-title">واجهة متجر إلكتروني (React)</p>
-                        <p class="card-description">
-                            تطوير واجهة مستخدم متكاملة لمتجر رقمي عصري، مع ميزات البحث والتصفية السريعة باستخدام React و Tailwind CSS.
-                        </p>
-                        <div class="card-tags">
-                            <span class="card-tag">React.js</span>
-                            <span class="card-tag">Tailwind</span>
-                            <span class="card-tag">Front-end</span>
-                        </div>
-                        <div class="card-footer">
-                            <div class="card-stats">
-                                <span class="card-stat" title="عدد المشاهدات">
-                                    <i class="ri-eye-line card-stat-icon"></i> 3.1K
-                                </span>
-                                <span class="card-stat" title="عدد الإعجابات">
-                                    <i class="ri-heart-line card-stat-icon"></i> 620
-                                </span>
-                            </div>
-                            <a class="card-button" href="#" title="شاهد الكود على GitHub">شاهد الكود</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card animate-card-pop" style="animation-delay: 0.7s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع صفحة الهبوط" class="card-link-wrapper" **data-image-url="programs/project-program-02.png"**>
-                        <img src="programs/project-program-02.png" alt="صورة مشروع صفحة هبوط لمؤتمر تقني Vue" class="project-image" />
-                    </a>
-                    <div class="card-content">
-                        </div>
-                </div>
-                <div class="project-card animate-card-pop" style="animation-delay: 0.9s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع لوحة التحكم" class="card-link-wrapper" **data-image-url="programs/project-program-03.png"**>
-                        <img src="programs/project-program-03.png" alt="صورة مشروع لوحة تحكم إدارية Bootstrap" class="project-image" />
-                    </a>
-                    <div class="card-content">
-                        </div>
-                </div>
-                <div class="project-card animate-card-pop" style="animation-delay: 1.1s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع معرض أعمال تفاعلي" class="card-link-wrapper" **data-image-url="programs/project-program-04.png"**>
-                        <img src="programs/project-program-04.png" alt="صورة مشروع معرض أعمال شخصي تفاعلي" class="project-image" />
-                    </a>
-                    <div class="card-content">
-                        </div>
-                </div>
-                <div class="project-card animate-card-pop" style="animation-delay: 1.3s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع واجهة تطبيق جوال" class="card-link-wrapper" **data-image-url="programs/project-program-05.png"**>
-                        <img src="programs/project-program-05.png" alt="صورة مشروع واجهة مستخدم تطبيق جوال" class="project-image" />
-                    </a>
-                    <div class="card-content">
-                        </div>
-                </div>
-                <div class="project-card animate-card-pop" style="animation-delay: 1.5s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع مدونة فنية" class="card-link-wrapper" **data-image-url="programs/project-program-06.png"**>
-                        <img src="programs/project-program-06.png" alt="صورة مشروع مدونة فنية بتصميم عصري" class="project-image" />
-                    </a>
-                    <div class="card-content">
-                        </div>
-                </div>
-                <div class="project-card animate-card-pop" style="animation-delay: 1.7s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع خارطة تفاعلية" class="card-link-wrapper" **data-image-url="programs/project-program-07.png"**>
-                        <img src="programs/project-program-07.png" alt="صورة مشروع خارطة تفاعلية لعرض البيانات" class="project-image" />
-                    </a>
-                    <div class="card-content">
-                        </div>
-                </div>
-                <div class="project-card animate-card-pop" style="animation-delay: 1.9s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع نماذج تسجيل دخول" class="card-link-wrapper" **data-image-url="programs/project-program-08.png"**>
-                        <img src="programs/project-program-08.png" alt="صورة مشروع نماذج تسجيل دخول وتوثيق" class="project-image" />
-                    </a>
-                    <div class="card-content">
-                        </div>
-                </div>
-                <div class="project-card animate-card-pop" style="animation-delay: 2.1s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع تطبيق ويب متقدم (PWA)" class="card-link-wrapper" **data-image-url="programs/project-program-09.png"**>
-                        <img src="programs/project-program-09.png" alt="صورة مشروع تطبيق ويب متقدم PWA" class="project-image" />
-                    </a>
-                    <div class="card-content">
-                        </div>
-                </div>
-                <div class="project-card animate-card-pop" style="animation-delay: 2.3s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع الرسوم البيانية التفاعلية" class="card-link-wrapper" **data-image-url="programs/project-program-10.png"**>
-                        <img src="programs/project-program-10.png" alt="صورة مشروع رسوم بيانية تفاعلية للبيانات" class="project-image" />
-                    </a>
-                    <div class="card-content">
-                        </div>
-                </div>
-                <div class="project-card animate-card-pop" style="animation-delay: 2.5s;">
-                    <a href="#" aria-label="عرض تفاصيل مشروع موقع تعريفي بسيط" class="card-link-wrapper" **data-image-url="programs/project-program-11.png"**>
-                        <img src="programs/project-program-11.png" alt="صورة مشروع موقع تعريفي بسيط HTML/CSS" class="project-image" />
-                    </a>
-                    <div class="card-content">
-                        </div>
-                </div>
-                <div class="project-card animate-card-pop" style="animation-delay: 2.7s;">
-                    <div class="text-center">
-                        <i class="ri-rocket-line text-primary text-4xl mb-4 animate-bounce"></i>
-                        <p class="text-xl font-bold text-primary mb-2">🚀 هل لديك فكرة جديدة؟</p>
-                        <p class="text-gray-300">دعنا نبني الواجهة الأمامية لمشروعك التالي بآخر التقنيات.</p>
-                        <a href="index.html" class="mt-4 inline-block px-6 py-3 bg-primary text-black font-bold rounded-full hover:bg-yellow-300 transition-all duration-300 shadow-lg hover:shadow-primary/50">ابدأ مشروعك الآن</a>
-                    </div>
-                </div>
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
+                
+                                <div class="project-card animate-card-pop" style="animation-delay: 0.5s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع المتجر الرقمي" class="card-link-wrapper" **data-image-url="programs/project-program-01.png"**> <img src="programs/project-program-01.png" alt="صورة مشروع واجهة متجر إلكتروني React" class="project-image" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">واجهة متجر إلكتروني (React)</p>
+                        <p class="card-description">
+                            تطوير واجهة مستخدم متكاملة لمتجر رقمي عصري، مع ميزات البحث والتصفية السريعة باستخدام React و Tailwind CSS.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">React.js</span>
+                            <span class="card-tag">Tailwind</span>
+                            <span class="card-tag">Front-end</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat" title="عدد المشاهدات">
+                                    <i class="ri-eye-line card-stat-icon"></i> 3.1K
+                                </span>
+                                <span class="card-stat" title="عدد الإعجابات">
+                                    <i class="ri-heart-line card-stat-icon"></i> 620
+                                </span>
+                            </div>
+                            <a class="card-button" href="#" title="شاهد الكود على GitHub">شاهد الكود</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card animate-card-pop" style="animation-delay: 0.7s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع صفحة الهبوط" class="card-link-wrapper" data-image-url="programs/project-program-02.png">
+                        <img src="programs/project-program-02.png" alt="صورة مشروع صفحة هبوط لمؤتمر تقني Vue" class="project-image" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">صفحة هبوط لمؤتمر تقني (Vue)</p>
+                        <p class="card-description">
+                            إنشاء صفحة هبوط عالية الأداء ومحسّنة لمحركات البحث (SEO)، لجمع الاشتراكات في مؤتمر تقني رائد.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Vue.js</span>
+                            <span class="card-tag">HTML/CSS</span>
+                            <span class="card-tag">SEO</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat" title="عدد المشاهدات">
+                                    <i class="ri-eye-line card-stat-icon"></i> 4.5K
+                                </span>
+                                <span class="card-stat" title="عدد الإعجابات">
+                                    <i class="ri-heart-line card-stat-icon"></i> 780
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">شاهد الموقع</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card animate-card-pop" style="animation-delay: 0.9s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع لوحة التحكم" class="card-link-wrapper" data-image-url="programs/project-program-03.png">
+                        <img src="programs/project-program-03.png" alt="صورة مشروع لوحة تحكم إدارية Bootstrap" class="project-image" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">لوحة تحكم (Dashboard) متجاوبة</p>
+                        <p class="card-description">
+                            تطوير واجهة مستخدم إدارية لعرض البيانات والإحصائيات بشكل واضح ومتجاوب مع جميع أحجام الشاشات.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">لوحة تحكم</span>
+                            <span class="card-tag">JavaScript</span>
+                            <span class="card-tag">Bootstrap</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat" title="عدد المشاهدات">
+                                    <i class="ri-eye-line card-stat-icon"></i> 2.8K
+                                </span>
+                                <span class="card-stat" title="عدد الإعجابات">
+                                    <i class="ri-heart-line card-stat-icon"></i> 410
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض الواجهة</a>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="project-card animate-card-pop" style="animation-delay: 1.1s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع معرض أعمال تفاعلي" class="card-link-wrapper" data-image-url="programs/project-program-04.png">
+                        <img src="programs/project-program-04.png" alt="صورة مشروع معرض أعمال شخصي تفاعلي" class="project-image" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">معرض أعمال شخصي (Svelte)</p>
+                        <p class="card-description">
+                            تصميم وتطوير معرض أعمال شخصي فائق السرعة والأداء باستخدام إطار عمل Svelte، مع تأثيرات حركية خفيفة.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Svelte</span>
+                            <span class="card-tag">Animation</span>
+                            <span class="card-tag">Front-end</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat" title="عدد المشاهدات">
+                                    <i class="ri-eye-line card-stat-icon"></i> 1.9K
+                                </span>
+                                <span class="card-stat" title="عدد الإعجابات">
+                                    <i class="ri-heart-line card-stat-icon"></i> 330
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">شاهد المعرض</a>
+                        </div>
+                    </div>
+                </div>
 
-            </section>
-            
-            <div class="text-center mt-24 animate-fade-in" style="animation-delay: 2.9s;">
-                <p class="text-gray-400 text-lg border-t border-gray-800 pt-6">
-                    ابداً مشروعك البرمجي التالي معنا. <a href="index.html" class="text-primary hover:text-yellow-300 font-bold transition-colors">اطلب عرض سعر</a>.
-                </p>
-            </div>
+                <div class="project-card animate-card-pop" style="animation-delay: 1.3s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع واجهة تطبيق جوال" class="card-link-wrapper" data-image-url="programs/project-program-05.png">
+                        <img src="programs/project-program-05.png" alt="صورة مشروع واجهة مستخدم تطبيق جوال" class="project-image" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">واجهة تطبيق جوال (NativeScript)</p>
+                        <p class="card-description">
+                            بناء واجهة مستخدم متكاملة لتطبيق مالي عبر NativeScript (أو React Native/Flutter)، لضمان تجربة مستخدم سلسة.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">NativeScript</span>
+                            <span class="card-tag">Mobile UI</span>
+                            <span class="card-tag">TypeScript</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat" title="عدد المشاهدات">
+                                    <i class="ri-eye-line card-stat-icon"></i> 2.5K
+                                </span>
+                                <span class="card-stat" title="عدد الإعجابات">
+                                    <i class="ri-heart-line card-stat-icon"></i> 500
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض التطبيق</a>
+                        </div>
+                    </div>
+                </div>
 
-        </main>
-        
-    </div>
+                <div class="project-card animate-card-pop" style="animation-delay: 1.5s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع مدونة فنية" class="card-link-wrapper" data-image-url="programs/project-program-06.png">
+                        <img src="programs/project-program-06.png" alt="صورة مشروع مدونة فنية بتصميم عصري" class="project-image" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">مدونة فنية بتصميم عصري (Gatsby)</p>
+                        <p class="card-description">
+                            تطوير مدونة ثابتة (Static Site) باستخدام Gatsby.js لتحقيق سرعة تحميل فائقة وتجربة قراءة ممتازة.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Gatsby.js</span>
+                            <span class="card-tag">Static Site</span>
+                            <span class="card-tag">GraphQL</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat" title="عدد المشاهدات">
+                                    <i class="ri-eye-line card-stat-icon"></i> 1.2K
+                                </span>
+                                <span class="card-stat" title="عدد الإعجابات">
+                                    <i class="ri-heart-line card-stat-icon"></i> 220
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">تصفح المدونة</a>
+                        </div>
+                    </div>
+                </div>
 
-    <footer class="glass-card mt-12 py-10 px-4 rounded-none border-t border-gray-800">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="md:col-span-2">
-                <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain mb-4" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
-                <p class="text-gray-400 text-sm max-w-sm">
-                    منصة STVX هي بوابتك لخدمات التصميم وتطوير الويب المتكاملة، ملتزمون بتقديم حلول تقنية مبتكرة وعالية الأداء.
-                </p>
-            </div>
-            
-            <div>
-                <h3 class="text-primary text-lg font-bold mb-4">روابط سريعة</h3>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="index.html" class="text-gray-400 hover:text-primary transition-colors">الرئيسية</a></li>
-                    <li><a href="portfolio.html" class="text-gray-400 hover:text-primary transition-colors">معرض الأعمال</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">اتصل بنا</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">المدونة</a></li>
-                </ul>
-            </div>
+                <div class="project-card animate-card-pop" style="animation-delay: 1.7s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع خارطة تفاعلية" class="card-link-wrapper" data-image-url="programs/project-program-07.png">
+                        <img src="programs/project-program-07.png" alt="صورة مشروع خارطة تفاعلية لعرض البيانات" class="project-image" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">خارطة تفاعلية لعرض البيانات</p>
+                        <p class="card-description">
+                            تطوير واجهة تعرض البيانات الإحصائية على خارطة تفاعلية باستخدام مكتبة Leaflet.js و AJAX لتحميل البيانات.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Leaflet.js</span>
+                            <span class="card-tag">API Integration</span>
+                            <span class="card-tag">JavaScript</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat" title="عدد المشاهدات">
+                                    <i class="ri-eye-line card-stat-icon"></i> 3.5K
+                                </span>
+                                <span class="card-stat" title="عدد الإعجابات">
+                                    <i class="ri-heart-line card-stat-icon"></i> 580
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">شاهد الخارطة</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div>
-                <h3 class="text-primary text-lg font-bold mb-4">خدماتنا</h3>
-                <ul class="space-y-2 text-sm">
-                    <li><span class="text-primary">تطوير الواجهات (Front-end)</span></li>
-                    <li><a href="backend.html" class="text-gray-400 hover:text-primary transition-colors">تطوير الخلفيات (Back-end)</a></li>
-                    <li><a href="design.html" class="text-gray-400 hover:text-primary transition-colors">خدمات التصميم</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">استشارات تقنية</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="mt-8 pt-6 border-t border-gray-800 text-center">
-            <p class="text-gray-500 text-xs">
-                &copy; 2025 STVX Platform. جميع الحقوق محفوظة.
-            </p>
-            <div class="flex justify-center space-x-4 rtl:space-x-reverse mt-4">
-                <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="فيسبوك"><i class="ri-facebook-fill text-xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="تويتر"><i class="ri-twitter-x-fill text-xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="لينكد إن"><i class="ri-linkedin-fill text-xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="جيت هاب"><i class="ri-github-fill text-xl"></i></a>
-            </div>
-        </div>
-    </footer>
+                <div class="project-card animate-card-pop" style="animation-delay: 1.9s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع نماذج تسجيل دخول" class="card-link-wrapper" data-image-url="programs/project-program-08.png">
+                        <img src="programs/project-program-08.png" alt="صورة مشروع نماذج تسجيل دخول وتوثيق" class="project-image" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">نماذج تسجيل دخول وتوثيق (Next.js)</p>
+                        <p class="card-description">
+                            تطوير مجموعة نماذج (Forms) للتوثيق (Login, Register) متكاملة ومؤمنة باستخدام Next.js و Firebase.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Next.js</span>
+                            <span class="card-tag">Forms</span>
+                            <span class="card-tag">Firebase</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat" title="عدد المشاهدات">
+                                    <i class="ri-eye-line card-stat-icon"></i> 1.8K
+                                </span>
+                                <span class="card-stat" title="عدد الإعجابات">
+                                    <i class="ri-heart-line card-stat-icon"></i> 390
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض النماذج</a>
+                        </div>
+                    </div>
+                </div>
 
-    <div id="image-modal" class="image-modal fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4 md:p-10">
-        <div class="relative max-w-full max-h-full transition-all duration-300 scale-90" id="modal-content">
-            
-            <button id="close-modal" class="absolute top-4 left-4 text-white text-3xl opacity-70 hover:opacity-100 transition z-[10000]" aria-label="إغلاق الصورة">
-                <i class="ri-close-line"></i>
-            </button>
-            
-            <img id="modal-image" src="" alt="صورة مكبرة للمشروع" class="rounded-lg shadow-2xl transition-all duration-300">
-        </div>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById('image-modal');
-            const modalImage = document.getElementById('modal-image');
-            const modalContent = document.getElementById('modal-content'); 
-            const closeModalButton = document.getElementById('close-modal');
-            const body = document.body;
+                <div class="project-card animate-card-pop" style="animation-delay: 2.1s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع تطبيق ويب متقدم (PWA)" class="card-link-wrapper" data-image-url="programs/project-program-09.png">
+                        <img src="programs/project-program-09.png" alt="صورة مشروع تطبيق ويب متقدم PWA" class="project-image" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">تطبيق ويب متقدم (PWA) للأخبار</p>
+                        <p class="card-description">
+                            تحويل موقع إخباري تقليدي إلى PWA لتحقيق التخزين المؤقت، وتجربة الأوفلاين، وإرسال الإشعارات.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">PWA</span>
+                            <span class="card-tag">Service Workers</span>
+                            <span class="card-tag">Caching</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat" title="عدد المشاهدات">
+                                    <i class="ri-eye-line card-stat-icon"></i> 4.9K
+                                </span>
+                                <span class="card-stat" title="عدد الإعجابات">
+                                    <i class="ri-heart-line card-stat-icon"></i> 910
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">شاهد التطبيق</a>
+                        </div>
+                    </div>
+                </div>
 
-            // وظيفة إغلاق الـ Modal
-            const closeModal = () => {
-                modal.classList.remove('active');
-                modalContent.classList.remove('scale-100');
-                modalContent.classList.add('scale-90');
-                body.classList.remove('modal-open-body'); 
-            };
+                <div class="project-card animate-card-pop" style="animation-delay: 2.3s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع الرسوم البيانية التفاعلية" class="card-link-wrapper" data-image-url="programs/project-program-10.png">
+                        <img src="programs/project-program-10.png" alt="صورة مشروع رسوم بيانية تفاعلية للبيانات" class="project-image" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">رسوم بيانية تفاعلية (D3.js)</p>
+                        <p class="card-description">
+                            تطوير واجهة لعرض البيانات المالية المعقدة باستخدام رسوم بيانية تفاعلية ومكتبة D3.js المتقدمة.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">D3.js</span>
+                            <span class="card-tag">Data Vis.</span>
+                            <span class="card-tag">React</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat" title="عدد المشاهدات">
+                                    <i class="ri-eye-line card-stat-icon"></i> 2.3K
+                                </span>
+                                <span class="card-stat" title="عدد الإعجابات">
+                                    <i class="ri-heart-line card-stat-icon"></i> 450
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض الرسوم</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card animate-card-pop" style="animation-delay: 2.5s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع موقع تعريفي بسيط" class="card-link-wrapper" data-image-url="programs/project-program-11.png">
+                        <img src="programs/project-program-11.png" alt="صورة مشروع موقع تعريفي بسيط HTML/CSS" class="project-image" />
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">موقع تعريفي بسيط (HTML/CSS)</p>
+                        <p class="card-description">
+                            تصميم وتكويد موقع تعريفي من صفحة واحدة لشركة ناشئة، مع التركيز على النظافة والتحميل السريع.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">HTML5</span>
+                            <span class="card-tag">CSS3</span>
+                            <span class="card-tag">Responsive</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat" title="عدد المشاهدات">
+                                    <i class="ri-eye-line card-stat-icon"></i> 1.5K
+                                </span>
+                                <span class="card-stat" title="عدد الإعجابات">
+                                    <i class="ri-heart-line card-stat-icon"></i> 280
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">شاهد الموقع</a>
+                        </div>
+                    </div>
+                </div>
 
-            // الاستماع لجميع الصور في البطاقات
-            document.querySelectorAll('.card-link-wrapper').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault(); 
-                    
-                    // المسار هنا حيوي: تأكد من أن الصور موجودة فعلاً في مجلد programs
-                    const imageUrl = link.getAttribute('data-image-url'); 
-                    console.log('Attempting to load image:', imageUrl); // للمساعدة في تتبع الأخطاء في المتصفح
+                <div class="project-card animate-card-pop flex items-center justify-center p-8 border-2 border-dashed border-primary/50 hover:border-primary transition-all duration-300" style="animation-delay: 2.7s;">
+                    <div class="text-center">
+                        <i class="ri-rocket-line text-primary text-4xl mb-4 animate-bounce"></i>
+                        <p class="text-xl font-bold text-primary mb-2">🚀 هل لديك فكرة جديدة؟</p>
+                        <p class="text-gray-300">دعنا نبني الواجهة الأمامية لمشروعك التالي بآخر التقنيات.</p>
+                        <a href="index.html" class="mt-4 inline-block px-6 py-3 bg-primary text-black font-bold rounded-full hover:bg-yellow-300 transition-all duration-300 shadow-lg hover:shadow-primary/50">ابدأ مشروعك الآن</a>
+                    </div>
+                </div>
 
-                    // عرض الصورة في الـ Modal
-                    modalImage.src = imageUrl;
-                    
-                    // إظهار الـ Modal وتفعيل التأثيرات
-                    modal.classList.add('active');
-                    
-                    setTimeout(() => {
-                        modalContent.classList.add('scale-100');
-                        modalContent.classList.remove('scale-90');
-                    }, 10); 
-                    
-                    body.classList.add('modal-open-body'); 
-                });
-            });
+            </section>
+            
+            <div class="text-center mt-24 animate-fade-in" style="animation-delay: 2.9s;">
+                <p class="text-gray-400 text-lg border-t border-gray-800 pt-6">
+                    ابداً مشروعك البرمجي التالي معنا. <a href="index.html" class="text-primary hover:text-yellow-300 font-bold transition-colors">اطلب عرض سعر</a>.
+                </p>
+            </div>
 
-            // إغلاق الـ Modal عند الضغط على زر الإغلاق
-            closeModalButton.addEventListener('click', closeModal);
+        </main>
+        
+    </div>
 
-            // إغلاق الـ Modal عند الضغط خارج الصورة
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
+    <footer class="glass-card mt-12 py-10 px-4 rounded-none border-t border-gray-800">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="md:col-span-2">
+                <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain mb-4" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
+                <p class="text-gray-400 text-sm max-w-sm">
+                    منصة STVX هي بوابتك لخدمات التصميم وتطوير الويب المتكاملة، ملتزمون بتقديم حلول تقنية مبتكرة وعالية الأداء.
+                </p>
+            </div>
+            
+            <div>
+                <h3 class="text-primary text-lg font-bold mb-4">روابط سريعة</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="index.html" class="text-gray-400 hover:text-primary transition-colors">الرئيسية</a></li>
+                    <li><a href="portfolio.html" class="text-gray-400 hover:text-primary transition-colors">معرض الأعمال</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">اتصل بنا</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">المدونة</a></li>
+                </ul>
+            </div>
 
-            // إغلاق الـ Modal عند الضغط على مفتاح Esc
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    closeModal();
-                }
-            });
-        });
-    </script>
+            <div>
+                <h3 class="text-primary text-lg font-bold mb-4">خدماتنا</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><span class="text-primary">تطوير الواجهات (Front-end)</span></li>
+                    <li><a href="backend.html" class="text-gray-400 hover:text-primary transition-colors">تطوير الخلفيات (Back-end)</a></li>
+                    <li><a href="design.html" class="text-gray-400 hover:text-primary transition-colors">خدمات التصميم</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">استشارات تقنية</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="mt-8 pt-6 border-t border-gray-800 text-center">
+            <p class="text-gray-500 text-xs">
+                &copy; 2025 STVX Platform. جميع الحقوق محفوظة.
+            </p>
+            <div class="flex justify-center space-x-4 rtl:space-x-reverse mt-4">
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="فيسبوك"><i class="ri-facebook-fill text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="تويتر"><i class="ri-twitter-x-fill text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="لينكد إن"><i class="ri-linkedin-fill text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="جيت هاب"><i class="ri-github-fill text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+        <div id="image-modal" class="image-modal fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4 md:p-10">
+        <div class="relative max-w-full max-h-full transition-all duration-300 scale-90" id="modal-content">
+            
+                        <button id="close-modal" class="absolute **top-6 right-6** text-white text-3xl opacity-70 hover:opacity-100 transition z-[10000] bg-black/30 rounded-full w-10 h-10 flex items-center justify-center backdrop-blur-sm" aria-label="إغلاق الصورة">
+                <i class="ri-close-line"></i>
+            </button>
+            
+                        <img id="modal-image" src="" alt="صورة مكبرة للمشروع" class="rounded-lg shadow-2xl transition-all duration-300">
+        </div>
+    </div>
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            const modalContent = document.getElementById('modal-content'); 
+            const closeModalButton = document.getElementById('close-modal');
+            const body = document.body;
+
+            // وظيفة إغلاق الـ Modal
+            const closeModal = () => {
+                modal.classList.remove('active');
+                modalContent.classList.remove('scale-100');
+                modalContent.classList.add('scale-90');
+                **body.classList.remove('modal-open-body');** // إزالة كلاس منع السكرول
+            };
+
+            // الاستماع لجميع الصور في البطاقات
+            document.querySelectorAll('.card-link-wrapper').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    
+                    const imageUrl = link.getAttribute('data-image-url'); 
+
+                    // عرض الصورة في الـ Modal
+                    modalImage.src = imageUrl;
+                    
+                    // إظهار الـ Modal وتفعيل التأثيرات
+                    modal.classList.add('active');
+                    
+                    setTimeout(() => {
+                        modalContent.classList.add('scale-100');
+                        modalContent.classList.remove('scale-90');
+                    }, 10); 
+                    
+                    **body.classList.add('modal-open-body');** // إضافة كلاس منع السكرول
+                });
+            });
+
+            // إغلاق الـ Modal عند الضغط على زر الإغلاق
+            closeModalButton.addEventListener('click', closeModal);
+
+            // إغلاق الـ Modal عند الضغط خارج الصورة
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // إغلاق الـ Modal عند الضغط على مفتاح Esc
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
