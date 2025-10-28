@@ -107,11 +107,13 @@
 
         /* 🌟🌟 التعديل هنا: تنسيقات الـ Modal لتظهر في منتصف الشاشة 🌟🌟 */
         .image-modal {
-            /* تم استبدال الكلاسات Tailwind بكود CSS مباشرة لضبط التمركز بشكل أفضل عند الحاجة */
             transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            /* الحالة الافتراضية: مخفية */
+            opacity: 0;
+            visibility: hidden;
         }
 
-        /* حالة ظهور المودال (لإضافة التأثيرات) */
+        /* حالة ظهور المودال */
         .image-modal.active {
             opacity: 1;
             visibility: visible;
@@ -120,6 +122,15 @@
         /* إخفاء السكرول بار عند ظهور النافذة المنبثقة */
         .modal-open-body {
             overflow: hidden; 
+        }
+        
+        /* 💡 إصلاح ظهور الصورة: تأكد من أن الـ Img نفسها لها تنسيقات عرض صحيحة */
+        #modal-image {
+            max-width: 100%;
+            max-height: 90vh; /* تحديد أقصى ارتفاع لضمان ظهروها في المنتصف */
+            width: auto; /* مهم للسماح للصورة بأخذ حجمها الطبيعي */
+            height: auto; /* مهم للسماح للصورة بأخذ حجمها الطبيعي */
+            object-fit: contain; /* التأكد من أن الصورة كاملة تظهر */
         }
         /* 🌟🌟 نهاية تعديل الـ Modal 🌟🌟 */
 
@@ -561,12 +572,14 @@
         </div>
     </footer>
 
-    <div id="image-modal" class="image-modal fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4 md:p-10 transition-all duration-300 invisible opacity-0">
+    <div id="image-modal" class="image-modal fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4 md:p-10">
         <div class="relative max-w-full max-h-full transition-all duration-300 scale-90" id="modal-content">
-            <button id="close-modal" class="absolute top-4 right-4 text-white text-3xl opacity-70 hover:opacity-100 transition z-[10000]" aria-label="إغلاق الصورة">
+            
+            <button id="close-modal" class="absolute top-4 left-4 text-white text-3xl opacity-70 hover:opacity-100 transition z-[10000]" aria-label="إغلاق الصورة">
                 <i class="ri-close-line"></i>
             </button>
-            <img id="modal-image" src="" alt="صورة مكبرة للمشروع" class="max-w-full max-h-screen object-contain rounded-lg shadow-2xl transition-all duration-300" style="max-height: 90vh;">
+            
+            <img id="modal-image" src="" alt="صورة مكبرة للمشروع" class="max-w-full max-h-[95vh] object-contain rounded-lg shadow-2xl transition-all duration-300">
         </div>
     </div>
     <script>
@@ -574,15 +587,14 @@
         document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById('image-modal');
             const modalImage = document.getElementById('modal-image');
-            const modalContent = document.getElementById('modal-content'); // الإطار الداخلي للتأثير
+            const modalContent = document.getElementById('modal-content'); 
             const closeModalButton = document.getElementById('close-modal');
             const body = document.body;
 
             // وظيفة إغلاق الـ Modal
             const closeModal = () => {
-                modal.classList.remove('active', 'opacity-100', 'visible');
+                modal.classList.remove('active');
                 modalContent.classList.remove('scale-100');
-                modal.classList.add('invisible', 'opacity-0');
                 modalContent.classList.add('scale-90');
                 body.classList.remove('modal-open-body'); // إزالة إخفاء السكرول
             };
@@ -597,14 +609,13 @@
                     modalImage.src = imageUrl;
                     
                     // إظهار الـ Modal وتفعيل التأثيرات
-                    modal.classList.add('active', 'opacity-100', 'visible');
-                    modal.classList.remove('invisible', 'opacity-0');
+                    modal.classList.add('active');
                     
                     // لإضافة تأثير التكبير (Pop-in effect)
                     setTimeout(() => {
                         modalContent.classList.add('scale-100');
                         modalContent.classList.remove('scale-90');
-                    }, 10); // تأخير بسيط لضمان تفعيل التأثير
+                    }, 10); 
                     
                     body.classList.add('modal-open-body'); // إخفاء السكرول لمنع التمرير خلف الـ Modal
                 });
