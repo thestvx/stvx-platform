@@ -69,7 +69,6 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        /* لا نحتاج لـ .project-card بعد الآن */
     </style>
 </head>
 <body class="text-white font-sans flex flex-col min-h-screen 
@@ -81,7 +80,7 @@
             <div class="flex items-center justify-between max-w-7xl mx-auto">
                 
                 <a href="portfolio.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" title="العودة إلى معرض الأعمال">
-                    <i class="ri-arrow-right-line text-primary text-xl"></i> 
+                    <i class="ri-arrow-left-line text-primary text-xl"></i> 
                 </a>
 
                 <div class="flex items-center space-x-4 rtl:space-x-reverse">
@@ -108,19 +107,119 @@
                     💻 معرض تطوير الواجهات (Front-end)
                 </h1>
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    نحول التصميم إلى واقع تفاعلي ومواقع سريعة الاستجابة باستخدام أحدث التقنيات وبتأثير **الانحناء ثلاثي الأبعاد**.
+                    نحول التصميم إلى واقع تفاعلي ومواقع سريعة الاستجابة باستخدام **React.js**، **Vue.js** وأحدث التقنيات البرمجية.
                 </p>
                 <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full animate-pulse"></div>
             </header>
 
-            <section class="w-full h-[60vh] min-h-[500px] mt-16 relative bg-black/20 rounded-2xl overflow-hidden shadow-2xl glass-hover-effect">
-                <div id="programs-gallery-container" class="w-full h-full relative">
-                    <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-lg z-10 pointer-events-none">
-                        جاري تحميل المعرض ثلاثي الأبعاد... (استخدم الفأرة/اللمس للتمرير)
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
+                
+                <div class="project-card animate-card-pop" style="animation-delay: 0.5s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع المتجر الرقمي" class="card-link-wrapper">
+                        <div
+                            aria-label="صورة مشروع واجهة متجر إلكتروني"
+                            role="img"
+                            class="card-image-placeholder"
+                            style="background-image: url('images/placeholder-program-1.jpg');"
+                        ></div>
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">واجهة متجر إلكتروني (React)</p>
+                        <p class="card-description">
+                            تطوير واجهة مستخدم متكاملة لمتجر رقمي عصري، مع ميزات البحث والتصفية السريعة باستخدام React و Tailwind CSS.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">React.js</span>
+                            <span class="card-tag">Tailwind</span>
+                            <span class="card-tag">Front-end</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+                                    3.1K
+                                </span>
+                                <span class="card-stat">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                    620
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">شاهد الكود</a>
+                        </div>
                     </div>
                 </div>
+
+                <div class="project-card animate-card-pop" style="animation-delay: 0.7s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع صفحة الهبوط" class="card-link-wrapper">
+                        <div
+                            aria-label="صورة مشروع صفحة هبوط"
+                            role="img"
+                            class="card-image-placeholder"
+                            style="background-image: url('images/placeholder-program-2.jpg');"
+                        ></div>
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">صفحة هبوط لمؤتمر تقني (Vue)</p>
+                        <p class="card-description">
+                            إنشاء صفحة هبوط عالية الأداء ومحسّنة لمحركات البحث (SEO)، لجمع الاشتراكات في مؤتمر تقني رائد.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Vue.js</span>
+                            <span class="card-tag">HTML/CSS</span>
+                            <span class="card-tag">SEO</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+                                    4.5K
+                                </span>
+                                <span class="card-stat">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                    780
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">شاهد الموقع</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card animate-card-pop" style="animation-delay: 0.9s;">
+                    <a href="#" aria-label="عرض تفاصيل مشروع لوحة التحكم" class="card-link-wrapper">
+                        <div
+                            aria-label="صورة مشروع لوحة تحكم إدارية"
+                            role="img"
+                            class="card-image-placeholder"
+                            style="background-image: url('images/placeholder-program-3.jpg');"
+                        ></div>
+                    </a>
+                    <div class="card-content">
+                        <p class="card-title">لوحة تحكم (Dashboard) متجاوبة</p>
+                        <p class="card-description">
+                            تطوير واجهة مستخدم إدارية لعرض البيانات والإحصائيات بشكل واضح ومتجاوب مع جميع أحجام الشاشات.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">لوحة تحكم</span>
+                            <span class="card-tag">JavaScript</span>
+                            <span class="card-tag">Bootstrap</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+                                    2.8K
+                                </span>
+                                <span class="card-stat">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="card-stat-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                    410
+                                </span>
+                            </div>
+                            <a class="card-button" href="#">عرض الواجهة</a>
+                        </div>
+                    </div>
+                </div>
+
             </section>
-            
             <div class="text-center mt-24 animate-fade-in" style="animation-delay: 1.2s;">
                 <p class="text-gray-400 text-lg border-t border-gray-800 pt-6">
                     ابدأ مشروعك البرمجي التالي معنا. <a href="index.html" class="text-primary hover:text-yellow-300 font-bold transition-colors">اطلب عرض سعر</a>.
@@ -131,31 +230,7 @@
         
     </div>
     
-    <script src="https://unpkg.com/ogl@latest/dist/ogl.min.js"></script>
-    
     <script src="script.js"></script> 
-    
-    <script>
-        // بيانات المشاريع الخاصة بصفحة تطوير الواجهات
-        const programsItems = [
-            // مسارات الصور تعكس مجلد 'programs/' الذي ذكرته
-            { image: 'programs/project-program-01.png', text: 'واجهة متجر رقمي متكامل' },
-            { image: 'programs/project-program-02.png', text: 'صفحة هبوط لمؤتمر تقني' },
-            { image: 'programs/project-program-03.png', text: 'لوحة تحكم (Dashboard) إدارية' },
-            { image: 'programs/project-program-04.png', text: 'واجهة تطبيق موبايل React Native' },
-            { image: 'programs/project-program-05.png', text: 'موقع تعريفي للخدمات' },
-        ];
-
-        // تهيئة المعرض الدائري عند تحميل المحتوى
-        document.addEventListener('DOMContentLoaded', () => {
-             // 💡 شرط للتأكد من أن الدالة initCircularGallery موجودة
-             if (window.initCircularGallery) {
-                 window.initCircularGallery('programs-gallery-container', programsItems);
-             } else {
-                 console.error("initCircularGallery is not defined. Ensure script.js loaded correctly.");
-             }
-        });
-    </script>
     
 </body>
 </html>
