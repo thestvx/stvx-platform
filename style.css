@@ -5,16 +5,16 @@
 /* -------------------------------------- */
 
 /*
-    ملاحظة هامة: بما أن "Expo Arabic" ليس متوفراً عبر Google Fonts،
-    يفترض أنه موجود كملف خط محلي في مسار محدد (مثل fonts/ExpoArabic.woff2).
-    
-    @font-face {
-        font-family: 'Expo Arabic';
-        src: url('fonts/ExpoArabic.woff2') format('woff2'),
-             url('fonts/ExpoArabic.woff') format('woff');
-        font-weight: 400;
-        font-style: normal;
-    }
+    ملاحظة هامة: بما أن "Expo Arabic" ليس متوفراً عبر Google Fonts،
+    يفترض أنه موجود كملف خط محلي في مسار محدد (مثل fonts/ExpoArabic.woff2).
+    
+    @font-face {
+        font-family: 'Expo Arabic';
+        src: url('fonts/ExpoArabic.woff2') format('woff2'),
+             url('fonts/ExpoArabic.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+    }
 */
 
 /* استيراد خط Cairo كبديل آمن وعصري للغة العربية */
@@ -24,9 +24,9 @@
 /* إعادة الضبط الأساسية (CSS Reset) */
 /* -------------------------------------- */
 *, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 
@@ -34,54 +34,59 @@
 /* 1. تنسيق الأساسيات وإعادة الضبط */
 /* -------------------------------------- */
 body {
-    /* يضمن تمدد الجسم ليشمل أقل ارتفاع للشاشة */
-    min-height: 100vh; 
-    /* يتم تفعيل تسريع الرسوميات لتحسين أداء الأنيميشن */
-    transform-style: preserve-3d;
-    
-    font-family: 'Expo Arabic', 'Cairo', sans-serif;
-    
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    
-    scroll-behavior: smooth; 
+    /* يضمن تمدد الجسم ليشمل أقل ارتفاع للشاشة */
+    min-height: 100vh; 
+    /* يتم تفعيل تسريع الرسوميات لتحسين أداء الأنيميشن */
+    transform-style: preserve-3d;
+    
+    font-family: 'Expo Arabic', 'Cairo', sans-serif;
+    
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    scroll-behavior: smooth; 
 }
 
 /* تنسيق النص المحدد (Selection) */
 ::selection {
-    background: #ffc72c; /* لون ذهبي */
-    color: #111111; /* نص داكن */
+    background: #ffc72c; /* لون ذهبي */
+    color: #111111; /* نص داكن */
 }
 ::-moz-selection {
-    background: #ffc72c;
-    color: #111111;
+    background: #ffc72c;
+    color: #111111;
 }
 
 a {
-    /* يزيل خطوط التسطير الافتراضية */
-    text-decoration: none;
-    /* يضمن انتقال سلس للتغييرات على الروابط */
-    transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease; 
+    /* يزيل خطوط التسطير الافتراضية */
+    text-decoration: none;
+    /* يضمن انتقال سلس للتغييرات على الروابط */
+    transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease; 
 }
 
 /* -------------------------------------- */
 /* 2. تنسيق شريط التبويب النشط في Auth.html */
 /* -------------------------------------- */
+.tab-button {
+    /* لتمكين وضع position: absolute للعنصر الزائف ::after */
+    position: relative; 
+}
+
 .tab-button.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: #ffc72c; /* اللون الذهبي الجديد */
-    border-radius: 2px 2px 0 0;
-    animation: slideInBottom 0.3s ease-out forwards;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #ffc72c; /* اللون الذهبي الجديد */
+    border-radius: 2px 2px 0 0;
+    animation: slideInBottom 0.3s ease-out forwards;
 }
 
 @keyframes slideInBottom {
-    from { transform: translateY(10px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from { transform: translateY(10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 /* -------------------------------------- */
@@ -89,31 +94,31 @@ a {
 /* -------------------------------------- */
 
 /* تنسيق شريط التمرير لمتصفحات Webkit (Chrome, Safari, Edge) */
-::-webkit-scrollbar { 
-    width: 8px; /* تم زيادة العرض قليلاً لتحسين الرؤية */
+::-webkit-scrollbar { 
+    width: 8px; /* تم زيادة العرض قليلاً لتحسين الرؤية */
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05); /* خلفية شفافة فاتحة */
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05); /* خلفية شفافة فاتحة */
+    border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #ffc72c; /* لون ذهبي */
-    border-radius: 10px;
-    /* إضافة حدود شفافة لجعل اللون الذهبي يبدو نحيفاً */
-    border: 2px solid transparent; 
-    background-clip: content-box; 
+    background: #ffc72c; /* لون ذهبي */
+    border-radius: 10px;
+    /* إضافة حدود شفافة لجعل اللون الذهبي يبدو نحيفاً */
+    border: 2px solid transparent; 
+    background-clip: content-box; 
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #e6b222; /* ذهبي أغمق قليلاً عند التمرير */
+    background: #e6b222; /* ذهبي أغمق قليلاً عند التمرير */
 }
 
 /* تنسيق شريط التمرير لمتصفح Firefox */
 * {
-    scrollbar-width: thin; 
-    scrollbar-color: #ffc72c rgba(255, 255, 255, 0.05); 
+    scrollbar-width: thin; 
+    scrollbar-color: #ffc72c rgba(255, 255, 255, 0.05); 
 }
 
 /* -------------------------------------- */
@@ -122,11 +127,11 @@ a {
 
 /* تأكيد تثبيت الشريط الجانبي في حالة العرض الكبير */
 @media (min-width: 1024px) { /* تطبيق هذا التنسيق على شاشات lg وأكبر */
-    .sidebar-scroll {
-        /* تأكد من أن الـ sidebar لا يتجاوز ارتفاع محتواه */
-        max-height: calc(100vh - 12rem); /* 100vh - (المسافة من الأعلى + المسافة من الأسفل) */
-        overflow-y: auto; /* لضمان ظهور شريط التمرير عند الحاجة */
-    }
+    .sidebar-scroll {
+        /* تأكد من أن الـ sidebar لا يتجاوز ارتفاع محتواه */
+        max-height: calc(100vh - 12rem); /* 100vh - (المسافة من الأعلى + المسافة من الأسفل) */
+        overflow-y: auto; /* لضمان ظهور شريط التمرير عند الحاجة */
+    }
 }
 
 
@@ -136,20 +141,21 @@ a {
 
 /* تطبيق تأثير التعتيم (blur) على المحتوى الرئيسي عند تفعيل فئة filter */
 #mainContent.filter {
-    filter: blur(4px) grayscale(70%); /* لزيادة وضوح التعتيم */
-    pointer-events: none; /* تعطيل التفاعل مع المحتوى خلف الـ sidebar */
+    filter: blur(4px) grayscale(70%); /* لزيادة وضوح التعتيم */
+    pointer-events: none; /* تعطيل التفاعل مع المحتوى خلف الـ sidebar */
+    transition: filter 0.3s ease; /* إضافة انتقال سلس لتأثير التعتيم */
 }
 
 /* -------------------------------------- */
 /* 6. تطبيق Glass-Card على حقول الإدخال للتركيز */
 /* -------------------------------------- */
-.glass-card input:focus, 
+.glass-card input:focus, 
 .glass-card textarea:focus,
 .glass-card select:focus {
-    /* يضمن أن حقول الإدخال داخل أي عنصر يحمل فئة glass-card تظهر ظل تركيز ذهبي */
-    box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.3), 0 0 10px rgba(255, 199, 44, 0.1);
-    outline: none; /* إزالة الـ outline الافتراضي */
-    border-color: #ffc72c !important; 
+    /* يضمن أن حقول الإدخال داخل أي عنصر يحمل فئة glass-card تظهر ظل تركيز ذهبي */
+    box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.3), 0 0 10px rgba(255, 199, 44, 0.1);
+    outline: none; /* إزالة الـ outline الافتراضي */
+    border-color: #ffc72c !important; 
 }
 
 /* -------------------------------------- */
@@ -158,24 +164,24 @@ a {
 
 /* تحسين مظهر الأزرار المربعة (للأيقونات/الفلاتر) */
 .icon-button {
-    transition: all 0.3s ease;
-    /* Glassmorphism خفيف */
-    background-color: rgba(255, 255, 255, 0.05); 
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    /* Glassmorphism خفيف */
+    background-color: rgba(255, 255, 255, 0.05); 
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 .icon-button:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px) scale(1.05); /* إضافة Scale لتأثير أجمل */
-    border-color: #ffc72c;
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px) scale(1.05); /* إضافة Scale لتأثير أجمل */
+    border-color: #ffc72c;
 }
 
 /* تحسين التباعد بين العناصر في وضع الأجهزة الكبيرة */
 @media (min-width: 1280px) {
-    .xl\:gap-8 {
-        gap: 2rem !important; 
-    }
+    .xl\:gap-8 {
+        gap: 2rem !important; 
+    }
 }
 
 /* -------------------------------------- */
@@ -183,127 +189,127 @@ a {
 /* -------------------------------------- */
 
 .project-card {
-    /* تطبيق تأثير البطاقة الزجاجية الأساسي */
-    background-color: rgba(17, 17, 17, 0.7);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    color: #f3f4f6;
-    /* تم تغيير transform هنا لضمان عدم تعارضها مع حركة الـ Lightbox */
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease; 
-    cursor: pointer;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    /* تطبيق تأثير البطاقة الزجاجية الأساسي */
+    background-color: rgba(17, 17, 17, 0.7);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: #f3f4f6;
+    /* تم تغيير transform هنا لضمان عدم تعارضها مع حركة الـ Lightbox */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease; 
+    cursor: pointer;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 .project-card:hover {
-    /* تم إزالة scale(1.02) لضمان عدم تداخل التحولات */
-    transform: translateY(-8px); 
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 199, 44, 0.2);
+    /* تم إزالة scale(1.02) لضمان عدم تداخل التحولات */
+    transform: translateY(-8px); 
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 199, 44, 0.2);
 }
 
 .card-link-wrapper {
-    display: block;
-    height: 250px; /* ارتفاع ثابت لـ Image Placeholder */
-    position: relative;
-    overflow: hidden;
+    display: block;
+    height: 250px; /* ارتفاع ثابت لـ Image Placeholder */
+    position: relative;
+    overflow: hidden;
 }
 
 .card-image-placeholder {
-    width: 100%;
-    height: 100%;
-    background-color: #222;
-    background-size: cover;
-    background-position: center;
-    /* يجب أن تكون transition موجودة لتطبيقها عند مغادرة الـ Lightbox */
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+    width: 100%;
+    height: 100%;
+    background-color: #222;
+    background-size: cover;
+    background-position: center;
+    /* يجب أن تكون transition موجودة لتطبيقها عند مغادرة الـ Lightbox */
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
 }
 
 .project-card:hover .card-image-placeholder {
-    /* تم إزالة تأثير التكبير البسيط هنا، لأنه سيتم التعامل معه عبر JavaScript/Lightbox */
-    /* transform: scale(1.1); */
+    /* تم إزالة تأثير التكبير البسيط هنا، لأنه سيتم التعامل معه عبر JavaScript/Lightbox */
+    /* transform: scale(1.1); */
 }
 
 .card-content {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .card-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: #ffc72c; /* اللون الذهبي */
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #ffc72c; /* اللون الذهبي */
 }
 
 .card-description {
-    font-size: 0.95rem;
-    color: #a0a0a0;
-    margin-bottom: 1rem;
-    flex-grow: 1; /* يسمح للوصف بأخذ المساحة الكافية */
+    font-size: 0.95rem;
+    color: #a0a0a0;
+    margin-bottom: 1rem;
+    flex-grow: 1; /* يسمح للوصف بأخذ المساحة الكافية */
 }
 
 .card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .card-tag {
-    background-color: rgba(255, 199, 44, 0.15);
-    color: #ffc72c;
-    padding: 0.3rem 0.7rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 600;
+    background-color: rgba(255, 199, 44, 0.15);
+    color: #ffc72c;
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
 }
 
 .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 1rem;
-    margin-top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 1rem;
+    margin-top: 0.5rem;
 }
 
 .card-stats {
-    display: flex;
-    gap: 1rem;
-    color: #888;
-    font-size: 0.9rem;
+    display: flex;
+    gap: 1rem;
+    color: #888;
+    font-size: 0.9rem;
 }
 
 .card-stat {
-    display: flex;
-    align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .card-stat-icon {
-    width: 18px;
-    height: 18px;
-    margin-left: 0.3rem;
-    color: #ffc72c;
+    width: 18px;
+    height: 18px;
+    margin-left: 0.3rem;
+    color: #ffc72c;
 }
 
 .card-button {
-    padding: 0.6rem 1.2rem;
-    background: #ffc72c;
-    color: #111111;
-    font-weight: 700;
-    border-radius: 6px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 0.6rem 1.2rem;
+    background: #ffc72c;
+    color: #111111;
+    font-weight: 700;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .card-button:hover {
-    background: #e6b222;
-    transform: scale(1.05);
+    background: #e6b222;
+    transform: scale(1.05);
 }
 
 /* -------------------------------------- */
@@ -317,7 +323,8 @@ a {
     left: 0;
     width: 100vw;
     height: 100vh;
-    pointer-events: none; /* يسمح بالتفاعل مع العناصر تحتها */
+    /* يسمح بالتفاعل مع العناصر تحتها في البداية حتى تظهر الصورة */
+    pointer-events: none; 
     z-index: 9999; /* يضمن الظهور فوق كل شيء */
 }
 
@@ -332,6 +339,7 @@ a {
     border-radius: 8px;
     max-width: 90vw;
     max-height: 90vh;
+    pointer-events: auto; /* يجعل الصورة قابلة للتفاعل (رغم أن JS تتعامل معها) */
 }
 
 /* حالة التمركز النهائي (عند إضافة كلاس is-centered بواسطة JavaScript) */
