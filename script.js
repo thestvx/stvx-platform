@@ -6,29 +6,28 @@
 function initSidebarToggle() {
     const sidebar = document.getElementById('sidebar');
     const toggleButton = document.getElementById('sidebar-toggle');
-    const mainContent = document.getElementById('mainContent'); // ملاحظة: لم يتم استخدام mainContent في الوظيفة، لكن الاحتفاظ به جيد
+    const mainContent = document.getElementById('mainContent');
     const backdrop = document.getElementById('sidebar-backdrop');
     
     if (!sidebar || !toggleButton || !mainContent || !backdrop) {
-        // الخروج إذا كانت العناصر المطلوبة غير موجودة في الصفحة
         return; 
     }
 
     const openSidebar = () => {
         sidebar.classList.remove('-translate-x-full');
         backdrop.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; // لمنع التمرير عندما تكون القائمة الجانبية مفتوحة
+        document.body.style.overflow = 'hidden'; 
     };
 
     const closeSidebar = () => {
         sidebar.classList.add('-translate-x-full');
         backdrop.classList.add('hidden');
-        document.body.style.overflow = ''; // استعادة التمرير
+        document.body.style.overflow = ''; 
     };
 
     toggleButton.addEventListener('click', openSidebar);
     backdrop.addEventListener('click', closeSidebar);
-    // إغلاق الشريط الجانبي عند النقر على أي رابط داخله
+
     sidebar.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', closeSidebar);
     });
@@ -84,31 +83,88 @@ function initAuthTabs() {
     }
 }
 
-
 // ----------------------------------------------------
-// 3. 🆕 وظيفة Lightbox On Hover (الصورة تطفو وتظهر في المنتصف) 🆕
+// 3. 🆕 وظيفة Lightbox عند النقر (LightBox on Click) 🆕
 // ----------------------------------------------------
-
 /**
- * تهيئة تأثير عرض الصورة بشكل عائم وبأبعادها الأصلية في منتصف الشاشة عند التحويم.
- * يجب إضافة الكلاس 'lightbox-trigger' إلى عنصر الصورة (img) داخل البطاقة.
- * ملاحظة: تعتمد هذه الوظيفة بشكل كبير على تعريف كلاسات مثل 'floating-image-wrapper' و 'cloned-image.is-centered' في ملفات CSS/Tailwind.
+ * تهيئة Lightbox لفتح صورة المشروع عند النقر عليها.
+ * يعتمد على وجود العناصر في الـ HTML: #lightbox و #lightbox-image.
  */
-function initImageLightboxOnHover() {
-    const triggers = document.querySelectorAll('.lightbox-trigger'); 
+function initClickLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    
+    // العناصر المطلوبة للوظيفة
+    if (!lightbox || !lightboxImage) {
+        return;
+    }
 
+    const triggers = document.querySelectorAll('.lightbox-trigger');
+
+    // وظيفة فتح النافذة
+    const openLightbox = (src) => {
+        lightboxImage.src = src; 
+        lightbox.classList.add('active'); 
+        document.body.style.overflow = 'hidden'; 
+    };
+
+    // وظيفة إغلاق النافذة
+    const closeLightbox = (event) => {
+        // الإغلاق عند الضغط على زر الإغلاق أو الخلفية الشفافة
+        if (event.target.classList.contains('lightbox-overlay') || event.target.closest('.lightbox-close') || event.target.id === 'lightbox') {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = ''; 
+        }
+    }
+
+    // ربط الحدث بجميع العناصر التي تحمل الكلاس .lightbox-trigger
+    triggers.forEach(trigger => {
+        // للتأكد من أننا نلتقط النقر على العنصر الأب (الرابط <a>) إذا كانت الصورة بداخله
+        // أو النقر على الصورة نفسها.
+        const clickableParent = trigger.closest('a') || trigger;
+        
+        clickableParent.addEventListener('click', (e) => {
+            // منع السلوك الافتراضي للرابط (#)
+            e.preventDefault(); 
+            // الحصول على مصدر الصورة من وسم <img>
+            const imageSrc = trigger.getAttribute('src');
+            if (imageSrc) {
+                openLightbox(imageSrc);
+            }
+        });
+    });
+
+    // إضافة مستمع الإغلاق على الـ Lightbox نفسه
+    lightbox.addEventListener('click', closeLightbox);
+    
+    // إغلاق Lightbox عند الضغط على مفتاح ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+             // إغلاق مباشرة
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
+
+// ----------------------------------------------------
+// 4. وظيفة Lightbox On Hover (الصورة تطفو وتظهر في المنتصف)
+// ----------------------------------------------------
+
+function initImageLightboxOnHover() {
+    const triggers = document.querySelectorAll('.lightbox-hover-trigger'); // تم تغيير الكلاس لتجنب التضارب مع lightbox-trigger للنقر
+    
     if (triggers.length === 0) {
         return;
     }
 
-    // عنصر حاوية للعرض العائم سيتم إنشاؤه لمرة واحدة
     let floatingImageContainer = null;
 
     const createContainer = () => {
         if (!floatingImageContainer) {
             floatingImageContainer = document.createElement('div');
             floatingImageContainer.id = 'floating-image-container';
-            // تطبيق كلاسات التحكم في المظهر والتمركز (يجب تعريفها في CSS)
             floatingImageContainer.classList.add('floating-image-wrapper'); 
             document.body.appendChild(floatingImageContainer);
         }
@@ -117,38 +173,31 @@ function initImageLightboxOnHover() {
     const showImage = (originalImage) => {
         if (!floatingImageContainer) return;
 
-        // 1. حساب موضع الصورة الأصلية
         const rect = originalImage.getBoundingClientRect();
 
-        // 2. إنشاء نسخة طبق الأصل من الصورة
         const clonedImage = originalImage.cloneNode(true);
         clonedImage.classList.add('cloned-image');
         
-        // 3. إعداد الأبعاد والموقع الأولي (مطابق للأصلية)
         Object.assign(clonedImage.style, {
             position: 'absolute',
             top: `${rect.top}px`,
             left: `${rect.left}px`,
             width: `${rect.width}px`,
             height: `${rect.height}px`,
-            opacity: '0', // تبدأ شفافة
+            opacity: '0', 
             transform: 'scale(1)',
-            // إضافة خاصية الانتقال (transition) هنا قد تكون أكثر مرونة من CSS
-            transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)' // مثال لتسريع وتسهيل التحكم بالحركة
+            transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)' 
         });
 
-        // إفراغ الحاوية وإضافة النسخة
         floatingImageContainer.innerHTML = '';
         floatingImageContainer.appendChild(clonedImage);
         
-        // إظهار النسخة المزدوجة وتفعيل الانتقال إلى المنتصف (بعد مهلة قصيرة للسماح بـ DOM Update)
         setTimeout(() => {
-            // إخفاء الصورة الأصلية مؤقتاً
             originalImage.style.opacity = '0'; 
 
             clonedImage.style.opacity = '1';
-            clonedImage.classList.add('is-centered'); // كلاس يطبق التمركز والأبعاد الأصلية في CSS
-        }, 10); // مهلة قصيرة جداً
+            clonedImage.classList.add('is-centered'); 
+        }, 10); 
 
         return clonedImage;
     };
@@ -158,7 +207,6 @@ function initImageLightboxOnHover() {
 
         const rect = originalImage.getBoundingClientRect();
         
-        // 1. إعادة الصورة العائمة إلى موقع الصورة الأصلية
         Object.assign(clonedImage.style, {
             top: `${rect.top}px`,
             left: `${rect.left}px`,
@@ -169,9 +217,7 @@ function initImageLightboxOnHover() {
         });
         clonedImage.classList.remove('is-centered'); 
         
-        // 2. إزالة الصورة العائمة وإظهار الأصلية بعد انتهاء الانتقال
-        // يجب أن تتطابق المدة مع مدة الانتقال (transition) المطبقة
-        const transitionDuration = 600; // 600ms = 0.6s (كما في Transition أعلاه)
+        const transitionDuration = 600; 
         setTimeout(() => {
             if (floatingImageContainer.contains(clonedImage)) {
                 floatingImageContainer.removeChild(clonedImage);
@@ -180,7 +226,6 @@ function initImageLightboxOnHover() {
         }, transitionDuration); 
     };
     
-    // إنشاء الحاوية مرة واحدة
     createContainer();
 
     triggers.forEach(trigger => {
@@ -191,7 +236,6 @@ function initImageLightboxOnHover() {
         });
 
         trigger.addEventListener('mouseleave', () => {
-            // إخفاء الصورة العائمة والعودة إلى الأصلية
             hideImage(clonedImg, trigger);
         });
     });
@@ -199,15 +243,12 @@ function initImageLightboxOnHover() {
 
 
 // ----------------------------------------------------
-// 4. التشغيل العام (Global Execution)
+// 5. التشغيل العام (Global Execution)
 // ----------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', () => {
     initSidebarToggle();
     initAuthTabs();
-    initImageLightboxOnHover(); // 🆕 تشغيل وظيفة Lightbox
+    initClickLightbox(); // 🆕 تشغيل وظيفة Lightbox للنقر
+    initImageLightboxOnHover(); // تشغيل وظيفة Lightbox للتحويم
 });
-
-// ----------------------------------------------------
-// * إزالة وظيفة initImageHoverZoom القديمة إذا كانت موجودة *
-// ----------------------------------------------------
