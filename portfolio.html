@@ -1,420 +1,431 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرض الأعمال | STVX Platform</title>
-    
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
-    
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css"> 
-    
-    <script>
-        // إعدادات Tailwind (تم الإبقاء عليها كما هي)
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#ffc72c', // لون التمييز الذهبي
-                        secondary: '#333333' // لون ثانوي للتفاصيل 
-                    },
-                    borderRadius: {
-                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
-                    },
-                    fontFamily: {
-                        sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
-                        logo: ['Pacifico', 'cursive'],
-                    },
-                    // تعريفات الأنيميشن 
-                    animation: {
-                        'fade-in': 'fadeIn 0.6s ease-out forwards',
-                        'slide-down': 'slideDown 0.5s ease-out forwards',
-                        'slide-up': 'slideUp 0.7s ease-out forwards',
-                        'card-pop': 'cardPop 0.6s ease-out forwards',
-                        'bounce': 'bounce 1s infinite',
-                        'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
-                        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-                        slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                        cardPop: { '0%': { opacity: '0', transform: 'scale(0.9) translateY(20px)' }, '100%': { opacity: '1', transform: 'scale(1) translateY(0)' } },
-                        ping: {
-                            '75%, 100%': { transform: 'scale(2)', opacity: '0' },
-                        },
-                        bounce: {
-                            '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
-                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
-                        },
-                        pulse: {
-                            '0%, 100%': { opacity: 1 },
-                            '50%': { opacity: .5 },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        /* خلفية رئيسية متدرجة داكنة */
-        .dark-bg {
-            background: linear-gradient(135deg, #0a0a0a, #111111);
-            min-height: 100vh;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض الأعمال | STVX Platform</title>
+    
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css"> 
+    
+    <script>
+        // إعدادات Tailwind (مهمة لتعريف الألوان والأنيميشن)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ffc72c', // لون التمييز الذهبي
+                        secondary: '#333333' // لون ثانوي للتفاصيل 
+                    },
+                    borderRadius: {
+                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
+                    },
+                    fontFamily: {
+                        // يجب أن يكون "Expo Arabic" معرّفاً في ملف style.css
+                        sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
+                        logo: ['Pacifico', 'cursive'],
+                    },
+                    // تعريفات الأنيميشن (كما هي)
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-down': 'slideDown 0.5s ease-out forwards',
+                        'slide-up': 'slideUp 0.7s ease-out forwards',
+                        'card-pop': 'cardPop 0.6s ease-out forwards',
+                        'bounce': 'bounce 1s infinite',
+                        'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+                        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        cardPop: { '0%': { opacity: '0', transform: 'scale(0.9) translateY(20px)' }, '100%': { opacity: '1', transform: 'scale(1) translateY(0)' } },
+                        ping: {
+                            '75%, 100%': { transform: 'scale(2)', opacity: '0' },
+                        },
+                        bounce: {
+                            '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
+                        },
+                        pulse: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: .5 },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* الخلفية الرئيسية والستايلات الثابتة */
+        .dark-bg {
+            background: linear-gradient(135deg, #0a0a0a, #111111);
+            min-height: 100vh;
+        }
 
-        /* تعريف Glass Card بسيط لضمان ظهوره في حال عدم وجود style.css */
-        .glass-card {
-            background-color: rgba(17, 17, 17, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-    </style>
+        /* تعريف Glass Card - ليعمل بشكل سليم */
+        .glass-card {
+            background-color: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); /* تم زيادة الظل قليلاً للوضوح */
+            border: 1px solid rgba(255, 255, 255, 0.1); /* تم زيادة وضوح الحدود */
+        }
+    </style>
 </head>
 <body class="dark-bg text-white font-sans flex flex-col min-h-screen">
-    
-    <div id="app-loader" class="fixed inset-0 bg-neutral-900 flex items-center justify-center z-[100] transition-opacity duration-300">
-        <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-primary border-t-transparent"></div>
-    </div>
-    
-    <div id="mainContent" class="flex-1 transition-filter duration-300">
-        
-                <nav class="glass-card px-6 py-4 sticky top-0 left-0 right-0 z-50 rounded-none">
-            <div class="flex items-center justify-between max-w-7xl mx-auto">
-                
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
-                </div>
-                
-                <div class="flex space-x-8 rtl:space-x-reverse text-lg font-medium">
-                    <a href="index.html" class="text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
-                    <a href="#" class="text-primary border-b-2 border-primary pb-1">معرض الأعمال</a>
-                </div>
-                
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110">
-                        <i class="ri-user-line text-gray-300 text-xl"></i>
-                    </a>
-                </div>
-            </div>
-        </nav>
+    
+    <div id="app-loader" class="fixed inset-0 bg-neutral-900 flex items-center justify-center z-[100] transition-opacity duration-300">
+        <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-primary border-t-transparent"></div>
+    </div>
+    
+    <div id="mainContent" class="flex-1 transition-filter duration-300">
+        
+        <nav class="glass-card px-6 py-4 sticky top-0 left-0 right-0 z-50 rounded-none">
+            <div class="flex items-center justify-between max-w-7xl mx-auto">
+                
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
+                </div>
+                
+                <div class="hidden md:flex space-x-8 rtl:space-x-reverse text-lg font-medium">
+                    <a href="index.html" class="text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
+                    <a href="#" class="text-primary border-b-2 border-primary pb-1">معرض الأعمال</a>
+                </div>
+                
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                    <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110">
+                        <i class="ri-user-line text-gray-300 text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
 
-        <main class="py-6 px-4 md:px-8 max-w-6xl mx-auto flex-1"> 
-            
-            <header class="text-center mb-10" style="animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;">
-                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
-                    أرشيف الإبداع 🗃️
-                </h1>
-                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
-                    استكشف أحدث أعمالنا من التصميم الاحترافي وتطوير الواجهات المبتكرة.
-                </p>
-            </header>
+        <main class="py-6 px-4 md:px-8 max-w-6xl mx-auto flex-1"> 
+            
+            <header class="text-center mb-10" style="animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
+                    أرشيف الإبداع 🗃️
+                </h1>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    استكشف أحدث أعمالنا من التصميم الاحترافي وتطوير الواجهات المبتكرة.
+                </p>
+            </header>
 
-            <section class="mb-4 flex justify-center"> 
-                <div class="flex flex-col md:flex-row justify-center items-center gap-12">
-                    
-                    <a href="#" 
-                        class="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:-rotate-1 animate-fade-in" 
-                        style="animation-delay: 0.8s;">
-                        <div
-                            class="text-white rounded-3xl border border-white/10 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl duration-700 z-10 relative backdrop-blur-xl hover:border-white/25 overflow-hidden hover:shadow-white/5 hover:shadow-3xl w-full max-w-sm"
-                        >
-                            <div class="absolute inset-0 z-0 overflow-hidden">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-primary/20 opacity-40 group-hover:opacity-60 transition-opacity duration-500"
-                                ></div>
+            <section class="mb-4 flex justify-center"> 
+                <div class="flex flex-col md:flex-row justify-center items-center gap-12">
+                    
+                    <a href="#" 
+                        class="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:-rotate-1 animate-fade-in" 
+                        style="animation-delay: 0.8s;">
+                        <div
+                            class="text-white rounded-3xl border border-white/10 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl duration-700 z-10 relative backdrop-blur-xl hover:border-white/25 overflow-hidden hover:shadow-white/5 hover:shadow-3xl w-full max-w-sm"
+                        >
+                            <div class="absolute inset-0 z-0 overflow-hidden">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-primary/20 opacity-40 group-hover:opacity-60 transition-opacity duration-500"
+                                ></div>
 
-                                <div
-                                    style="animation-delay: 0.5s;"
-                                    class="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-primary/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce"
-                                ></div>
+                                <div
+                                    style="animation-delay: 0.5s;"
+                                    class="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-primary/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce"
+                                ></div>
 
-                                <div
-                                    class="absolute top-10 left-10 w-16 h-16 rounded-full bg-primary/20 blur-xl animate-ping"
-                                ></div>
-                                <div
-                                    style="animation-delay: 1s;"
-                                    class="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-primary/20 blur-lg animate-ping"
-                                ></div>
+                                <div
+                                    class="absolute top-10 left-10 w-16 h-16 rounded-full bg-primary/20 blur-xl animate-ping"
+                                ></div>
+                                <div
+                                    style="animation-delay: 1s;"
+                                    class="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-primary/20 blur-lg animate-ping"
+                                ></div>
 
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000"
-                                ></div>
-                            </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000"
+                                ></div>
+                            </div>
 
-                            <div class="p-8 relative z-10">
-                                <div class="flex flex-col items-center text-center">
-                                    <div class="relative mb-6">
-                                        <div
-                                            class="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping"
-                                        ></div>
-                                        <div
-                                            style="animation-delay: 0.5s;"
-                                            class="absolute inset-0 rounded-full border border-primary/10 animate-pulse"
-                                        ></div>
+                            <div class="p-8 relative z-10">
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="relative mb-6">
+                                        <div
+                                            class="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping"
+                                        ></div>
+                                        <div
+                                            style="animation-delay: 0.5s;"
+                                            class="absolute inset-0 rounded-full border border-primary/10 animate-pulse"
+                                        ></div>
 
-                                        <div
-                                            class="p-6 rounded-full backdrop-blur-lg border border-white/20 bg-gradient-to-br from-black/80 to-black/60 shadow-2xl transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 hover:shadow-primary/20"
-                                        >
-                                            <i class="ri-pen-nib-line text-4xl text-primary transform group-hover:rotate-180 transition-transform duration-700 filter drop-shadow-lg"></i>
-                                        </div>
-                                    </div>
+                                        <div
+                                            class="p-6 rounded-full backdrop-blur-lg border border-white/20 bg-gradient-to-br from-black/80 to-black/60 shadow-2xl transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 hover:shadow-primary/20"
+                                        >
+                                            <i class="ri-pen-nib-line text-4xl text-primary transform group-hover:rotate-180 transition-transform duration-700 filter drop-shadow-lg"></i>
+                                        </div>
+                                    </div>
 
-                                    <div
-                                        class="mb-4 transform group-hover:scale-105 transition-transform duration-300"
-                                    >
-                                        <p
-                                            class="text-3xl font-bold bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent animate-pulse"
-                                        >
-                                            تصاميم الجرافيكس
-                                        </p>
-                                    </div>
+                                    <div
+                                        class="mb-4 transform group-hover:scale-105 transition-transform duration-300"
+                                    >
+                                        <p
+                                            class="text-3xl font-bold bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent animate-pulse"
+                                        >
+                                            تصاميم الجرافيكس
+                                        </p>
+                                    </div>
 
-                                    <div class="space-y-1 max-w-sm">
-                                        <p
-                                            class="text-gray-300 text-sm font-semibold leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
-                                        >
-                                            هويات بصرية متكاملة وشعارات إبداعية.
-                                        </p>
+                                    <div class="space-y-1 max-w-sm">
+                                        <p
+                                            class="text-gray-300 text-sm font-semibold leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
+                                        >
+                                            هويات بصرية متكاملة وشعارات إبداعية.
+                                        </p>
 
-                                        <p
-                                            class="text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
-                                        >
-                                            موشن جرافيكس احترافي وإعلانات رقمية.
-                                        </p>
-                                        <p
-                                            class="text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
-                                        >
-                                            نصمم رؤيتك البصرية ونحولها إلى واقع جذاب.
-                                        </p>
-                                    </div>
+                                        <p
+                                            class="text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
+                                        >
+                                            موشن جرافيكس احترافي وإعلانات رقمية.
+                                        </p>
+                                        <p
+                                            class="text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
+                                        >
+                                            نصمم رؤيتك البصرية ونحولها إلى واقع جذاب.
+                                        </p>
+                                    </div>
 
-                                    <div
-                                        class="mt-6 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full transform group-hover:w-1/2 group-hover:h-1 transition-all duration-500 animate-pulse"
-                                    ></div>
+                                    <div
+                                        class="mt-6 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full transform group-hover:w-1/2 group-hover:h-1 transition-all duration-500 animate-pulse"
+                                    ></div>
 
-                                    <div
-                                        class="flex space-x-2 rtl:space-x-reverse mt-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300"
-                                    >
-                                        <div class="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                                        <div
-                                            style="animation-delay: 0.1s;"
-                                            class="w-2 h-2 bg-primary rounded-full animate-bounce"
-                                        ></div>
-                                        <div
-                                            style="animation-delay: 0.2s;"
-                                            class="w-2 h-2 bg-primary rounded-full animate-bounce"
-                                        ></div>
-                                    </div>
-                                </div>
-                            </div>
+                                    <div
+                                        class="flex space-x-2 rtl:space-x-reverse mt-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                                    >
+                                        <div class="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                                        <div
+                                            style="animation-delay: 0.1s;"
+                                            class="w-2 h-2 bg-primary rounded-full animate-bounce"
+                                        ></div>
+                                        <div
+                                            style="animation-delay: 0.2s;"
+                                            class="w-2 h-2 bg-primary rounded-full animate-bounce"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div
-                                class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                            ></div>
-                            <div
-                                class="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-primary/10 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                            ></div>
-                        </div>
-                    </a>
+                            <div
+                                class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                            ></div>
+                            <div
+                                class="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-primary/10 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                            ></div>
+                        </div>
+                    </a>
 
-                    <a href="#" 
-                        class="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:rotate-1 animate-fade-in" 
-                        style="animation-delay: 1s;">
-                        <div
-                            class="text-white rounded-3xl border border-white/10 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl duration-700 z-10 relative backdrop-blur-xl hover:border-white/25 overflow-hidden hover:shadow-white/5 hover:shadow-3xl w-full max-w-sm"
-                        >
-                            <div class="absolute inset-0 z-0 overflow-hidden">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-primary/20 opacity-40 group-hover:opacity-60 transition-opacity duration-500"
-                                ></div>
+                    <a href="#" 
+                        class="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:rotate-1 animate-fade-in" 
+                        style="animation-delay: 1s;">
+                        <div
+                            class="text-white rounded-3xl border border-white/10 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl duration-700 z-10 relative backdrop-blur-xl hover:border-white/25 overflow-hidden hover:shadow-white/5 hover:shadow-3xl w-full max-w-sm"
+                        >
+                            <div class="absolute inset-0 z-0 overflow-hidden">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-primary/20 opacity-40 group-hover:opacity-60 transition-opacity duration-500"
+                                ></div>
 
-                                <div
-                                    style="animation-delay: 0.5s;"
-                                    class="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-primary/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce"
-                                ></div>
+                                <div
+                                    style="animation-delay: 0.5s;"
+                                    class="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-primary/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce"
+                                ></div>
 
-                                <div
-                                    class="absolute top-10 left-10 w-16 h-16 rounded-full bg-primary/20 blur-xl animate-ping"
-                                ></div>
-                                <div
-                                    style="animation-delay: 1s;"
-                                    class="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-primary/20 blur-lg animate-ping"
-                                ></div>
+                                <div
+                                    class="absolute top-10 left-10 w-16 h-16 rounded-full bg-primary/20 blur-xl animate-ping"
+                                ></div>
+                                <div
+                                    style="animation-delay: 1s;"
+                                    class="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-primary/20 blur-lg animate-ping"
+                                ></div>
 
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000"
-                                ></div>
-                            </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000"
+                                ></div>
+                            </div>
 
-                            <div class="p-8 relative z-10">
-                                <div class="flex flex-col items-center text-center">
-                                    <div class="relative mb-6">
-                                        <div
-                                            class="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping"
-                                        ></div>
-                                        <div
-                                            style="animation-delay: 0.5s;"
-                                            class="absolute inset-0 rounded-full border border-primary/10 animate-pulse"
-                                        ></div>
+                            <div class="p-8 relative z-10">
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="relative mb-6">
+                                        <div
+                                            class="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping"
+                                        ></div>
+                                        <div
+                                            style="animation-delay: 0.5s;"
+                                            class="absolute inset-0 rounded-full border border-primary/10 animate-pulse"
+                                        ></div>
 
-                                        <div
-                                            class="p-6 rounded-full backdrop-blur-lg border border-white/20 bg-gradient-to-br from-black/80 to-black/60 shadow-2xl transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 hover:shadow-primary/20"
-                                        >
-                                            <i class="ri-code-s-slash-line text-4xl text-primary transform group-hover:rotate-180 transition-transform duration-700 filter drop-shadow-lg"></i>
-                                        </div>
-                                    </div>
+                                        <div
+                                            class="p-6 rounded-full backdrop-blur-lg border border-white/20 bg-gradient-to-br from-black/80 to-black/60 shadow-2xl transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 hover:shadow-primary/20"
+                                        >
+                                            <i class="ri-code-s-slash-line text-4xl text-primary transform group-hover:rotate-180 transition-transform duration-700 filter drop-shadow-lg"></i>
+                                        </div>
+                                    </div>
 
-                                    <div
-                                        class="mb-4 transform group-hover:scale-105 transition-transform duration-300"
-                                    >
-                                        <p
-                                            class="text-3xl font-bold bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent animate-pulse"
-                                        >
-                                            تطوير الواجهات والبرمجة
-                                        </p>
-                                    </div>
+                                    <div
+                                        class="mb-4 transform group-hover:scale-105 transition-transform duration-300"
+                                    >
+                                        <p
+                                            class="text-3xl font-bold bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent animate-pulse"
+                                        >
+                                            تطوير الواجهات والبرمجة
+                                        </p>
+                                    </div>
 
-                                    <div class="space-y-1 max-w-sm">
-                                        <p
-                                            class="text-gray-300 text-sm font-semibold leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
-                                        >
-                                            بناء مواقع وتطبيقات تفاعلية متجاوبة.
-                                        </p>
+                                    <div class="space-y-1 max-w-sm">
+                                        <p
+                                            class="text-gray-300 text-sm font-semibold leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
+                                        >
+                                            بناء مواقع وتطبيقات تفاعلية متجاوبة.
+                                        </p>
 
-                                        <p
-                                            class="text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
-                                        >
-                                            استخدام أحدث تقنيات الـ Front-end.
-                                        </p>
-                                        <p
-                                            class="text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
-                                        >
-                                            تحويل التصميم إلى كود نظيف وسريع الأداء.
-                                        </p>
-                                    </div>
+                                        <p
+                                            class="text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
+                                        >
+                                            استخدام أحدث تقنيات الـ Front-end.
+                                        </p>
+                                        <p
+                                            class="text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
+                                        >
+                                            تحويل التصميم إلى كود نظيف وسريع الأداء.
+                                        </p>
+                                    </div>
 
-                                    <div
-                                        class="mt-6 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full transform group-hover:w-1/2 group-hover:h-1 transition-all duration-500 animate-pulse"
-                                    ></div>
+                                    <div
+                                        class="mt-6 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full transform group-hover:w-1/2 group-hover:h-1 transition-all duration-500 animate-pulse"
+                                    ></div>
 
-                                    <div
-                                        class="flex space-x-2 rtl:space-x-reverse mt-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300"
-                                    >
-                                        <div class="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                                        <div
-                                            style="animation-delay: 0.1s;"
-                                            class="w-2 h-2 bg-primary rounded-full animate-bounce"
-                                        ></div>
-                                        <div
-                                            style="animation-delay: 0.2s;"
-                                            class="w-2 h-2 bg-primary rounded-full animate-bounce"
-                                        ></div>
-                                    </div>
-                                </div>
-                            </div>
+                                    <div
+                                        class="flex space-x-2 rtl:space-x-reverse mt-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                                    >
+                                        <div class="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                                        <div
+                                            style="animation-delay: 0.1s;"
+                                            class="w-2 h-2 bg-primary rounded-full animate-bounce"
+                                        ></div>
+                                        <div
+                                            style="animation-delay: 0.2s;"
+                                            class="w-2 h-2 bg-primary rounded-full animate-bounce"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div
-                                class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                            ></div>
-                            <div
-                                class="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-primary/10 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                            ></div>
-                        </div>
-                    </a>
+                            <div
+                                class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                            ></div>
+                            <div
+                                class="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-primary/10 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                            ></div>
+                        </div>
+                    </a>
 
-                </div>
-            </section>
+                </div>
+            </section>
 
-        </main>
-        
-        <footer class="glass-card mt-auto px-6 py-8 text-center border-t border-gray-800">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex justify-center space-x-4 rtl:space-x-reverse mb-6">
-                    
-                    <a
-                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#3b5998] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#3b5998]/40"
-                        href="https://web.facebook.com/iiStevexn"
-                        aria-label="Facebook"
-                    >
-                        <svg class="w-5" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1.1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z"></path>
-                        </svg>
-                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#3b5998] px-2 py-1 rounded-md drop-shadow-lg">
-                            Facebook
-                        </span>
-                    </a>
-                    
-                    <a
-                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#000000] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-white/40"
-                        href="https://x.com/iistevexn"
-                        aria-label="Twitter X"
-                    >
-                        <i class="ri-twitter-x-fill text-xl"></i>
-                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-black px-2 py-1 rounded-md drop-shadow-lg">
-                            Twitter/X
-                        </span>
-                    </a>
+        </main>
+        
+        <footer class="glass-card mt-auto px-6 py-8 text-center border-t border-gray-800">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-center space-x-4 rtl:space-x-reverse mb-6">
+                    
+                    <a
+                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#3b5998] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#3b5998]/40"
+                        href="https://web.facebook.com/iiStevexn"
+                        aria-label="Facebook"
+                    >
+                        <svg class="w-5" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1.1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z"></path>
+                        </svg>
+                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#3b5998] px-2 py-1 rounded-md drop-shadow-lg">
+                            Facebook
+                        </span>
+                    </a>
+                    
+                    <a
+                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#000000] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-white/40"
+                        href="https://x.com/iistevexn"
+                        aria-label="Twitter X"
+                    >
+                        <i class="ri-twitter-x-fill text-xl"></i>
+                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-black px-2 py-1 rounded-md drop-shadow-lg">
+                            Twitter/X
+                        </span>
+                    </a>
 
-                    <a
-                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-pink-600/40"
-                        style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);"
-                        href="https://www.instagram.com/thestiiiv"
-                        aria-label="Instagram"
-                    >
-                        <i class="ri-instagram-line text-xl"></i>
-                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-pink-600 px-2 py-1 rounded-md drop-shadow-lg">
-                            Instagram
-                        </span>
-                    </a>
-                    
-                    <a
-                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#5865F2] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#5865F2]/40"
-                        href="https://discord.gg/Vnr8qFnyJr"
-                        aria-label="Discord"
-                    >
-                        <i class="ri-discord-fill text-xl"></i>
-                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#5865F2] px-2 py-1 rounded-md drop-shadow-lg">
-                            Discord
-                        </span>
-                    </a>
-                    
-                    <a
-                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#0088CC] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#0088CC]/40"
-                        href="https://t.me/thestvx" 
-                        aria-label="Telegram"
-                    >
-                        <i class="ri-telegram-fill text-xl"></i>
-                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#0088CC] px-2 py-1 rounded-md drop-shadow-lg">
-                            Telegram
-                        </span>
-                    </a>
+                    <a
+                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-pink-600/40"
+                        style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);"
+                        href="https://www.instagram.com/thestiiiv"
+                        aria-label="Instagram"
+                    >
+                        <i class="ri-instagram-line text-xl"></i>
+                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-pink-600 px-2 py-1 rounded-md drop-shadow-lg">
+                            Instagram
+                        </span>
+                    </a>
+                    
+                    <a
+                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#5865F2] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#5865F2]/40"
+                        href="https://discord.gg/Vnr8qFnyJr"
+                        aria-label="Discord"
+                    >
+                        <i class="ri-discord-fill text-xl"></i>
+                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#5865F2] px-2 py-1 rounded-md drop-shadow-lg">
+                            Discord
+                        </span>
+                    </a>
+                    
+                    <a
+                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#0088CC] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#0088CC]/40"
+                        href="https://t.me/thestvx" 
+                        aria-label="Telegram"
+                    >
+                        <i class="ri-telegram-fill text-xl"></i>
+                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#0088CC] px-2 py-1 rounded-md drop-shadow-lg">
+                            Telegram
+                        </span>
+                    </a>
 
-                    <a
-                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-primary text-gray-900 font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-primary/40"
-                        href="mailto:faroukkir01@gmail.com"
-                        aria-label="Email"
-                    >
-                        <i class="ri-mail-line text-xl"></i>
-                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-gray-900 bg-primary px-2 py-1 rounded-md drop-shadow-lg">
-                            البريد الإلكتروني
-                        </span>
-                    </a>
-                    
-                </div>
-                
-                <p class="text-base text-gray-400">&copy; 2024 STVX Platform. جميع الحقوق محفوظة.</p>
-            </div>
-        </footer>
-        
-    </div>
-    
-    <script src="script.js"></script> 
-    
-    </body>
+                    <a
+                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-primary text-gray-900 font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-primary/40"
+                        href="mailto:faroukkir01@gmail.com"
+                        aria-label="Email"
+                    >
+                        <i class="ri-mail-line text-xl"></i>
+                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-gray-900 bg-primary px-2 py-1 rounded-md drop-shadow-lg">
+                            البريد الإلكتروني
+                        </span>
+                    </a>
+                    
+                </div>
+                
+                <p class="text-base text-gray-400">&copy; 2024 STVX Platform. جميع الحقوق محفوظة.</p>
+            </div>
+        </footer>
+        
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const loader = document.getElementById('app-loader');
+                if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 300);
+                }
+            }, 500); // تأخير نصف ثانية لإظهار اللودر
+        });
+    </script>
+    
+    </body>
 </html>
