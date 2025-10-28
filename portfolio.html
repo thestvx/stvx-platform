@@ -26,13 +26,13 @@
                         sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
                         logo: ['Pacifico', 'cursive'],
                     },
-                    // تعريفات الأنيميشن (للحركة السلسة) 
+                    // تعريفات الأنيميشن 
                     animation: {
                         'fade-in': 'fadeIn 0.6s ease-out forwards',
                         'slide-down': 'slideDown 0.5s ease-out forwards',
                         'slide-up': 'slideUp 0.7s ease-out forwards',
                         'card-pop': 'cardPop 0.6s ease-out forwards',
-                        // 🛠️ حركات البطاقة الجديدة 🛠️
+                        // حركات البطاقة الجديدة
                         'bounce': 'bounce 1s infinite',
                         'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
                         'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -42,7 +42,6 @@
                         slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
                         slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
                         cardPop: { '0%': { opacity: '0', transform: 'scale(0.9) translateY(20px)' }, '100%': { opacity: '1', transform: 'scale(1) translateY(0)' } },
-                        // تعريف حركات Tailwind الأساسية لضمان عمل البطاقة
                         ping: {
                             '75%, 100%': { transform: 'scale(2)', opacity: '0' },
                         },
@@ -61,70 +60,11 @@
     </script>
     
     <style>
-        /* قاعدة Glassmorphism الأساسية */
-        .glass-card {
-            background-color: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
         .dark-bg {
             background: linear-gradient(135deg, #0a0a0a, #111111);
             min-height: 100vh;
         }
-
-        /* 🌟 بطاقة المشروع الرئيسية (Portfolio Card) 🌟 */
-        .project-card {
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.4s ease-out, box-shadow 0.4s ease-out, border 0.4s ease-out;
-            transform-style: preserve-3d;
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-        }
-
-        .project-card:hover {
-            transform: translateY(-8px) scale(1.03) rotateX(1deg);
-            box-shadow: 0 15px 35px rgba(255, 199, 44, 0.3); 
-            border-color: #ffc72c;
-        }
-        
-        .project-card:hover img {
-            transform: scale(1.1);
-        }
-        .project-card img {
-            transition: transform 0.6s ease-out;
-        }
-
-        .card-image-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.1) 60%);
-            transition: opacity 0.3s ease;
-            z-index: 10;
-        }
-
-        .card-info {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            padding: 1.5rem;
-            z-index: 20;
-            opacity: 1; 
-        }
-
-        /* توزيع الأنيميشن لتظهر البطاقات بالتتابع */
-        .project-card:nth-child(1) { animation: cardPop 0.6s ease-out 1.2s forwards; opacity: 0; }
-        .project-card:nth-child(2) { animation: cardPop 0.6s ease-out 1.3s forwards; opacity: 0; }
-        .project-card:nth-child(3) { animation: cardPop 0.6s ease-out 1.4s forwards; opacity: 0; }
-        .project-card:nth-child(4) { animation: cardPop 0.6s ease-out 1.5s forwards; opacity: 0; }
-        .project-card:nth-child(5) { animation: cardPop 0.6s ease-out 1.6s forwards; opacity: 0; }
-        .project-card:nth-child(6) { animation: cardPop 0.6s ease-out 1.7s forwards; opacity: 0; }
-        .project-card:nth-child(7) { animation: cardPop 0.6s ease-out 1.8s forwards; opacity: 0; }
-        
+        /* لا حاجة لتعريفات البطاقات القديمة */
     </style>
 </head>
 <body class="dark-bg text-white font-sans flex flex-col min-h-screen">
@@ -156,21 +96,21 @@
             </div>
         </nav>
 
-        <main class="py-12 px-4 md:px-8 max-w-6xl mx-auto">
+        <main class="py-6 px-4 md:px-8 max-w-6xl mx-auto flex-1"> 
             
-            <header class="text-center mb-12" style="animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;">
+            <header class="text-center mb-10" style="animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;">
                 <h1 class="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
                     أرشيف الإبداع 🗃️
                 </h1>
                 <p class="text-xl text-gray-300 max-w-2xl mx-auto">
-                    مجموعة من المشاريع التي تجمع بين دقة الكود وجمالية التصميم، مقسمة لخدمة رؤيتك.
+                    استكشف أحدث أعمالنا من التصميم الاحترافي وتطوير الواجهات المبتكرة.
                 </p>
             </header>
 
-            <section class="mb-16"> 
+            <section class="mb-4 flex justify-center"> 
                 <div class="flex flex-col md:flex-row justify-center items-center gap-12">
                     
-                    <a href="#graphics" 
+                    <a href="#" 
                         class="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:-rotate-1 animate-fade-in" 
                         style="animation-delay: 0.8s;">
                         <div
@@ -275,7 +215,7 @@
                         </div>
                     </a>
 
-                    <a href="#coding" 
+                    <a href="#" 
                         class="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:rotate-1 animate-fade-in" 
                         style="animation-delay: 1s;">
                         <div
@@ -382,121 +322,7 @@
 
                 </div>
             </section>
-            <section id="graphics" class="py-8"> 
-                <div class="flex items-center justify-between mb-8">
-                    <h2 class="text-3xl font-bold text-white border-r-4 border-primary pr-3" style="animation: slideUp 0.6s ease-out 1.2s forwards; opacity: 0;">
-                        <i class="ri-palette-line text-primary ml-2"></i> تصاميم الجرافيكس
-                    </h2>
-                </div>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    
-                    <a href="#" class="glass-card rounded-2xl project-card">
-                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                            <img src="https://readdy.ai/api/search-image?query=Elegant%20corporate%20identity%20design%20mockup%20on%20dark%20background%2C%20logo%20and%20business%20card%20with%20gold%20foil%2C%20minimalist%20style&width=400&height=300&seq=graphic1&orientation=landscape" 
-                                alt="تصميم هوية" class="w-full h-full object-cover rounded-2xl">
-                            <div class="card-image-overlay rounded-2xl"></div>
-                            <div class="card-info">
-                                <h3 class="text-xl font-bold text-primary mb-1">هوية بصرية لشركة استثمارية</h3>
-                                <p class="text-sm text-gray-300">الشعار، الألوان، والمطبوعات.</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="glass-card rounded-2xl project-card">
-                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                            <img src="https://readdy.ai/api/search-image?query=3D%20motion%20graphics%20abstract%20animation%20still%2C%20dark%20futuristic%20design%2C%20glowing%20lines%2C%20professional%20look&width=400&height=300&seq=motion1&orientation=landscape" 
-                                alt="موشن جرافيكس" class="w-full h-full object-cover rounded-2xl">
-                            <div class="card-image-overlay rounded-2xl"></div>
-                            <div class="card-info">
-                                <h3 class="text-xl font-bold text-primary mb-1">فيديو موشن جرافيك إعلاني</h3>
-                                <p class="text-sm text-gray-300">رسوم متحركة ثلاثية الأبعاد للمنتجات.</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="glass-card rounded-2xl project-card">
-                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                            <img src="https://readdy.ai/api/search-image?query=Creative%20book%20cover%20design%20mockup%2C%20abstract%20dark%20theme%2C%20minimalist%20typography%2C%20high%20quality%20print%20visual&width=400&height=300&seq=book1&orientation=landscape" 
-                                alt="غلاف كتاب" class="w-full h-full object-cover rounded-2xl">
-                            <div class="card-image-overlay rounded-2xl"></div>
-                            <div class="card-info">
-                                <h3 class="text-xl font-bold text-primary mb-1">غلاف رواية رقمية</h3>
-                                <p class="text-sm text-gray-300">تصميم رقمي فني باستخدام الفوتوشوب.</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="glass-card rounded-2xl project-card">
-                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                            <img src="https://readdy.ai/api/search-image?query=Set%20of%20social%20media%20post%20templates%2C%20dark%20and%20gold%20theme%2C%20elegant%20design%2C%20creative%20marketing%20visuals&width=400&height=300&seq=social1&orientation=landscape" 
-                                alt="سوشيال ميديا" class="w-full h-full object-cover rounded-2xl">
-                            <div class="card-image-overlay rounded-2xl"></div>
-                            <div class="card-info">
-                                <h3 class="text-xl font-bold text-primary mb-1">حملة تسويقية لمنصة تقنية</h3>
-                                <p class="text-sm text-gray-300">15 تصميمًا لمنصات مختلفة.</p>
-                            </div>
-                        </div>
-                    </a>
-                    
-                </div>
-            </section>
-
-            <section id="coding" class="py-8"> 
-                <div class="flex items-center justify-between mb-8">
-                    <h2 class="text-3xl font-bold text-white border-r-4 border-primary pr-3" style="animation: slideUp 0.6s ease-out 1.2s forwards; opacity: 0;">
-                        <i class="ri-code-s-slash-line text-primary ml-2"></i> تطوير الواجهات والبرمجة
-                    </h2>
-                </div>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    
-                    <a href="#" class="glass-card rounded-2xl project-card">
-                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                            <img src="https://readdy.ai/api/search-image?query=Modern%20dark%20dashboard%20UI%2FUX%20design%2C%20finance%20theme%2C%20minimalist%20charts%2C%20Figma%20mockup&width=400&height=300&seq=ui1&orientation=landscape" 
-                                alt="لوحة تحكم" class="w-full h-full object-cover rounded-2xl">
-                            <div class="card-image-overlay rounded-2xl"></div>
-                            <div class="card-info">
-                                <h3 class="text-xl font-bold text-primary mb-1">تصميم لوحة تحكم تحليلية</h3>
-                                <p class="text-sm text-gray-300">تصميم UX/UI في فيجما.</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="glass-card rounded-2xl project-card">
-                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                            <img src="https://readdy.ai/api/search-image?query=Sleek%20e-commerce%20website%20front-end%20development%20mockup%2C%20dark%20theme%2C%20clean%20code%2C%20Tailwind%20CSS%20implementation&width=400&height=300&seq=web1&orientation=landscape" 
-                                alt="تطوير واجهة" class="w-full h-full object-cover rounded-2xl">
-                            <div class="card-image-overlay rounded-2xl"></div>
-                            <div class="card-info">
-                                <h3 class="text-xl font-bold text-primary mb-1">تطوير واجهة متجر تقني</h3>
-                                <p class="text-sm text-gray-300">HTML, Tailwind CSS, JavaScript.</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="glass-card rounded-2xl project-card">
-                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                            <img src="https://readdy.ai/api/search-image?query=Mobile%20fitness%20app%20prototype%20design%2C%20dark%20mode%2C%20vibrant%20accents%2C%20Figma%20mockup%2C%20clean%20interface&width=400&height=300&seq=app1&orientation=landscape" 
-                                alt="تطبيق جوال" class="w-full h-full object-cover rounded-2xl">
-                            <div class="card-image-overlay rounded-2xl"></div>
-                            <div class="card-info">
-                                <h3 class="text-xl font-bold text-primary mb-1">تطبيق جوال لتتبع الصحة</h3>
-                                <p class="text-sm text-gray-300">نموذج تفاعلي (Prototyping).</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="glass-card rounded-2xl project-card">
-                        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
-                            <img src="https://readdy.ai/api/search-image?query=Modern%20tech%20company%20landing%20page%20design%2C%20dark%20minimalist%20style%2C%20futuristic%20elements%2C%20clean%20typography&width=400&height=300&seq=landing1&orientation=landscape" 
-                                alt="موقع تعريفي" class="w-full h-full object-cover rounded-2xl">
-                            <div class="card-image-overlay rounded-2xl"></div>
-                            <div class="card-info">
-                                <h3 class="text-xl font-bold text-primary mb-1">صفحة هبوط لخدمة سحابية</h3>
-                                <p class="text-sm text-gray-300">صفحة هبوط متجاوبة وسريعة.</p>
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-            </section>
-
-        </main>
+            </main>
         
         <footer class="glass-card mt-auto px-6 py-8 text-center border-t border-gray-800">
             <div class="max-w-7xl mx-auto">
