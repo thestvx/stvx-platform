@@ -117,7 +117,7 @@
         .card-button { background-color: #ffc72c; color: #111; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; transition: background-color 0.3s; }
         .card-button:hover { background-color: #ffd966; }
 
-        /* 🟢 تنسيقات Lightbox المُعدَّلة لحل مشكلة التوسيط والأبعاد 🟢 */
+        /* 🟢 تنسيقات Lightbox المُعدَّلة لحل مشكلة التوسيط والأبعاد 🟢 */
         .lightbox-overlay {
             display: none; /* مخفي في البداية */
             position: fixed;
@@ -128,7 +128,7 @@
             background-color: rgba(0, 0, 0, 0.9); /* خلفية سوداء شبه شفافة */
             z-index: 1000; /* ليكون فوق كل العناصر */
             /* 💡 استخدام Flexbox للتوسيط المثالي 💡 */
-            display: flex; /* يجب أن تكون flex حتى عندما يكون مخفياً ليتم التوسيط عند الظهور */
+            display: flex; 
             align-items: center;
             justify-content: center;
             /* إضافة انتقال سلس لظهور الـ overlay */
@@ -147,7 +147,6 @@
             /* 💡 لضمان أن حجم المحتوى لا يتجاوز الشاشة */
             max-width: 90vw;
             max-height: 90vh;
-            /* تم إزالة margin: auto; لأنه يتعارض مع Flexbox */
             transform: scale(0.8); /* للأنيميشن */
             transition: transform 0.3s ease-out;
             /* 💡 لضمان أن المحتوى لا يخرج عن الحجم الأقصى */
@@ -160,7 +159,6 @@
 
         .lightbox-content img {
             display: block;
-            /* 💡 تم تغيير width: auto; للحفاظ على العرض الأصلي للصورة */
             width: auto;
             /* 💡 لضمان عدم تجاوز العرض والارتفاع حجم حاوية الـ lightbox-content */
             max-width: 100%;
@@ -604,65 +602,90 @@
                         </div>
                     </div>
                 </div>
-
-
             </section>
 
-            <div class="text-center mt-24 animate-fade-in" style="animation-delay: 2.9s;">
-                <p class="text-gray-400 text-lg border-t border-gray-800 pt-6">
-                    هل لديك مشروع جرافيكي في ذهنك؟ <a href="index.html" class="text-primary hover:text-yellow-300 font-bold transition-colors">تواصل معنا الآن</a>.
-                </p>
+            <div id="lightboxOverlay" class="lightbox-overlay">
+                <div class="lightbox-content">
+                    <img id="lightboxImage" src="" alt="صورة مكبرة للمشروع">
+                </div>
+                <div id="lightboxClose" class="lightbox-close">
+                    <i class="ri-close-line"></i>
+                </div>
             </div>
 
         </main>
 
     </div>
 
-    <div id="lightbox" class="lightbox-overlay" onclick="closeLightbox(event)">
-        <div class="lightbox-content">
-            <img id="lightbox-image" src="" alt="صورة مكبرة">
+    <footer class="glass-card mt-12 py-6 text-center text-gray-400 rounded-none animate-slide-up" style="animation-delay: 2.9s;">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+            <p>&copy; 2025 STVX Platform. جميع الحقوق محفوظة. | تصميم وبرمجة <span class="text-primary font-bold">STVX Dev Team</span></p>
         </div>
-        <span class="lightbox-close" onclick="closeLightbox(event)">&times;</span>
-    </div>
+    </footer>
 
     <script>
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImage = document.getElementById('lightbox-image');
+        document.addEventListener('DOMContentLoaded', () => {
+            const lightbox = document.getElementById('lightboxOverlay');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const closeButton = document.getElementById('lightboxClose');
+            const lightboxTriggers = document.querySelectorAll('.lightbox-trigger');
 
-        // وظيفة فتح النافذة
-        function openLightbox(src) {
-            lightboxImage.src = src; // تعيين مصدر الصورة المكبرة
-            lightbox.classList.add('active'); // إظهار النافذة
-            document.body.style.overflow = 'hidden'; // منع تمرير الصفحة
-        }
-
-        // وظيفة إغلاق النافذة
-        function closeLightbox(event) {
-            // يتم الإغلاق عند الضغط على زر الإغلاق (class=lightbox-close) أو الخلفية
-            // يتم التحقق مما إذا كان الهدف هو الـ overlay نفسه أو زر الإغلاق (أو أي عنصر بداخله)
-            if (event.target === lightbox || event.target.closest('.lightbox-close')) {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = ''; // إعادة تمرير الصفحة
+            // 1. الدالة التي تفتح الـ Lightbox
+            function openLightbox(imageSrc) {
+                // 🟢 الخطوة الحاسمة: تعيين مسار الصورة (src)
+                lightboxImage.src = imageSrc;
+                
+                // 💡 إضافة كلاس active لعرض الـ overlay والـ content بالـ CSS الانتقالي
+                lightbox.classList.add('active');
+                
+                // منع التمرير في الخلفية عند فتح المودال
+                document.body.style.overflow = 'hidden';
             }
-        }
 
-        // ربط جميع العناصر التي لديها الفئة 'lightbox-trigger' بوظيفة الفتح
-        document.querySelectorAll('.lightbox-trigger').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault(); // منع انتقال الـ <a> إلى رابط فارغ (#)
-                // 💡 التعديل هنا: نأخذ رابط الصورة من خاصية href للرابط <a> وليس من src الصورة
-                const imageSrc = link.getAttribute('href');
-                openLightbox(imageSrc); // تمرير رابط الصورة (href) إلى وظيفة الفتح
+            // 2. الدالة التي تغلق الـ Lightbox
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                
+                // إزالة منع التمرير
+                document.body.style.overflow = 'auto';
+
+                // 💡 (اختياري) إفراغ الـ src بعد الإغلاق لتوفير الذاكرة
+                setTimeout(() => {
+                    lightboxImage.src = ''; 
+                }, 300); // 300ms تتوافق مع مدة الانتقال في الـ CSS
+            }
+
+            // 3. إضافة مستمعي الأحداث لمُحفِّزات (Triggers) الـ Lightbox
+            lightboxTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault(); // منع انتقال الرابط إلى صفحة أخرى
+                    
+                    // جلب مسار الصورة الكبيرة من خاصية href في العنصر <a>
+                    const imagePath = trigger.getAttribute('href'); 
+                    
+                    if (imagePath) {
+                        openLightbox(imagePath);
+                    }
+                });
+            });
+
+            // 4. إضافة مستمعي الأحداث لزر الإغلاق وللـ Overlay نفسه
+            closeButton.addEventListener('click', closeLightbox);
+
+            // الإغلاق عند النقر على الخلفية المعتمة (وليس على الصورة نفسها)
+            lightbox.addEventListener('click', (e) => {
+                if (e.target.id === 'lightboxOverlay') {
+                    closeLightbox();
+                }
+            });
+
+            // الإغلاق عند الضغط على مفتاح ESCAPE
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape" && lightbox.classList.contains('active')) {
+                    closeLightbox();
+                }
             });
         });
-
-        // إغلاق Lightbox عند الضغط على مفتاح ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                closeLightbox({ target: lightbox });
-            }
-        });
     </script>
-
 </body>
 </html>
