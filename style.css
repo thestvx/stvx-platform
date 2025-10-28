@@ -1,649 +1,1001 @@
 /* style.css (تنسيقات عامة وموحدة لجميع صفحات الموقع) */
 
-/* -------------------------------------- */
-/* 0. المتغيرات والألوان الأساسية (CSS Variables) 🎨 */
-/* -------------------------------------- */
-:root {
-    /* الألوان الرئيسية */
-    --color-primary: #ffc72c; /* اللون الذهبي */
-    --color-primary-dark: #e6b222; /* ذهبي أغمق للتأثيرات */
-    --color-background-dark: #111111;
-    --color-text-light: #f3f4f6;
-    --color-text-muted: #a0a0a0;
 
-    /* الخطوط */
-    --font-primary: 'Expo Arabic', 'Cairo', sans-serif;
-    
-    /* انتقالات/حركات */
-    --transition-fast: 0.3s ease;
-    --transition-slow: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --ease-strong: cubic-bezier(0.2, 0.9, 0.3, 1.2);
+
+/* -------------------------------------- */
+
+/* 0. المتغيرات والألوان الأساسية (CSS Variables) 🎨 */
+
+/* -------------------------------------- */
+
+:root {
+
+    /* الألوان الرئيسية */
+
+    --color-primary: #ffc72c; /* اللون الذهبي */
+
+    --color-primary-dark: #e6b222; /* ذهبي أغمق للتأثيرات */
+
+    --color-background-dark: #111111;
+
+    --color-text-light: #f3f4f6;
+
+    --color-text-muted: #a0a0a0;
+
+
+
+    /* الخطوط */
+
+    --font-primary: 'Expo Arabic', 'Cairo', sans-serif;
+
+    
+
+    /* انتقالات/حركات */
+
+    --transition-fast: 0.3s ease;
+
+    --transition-slow: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    --ease-strong: cubic-bezier(0.2, 0.9, 0.3, 1.2);
+
 }
 
+
+
 /* -------------------------------------- */
+
 /* 0. استيراد الخطوط الأساسية */
+
 /* -------------------------------------- */
+
+
 
 /* استيراد خط Cairo كبديل آمن وعصري للغة العربية */
+
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap');
 
+
+
 /* -------------------------------------- */
+
 /* إعادة الضبط الأساسية (CSS Reset) */
+
 /* -------------------------------------- */
+
 *, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+
+    box-sizing: border-box;
+
+    margin: 0;
+
+    padding: 0;
+
 }
 
 
+
+
+
 /* -------------------------------------- */
+
 /* 1. تنسيق الأساسيات وإعادة الضبط */
+
 /* -------------------------------------- */
+
 body {
-    min-height: 100vh; 
-    transform-style: preserve-3d;
-    
-    /* توحيد الخطوط باستخدام المتغيرات */
-    font-family: var(--font-primary);
-    
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    
-    scroll-behavior: smooth; 
-    color: var(--color-text-light); /* تطبيق لون النص الأساسي */
+
+    min-height: 100vh; 
+
+    transform-style: preserve-3d;
+
+    
+
+    /* توحيد الخطوط باستخدام المتغيرات */
+
+    font-family: var(--font-primary);
+
+    
+
+    -webkit-font-smoothing: antialiased;
+
+    -moz-osx-font-smoothing: grayscale;
+
+    
+
+    scroll-behavior: smooth; 
+
+    color: var(--color-text-light); /* تطبيق لون النص الأساسي */
+
 }
+
+
 
 /* 💡 كلاس لمنع التمرير عند ظهور الـ Sidebar/Modal (مطلوب لملف script.js) */
+
 .overflow-hidden {
-    overflow: hidden !important;
+
+    overflow: hidden !important;
+
 }
+
+
 
 /* تنسيق النص المحدد (Selection) */
+
 ::selection {
-    background: var(--color-primary); 
-    color: var(--color-background-dark); 
+
+    background: var(--color-primary); 
+
+    color: var(--color-background-dark); 
+
 }
+
 ::-moz-selection {
-    background: var(--color-primary);
-    color: var(--color-background-dark);
+
+    background: var(--color-primary);
+
+    color: var(--color-background-dark);
+
 }
+
+
 
 a {
-    text-decoration: none;
-    transition: color var(--transition-fast), transform var(--transition-fast), opacity var(--transition-fast); 
+
+    text-decoration: none;
+
+    transition: color var(--transition-fast), transform var(--transition-fast), opacity var(--transition-fast); 
+
 }
 
+
+
 /* -------------------------------------- */
+
 /* 2. تنسيق شريط التبويب النشط في Auth.html */
+
 /* -------------------------------------- */
+
 .tab-button {
-    position: relative; 
+
+    position: relative; 
+
 }
+
+
 
 .tab-button.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: var(--color-primary); 
-    border-radius: 2px 2px 0 0;
-    animation: slideInBottom 0.3s ease-out forwards;
+
+    content: '';
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 3px;
+
+    background-color: var(--color-primary); 
+
+    border-radius: 2px 2px 0 0;
+
+    animation: slideInBottom 0.3s ease-out forwards;
+
 }
+
+
 
 /* حركة ظهور اللوحة عند التبديل (مطلوب لملف script.js) */
+
 .animate-slide-down {
-    animation: slideInTop 0.4s ease-out forwards;
+
+    animation: slideInTop 0.4s ease-out forwards;
+
 }
+
+
 
 @keyframes slideInBottom {
-    from { transform: translateY(10px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+
+    from { transform: translateY(10px); opacity: 0; }
+
+    to { transform: translateY(0); opacity: 1; }
+
 }
+
+
 
 @keyframes slideInTop {
-    from { transform: translateY(-15px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+
+    from { transform: translateY(-15px); opacity: 0; }
+
+    to { transform: translateY(0); opacity: 1; }
+
 }
 
+
+
 /* -------------------------------------- */
+
 /* 3. تنسيق شريط التمرير (Scrollbar) ⚙️ */
+
 /* -------------------------------------- */
+
+
 
 /* تنسيق شريط التمرير لمتصفحات Webkit (Chrome, Safari, Edge) */
-::-webkit-scrollbar { 
-    width: 8px;
+
+::-webkit-scrollbar { 
+
+    width: 8px;
+
 }
+
+
 
 ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border-radius: 10px;
+
 }
+
+
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-primary); 
-    border-radius: 10px;
-    border: 2px solid transparent; 
-    background-clip: content-box; 
+
+    background: var(--color-primary); 
+
+    border-radius: 10px;
+
+    border: 2px solid transparent; 
+
+    background-clip: content-box; 
+
 }
+
+
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-primary-dark); 
+
+    background: var(--color-primary-dark); 
+
 }
+
+
 
 /* تنسيق شريط التمرير لمتصفح Firefox */
+
 * {
-    scrollbar-width: thin; 
-    scrollbar-color: var(--color-primary) rgba(255, 255, 255, 0.05); 
+
+    scrollbar-width: thin; 
+
+    scrollbar-color: var(--color-primary) rgba(255, 255, 255, 0.05); 
+
 }
 
+
+
 /* -------------------------------------- */
+
 /* 4. تنسيق القوائم المنسدلة (Dropdown Menu) - جديد 🔽 */
+
 /* -------------------------------------- */
+
+
 
 .dropdown-menu {
-    position: absolute;
-    z-index: 50; /* تأكد من ظهورها فوق العناصر الأخرى */
-    min-width: 12rem; /* عرض افتراضي */
-    padding: 0.5rem;
-    
-    /* تصميم Glassmorphism خفيف متناسق مع البطاقات */
-    background-color: rgba(17, 17, 17, 0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    
-    /* إخفاء افتراضي يتم التحكم به بواسطة JS */
-    display: none; 
-    opacity: 0;
-    transform: scale(0.95) translateY(-10px);
-    transition: opacity var(--transition-fast), transform var(--transition-fast);
+
+    position: absolute;
+
+    z-index: 50; /* تأكد من ظهورها فوق العناصر الأخرى */
+
+    min-width: 12rem; /* عرض افتراضي */
+
+    padding: 0.5rem;
+
+    
+
+    /* تصميم Glassmorphism خفيف متناسق مع البطاقات */
+
+    background-color: rgba(17, 17, 17, 0.9);
+
+    backdrop-filter: blur(10px);
+
+    -webkit-backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 8px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+    
+
+    /* إخفاء افتراضي يتم التحكم به بواسطة JS */
+
+    display: none; 
+
+    opacity: 0;
+
+    transform: scale(0.95) translateY(-10px);
+
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+
 }
+
+
 
 .dropdown-menu.block {
-    display: block;
-    opacity: 1;
-    transform: scale(1) translateY(0);
+
+    display: block;
+
+    opacity: 1;
+
+    transform: scale(1) translateY(0);
+
 }
+
+
 
 .dropdown-menu a {
-    display: block;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    color: var(--color-text-light);
-    font-size: 0.9rem;
+
+    display: block;
+
+    padding: 0.5rem 1rem;
+
+    border-radius: 4px;
+
+    color: var(--color-text-light);
+
+    font-size: 0.9rem;
+
 }
+
+
 
 .dropdown-menu a:hover {
-    background-color: rgba(255, 199, 44, 0.1);
-    color: var(--color-primary);
+
+    background-color: rgba(255, 199, 44, 0.1);
+
+    color: var(--color-primary);
+
 }
 
+
+
 /* -------------------------------------- */
+
 /* 5. تنسيق الشريط الجانبي الثابت (Sidebar Fix) */
+
 /* -------------------------------------- */
 
-@media (min-width: 1024px) { 
-    .sidebar-scroll {
-        max-height: calc(100vh - 12rem); 
-        overflow-y: auto; 
-    }
+
+
+@media (min-width: 1024px) { 
+
+    .sidebar-scroll {
+
+        max-height: calc(100vh - 12rem); 
+
+        overflow-y: auto; 
+
+    }
+
 }
 
 
+
+
+
 /* -------------------------------------- */
+
 /* 6. تنسيق تأثير الـ Overlay عند فتح الـ Sidebar في الجوال */
+
 /* -------------------------------------- */
+
+
 
 /* تأكيد أن الخلفية لا تتفاعل */
+
 #sidebar-backdrop {
-    pointer-events: auto;
+
+    pointer-events: auto;
+
 }
+
+
 
 /* تطبيق تأثير التعتيم (blur) على المحتوى الرئيسي عند تفعيل فئة filter */
+
 #mainContent.filter {
-    filter: blur(4px) grayscale(70%); 
-    pointer-events: none; /* تعطيل التفاعل مع المحتوى خلف الـ sidebar */
-    transition: filter var(--transition-fast); 
+
+    filter: blur(4px) grayscale(70%); 
+
+    pointer-events: none; /* تعطيل التفاعل مع المحتوى خلف الـ sidebar */
+
+    transition: filter var(--transition-fast); 
+
 }
 
+
+
 /* -------------------------------------- */
+
 /* 7. تطبيق Glass-Card على حقول الإدخال للتركيز */
-/* -------------------------------------- */
-.glass-card input:focus, 
-.glass-card textarea:focus,
-.glass-card select:focus {
-    box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.3), 0 0 10px rgba(255, 199, 44, 0.1);
-    outline: none; 
-    border-color: var(--color-primary) !important; 
-}
 
 /* -------------------------------------- */
-/* 8. تنسيقات خاصة بـ Portfolio.html والمشاريع */
+
+.glass-card input:focus, 
+
+.glass-card textarea:focus,
+
+.glass-card select:focus {
+
+    box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.3), 0 0 10px rgba(255, 199, 44, 0.1);
+
+    outline: none; 
+
+    border-color: var(--color-primary) !important; 
+
+}
+
+
+
 /* -------------------------------------- */
+
+/* 8. تنسيقات خاصة بـ Portfolio.html والمشاريع */
+
+/* -------------------------------------- */
+
+
 
 /* تحسين مظهر الأزرار المربعة (للأيقونات/الفلاتر) */
+
 .icon-button {
-    transition: all var(--transition-fast);
-    background-color: rgba(255, 255, 255, 0.05); 
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    transition: all var(--transition-fast);
+
+    background-color: rgba(255, 255, 255, 0.05); 
+
+    backdrop-filter: blur(5px);
+
+    -webkit-backdrop-filter: blur(5px);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
 }
+
 .icon-button:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px) scale(1.05); 
-    border-color: var(--color-primary);
+
+    background-color: rgba(255, 255, 255, 0.15);
+
+    transform: translateY(-2px) scale(1.05); 
+
+    border-color: var(--color-primary);
+
 }
+
+
 
 /* تحسين التباعد بين العناصر في وضع الأجهزة الكبيرة */
+
 @media (min-width: 1280px) {
-    .xl\:gap-8 {
-        gap: 2rem !important; 
-    }
+
+    .xl\:gap-8 {
+
+        gap: 2rem !important; 
+
+    }
+
 }
 
+
+
 /* -------------------------------------- */
+
 /* 9. تنسيقات بطاقات المشاريع الجديدة (.project-card) */
+
 /* -------------------------------------- */
+
+
 
 .project-card {
-    background-color: rgba(17, 17, 17, 0.7);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    color: var(--color-text-light);
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease; 
-    cursor: pointer;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+
+    background-color: rgba(17, 17, 17, 0.7);
+
+    backdrop-filter: blur(15px);
+
+    -webkit-backdrop-filter: blur(15px);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
+
+    color: var(--color-text-light);
+
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease; 
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+
 }
+
+
 
 .project-card:hover {
-    transform: translateY(-8px); 
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 199, 44, 0.2);
+
+    transform: translateY(-8px); 
+
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 199, 44, 0.2);
+
 }
+
+
 
 .card-link-wrapper {
-    display: block;
-    height: 250px; 
-    position: relative;
-    overflow: hidden;
+
+    display: block;
+
+    height: 250px; 
+
+    position: relative;
+
+    overflow: hidden;
+
 }
+
+
 
 .card-link-wrapper img {
-    width: 100%;
-    height: 100%;
-    background-color: #222;
-    object-fit: cover; 
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
+
+    width: 100%;
+
+    height: 100%;
+
+    background-color: #222;
+
+    object-fit: cover; 
+
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
+
 }
+
+
 
 .card-content {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+
+    padding: 1.5rem;
+
+    display: flex;
+
+    flex-direction: column;
+
+    flex-grow: 1;
+
 }
+
+
 
 .card-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: var(--color-primary); 
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+    margin-bottom: 0.5rem;
+
+    color: var(--color-primary); 
+
 }
+
+
 
 .card-description {
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-    margin-bottom: 1rem;
-    flex-grow: 1; 
+
+    font-size: 0.95rem;
+
+    color: var(--color-text-muted);
+
+    margin-bottom: 1rem;
+
+    flex-grow: 1; 
+
 }
+
+
 
 .card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 0.5rem;
+
+    margin-bottom: 1rem;
+
 }
+
+
 
 .card-tag {
-    background-color: rgba(255, 199, 44, 0.15);
-    color: var(--color-primary);
-    padding: 0.3rem 0.7rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 600;
+
+    background-color: rgba(255, 199, 44, 0.15);
+
+    color: var(--color-primary);
+
+    padding: 0.3rem 0.7rem;
+
+    border-radius: 4px;
+
+    font-size: 0.75rem;
+
+    font-weight: 600;
+
 }
+
+
 
 .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 1rem;
-    margin-top: 0.5rem;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+    padding-top: 1rem;
+
+    margin-top: 0.5rem;
+
 }
+
+
 
 .card-stats {
-    display: flex;
-    gap: 1rem;
-    color: #888;
-    font-size: 0.9rem;
+
+    display: flex;
+
+    gap: 1rem;
+
+    color: #888;
+
+    font-size: 0.9rem;
+
 }
+
+
 
 .card-stat {
-    display: flex;
-    align-items: center;
+
+    display: flex;
+
+    align-items: center;
+
 }
+
+
 
 .card-stat-icon {
-    width: 18px;
-    height: 18px;
-    margin-left: 0.3rem;
-    color: var(--color-primary);
+
+    width: 18px;
+
+    height: 18px;
+
+    margin-left: 0.3rem;
+
+    color: var(--color-primary);
+
 }
+
+
 
 .card-button {
-    padding: 0.6rem 1.2rem;
-    background: var(--color-primary);
-    color: var(--color-background-dark);
-    font-weight: 700;
-    border-radius: 6px;
-    transition: background-color var(--transition-fast), transform 0.2s ease;
+
+    padding: 0.6rem 1.2rem;
+
+    background: var(--color-primary);
+
+    color: var(--color-background-dark);
+
+    font-weight: 700;
+
+    border-radius: 6px;
+
+    transition: background-color var(--transition-fast), transform 0.2s ease;
+
 }
+
+
 
 .card-button:hover {
-    background: var(--color-primary-dark);
-    transform: scale(1.05);
+
+    background: var(--color-primary-dark);
+
+    transform: scale(1.05);
+
 }
 
+
+
 /* -------------------------------------- */
+
 /* 10. إضافات الأنيميشن المخصصة (جديدة) */
+
 /* -------------------------------------- */
+
+
 
 /* Fade & pop (استخدم على بطاقات وبطاقات مشروع) */
+
 .animate-card-pop {
-    opacity: 0;
-    transform: translateY(18px) scale(.98);
-    transition: transform 0.6s var(--transition-slow), opacity 0.45s var(--transition-fast);
+
+    opacity: 0;
+
+    transform: translateY(18px) scale(.98);
+
+    transition: transform 0.6s var(--transition-slow), opacity 0.45s var(--transition-fast);
+
 }
+
 .animate-card-pop.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+
 }
+
+
 
 /* Fade-in text */
+
 .animate-fade-in {
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.5s var(--transition-fast), transform 0.6s var(--transition-slow);
+
+    opacity: 0;
+
+    transform: translateY(8px);
+
+    transition: opacity 0.5s var(--transition-fast), transform 0.6s var(--transition-slow);
+
 }
+
 .animate-fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+
+    opacity: 1;
+
+    transform: translateY(0);
+
 }
+
+
 
 /* Image glow on hover */
+
 .img-glow-hover {
-    transition: transform 0.6s var(--transition-slow), box-shadow 0.4s var(--transition-fast);
+
+    transition: transform 0.6s var(--transition-slow), box-shadow 0.4s var(--transition-fast);
+
 }
+
 .img-glow-hover:hover {
-    transform: scale(1.06) rotate(.8deg);
-    box-shadow: 0 10px 30px rgba(255, 199, 44, 0.18), 0 0 20px rgba(255, 199, 44, 0.06);
+
+    transform: scale(1.06) rotate(.8deg);
+
+    box-shadow: 0 10px 30px rgba(255, 199, 44, 0.18), 0 0 20px rgba(255, 199, 44, 0.06);
+
 }
+
+
 
 /* Tilt effect (uses JS to set transform rotateX/Y) */
+
 .tilt {
-    transform-style: preserve-3d;
-    transition: transform 0.35s var(--ease-strong);
-    will-change: transform;
+
+    transform-style: preserve-3d;
+
+    transition: transform 0.35s var(--ease-strong);
+
+    will-change: transform;
+
 }
+
+
 
 /* subtle pulse for primary accents */
+
 .pulse-primary {
-    animation: pulsePrimary 2.8s ease-in-out infinite;
+
+    animation: pulsePrimary 2.8s ease-in-out infinite;
+
 }
+
 @keyframes pulsePrimary {
-    0% { box-shadow: 0 0 0 0 rgba(255,199,44,0.12); }
-    70% { box-shadow: 0 0 0 12px rgba(255,199,44,0.00); }
-    100% { box-shadow: 0 0 0 0 rgba(255,199,44,0.00); }
+
+    0% { box-shadow: 0 0 0 0 rgba(255,199,44,0.12); }
+
+    70% { box-shadow: 0 0 0 12px rgba(255,199,44,0.00); }
+
+    100% { box-shadow: 0 0 0 0 rgba(255,199,44,0.00); }
+
 }
+
+
 
 /* Stagger container for children animations */
+
 .stagger-container { --stagger-delay: 0.08s; }
+
 .stagger-container .stagger-item {
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.5s var(--transition-fast), transform 0.6s var(--transition-slow);
+
+    opacity: 0;
+
+    transform: translateY(12px);
+
+    transition: opacity 0.5s var(--transition-fast), transform 0.6s var(--transition-slow);
+
 }
+
 .stagger-container.visible .stagger-item {
-    opacity: 1;
-    transform: translateY(0);
+
+    opacity: 1;
+
+    transform: translateY(0);
+
 }
+
 .stagger-container.visible .stagger-item:nth-child(1){ transition-delay: calc(var(--stagger-delay) * 1); }
+
 .stagger-container.visible .stagger-item:nth-child(2){ transition-delay: calc(var(--stagger-delay) * 2); }
+
 .stagger-container.visible .stagger-item:nth-child(3){ transition-delay: calc(var(--stagger-delay) * 3); }
+
 .stagger-container.visible .stagger-item:nth-child(4){ transition-delay: calc(var(--stagger-delay) * 4); }
+
 .stagger-container.visible .stagger-item:nth-child(5){ transition-delay: calc(var(--stagger-delay) * 5); }
 
+
+
 /* SVG underline animated (use under headings) */
+
 .svg-underline {
-    display: inline-block;
-    vertical-align: middle;
-    position: relative;
+
+    display: inline-block;
+
+    vertical-align: middle;
+
+    position: relative;
+
 }
+
 .svg-underline svg {
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 100%;
-    height: 10px;
-    overflow: visible;
-    opacity: 0.85;
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: -6px;
+
+    width: 100%;
+
+    height: 10px;
+
+    overflow: visible;
+
+    opacity: 0.85;
+
 }
+
 .svg-underline path {
-    stroke: var(--color-primary);
-    stroke-width: 2;
-    fill: none;
-    stroke-dasharray: 120;
-    stroke-dashoffset: 120;
-    transition: stroke-dashoffset 0.9s var(--transition-slow);
+
+    stroke: var(--color-primary);
+
+    stroke-width: 2;
+
+    fill: none;
+
+    stroke-dasharray: 120;
+
+    stroke-dashoffset: 120;
+
+    transition: stroke-dashoffset 0.9s var(--transition-slow);
+
 }
+
 .svg-underline.visible svg path { stroke-dashoffset: 0; }
 
+
+
 /* reveal on scroll generic */
+
 .animate-on-scroll {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.6s var(--transition-fast), transform 0.6s var(--transition-slow);
+
+    opacity: 0;
+
+    transform: translateY(18px);
+
+    transition: opacity 0.6s var(--transition-fast), transform 0.6s var(--transition-slow);
+
 }
+
 .animate-on-scroll.visible {
-    opacity: 1;
-    transform: translateY(0);
+
+    opacity: 1;
+
+    transform: translateY(0);
+
 }
+
+
 
 /* small decorative shimmer for hero CTA */
+
 .shimmer {
-    position: relative;
-    overflow: hidden;
+
+    position: relative;
+
+    overflow: hidden;
+
 }
+
 .shimmer::after {
-    content: "";
-    position: absolute;
-    top: -40%;
-    left: -40%;
-    width: 80%;
-    height: 200%;
-    background: linear-gradient(120deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.02) 100%);
-    transform: rotate(25deg);
-    transition: transform 0.9s ease;
-    pointer-events: none;
+
+    content: "";
+
+    position: absolute;
+
+    top: -40%;
+
+    left: -40%;
+
+    width: 80%;
+
+    height: 200%;
+
+    background: linear-gradient(120deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.02) 100%);
+
+    transform: rotate(25deg);
+
+    transition: transform 0.9s ease;
+
+    pointer-events: none;
+
 }
+
 .shimmer:hover::after { transform: translateX(40%) rotate(25deg); }
 
+
+
 /* small helper for reduced-motion users */
+
 @media (prefers-reduced-motion: reduce) {
-    .animate-card-pop, .animate-fade-in, .stagger-container .stagger-item, .animate-on-scroll {
-        transition: none !important;
-        transform: none !important;
-        opacity: 1 !important;
-    }
+
+    .animate-card-pop, .animate-fade-in, .stagger-container .stagger-item, .animate-on-scroll {
+
+        transition: none !important;
+
+        transform: none !important;
+
+        opacity: 1 !important;
+
+    }
+
 }
 
 
-/* -------------------------------------- */
-/* 11. تنسيقات خاصة بـ graphics.html 🖼️ */
-/* -------------------------------------- */
-
-/* تنسيق القسم الرئيسي (Hero Section) */
-.graphics-hero {
-    /* تطبيق الألوان الأساسية للخلفية والنص */
-    background-color: var(--color-background-dark);
-    color: var(--color-text-light);
-    padding: 6rem 0 4rem 0; /* تباعد علوي وسفلي جيد */
-    position: relative;
-    overflow: hidden; /* لإخفاء أي عناصر تتجاوز حدود القسم */
-    text-align: center;
-}
-
-.graphics-hero h1 {
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 900;
-    margin-bottom: 0.75rem;
-    color: var(--color-primary); /* إبراز العنوان باللون الذهبي */
-}
-
-.graphics-hero p {
-    font-size: clamp(1rem, 2vw, 1.25rem);
-    max-width: 800px;
-    margin: 0 auto 2rem auto;
-    color: var(--color-text-muted);
-}
-
-/* نمط زر CTA في القسم الرئيسي */
-.hero-cta-button {
-    display: inline-block;
-    padding: 0.8rem 2.5rem;
-    background: var(--color-primary);
-    color: var(--color-background-dark);
-    font-weight: 700;
-    border-radius: 8px;
-    transition: all var(--transition-fast);
-    box-shadow: 0 4px 15px rgba(255, 199, 44, 0.4);
-}
-
-.hero-cta-button:hover {
-    background: var(--color-primary-dark);
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 8px 20px rgba(255, 199, 44, 0.6);
-}
-
-/* تنسيق شبكة عرض العناصر الرسومية */
-.graphics-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 300px كعرض أدنى لكل عمود */
-    gap: 2rem;
-    padding: 2rem 0;
-}
-
-/* تنسيق بطاقة العنصر الرسومي (للملفات/الصور/التصاميم) - يتبع نمط project-card */
-.graphic-item-card {
-    /* إعادة استخدام التنسيق الأساسي لبطاقة المشروع لكن بحدود أخف */
-    background-color: rgba(17, 17, 17, 0.8); /* خلفية معتمة أكثر */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.graphic-item-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 199, 44, 0.15);
-}
-
-.graphic-image-wrapper {
-    height: 220px;
-    overflow: hidden;
-    position: relative;
-}
-
-.graphic-image-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s var(--transition-slow);
-}
-
-.graphic-item-card:hover .graphic-image-wrapper img {
-    transform: scale(1.08); /* تكبير الصورة عند التحويم */
-}
-
-.graphic-content {
-    padding: 1.25rem;
-}
-
-.graphic-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: var(--color-primary);
-}
-
-.graphic-category {
-    font-size: 0.85rem;
-    color: #888;
-    margin-bottom: 1rem;
-    display: block;
-}
-
-/* زر أو رابط لعرض/تحميل التصميم */
-.view-graphic-button {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 0.7rem 0;
-    background-color: rgba(255, 199, 44, 0.1);
-    color: var(--color-primary);
-    border-radius: 6px;
-    font-weight: 600;
-    transition: background-color var(--transition-fast), transform 0.2s ease;
-    margin-top: 1rem;
-}
-
-.view-graphic-button:hover {
-    background-color: var(--color-primary);
-    color: var(--color-background-dark);
-    transform: translateY(-2px);
-}
-
-/* تنسيق زر الفلترة النشط (مطلوب ليتناسب مع initGraphicsFilter في script.js) */
-.active-filter {
-    background-color: var(--color-primary) !important;
-    color: var(--color-background-dark) !important;
-    font-weight: 700;
-    border-color: var(--color-primary) !important;
-}
-
-/* تخصيص تأثير التمرير (Animation on scroll) لبطاقات العناصر الرسومية */
-.graphic-item-card.animate-on-scroll {
-    opacity: 0;
-    transform: translateY(20px);
-}
-.graphic-item-card.animate-on-scroll.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
 
 /* End of file */
