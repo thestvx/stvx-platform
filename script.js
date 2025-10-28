@@ -16,15 +16,13 @@ function initSidebarToggle() {
     const openSidebar = () => {
         sidebar.classList.remove('-translate-x-full');
         backdrop.classList.remove('hidden');
-        // تعديل: استخدام كلاس overflow-hidden بدلاً من التعديل المباشر
-        document.body.classList.add('overflow-hidden'); 
+        document.body.classList.add('overflow-hidden'); // 💡 تعديل: منع التمرير
     };
 
     const closeSidebar = () => {
         sidebar.classList.add('-translate-x-full');
         backdrop.classList.add('hidden');
-        // تعديل: إزالة كلاس overflow-hidden
-        document.body.classList.remove('overflow-hidden'); 
+        document.body.classList.remove('overflow-hidden'); // 💡 تعديل: السماح بالتمرير
     };
 
     toggleButton.addEventListener('click', openSidebar);
@@ -66,7 +64,6 @@ function initAuthTabs() {
             // إظهار اللوحة المستهدفة مع تأثير حركي
             if (panel.id === targetId) {
                 panel.classList.remove('hidden');
-                // نترك animate-slide-down على افتراض وجودها في الـ CSS/Tailwind
                 panel.classList.add('animate-slide-down'); 
             }
         });
@@ -89,49 +86,37 @@ function initAuthTabs() {
 // ----------------------------------------------------
 // 3. وظيفة Lightbox عند النقر (LightBox on Click)
 // ----------------------------------------------------
-/**
- * تهيئة Lightbox لفتح صورة المشروع عند النقر عليها.
- * يعتمد على وجود العناصر في الـ HTML: #lightbox و #lightbox-image.
- */
 function initClickLightbox() {
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightbox-image');
     
-    // العناصر المطلوبة للوظيفة
     if (!lightbox || !lightboxImage) {
         return;
     }
 
     const triggers = document.querySelectorAll('.lightbox-trigger');
 
-    // وظيفة فتح النافذة
     const openLightbox = (src) => {
         lightboxImage.src = src; 
         lightbox.classList.add('active'); 
-        // تعديل: استخدام كلاس overflow-hidden بدلاً من التعديل المباشر
-        document.body.classList.add('overflow-hidden'); 
+        document.body.classList.add('overflow-hidden'); // 💡 تعديل: منع التمرير
     };
 
-    // وظيفة إغلاق النافذة
     const closeLightbox = (event) => {
         // الإغلاق عند الضغط على زر الإغلاق أو الخلفية الشفافة
         if (event.target.classList.contains('lightbox-overlay') || event.target.closest('.lightbox-close') || event.target.id === 'lightbox') {
             lightbox.classList.remove('active');
-            // تعديل: إزالة كلاس overflow-hidden
-            document.body.classList.remove('overflow-hidden'); 
+            document.body.classList.remove('overflow-hidden'); // 💡 تعديل: السماح بالتمرير
         }
     }
 
-    // ربط الحدث بجميع العناصر التي تحمل الكلاس .lightbox-trigger
     triggers.forEach(trigger => {
-        trigger.addEventListener('click', (e) => { // تم تبسيط الاستماع للنقر مباشرة على trigger
-            // منع السلوك الافتراضي للرابط (#) إذا كان trigger رابطاً
+        trigger.addEventListener('click', (e) => { 
             if (trigger.tagName === 'A') {
                 e.preventDefault(); 
             }
             
-            // === الحل والتعديل: تحديد وسم الصورة بشكل صحيح ===
-            // 1. البحث عن وسم <img> داخل العنصر trigger، أو استخدام trigger نفسه إذا كان هو <img>.
+            // البحث عن وسم <img> داخل trigger أو استخدام trigger نفسه
             const imageElement = trigger.tagName === 'IMG' ? trigger : trigger.querySelector('img');
             
             if (imageElement) {
@@ -140,19 +125,15 @@ function initClickLightbox() {
                     openLightbox(imageSrc);
                 }
             }
-            // ===============================================
         });
     });
 
-    // إضافة مستمع الإغلاق على الـ Lightbox نفسه
     lightbox.addEventListener('click', closeLightbox);
     
-    // إغلاق Lightbox عند الضغط على مفتاح ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-             // إغلاق مباشرة
              lightbox.classList.remove('active');
-             document.body.classList.remove('overflow-hidden'); // تعديل: إزالة كلاس overflow-hidden
+             document.body.classList.remove('overflow-hidden');
         }
     });
 }
@@ -163,10 +144,9 @@ function initClickLightbox() {
 // ----------------------------------------------------
 
 function initImageLightboxOnHover() {
-    // تم توحيد اسم المتغيرات لتكون أكثر وضوحاً
-    const hoverTriggers = document.querySelectorAll('.lightbox-hover-trigger'); 
+    const triggers = document.querySelectorAll('.lightbox-hover-trigger'); 
     
-    if (hoverTriggers.length === 0) {
+    if (triggers.length === 0) {
         return;
     }
 
@@ -176,12 +156,12 @@ function initImageLightboxOnHover() {
         if (!floatingImageContainer) {
             floatingImageContainer = document.createElement('div');
             floatingImageContainer.id = 'floating-image-container';
-            // نستخدم wrapper لضمان أن الصورة العائمة تكون في الأعلى دائماً
             floatingImageContainer.classList.add('floating-image-wrapper'); 
             document.body.appendChild(floatingImageContainer);
         }
     };
 
+    // (وظائف showImage و hideImage لم تتغير، وهي منطقية)
     const showImage = (originalImage) => {
         if (!floatingImageContainer) return;
 
@@ -190,7 +170,6 @@ function initImageLightboxOnHover() {
         const clonedImage = originalImage.cloneNode(true);
         clonedImage.classList.add('cloned-image');
         
-        // تطبيق الأنماط الأولية للانتقال من موقع الصورة الأصلية
         Object.assign(clonedImage.style, {
             position: 'absolute',
             top: `${rect.top}px`,
@@ -206,10 +185,8 @@ function initImageLightboxOnHover() {
         floatingImageContainer.appendChild(clonedImage);
         
         setTimeout(() => {
-            // إخفاء الصورة الأصلية بعد نسخها
             originalImage.style.opacity = '0'; 
 
-            // بدء حركة الانتقال إلى المنتصف (يجب أن يتم تعريف أنماط is-centered في الـ CSS)
             clonedImage.style.opacity = '1';
             clonedImage.classList.add('is-centered'); 
         }, 10); 
@@ -222,7 +199,6 @@ function initImageLightboxOnHover() {
 
         const rect = originalImage.getBoundingClientRect();
         
-        // إعادة الصورة إلى موقعها الأصلي قبل الحذف
         Object.assign(clonedImage.style, {
             top: `${rect.top}px`,
             left: `${rect.left}px`,
@@ -238,14 +214,14 @@ function initImageLightboxOnHover() {
             if (floatingImageContainer.contains(clonedImage)) {
                 floatingImageContainer.removeChild(clonedImage);
             }
-            originalImage.style.opacity = '1'; // إظهار الصورة الأصلية مرة أخرى
+            originalImage.style.opacity = '1'; 
         }, transitionDuration); 
     };
     
     createContainer();
 
-    hoverTriggers.forEach(trigger => {
-        let clonedImg = null; // متغير لتخزين الصورة المستنسخة لكل عنصر
+    triggers.forEach(trigger => {
+        let clonedImg = null;
 
         trigger.addEventListener('mouseenter', () => {
             clonedImg = showImage(trigger);
@@ -260,30 +236,24 @@ function initImageLightboxOnHover() {
 // ----------------------------------------------------
 // 5. تهيئة معرض الصور المودال (Programs Image Modal)
 // ----------------------------------------------------
-/**
- * وظيفة خاصة بصفحة programs.html للتحكم في ظهور الـ modal الخاصة بالصور.
- * تم جلبها من الكود الذي أرسلته سابقًا مع التعديلات اللازمة لمنع التمرير وضمان الظهور في الأعلى.
- */
 function initImageModalGallery() {
-    const imageModal = document.getElementById('image-modal'); // تم تغيير اسم المتغير
+    const modal = document.getElementById('image-modal');
     const fullImage = document.getElementById('full-image');
-    const closeModalButton = document.getElementById('close-modal'); // تم تغيير اسم المتغير
+    const closeModal = document.getElementById('close-modal');
     const cardLinkWrappers = document.querySelectorAll('.card-link-wrapper');
 
-    if (!imageModal || !fullImage || !closeModalButton || cardLinkWrappers.length === 0) {
-        // لا تشغل الوظيفة إذا لم يتم العثور على العناصر، أي أننا لسنا في صفحة programs.html
+    if (!modal || !fullImage || !closeModal || cardLinkWrappers.length === 0) {
         return;
     }
 
     // وظيفة إخفاء الـ Modal
     const hideModal = () => {
-        imageModal.classList.remove('opacity-100', 'visible');
-        imageModal.classList.add('opacity-0', 'invisible');
+        modal.classList.remove('opacity-100', 'visible');
+        modal.classList.add('opacity-0', 'invisible');
         
-        // ✅ إعادة التمرير إلى الجسم (إذا كان قد تم إيقافه)
+        // 🛑 إعادة التمرير إلى الجسم
         document.body.classList.remove('overflow-hidden');
         
-        // تأخير إزالة مصدر الصورة حتى انتهاء الانتقال
         setTimeout(() => { fullImage.src = ''; }, 500);
     }
     
@@ -298,33 +268,27 @@ function initImageModalGallery() {
                 fullImage.src = imageUrl;
 
                 // إظهار الـ Modal
-                imageModal.classList.remove('opacity-0', 'invisible');
-                imageModal.classList.add('opacity-100', 'visible');
+                modal.classList.remove('opacity-0', 'invisible');
+                modal.classList.add('opacity-100', 'visible');
                 
-                // ✅ التعديل لحل مشكلة السكرول ✅
-                // منع التمرير على الجسم
+                // 🚀 منع التمرير على الجسم
                 document.body.classList.add('overflow-hidden');
                 
-                // نقل تركيز الشاشة إلى أعلى الـ modal (إلى أعلى الصفحة)
                 window.scrollTo(0, 0); 
             }
         });
     });
 
-    // إغلاق الـ Modal عند النقر على زر الإغلاق
-    closeModalButton.addEventListener('click', hideModal);
+    closeModal.addEventListener('click', hideModal);
 
-    // إغلاق الـ Modal عند النقر خارج الصورة (على الخلفية السوداء)
-    imageModal.addEventListener('click', (e) => {
-        // تحقق ما إذا كان النقر على الـ modal نفسه وليس على الـ content (الصورة)
+    modal.addEventListener('click', (e) => {
         if (e.target.id === 'image-modal') { 
             hideModal();
         }
     });
 
-    // إغلاق الـ Modal عند الضغط على مفتاح ESC
     document.addEventListener('keydown', (e) => {
-        if (e.key === "Escape" && imageModal.classList.contains('opacity-100')) {
+        if (e.key === "Escape" && modal.classList.contains('opacity-100')) {
             hideModal();
         }
     });
@@ -340,7 +304,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initAuthTabs();
     initClickLightbox(); 
     initImageLightboxOnHover(); 
-    
-    // تشغيل وظيفة معرض الصور المودال الجديدة
     initImageModalGallery(); 
 });
