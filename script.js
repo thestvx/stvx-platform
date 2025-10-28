@@ -84,7 +84,7 @@ function initAuthTabs() {
 }
 
 // ----------------------------------------------------
-// 3. 🆕 وظيفة Lightbox عند النقر (LightBox on Click) 🆕
+// 3. وظيفة Lightbox عند النقر (LightBox on Click)
 // ----------------------------------------------------
 /**
  * تهيئة Lightbox لفتح صورة المشروع عند النقر عليها.
@@ -126,11 +126,18 @@ function initClickLightbox() {
         clickableParent.addEventListener('click', (e) => {
             // منع السلوك الافتراضي للرابط (#)
             e.preventDefault(); 
-            // الحصول على مصدر الصورة من وسم <img>
-            const imageSrc = trigger.getAttribute('src');
-            if (imageSrc) {
-                openLightbox(imageSrc);
+            
+            // === الحل والتعديل: تحديد وسم الصورة بشكل صحيح ===
+            // 1. البحث عن وسم <img> داخل العنصر trigger، أو استخدام trigger نفسه إذا كان هو <img>.
+            const imageElement = trigger.tagName === 'IMG' ? trigger : trigger.querySelector('img');
+            
+            if (imageElement) {
+                const imageSrc = imageElement.getAttribute('src');
+                if (imageSrc) {
+                    openLightbox(imageSrc);
+                }
             }
+            // ===============================================
         });
     });
 
@@ -249,6 +256,6 @@ function initImageLightboxOnHover() {
 document.addEventListener('DOMContentLoaded', () => {
     initSidebarToggle();
     initAuthTabs();
-    initClickLightbox(); // 🆕 تشغيل وظيفة Lightbox للنقر
+    initClickLightbox(); // تشغيل وظيفة Lightbox للنقر
     initImageLightboxOnHover(); // تشغيل وظيفة Lightbox للتحويم
 });
