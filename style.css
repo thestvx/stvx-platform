@@ -218,17 +218,17 @@ a {
     overflow: hidden;
 }
 
-.card-image-placeholder {
+/* تم تحديث هذا ليتوافق مع وسم <img> مباشرة إذا كان يحمل الكلاس lightbox-trigger */
+.lightbox-trigger, .card-image-placeholder img {
     width: 100%;
     height: 100%;
     background-color: #222;
-    background-size: cover;
-    background-position: center;
+    object-fit: cover; /* تم استخدام cover لملء البطاقة */
     /* يجب أن تكون transition موجودة لتطبيقها عند مغادرة الـ Lightbox */
     transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
 }
 
-.project-card:hover .card-image-placeholder {
+.project-card:hover .lightbox-trigger {
     /* تم إزالة تأثير التكبير البسيط هنا، لأنه سيتم التعامل معه عبر JavaScript/Lightbox */
     /* transform: scale(1.1); */
 }
@@ -313,7 +313,7 @@ a {
 }
 
 /* -------------------------------------- */
-/* 9. 🆕 تنسيقات Lightbox On Hover (الصورة العائمة) 🆕 */
+/* 9. تنسيقات Lightbox On Hover (الصورة العائمة) */
 /* -------------------------------------- */
 
 /* الحاوية الرئيسية للصورة العائمة - تثبيت وتغطية الشاشة */
@@ -354,4 +354,92 @@ a {
     
     /* التحويل إلى المنتصف بناءً على أبعادها الحقيقية */
     transform: translate(-50%, -50%) scale(1);
+}
+
+/* -------------------------------------- */
+/* 10. 🚨 تنسيقات Lightbox على النقر (Lightbox Modal) 🚨 */
+/* -------------------------------------- */
+
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* خلفية شفافة ومظلمة */
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 9998; /* أسفل الـ floating-image-wrapper */
+    
+    /* تنسيقات الإخفاء الافتراضية */
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    /* لتوسيط المحتوى */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* حالة الظهور (يتم إضافتها بواسطة JavaScript) */
+.lightbox-overlay.active {
+    display: flex; /* إظهار الـ flex لتمكين التوسيط */
+    opacity: 1;
+}
+
+.lightbox-content {
+    position: relative;
+    /* تحديد أبعاد المحتوى لتسمح للصورة بالتكبير داخله */
+    max-width: 95%; 
+    max-height: 95%;
+    width: auto;
+    height: auto;
+    
+    /* لا تظهر أي محتويات تتجاوز هذه الحدود */
+    overflow: hidden; 
+}
+
+/* زر الإغلاق */
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    font-size: 3rem;
+    color: #ffc72c;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.lightbox-close:hover {
+    color: #e6b222;
+    transform: rotate(90deg);
+}
+
+/* الصورة المكبرة داخل Lightbox */
+#lightbox-image {
+    /* 🚨 هذا هو الجزء الذي يحل مشكلة الأبعاد 🚨 */
+    display: block;
+    max-width: 100%; 
+    max-height: 100%; 
+    object-fit: contain; /* مهم جداً: للحفاظ على نسبة الأبعاد وتضمين الصورة بالكامل */
+    
+    /* يتم حذف أي ارتفاع أو عرض ثابت كان مطبقاً */
+    width: auto;
+    height: auto;
+    
+    /* تحسين المظهر */
+    border-radius: 8px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
+}
+
+/* تطبيق حركة الظهور النهائية للصورة */
+.lightbox-overlay.active #lightbox-image {
+    transform: scale(1);
+    opacity: 1;
 }
