@@ -105,10 +105,24 @@
             transition: box-shadow 0.3s, transform 0.3s;
         }
 
-        /* تنسيقات الـ Modal */
+        /* 🌟🌟 التعديل هنا: تنسيقات الـ Modal لتظهر في منتصف الشاشة 🌟🌟 */
         .image-modal {
-            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            /* تم استبدال الكلاسات Tailwind بكود CSS مباشرة لضبط التمركز بشكل أفضل عند الحاجة */
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
         }
+
+        /* حالة ظهور المودال (لإضافة التأثيرات) */
+        .image-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* إخفاء السكرول بار عند ظهور النافذة المنبثقة */
+        .modal-open-body {
+            overflow: hidden; 
+        }
+        /* 🌟🌟 نهاية تعديل الـ Modal 🌟🌟 */
+
 
         /* تنسيقات العنوان والوصف والـ Tags */
         .card-title { font-size: 1.25rem; font-weight: 700; color: #ffc72c; margin-bottom: 0.5rem; }
@@ -483,7 +497,7 @@
                     </div>
                 </div>
 
-                <div class="project-card animate-card-pop flex items-center justify-center p-8 border-2 border-dashed border-primary/50 hover:border-primary transition-all duration-300" style="animation-delay: 2.7s;">
+                <div class="project-card animate-card-pop" style="animation-delay: 2.7s;">
                     <div class="text-center">
                         <i class="ri-rocket-line text-primary text-4xl mb-4 animate-bounce"></i>
                         <p class="text-xl font-bold text-primary mb-2">🚀 هل لديك فكرة جديدة؟</p>
@@ -547,85 +561,73 @@
         </div>
     </footer>
 
-    <div id="image-modal" class="image-modal fixed inset-0 bg-black/80 z-[100] flex items-center justify-center opacity-0 invisible" aria-hidden="true" role="dialog" aria-modal="true">
-        <div id="modal-content" class="relative max-w-5xl mx-auto p-4">
-            <img id="full-image" src="" alt="صورة مكبرة للمشروع" class="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-2xl">
+    <div id="image-modal" class="image-modal fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4 md:p-10 transition-all duration-300 invisible opacity-0">
+        <div class="relative max-w-full max-h-full transition-all duration-300 scale-90" id="modal-content">
+            <button id="close-modal" class="absolute top-4 right-4 text-white text-3xl opacity-70 hover:opacity-100 transition z-[10000]" aria-label="إغلاق الصورة">
+                <i class="ri-close-line"></i>
+            </button>
+            <img id="modal-image" src="" alt="صورة مكبرة للمشروع" class="max-w-full max-h-screen object-contain rounded-lg shadow-2xl transition-all duration-300" style="max-height: 90vh;">
         </div>
-        
-        <button id="close-modal" class="absolute top-4 right-4 text-white text-3xl p-2 rounded-full bg-black/50 hover:bg-black/80 transition-colors" aria-label="إغلاق الصورة">
-            <i class="ri-close-line"></i>
-        </button>
     </div>
-
-    <button id="back-to-top" class="fixed bottom-6 left-6 w-12 h-12 glass-card flex items-center justify-center rounded-full text-primary shadow-lg hover:bg-white/10 z-40" aria-label="العودة للأعلى">
-        <i class="ri-arrow-up-line text-xl font-bold"></i>
-    </button>
-    
     <script>
-        const modal = document.getElementById('image-modal');
-        const fullImage = document.getElementById('full-image');
-        const closeModal = document.getElementById('close-modal');
-        const cardLinkWrappers = document.querySelectorAll('.card-link-wrapper');
-        const backToTopButton = document.getElementById('back-to-top');
+        // 🌟🌟 التعديل هنا: كود تشغيل النافذة المنبثقة (Modal) عند الضغط على الصورة 🌟🌟
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            const modalContent = document.getElementById('modal-content'); // الإطار الداخلي للتأثير
+            const closeModalButton = document.getElementById('close-modal');
+            const body = document.body;
 
-        // 1. منطق عرض المودال (Popup) للصور
-        cardLinkWrappers.forEach(wrapper => {
-            wrapper.addEventListener('click', (e) => {
-                e.preventDefault(); 
+            // وظيفة إغلاق الـ Modal
+            const closeModal = () => {
+                modal.classList.remove('active', 'opacity-100', 'visible');
+                modalContent.classList.remove('scale-100');
+                modal.classList.add('invisible', 'opacity-0');
+                modalContent.classList.add('scale-90');
+                body.classList.remove('modal-open-body'); // إزالة إخفاء السكرول
+            };
 
-                const imageUrl = wrapper.getAttribute('data-image-url'); 
-                
-                if (imageUrl) {
-                    fullImage.src = imageUrl;
+            // الاستماع لجميع الصور في البطاقات
+            document.querySelectorAll('.card-link-wrapper').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); // منع انتقال الرابط
+                    const imageUrl = link.getAttribute('data-image-url');
 
-                    // إظهار الـ Modal
-                    modal.classList.remove('opacity-0', 'invisible');
-                    modal.classList.add('opacity-100', 'visible');
+                    // عرض الصورة في الـ Modal
+                    modalImage.src = imageUrl;
+                    
+                    // إظهار الـ Modal وتفعيل التأثيرات
+                    modal.classList.add('active', 'opacity-100', 'visible');
+                    modal.classList.remove('invisible', 'opacity-0');
+                    
+                    // لإضافة تأثير التكبير (Pop-in effect)
+                    setTimeout(() => {
+                        modalContent.classList.add('scale-100');
+                        modalContent.classList.remove('scale-90');
+                    }, 10); // تأخير بسيط لضمان تفعيل التأثير
+                    
+                    body.classList.add('modal-open-body'); // إخفاء السكرول لمنع التمرير خلف الـ Modal
+                });
+            });
+
+            // إغلاق الـ Modal عند الضغط على زر الإغلاق
+            closeModalButton.addEventListener('click', closeModal);
+
+            // إغلاق الـ Modal عند الضغط خارج الصورة
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // إغلاق الـ Modal عند الضغط على مفتاح Esc
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
                 }
             });
         });
-
-        // وظيفة إخفاء الـ Modal
-        function hideModal() {
-            modal.classList.remove('opacity-100', 'visible');
-            modal.classList.add('opacity-0', 'invisible');
-            // تأخير إزالة مصدر الصورة حتى انتهاء الانتقال
-            setTimeout(() => { fullImage.src = ''; }, 500);
-        }
-
-        // إغلاق الـ Modal عند النقر على زر الإغلاق
-        closeModal.addEventListener('click', hideModal);
-
-        // إغلاق الـ Modal عند النقر خارج الصورة (على الخلفية السوداء)
-        modal.addEventListener('click', (e) => {
-            if (e.target.id === 'image-modal') { 
-                hideModal();
-            }
-        });
-
-        // إغلاق الـ Modal عند الضغط على مفتاح ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape" && modal.classList.contains('opacity-100')) {
-                hideModal();
-            }
-        });
-
-        // 2. منطق زر العودة للأعلى (Back to Top)
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) { // أظهر الزر بعد التمرير 300 بكسل
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
-        });
-
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
+        // 🌟🌟 نهاية كود JavaScript 🌟🌟
     </script>
-    
 </body>
 </html>
