@@ -1,39 +1,17 @@
 // script.js (وظائف عامة وتهيئة للعناصر)
 
 // ----------------------------------------------------
-// وظائف المساعدة العامة (Helper Functions)
+// 1. وظائف المساعدة العامة (Helper Functions)
 // ----------------------------------------------------
 
-// هذه الوظائف لم تعد ضرورية بعد إزالة OGL Gallery
-/*
-function debounce(func, wait) {
-    let timeout;
-    return function (...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), wait);
-    };
-}
-
-function lerp(p1, p2, t) {
-    return p1 + (p2 - p1) * t;
-}
-
-function autoBind(instance) {
-    const proto = Object.getPrototypeOf(instance);
-    Object.getOwnPropertyNames(proto).forEach(key => {
-        if (key !== 'constructor' && typeof instance[key] === 'function') {
-            instance[key] = instance[key].bind(instance);
-        }
-    });
-}
-*/
+// الوظائف القديمة تم حذفها لتنظيف الكود كما أشرت في تعليقك.
 
 // ----------------------------------------------------
-// 6. تهيئة النظام العام (Global Init)
+// 2. تهيئة الشريط الجانبي (Sidebar Toggle)
 // ----------------------------------------------------
 
 /**
- * 6.1. تهيئة الشريط الجانبي (Sidebar Toggle)
+ * تهيئة آلية فتح وإغلاق الشريط الجانبي (Sidebar)
  */
 function initSidebarToggle() {
     const sidebar = document.getElementById('sidebar');
@@ -48,8 +26,7 @@ function initSidebarToggle() {
 
     const openSidebar = () => {
         sidebar.classList.remove('-translate-x-full');
-        // تم إزالة 'filter' من هنا لضمان عدم تأثيره على أداء المعرض الجديد
-        // mainContent.classList.add('filter');
+        // تم إزالة 'filter'
         backdrop.classList.remove('hidden');
         document.body.style.overflow = 'hidden'; // منع تمرير الجسم أثناء فتح الشريط
     };
@@ -64,14 +41,18 @@ function initSidebarToggle() {
     toggleButton.addEventListener('click', openSidebar);
     backdrop.addEventListener('click', closeSidebar);
 
-    // إضافة مستمع لإغلاق الشريط عند النقر على رابط بداخله (لتجنب بقاء الشريط مفتوحاً)
+    // إضافة مستمع لإغلاق الشريط عند النقر على رابط بداخله
     sidebar.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', closeSidebar);
     });
 }
 
+// ----------------------------------------------------
+// 3. تهيئة تبديل علامات التبويب في صفحة المصادقة (Auth Tabs)
+// ----------------------------------------------------
+
 /**
- * 6.2. تهيئة تبديل علامات التبويب في صفحة المصادقة (Auth Tabs)
+ * تهيئة تبديل علامات التبويب في صفحة المصادقة (Auth Tabs)
  */
 function initAuthTabs() {
     const tabButtons = document.querySelectorAll('.tab-button');
@@ -114,18 +95,53 @@ function initAuthTabs() {
     }
 }
 
-
 // ----------------------------------------------------
-// 7. وظيفة التهيئة الشاملة (Window Global Function)
+// 4. وظيفة تأثير التكبير السلس عند التحويم (Smooth Zoom) 🆕
 // ----------------------------------------------------
 
 /**
- * تم حذف وظيفة window.initCircularGallery بالكامل.
- * تم إبقاء وظائف التهيئة العامة فقط.
+ * تهيئة تأثير التكبير السلس على العناصر المحددة (يفترض وجود كلاسات CSS/Tailwind جاهزة: 
+ * 'transition-transform duration-300 ease-in-out' و 'scale-110').
+ * يجب إضافة الكلاس 'zoom-target' إلى العناصر التي تريد تطبيق التأثير عليها.
  */
+function initImageHoverZoom() {
+    // العناصر المراد تطبيق التكبير عليها.
+    // يجب أن تكون هذه العناصر هي الصور أو الحاويات التي تحويها.
+    const zoomTargets = document.querySelectorAll('.zoom-target'); 
 
-// تشغيل وظائف التهيئة العامة عند تحميل الصفحة
+    if (zoomTargets.length === 0) {
+        return;
+    }
+
+    zoomTargets.forEach(target => {
+        // إضافة كلاسات الانتقال (Transition) الأساسية لضمان السلاسة
+        // (إذا لم تكن مضافة بالفعل في HTML/CSS).
+        target.classList.add('transition-transform', 'duration-300', 'ease-in-out');
+
+        // عند التحويم (mouseover)
+        target.addEventListener('mouseenter', () => {
+            // إضافة كلاس التكبير (يجب أن يكون 'scale-110' أو ما يعادله في CSS)
+            target.classList.add('scale-110'); 
+        });
+
+        // عند مغادرة التحويم (mouseout)
+        target.addEventListener('mouseleave', () => {
+            // إزالة كلاس التكبير للعودة إلى الحجم الأصلي (scale-100 أو بدون scale)
+            target.classList.remove('scale-110');
+        });
+    });
+}
+
+
+// ----------------------------------------------------
+// 5. التشغيل العام (Global Execution)
+// ----------------------------------------------------
+
+/**
+ * تشغيل وظائف التهيئة العامة عند تحميل الصفحة
+ */
 document.addEventListener('DOMContentLoaded', () => {
     initSidebarToggle();
     initAuthTabs();
+    initImageHoverZoom(); // 🆕 إضافة وظيفة التكبير السلس
 });
