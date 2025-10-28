@@ -7,9 +7,6 @@
 /*
     ملاحظة هامة: بما أن "Expo Arabic" ليس متوفراً عبر Google Fonts،
     يفترض أنه موجود كملف خط محلي في مسار محدد (مثل fonts/ExpoArabic.woff2).
-    إذا لم يكن كذلك، سيتم استخدام الخط الاحتياطي (Cairo).
-    
-    لضمان التوافق، قم بفك التعليق عن هذا القسم إذا كان لديك ملفات الخطوط:
     
     @font-face {
         font-family: 'Expo Arabic';
@@ -24,7 +21,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap');
 
 /* -------------------------------------- */
-/* **إضافة جديدة**: إعادة الضبط الأساسية (CSS Reset) */
+/* إعادة الضبط الأساسية (CSS Reset) */
 /* -------------------------------------- */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -42,17 +39,15 @@ body {
     /* يتم تفعيل تسريع الرسوميات لتحسين أداء الأنيميشن */
     transform-style: preserve-3d;
     
-    /* 🛠️ تعديل: التأكيد على الخط الاحتياطي 🛠️ */
     font-family: 'Expo Arabic', 'Cairo', sans-serif;
     
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     
-    /* 🛠️ إضافة: ضمان سلاسة في التمرير (خاصة لصفحة index/contact) 🛠️ */
     scroll-behavior: smooth; 
 }
 
-/* 🛠️ تعديل: تنسيق النص المحدد (Selection) 🛠️ */
+/* تنسيق النص المحدد (Selection) */
 ::selection {
     background: #ffc72c; /* لون ذهبي */
     color: #111111; /* نص داكن */
@@ -66,7 +61,7 @@ a {
     /* يزيل خطوط التسطير الافتراضية */
     text-decoration: none;
     /* يضمن انتقال سلس للتغييرات على الروابط */
-    transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease; /* 🛠️ إضافة opacity 🛠️ */
+    transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease; 
 }
 
 /* -------------------------------------- */
@@ -90,13 +85,11 @@ a {
 }
 
 /* -------------------------------------- */
-/* 3. تنسيق شريط التمرير (Sidebar Scrollbar) */
+/* 3. تنسيق شريط التمرير (Scrollbar) */
 /* -------------------------------------- */
 
-/* تطبيق تنسيق التمرير على كل عنصر يحتاج إليه */
-
 /* تنسيق شريط التمرير لمتصفحات Webkit (Chrome, Safari, Edge) */
-::-webkit-scrollbar { /* 🛠️ تعديل: تطبيقه عالميًا بدلاً من sidebar-scroll فقط 🛠️ */
+::-webkit-scrollbar { 
     width: 8px; /* تم زيادة العرض قليلاً لتحسين الرؤية */
 }
 
@@ -118,7 +111,6 @@ a {
 }
 
 /* تنسيق شريط التمرير لمتصفح Firefox */
-/* 🛠️ إضافة: جعله عالميًا 🛠️ */
 * {
     scrollbar-width: thin; 
     scrollbar-color: #ffc72c rgba(255, 255, 255, 0.05); 
@@ -133,7 +125,7 @@ a {
     .sidebar-scroll {
         /* تأكد من أن الـ sidebar لا يتجاوز ارتفاع محتواه */
         max-height: calc(100vh - 12rem); /* 100vh - (المسافة من الأعلى + المسافة من الأسفل) */
-        overflow-y: auto; /* 🛠️ إضافة: لضمان ظهور شريط التمرير عند الحاجة 🛠️ */
+        overflow-y: auto; /* لضمان ظهور شريط التمرير عند الحاجة */
     }
 }
 
@@ -144,7 +136,7 @@ a {
 
 /* تطبيق تأثير التعتيم (blur) على المحتوى الرئيسي عند تفعيل فئة filter */
 #mainContent.filter {
-    filter: blur(4px) grayscale(70%); /* 🛠️ تعديل: لزيادة وضوح التعتيم 🛠️ */
+    filter: blur(4px) grayscale(70%); /* لزيادة وضوح التعتيم */
     pointer-events: none; /* تعطيل التفاعل مع المحتوى خلف الـ sidebar */
 }
 
@@ -153,11 +145,10 @@ a {
 /* -------------------------------------- */
 .glass-card input:focus, 
 .glass-card textarea:focus,
-.glass-card select:focus { /* 🛠️ تعديل: إضافة دعم لـ select 🛠️ */
+.glass-card select:focus {
     /* يضمن أن حقول الإدخال داخل أي عنصر يحمل فئة glass-card تظهر ظل تركيز ذهبي */
     box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.3), 0 0 10px rgba(255, 199, 44, 0.1);
     outline: none; /* إزالة الـ outline الافتراضي */
-    /* 🛠️ إضافة: تغيير بسيط للحدود عند التركيز 🛠️ */
     border-color: #ffc72c !important; 
 }
 
@@ -176,7 +167,7 @@ a {
 }
 .icon-button:hover {
     background-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px) scale(1.05); /* 🛠️ تعديل: إضافة Scale لتأثير أجمل 🛠️ */
+    transform: translateY(-2px) scale(1.05); /* إضافة Scale لتأثير أجمل */
     border-color: #ffc72c;
 }
 
@@ -188,29 +179,131 @@ a {
 }
 
 /* -------------------------------------- */
-/* 8. 🆕 تنسيقات WebGL (OGL Circular Gallery) 🆕 */
+/* 8. 🆕 تنسيقات بطاقات المشاريع الجديدة (.project-card) 🆕 */
 /* -------------------------------------- */
 
-/* لضمان أن الـ canvas يملأ الحاوية بالكامل */
-#graphics-gallery-container canvas,
-#programs-gallery-container canvas,
-#photography-gallery-container canvas {
+.project-card {
+    /* تطبيق تأثير البطاقة الزجاجية الأساسي */
+    background-color: rgba(17, 17, 17, 0.7);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: #f3f4f6;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.project-card:hover {
+    transform: translateY(-8px) scale(1.02); /* تأثير رفع البطاقة */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 199, 44, 0.2);
+}
+
+.card-link-wrapper {
     display: block;
+    height: 250px; /* ارتفاع ثابت لـ Image Placeholder */
+    position: relative;
+    overflow: hidden;
+}
+
+.card-image-placeholder {
     width: 100%;
     height: 100%;
-    /* يجب وضعه فوق النص التوجيهي "جاري تحميل المعرض..." */
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 20;
+    background-color: #222;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease;
 }
 
-/* تأثير التكبير على الحاوية عند التحويم (اختياري، لكنه يضيف جمالية) */
-.glass-hover-effect {
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* تأثير ارتدادي جميل */
+.project-card:hover .card-image-placeholder {
+    transform: scale(1.05); /* تكبير الصورة عند التحويم */
 }
 
-.glass-hover-effect:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 50px rgba(255, 199, 44, 0.4);
+.card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #ffc72c; /* اللون الذهبي */
+}
+
+.card-description {
+    font-size: 0.95rem;
+    color: #a0a0a0;
+    margin-bottom: 1rem;
+    flex-grow: 1; /* يسمح للوصف بأخذ المساحة الكافية */
+}
+
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.card-tag {
+    background-color: rgba(255, 199, 44, 0.15);
+    color: #ffc72c;
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+}
+
+.card-stats {
+    display: flex;
+    gap: 1rem;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.card-stat {
+    display: flex;
+    align-items: center;
+}
+
+.card-stat-icon {
+    width: 18px;
+    height: 18px;
+    margin-left: 0.3rem;
+    color: #ffc72c;
+}
+
+.card-button {
+    padding: 0.6rem 1.2rem;
+    background: #ffc72c;
+    color: #111111;
+    font-weight: 700;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.card-button:hover {
+    background: #e6b222;
+    transform: scale(1.05);
+}
+
+/* -------------------------------------- */
+/* 9. 🚫 حذف تنسيقات OGL Circular Gallery 🚫 */
+/* -------------------------------------- */
+/* تم حذف جميع التنسيقات المتعلقة بـ canvas و glass-hover-effect */
+/* لضمان نظافة الملف بعد استبدال المعرض بشبكة البطاقات. */
