@@ -104,14 +104,37 @@
             border-radius: 12px;
             padding: 1.5rem;
             transition: box-shadow 0.3s, transform 0.3s;
+            /* 💡 التعديل 1: نجعل البطاقة نفسها حاوية Flex عمودية */
+            display: flex;
+            flex-direction: column;
+            height: 100%; 
         }
-        
+        
+        /* 💡 التعديل 2: إضافة .card-content ليكون مرناً */
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* للسماح لها بملء المساحة المتاحة */
+        }
+
         /* تنسيقات العنوان والوصف والـ Tags - موحدة مع graphics.html */
         .card-title { font-size: 1.25rem; font-weight: 700; color: #ffc72c; margin-bottom: 0.5rem; }
-        .card-description { color: #ccc; font-size: 0.9rem; margin-bottom: 1rem; height: 4.5rem; overflow: hidden; }
+        .card-description { 
+            color: #ccc; 
+            font-size: 0.9rem; 
+            margin-bottom: 1rem; 
+            /* تم إزالة height: 4.5rem; و overflow: hidden; */ 
+            flex-grow: 1; /* 💡 التعديل 3: يسمح للوصف بالاستطالة ليدفع العناصر التي تليه */
+        }
         .card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-        .card-tag { background-color: rgba(255, 199, 44, 0.1); color: #ffc72c; padding: 0.25rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1rem; }
+        .card-footer { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-top: 1px solid rgba(255, 255, 255, 0.1); 
+            padding-top: 1rem; 
+            margin-top: auto; /* 💡 التعديل 4: لدفعه إلى الأسفل */
+        }
         .card-stats { display: flex; gap: 1rem; font-size: 0.9rem; color: #888; }
         .card-stat-icon { width: 1.1rem; height: 1.1rem; margin-left: 0.3rem; color: #ffc72c; } 
         .card-button { background-color: #ffc72c; color: #111; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; transition: background-color 0.3s; }
@@ -170,7 +193,7 @@
                 <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full animate-pulse"></div>
             </header>
 
-            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
+                        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
                 
                 <div class="project-card animate-card-pop" style="animation-delay: 0.5s;">
                     <a href="#" aria-label="عرض تفاصيل مشروع المتجر الرقمي" class="card-link-wrapper"> 
@@ -479,7 +502,7 @@
                     </div>
                 </div>
 
-                                                <div class="project-card animate-card-pop flex items-center justify-center p-8 border-2 border-dashed border-primary/50 hover:border-primary transition-all duration-300" style="animation-delay: 2.7s;">                     <div class="text-center">
+                                                                <div class="project-card animate-card-pop flex items-center justify-center p-8 border-2 border-dashed border-primary/50 hover:border-primary transition-all duration-300" style="animation-delay: 2.7s;">                     <div class="text-center">
                         <i class="ri-rocket-line text-primary text-4xl mb-4 animate-bounce"></i>
                         <p class="text-xl font-bold text-primary mb-2">🚀 هل لديك فكرة جديدة؟</p>
                         <p class="text-gray-300">دعنا نبني الواجهة الأمامية لمشروعك التالي بآخر التقنيات.</p>
