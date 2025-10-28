@@ -4,19 +4,6 @@
 /* 0. استيراد الخطوط الأساسية */
 /* -------------------------------------- */
 
-/*
-    ملاحظة هامة: بما أن "Expo Arabic" ليس متوفراً عبر Google Fonts،
-    يفترض أنه موجود كملف خط محلي في مسار محدد (مثل fonts/ExpoArabic.woff2).
-    
-    @font-face {
-        font-family: 'Expo Arabic';
-        src: url('fonts/ExpoArabic.woff2') format('woff2'),
-             url('fonts/ExpoArabic.woff') format('woff');
-        font-weight: 400;
-        font-style: normal;
-    }
-*/
-
 /* استيراد خط Cairo كبديل آمن وعصري للغة العربية */
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap');
 
@@ -34,12 +21,9 @@
 /* 1. تنسيق الأساسيات وإعادة الضبط */
 /* -------------------------------------- */
 body {
-    /* يضمن تمدد الجسم ليشمل أقل ارتفاع للشاشة */
-    min-height: 100vh; 
-    /* يتم تفعيل تسريع الرسوميات لتحسين أداء الأنيميشن */
+    min-height: 100vh;  
     transform-style: preserve-3d;
     
-    /* توحيد الخطوط */
     font-family: 'Expo Arabic', 'Cairo', sans-serif;
     
     -webkit-font-smoothing: antialiased;
@@ -48,15 +32,15 @@ body {
     scroll-behavior: smooth; 
 }
 
-/* 💡 إضافة كلاس لمنع التمرير عند ظهور المودال (مطلوب لملف script.js) */
+/* 💡 الكلاس الضروري لمنع التمرير (لـ script.js) */
 .overflow-hidden {
     overflow: hidden !important;
 }
 
 /* تنسيق النص المحدد (Selection) */
 ::selection {
-    background: #ffc72c; /* لون ذهبي */
-    color: #111111; /* نص داكن */
+    background: #ffc72c;
+    color: #111111;
 }
 ::-moz-selection {
     background: #ffc72c;
@@ -64,9 +48,7 @@ body {
 }
 
 a {
-    /* يزيل خطوط التسطير الافتراضية */
     text-decoration: none;
-    /* يضمن انتقال سلس للتغييرات على الروابط */
     transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease; 
 }
 
@@ -74,7 +56,6 @@ a {
 /* 2. تنسيق شريط التبويب النشط في Auth.html */
 /* -------------------------------------- */
 .tab-button {
-    /* لتمكين وضع position: absolute للعنصر الزائف ::after */
     position: relative; 
 }
 
@@ -85,7 +66,7 @@ a {
     left: 0;
     width: 100%;
     height: 3px;
-    background-color: #ffc72c; /* اللون الذهبي الجديد */
+    background-color: #ffc72c;
     border-radius: 2px 2px 0 0;
     animation: slideInBottom 0.3s ease-out forwards;
 }
@@ -99,29 +80,26 @@ a {
 /* 3. تنسيق شريط التمرير (Scrollbar) */
 /* -------------------------------------- */
 
-/* تنسيق شريط التمرير لمتصفحات Webkit (Chrome, Safari, Edge) */
 ::-webkit-scrollbar { 
-    width: 8px; /* تم زيادة العرض قليلاً لتحسين الرؤية */
+    width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05); /* خلفية شفافة فاتحة */
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #ffc72c; /* لون ذهبي */
+    background: #ffc72c;
     border-radius: 10px;
-    /* إضافة حدود شفافة لجعل اللون الذهبي يبدو نحيفاً */
     border: 2px solid transparent; 
     background-clip: content-box; 
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #e6b222; /* ذهبي أغمق قليلاً عند التمرير */
+    background: #e6b222;
 }
 
-/* تنسيق شريط التمرير لمتصفح Firefox */
 * {
     scrollbar-width: thin; 
     scrollbar-color: #ffc72c rgba(255, 255, 255, 0.05); 
@@ -131,12 +109,10 @@ a {
 /* 4. تنسيق الشريط الجانبي الثابت (Sidebar Fix) */
 /* -------------------------------------- */
 
-/* تأكيد تثبيت الشريط الجانبي في حالة العرض الكبير */
-@media (min-width: 1024px) { /* تطبيق هذا التنسيق على شاشات lg وأكبر */
+@media (min-width: 1024px) {
     .sidebar-scroll {
-        /* تأكد من أن الـ sidebar لا يتجاوز ارتفاع محتواه */
-        max-height: calc(100vh - 12rem); /* 100vh - (المسافة من الأعلى + المسافة من الأسفل) */
-        overflow-y: auto; /* لضمان ظهور شريط التمرير عند الحاجة */
+        max-height: calc(100vh - 12rem);
+        overflow-y: auto;
     }
 }
 
@@ -145,11 +121,10 @@ a {
 /* 5. تنسيق تأثير الـ Overlay عند فتح الـ Sidebar في الجوال */
 /* -------------------------------------- */
 
-/* تطبيق تأثير التعتيم (blur) على المحتوى الرئيسي عند تفعيل فئة filter */
 #mainContent.filter {
-    filter: blur(4px) grayscale(70%); /* لزيادة وضوح التعتيم */
-    pointer-events: none; /* تعطيل التفاعل مع المحتوى خلف الـ sidebar */
-    transition: filter 0.3s ease; /* إضافة انتقال سلس لتأثير التعتيم */
+    filter: blur(4px) grayscale(70%);
+    pointer-events: none;
+    transition: filter 0.3s ease;
 }
 
 /* -------------------------------------- */
@@ -158,9 +133,8 @@ a {
 .glass-card input:focus, 
 .glass-card textarea:focus,
 .glass-card select:focus {
-    /* يضمن أن حقول الإدخال داخل أي عنصر يحمل فئة glass-card تظهر ظل تركيز ذهبي */
     box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.3), 0 0 10px rgba(255, 199, 44, 0.1);
-    outline: none; /* إزالة الـ outline الافتراضي */
+    outline: none;
     border-color: #ffc72c !important; 
 }
 
@@ -168,10 +142,8 @@ a {
 /* 7. تنسيقات خاصة بـ Portfolio.html والمشاريع */
 /* -------------------------------------- */
 
-/* تحسين مظهر الأزرار المربعة (للأيقونات/الفلاتر) */
 .icon-button {
     transition: all 0.3s ease;
-    /* Glassmorphism خفيف */
     background-color: rgba(255, 255, 255, 0.05); 
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
@@ -179,11 +151,10 @@ a {
 }
 .icon-button:hover {
     background-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px) scale(1.05); /* إضافة Scale لتأثير أجمل */
+    transform: translateY(-2px) scale(1.05);
     border-color: #ffc72c;
 }
 
-/* تحسين التباعد بين العناصر في وضع الأجهزة الكبيرة */
 @media (min-width: 1280px) {
     .xl\:gap-8 {
         gap: 2rem !important; 
@@ -195,7 +166,6 @@ a {
 /* -------------------------------------- */
 
 .project-card {
-    /* تطبيق تأثير البطاقة الزجاجية الأساسي */
     background-color: rgba(17, 17, 17, 0.7);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -205,37 +175,29 @@ a {
     display: flex;
     flex-direction: column;
     color: #f3f4f6;
-    /* تم تغيير transform هنا لضمان عدم تعارضها مع حركة الـ Lightbox */
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease; 
     cursor: pointer;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 .project-card:hover {
-    /* تم إزالة scale(1.02) لضمان عدم تداخل التحولات */
     transform: translateY(-8px); 
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 199, 44, 0.2);
 }
 
 .card-link-wrapper {
     display: block;
-    height: 250px; /* ارتفاع ثابت لـ Image Placeholder */
+    height: 250px;
     position: relative;
     overflow: hidden;
 }
 
-/* تم تحديث هذا ليتوافق مع وسم <img> مباشرة إذا كان يحمل الكلاس lightbox-trigger */
 .lightbox-trigger, .card-image-placeholder img {
     width: 100%;
     height: 100%;
     background-color: #222;
-    object-fit: cover; /* تم استخدام cover لملء البطاقة */
-    /* يجب أن تكون transition موجودة لتطبيقها عند مغادرة الـ Lightbox */
+    object-fit: cover;
     transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
-}
-
-.project-card:hover .lightbox-trigger {
-    /* ترك هذا الفارغ لضمان أن JavaScript هي من تتحكم في التحويل عند التحويم/النقر */
 }
 
 .card-content {
@@ -249,14 +211,14 @@ a {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: #ffc72c; /* اللون الذهبي */
+    color: #ffc72c;
 }
 
 .card-description {
     font-size: 0.95rem;
     color: #a0a0a0;
     margin-bottom: 1rem;
-    flex-grow: 1; /* يسمح للوصف بأخذ المساحة الكافية */
+    flex-grow: 1;
 }
 
 .card-tags {
@@ -321,91 +283,71 @@ a {
 /* 9. تنسيقات Lightbox On Hover (الصورة العائمة) */
 /* -------------------------------------- */
 
-/* الحاوية الرئيسية للصورة العائمة - تثبيت وتغطية الشاشة */
 .floating-image-wrapper {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    /* يسمح بالتفاعل مع العناصر تحتها في البداية حتى تظهر الصورة */
     pointer-events: none; 
-    z-index: 9999; /* يضمن الظهور فوق كل شيء */
+    z-index: 9999;
 }
 
-/* الصورة المنسوخة التي ستنتقل من مكانها إلى المنتصف */
 .cloned-image {
-    /* أساسيات الانتقال (يجب أن يتطابق مع مدة setTimeout في JS وهي 600ms) */
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* تم توحيد الـ bezier curve */
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
     z-index: 10000;
-    object-fit: contain; /* مهم: لضمان ظهور الصورة بأبعادها الأصلية دون قص */
-    /* إضافة خلفية مظلمة عند تفعيلها */
+    object-fit: contain;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 1000px rgba(0, 0, 0, 0.4); 
     border-radius: 8px;
     max-width: 90vw;
     max-height: 90vh;
-    pointer-events: auto; /* يجعل الصورة قابلة للتفاعل (رغم أن JS تتعامل معها) */
+    pointer-events: auto;
 }
 
-/* حالة التمركز النهائي (عند إضافة كلاس is-centered بواسطة JavaScript) */
 .cloned-image.is-centered {
-    /* إرجاع الأبعاد إلى auto لتمكين التمركز والأبعاد الأصلية */
     width: auto !important; 
     height: auto !important;
-    
-    /* التمركز في منتصف الشاشة */
     top: 50% !important; 
     left: 50% !important;
-    
-    /* التحويل إلى المنتصف بناءً على أبعادها الحقيقية */
     transform: translate(-50%, -50%) scale(1);
 }
 
 /* -------------------------------------- */
-/* 10. 🚨 تنسيقات Lightbox على النقر (Lightbox Modal) 🚨 */
+/* 10. تنسيقات Lightbox على النقر (Lightbox Modal) */
 /* -------------------------------------- */
 
-/* تم تعديل selector من .lightbox-overlay إلى #lightbox ليتوافق مع الـ ID في JS */
 #lightbox { 
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* خلفية شفافة ومظلمة */
     background: rgba(0, 0, 0, 0.9);
     z-index: 9998; 
     
-    /* تنسيقات الإخفاء الافتراضية */
     display: none;
     opacity: 0;
     transition: opacity 0.3s ease;
 
-    /* لتوسيط المحتوى */
     justify-content: center;
     align-items: center;
-    cursor: zoom-out; /* لتوضيح إمكانية الإغلاق بالنقر */
+    cursor: zoom-out;
 }
 
-/* حالة الظهور (يتم إضافتها بواسطة JavaScript) */
 #lightbox.active {
-    display: flex; /* إظهار الـ flex لتمكين التوسيط */
+    display: flex;
     opacity: 1;
 }
 
 .lightbox-content {
     position: relative;
-    /* تحديد أبعاد المحتوى لتسمح للصورة بالتكبير داخله */
     max-width: 95%; 
     max-height: 95%;
     width: auto;
     height: auto;
-    
-    /* لا تظهر أي محتويات تتجاوز هذه الحدود */
     overflow: hidden; 
 }
 
-/* زر الإغلاق */
 .lightbox-close {
     position: absolute;
     top: 20px;
@@ -424,35 +366,30 @@ a {
     transform: rotate(90deg);
 }
 
-/* الصورة المكبرة داخل Lightbox */
 #lightbox-image {
-    /* 🚨 هذا هو الجزء الذي يحل مشكلة الأبعاد 🚨 */
     display: block;
     max-width: 100%; 
     max-height: 100%; 
-    object-fit: contain; /* مهم جداً: للحفاظ على نسبة الأبعاد وتضمين الصورة بالكامل */
+    object-fit: contain;
     
-    /* يتم حذف أي ارتفاع أو عرض ثابت كان مطبقاً */
     width: auto;
     height: auto;
     
-    /* تحسين المظهر */
     border-radius: 8px;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
     transform: scale(0.9);
     opacity: 0;
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
-    cursor: default; /* إلغاء خاصية zoom-out على الصورة نفسها */
+    cursor: default;
 }
 
-/* تطبيق حركة الظهور النهائية للصورة */
 #lightbox.active #lightbox-image {
     transform: scale(1);
     opacity: 1;
 }
 
 /* -------------------------------------- */
-/* 11. 🆕 تنسيقات Programs Image Modal 🆕 */
+/* 11. تنسيقات Programs Image Modal */
 /* -------------------------------------- */
 
 #image-modal {
@@ -461,7 +398,6 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    /* خلفية شفافة ومظلمة، استخدم نفس اللون في Lightbox */
     background: rgba(0, 0, 0, 0.9); 
     z-index: 9999; 
     
@@ -469,40 +405,35 @@ a {
     justify-content: center;
     align-items: center;
     
-    /* حالة الإخفاء الافتراضية (باستخدام opacity و visibility للانتقال السلس) */
     opacity: 0;
     visibility: hidden; 
     transition: opacity 0.3s ease, visibility 0.3s ease; 
-    cursor: zoom-out; /* لتوضيح إمكانية الإغلاق بالنقر */
+    cursor: zoom-out;
 }
 
-/* حالة الظهور (يتم إضافتها بواسطة JavaScript) */
 #image-modal.opacity-100 {
     opacity: 1;
     visibility: visible;
 }
 
-/* حاوية الصورة الكاملة داخل المودال */
 .modal-content-wrapper {
     position: relative;
     max-width: 95%; 
     max-height: 95%; 
-    padding: 0; /* لا تحتاج إلى padding */
+    padding: 0;
 }
 
-/* الصورة نفسها */
 #full-image {
     display: block;
     max-width: 100%; 
     max-height: 100%; 
-    object-fit: contain; /* لضمان احتواء الصورة بالكامل داخل الحدود */
+    object-fit: contain;
     border-radius: 8px;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
     transition: transform 0.3s ease;
-    cursor: default; /* إلغاء خاصية zoom-out على الصورة نفسها */
+    cursor: default;
 }
 
-/* زر الإغلاق لـ Programs Modal */
 #close-modal {
     position: absolute;
     top: 20px;
