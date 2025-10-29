@@ -1,17 +1,16 @@
-/* auth.css */
+/* auth.css - الكود النهائي المعدل */
 
 /* -------------------------------------- */
 /* 1. الخلفية الثابتة لصفحة التسجيل */
 /* -------------------------------------- */
 .auth-background {
-    background-image: url('images/loginbackground009.png'); 
-    background-size: cover; 
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 100vh; 
-    overflow-x: hidden; 
-    /* تأكيد أن الخلفية تبقى ثابتة عند التمرير إن وجد */
-    background-attachment: fixed;
+    background-image: url('images/loginbackground009.png'); 
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh; 
+    overflow-x: hidden; 
+    background-attachment: fixed;
 }
 
 /* -------------------------------------- */
@@ -20,80 +19,72 @@
 
 /* 2.1. تعريف الخط Expo Arabic (Regular) */
 @font-face {
-    font-family: 'Expo Arabic';
-    src: url('fonts/Expo-Regular.ttf') format('truetype');
-    font-weight: 400; /* الوزن العادي */
-    font-style: normal;
-    font-display: swap; 
+    font-family: 'Expo Arabic';
+    src: url('fonts/Expo-Regular.ttf') format('truetype');
+    font-weight: 400; /* الوزن العادي */
+    font-style: normal;
+    font-display: swap; 
 }
 
 /* 2.2. تعريف الخط Expo Arabic (Bold) */
 @font-face {
-    font-family: 'Expo Arabic';
-    src: url('fonts/Expo-Bold.ttf') format('truetype');
-    font-weight: 700; /* الوزن العريض */
-    font-style: normal;
-    font-display: swap;
+    font-family: 'Expo Arabic';
+    src: url('fonts/Expo-Bold.ttf') format('truetype');
+    font-weight: 700; /* الوزن العريض */
+    font-style: normal;
+    font-display: swap;
 }
 
 /* 2.3. تطبيق الخط Expo Arabic كخط أساسي للصفحة مع اتجاه النص (RTL) */
 body {
-    font-family: 'Expo Arabic', sans-serif !important;
-    direction: rtl; /* هام جداً للغة العربية */
-    text-align: right; /* يضمن محاذاة النص الافتراضية لليمين */
+    font-family: 'Expo Arabic', sans-serif !important;
+    direction: rtl; /* هام جداً للغة العربية */
+    text-align: right; /* يضمن محاذاة النص الافتراضية لليمين */
 }
 
 /* -------------------------------------- */
 /* 3. خط Akira Expanded (للعناوين الفنية فقط) */
 /* -------------------------------------- */
 @font-face {
-    font-family: 'Akira-Like';
-    /* بما أن الخط Akira Expanded قد لا يكون متوفراً على جهاز المستخدم، 
-       استبدلته بخطوط بديلة ذات مظهر جريء */
-    src: local('Akira Expanded Super Bold'), 
-         local('Akira Expanded-SuperBold'),
-         local('Arial Black'),
-         local('Impact');
-    font-weight: 900;
+    font-family: 'Akira-Like';
+    src: local('Akira Expanded Super Bold'), 
+         local('Akira Expanded-SuperBold'),
+         local('Arial Black'),
+         local('Impact');
+    font-weight: 900;
 }
 
 /* -------------------------------------- */
 /* 4. تنسيق طبقة التحميل (Loader Overlay) */
 /* -------------------------------------- */
-
-/* هذا التنسيق يجهز طبقة التحميل للاختفاء عبر JavaScript */
 #loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* خلفية شفافة قليلاً لتغطية الصفحة بالكامل */
-    background-color: rgba(0, 0, 0, 0.9); 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; /* لضمان ظهورها فوق كل العناصر */
-    /* يمكنك إزالة القاعدة التالية إذا كنت تريد الإخفاء بـ JS */
-    display: none !important; /* 🛑 قاعدة الإخفاء القسري الحالية 🛑 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    /* تمت إزالة 'display: none !important' وسيتم التحكم بالظهور/الإخفاء عبر JavaScript */
 }
 
-
-/* -------------------------------------- */
 /* أكواد الـ Loader SVG الكاملة (للتذكير في حال الحاجة المستقبلية) */
 /* -------------------------------------- */
 :root {
-    --hue: 35; 
-    --dur: 2s; 
+    --hue: 35; 
+    --dur: 2s; 
 }
 
 .loader {
-    --dur: 2s;
-    display: block;
-    margin: auto;
-    width: 56px; 
-    height: auto;
-    overflow: visible;
+    --dur: 2s;
+    display: block;
+    margin: auto;
+    width: 56px; 
+    height: auto;
+    overflow: visible;
 }
 
 .loader__glare-top,
@@ -102,85 +93,172 @@ body {
 .loader__bevel,
 .loader__sand-top,
 .loader__sand-bottom {
-    animation-duration: var(--dur);
-    animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
-    animation-iteration-count: infinite;
+    animation-duration: var(--dur);
+    animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+    animation-iteration-count: infinite;
 }
 
 .loader__model {
-    animation-name: loaderModel;
+    animation-name: loaderModel;
 }
 
 @keyframes loaderModel {
-    0%, 10% { transform: translate(0, 0); }
-    10% { transform: translate(0, 0) scale(1, 1); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1); }
-    30% { transform: translate(0, 56px) scale(1.0, 0.01); }
-    40% { transform: translate(0, 56px) scale(1.0, 0.01); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1); }
-    50% { transform: translate(0, 56px) scale(1.0, 0.01); }
-    50.001% { transform: translate(0, -56px) scale(1.0, 0.01); }
-    70% { transform: translate(0, 0) scale(1, 1); }
-    90% { transform: translate(0, 0) scale(1, 1); }
-    100% { transform: translate(0, 0); }
+    0%, 10% { transform: translate(0, 0); }
+    10% { transform: translate(0, 0) scale(1, 1); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1); }
+    30% { transform: translate(0, 56px) scale(1.0, 0.01); }
+    40% { transform: translate(0, 56px) scale(1.0, 0.01); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1); }
+    50% { transform: translate(0, 56px) scale(1.0, 0.01); }
+    50.001% { transform: translate(0, -56px) scale(1.0, 0.01); }
+    70% { transform: translate(0, 0) scale(1, 1); }
+    90% { transform: translate(0, 0) scale(1, 1); }
+    100% { transform: translate(0, 0); }
 }
 
 .loader__sand-top {
-    animation-name: loaderSandTop;
-    transform-origin: 50% 50%;
+    animation-name: loaderSandTop;
+    transform-origin: 50% 50%;
 }
 
 @keyframes loaderSandTop {
-    0%, 10% { transform: scaleY(1); }
-    30% { transform: scaleY(0.001); }
-    50% { transform: scaleY(0.001); }
-    50.001% { transform: scaleY(0.001); }
-    70% { transform: scaleY(1); }
-    90% { transform: scaleY(1); }
-    100% { transform: scaleY(1); }
+    0%, 10% { transform: scaleY(1); }
+    30% { transform: scaleY(0.001); }
+    50% { transform: scaleY(0.001); }
+    50.001% { transform: scaleY(0.001); }
+    70% { transform: scaleY(1); }
+    90% { transform: scaleY(1); }
+    100% { transform: scaleY(1); }
 }
 
 .loader__sand-bottom {
-    animation-name: loaderSandBottom;
-    transform-origin: 50% 50%;
+    animation-name: loaderSandBottom;
+    transform-origin: 50% 50%;
 }
 
 @keyframes loaderSandBottom {
-    0%, 10% { transform: scaleY(1); }
-    30% { transform: scaleY(0.001); }
-    50% { transform: scaleY(0.001); }
-    50.001% { transform: scaleY(0.001); }
-    70% { transform: scaleY(1); }
-    90% { transform: scaleY(1); }
-    100% { transform: scaleY(1); }
+    0%, 10% { transform: scaleY(1); }
+    30% { transform: scaleY(0.001); }
+    50% { transform: scaleY(0.001); }
+    50.001% { transform: scaleY(0.001); }
+    70% { transform: scaleY(1); }
+    90% { transform: scaleY(1); }
+    100% { transform: scaleY(1); }
 }
 
 .loader__glare-top {
-    animation-name: loaderGlareTop;
-    transform-origin: 50% 50%;
+    animation-name: loaderGlareTop;
+    transform-origin: 50% 50%;
 }
 
 @keyframes loaderGlareTop {
-    0% { transform: translate(0, 0); }
-    10% { transform: translate(0, 0); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1); }
-    30% { transform: translate(0, 56px); }
-    50% { transform: translate(0, 56px); }
-    50.001% { transform: translate(0, -56px); }
-    70% { transform: translate(0, 0); }
-    90% { transform: translate(0, 0); }
-    100% { transform: translate(0, 0); }
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(0, 0); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1); }
+    30% { transform: translate(0, 56px); }
+    50% { transform: translate(0, 56px); }
+    50.001% { transform: translate(0, -56px); }
+    70% { transform: translate(0, 0); }
+    90% { transform: translate(0, 0); }
+    100% { transform: translate(0, 0); }
 }
 
 .loader__glare-bottom {
-    animation-name: loaderGlareBottom;
-    transform-origin: 50% 50%;
+    animation-name: loaderGlareBottom;
+    transform-origin: 50% 50%;
 }
 
 @keyframes loaderGlareBottom {
-    0% { transform: translate(0, 0); }
-    10% { transform: translate(0, 0); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1); }
-    30% { transform: translate(0, 56px); }
-    50% { transform: translate(0, 56px); }
-    50.001% { transform: translate(0, -56px); }
-    70% { transform: translate(0, 0); }
-    90% { transform: translate(0, 0); }
-    100% { transform: translate(0, 0); }
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(0, 0); animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1); }
+    30% { transform: translate(0, 56px); }
+    50% { transform: translate(0, 56px); }
+    50.001% { transform: translate(0, -56px); }
+    70% { transform: translate(0, 0); }
+    90% { transform: translate(0, 0); }
+    100% { transform: translate(0, 0); }
+}
+
+/* -------------------------------------- */
+/* 5. حركات التبديل بين نماذج الدخول والتسجيل (الجديدة) */
+/* -------------------------------------- */
+
+/* تنسيق النموذج (يجب أن يكون absolute لإتاحة الحركة) */
+.form-content {
+    opacity: 0;
+    transform: translateX(100%); /* البداية من اليمين (لنموذج غير نشط في وضع RTL) */
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    visibility: hidden;
+    position: absolute; 
+    right: 0; 
+}
+
+/* حالة النموذج النشط */
+.form-content.active-form {
+    opacity: 1;
+    transform: translateX(0); /* الوصول إلى المركز */
+    visibility: visible;
+    position: static; /* مهم: يسمح للحاوية بمعرفة ارتفاعه لضبط ارتفاع form-wrapper */
+}
+
+/* حركة النموذج الداخل (القادم من اليسار) - عند الانتقال لتسجيل الدخول */
+.form-content.animate-in-left {
+    transform: translateX(-100%); /* البداية من اليسار (خارج الشاشة) */
+}
+
+.form-content.animate-in-left.active-form {
+    transform: translateX(0); /* الوصول إلى المركز */
+}
+
+/* حركة النموذج الخارج (الذهاب لليمين) - عند الانتقال لتسجيل الدخول */
+.form-content.animate-out-right {
+    transform: translateX(100%); /* الذهاب إلى اليمين */
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* حركة النموذج الخارج (الذهاب لليسار) - عند الانتقال لإنشاء حساب */
+.form-content.animate-out-left {
+    transform: translateX(-100%); /* الذهاب إلى اليسار */
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* لإلغاء الرسوم المتحركة الافتراضية لـ Tailwind التي قد تتعارض مع الانتقالات الجديدة */
+#login-form, #register-form {
+    animation: none !important;
+}
+
+/* تنسيق شريط التبويب النشط (للحركة البصرية تحت الزر) */
+.tab-button.active {
+    color: #ffc72c; /* لون النص الأساسي */
+}
+/* لا نحتاج لـ ::after هنا، فـ tab-indicator هو من يقوم بالمهمة */
+
+
+/* تحسين مربع اختيار الشروط */
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: transparent;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    margin-left: 8px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    border-radius: 4px; /* إضافة تدوير بسيط */
+}
+
+input[type="checkbox"]:checked {
+    background-color: #ffc72c; /* primary */
+    border-color: #ffc72c;
+}
+
+input[type="checkbox"]:checked::after {
+    content: '\2713'; /* علامة صح بسيطة */
+    font-size: 10px;
+    color: #333333;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
