@@ -166,6 +166,14 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* 💡 الإضافة: تخصيص الـ drop shadow للوجو والعنوان */
+        .header-logo {
+            filter: drop-shadow(0 4px 8px rgba(255, 199, 44, 0.6));
+        }
+        .header-title {
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+        }
     </style>
 </head>
 <body class="text-white font-sans flex flex-col min-h-screen
@@ -175,18 +183,16 @@
 
         <nav class="glass-card px-6 py-4 sticky top-0 left-0 right-0 z-50 rounded-none">
             <div class="flex items-center justify-between max-w-7xl mx-auto">
-
+                
                 <a href="portfolio.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" title="العودة إلى معرض الأعمال">
-                    <i class="ri-arrow-left-line text-primary text-xl"></i>
+                    <i class="ri-arrow-right-line text-primary text-xl"></i>
                 </a>
 
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
-                </div>
-
-                <div class="hidden md:flex space-x-8 rtl:space-x-reverse text-lg font-medium">
-                    <a href="index.html" class="text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
-                    <span class="text-primary border-b-2 border-primary pb-1">تطوير الواجهات</span>
+                <div class="flex-1 hidden md:flex justify-center">
+                    <div class="space-x-8 rtl:space-x-reverse text-lg font-medium">
+                        <a href="index.html" class="text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
+                        <span class="text-primary border-b-2 border-primary pb-1">تطوير الواجهات</span>
+                    </div>
                 </div>
 
                 <div class="flex items-center space-x-4 rtl:space-x-reverse">
@@ -200,7 +206,9 @@
         <main class="py-12 px-4 md:px-8 max-w-7xl mx-auto flex-1">
 
             <header class="text-center mb-12 animate-slide-down" style="animation-delay: 0.3s;">
-                <h1 class="text-4xl md:text-5xl font-extrabold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
+                <img src="images/logos4you.png" alt="STVX Logo" class="mx-auto w-48 mb-6 header-logo" /> 
+
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300 header-title">
                     معرض تطوير الواجهات (Front-end)
                 </h1>
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -524,12 +532,6 @@
                 </div>
 
             </section>
-
-            <div class="text-center mt-24 animate-fade-in" style="animation-delay: 3.3s;">
-                <p class="text-gray-400 text-lg border-t border-gray-800 pt-6">
-                    ابداً مشروعك البرمجي التالي معنا. <a href="index.html" class="text-primary hover:text-yellow-300 font-bold transition-colors">اطلب عرض سعر</a>.
-                </p>
-            </div>
 
             <button id="back-to-top" class="fixed bottom-6 right-6 p-3 glass-card rounded-full cursor-pointer hover:bg-primary/20 transition-all duration-300" title="العودة للأعلى">
                 <i class="ri-arrow-up-line text-primary text-2xl"></i>
