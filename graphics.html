@@ -252,17 +252,29 @@
 
             color: #111 !important;
 
-            padding: 0.6rem 1.5rem !important; /* حجم أكبر للزر */
+            /* التعديل هنا لتقليل حجم الزر ليتناسب مع البطاقة */
 
-            border-radius: 10px !important; /* تدوير أكثر */
+            padding: 0.5rem 1.2rem !important; /* حجم متناسق للزر */
 
-            font-weight: 800 !important; /* خط أثقل */
+            border-radius: 8px !important; /* تدوير مناسب للحجم الجديد */
+
+            font-weight: 700 !important; /* خط أقل سماكة قليلاً */
 
             letter-spacing: 0.5px;
 
             box-shadow: 0 4px 15px rgba(255, 199, 44, 0.4);
 
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+            /* إضافة كلاس لتأكيد أن الزر يظهر كزر متناسق (يمكن دمجه مع الـ padding لتقليل عدد التعديلات) */
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 0.95rem; /* حجم خط مناسب */
 
         }
 
@@ -284,7 +296,7 @@
 
 <body class="text-white font-sans flex flex-col min-h-screen
 
-    bg-[url('images/loginbackground006.png')] **bg-attachment-fixed** bg-cover bg-center">
+    bg-[url('images/loginbackground006.png')] bg-attachment-fixed bg-cover bg-center">
 
 
 
@@ -306,7 +318,7 @@
 
                 <div class="flex items-center space-x-4 rtl:space-x-reverse">
 
-                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain **animate-fade-in**" style="filter: drop-shadow(0 0 10px rgba(255, 199, 44, 0.8));">
+                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain animate-fade-in" style="filter: drop-shadow(0 0 10px rgba(255, 199, 44, 0.8));">
 
                 </div>
 
@@ -316,7 +328,7 @@
 
                     <a href="index.html" class="text-gray-300 hover:text-primary transition-colors hover:scale-105">الرئيسية</a>
 
-                    <span class="text-primary border-b-2 border-primary pb-1 **animate-slide-down**">الجرافيكس</span>
+                    <span class="text-primary border-b-2 border-primary pb-1 animate-slide-down">الجرافيكس</span>
 
                     
 
@@ -872,7 +884,7 @@
 
                 </div>
 
-                
+
 
                 <div class="project-card animate-card-pop" style="animation-delay: 2.3s;">
 
