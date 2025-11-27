@@ -1,447 +1,1489 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STVX Platform | فنّ بصري وشيفرة مبدعة</title>
-    
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
-    
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css"> 
-    <link rel="stylesheet" href="auth.css"> 
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#ffc72c', // لون التمييز الذهبي
-                        secondary: '#333333' // لون ثانوي للتفاصيل 
-                    },
-                    borderRadius: {
-                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
-                    },
-                    fontFamily: {
-                        // 🛑 تم تعديل الخط الأساسي إلى Expo Arabic 🛑
-                        sans: ['Expo Arabic', 'sans-serif'],
-                        logo: ['Pacifico', 'cursive'],
-                    },
-                    // تعريفات الأنيميشن (للحركة السلسة) 
-                    animation: {
-                        'fade-in': 'fadeIn 0.6s ease-out forwards',
-                        'slide-down': 'slideDown 0.5s ease-out forwards',
-                        'slide-up': 'slideUp 0.7s ease-out forwards',
-                    },
-                    keyframes: {
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-                        slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        /* قاعدة Glassmorphism الأساسية */
-        .glass-card {
-            background-color: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>STVX Platform | فن بصري وشيفرة مبدعة</title>
 
-        /* أنيميشن التفاعل (Hover Animation) */
-        .glass-card:hover {
-            border-color: #ffc72c; /* تمييز الحدود بالذهبي عند التمرير */
-            box-shadow: 0 0 10px rgba(255, 199, 44, 0.3), 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            transform: translateY(-2px); /* تأثير ارتفاع خفيف */
-        }
-        
-        .dark-bg {
-            background: linear-gradient(135deg, #0a0a0a, #111111);
-            min-height: 100vh;
-        }
+  <!-- Tailwind CSS (Browser Build v4) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-        .glass-button-hover:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: scale(1.05);
-        }
-        
-        /* 🚀 Hero Section Styles 🚀 */
-        .hero-image-container {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            filter: blur(2.5px); 
-            -webkit-filter: blur(2.5px);
-            transition: filter 0.3s ease;
-            z-index: 1;
-            border-radius: inherit;
-        }
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet" />
 
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)); 
-            z-index: 2; 
-            border-radius: inherit;
-        }
+  <!-- Arabic Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-        .hero-content {
-            position: relative;
-            z-index: 3; 
-        }
-        
-        .hero-text-shadow {
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9); 
-        }
-        
-        /* 💡 تحسين بطاقات الخدمات الصغيرة (تأثير الارتداد) 💡 */
-        .service-mini-card {
-             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* تأثير ارتداد سلس */
-        }
-        .service-mini-card:hover {
-            transform: translateY(-5px) scale(1.03); /* رفع خفيف مع تأثير ارتداد واضح */
-            box-shadow: 0 10px 20px rgba(255, 199, 44, 0.2);
-            border-color: #ffc72c;
-        }
-        
-        /* 🌟 تحسين بطاقات البورتفوليو (Portfolio Cards) 🌟 */
-        .portfolio-card {
-             position: relative;
-             overflow: hidden;
-             transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
-             border: 1px solid rgba(255, 255, 255, 0.1); 
-        }
-        .portfolio-card:hover {
-            transform: translateY(-5px) scale(1.02); /* رفع وتكبير خفيفين */
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); 
-            border-color: #ffc72c;
-        }
-        .portfolio-card:hover img {
-            transform: scale(1.1); /* تكبير الصورة داخل البطاقة */
-        }
-        .portfolio-card img {
-            transition: transform 0.5s ease-out;
-        }
+  <!-- Tailwind theme extensions (v4 CSS-first) -->
+  <style type="text/tailwindcss">
+    @theme {
+      --color-primary: #ffc72c;
+      --color-secondary: #333333;
+      --font-sans: "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    }
+  </style>
 
-        .card-image-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.1) 60%);
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-        
-        /* 🎯 تحسين بطاقات الخدمات المميزة (تأثير 3D Tilt) 🎯 */
-        .featured-service-card {
-            transition: all 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2); 
-            transform-style: preserve-3d;
-        }
+  <style>
+    :root {
+      color-scheme: dark;
+      --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.42);
+      --shadow-glow: 0 18px 60px rgba(255, 199, 44, 0.10);
+    }
 
-        .featured-service-card:hover {
-            transform: scale(1.05) rotateX(1deg) rotateY(-3deg); /* إمالة ثلاثية الأبعاد خفيفة وواضحة */
-            box-shadow: 0 15px 40px rgba(255, 199, 44, 0.4);
-            border-color: #ffc72c;
-        }
-    </style>
+    html { scroll-behavior: smooth; }
+
+    /* Premium glass surface */
+    .glass {
+      background: rgba(17, 17, 17, 0.74);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Gradient border for premium sections */
+    .g-border {
+      position: relative;
+      isolation: isolate;
+    }
+    .g-border::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,199,44,.45), rgba(255,255,255,.08), rgba(255,199,44,.18));
+      filter: blur(0.2px);
+      z-index: -1;
+    }
+
+    /* Subtle grain layer */
+    .grain {
+      pointer-events: none;
+      opacity: 0.08;
+      background-image:
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,0.22), transparent 35%),
+        radial-gradient(circle at 80% 30%, rgba(255,255,255,0.16), transparent 40%),
+        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.12), transparent 45%),
+        radial-gradient(circle at 60% 60%, rgba(255,255,255,0.10), transparent 45%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.06), rgba(255,255,255,0.06) 1px, transparent 1px, transparent 3px);
+      mix-blend-mode: overlay;
+    }
+
+    /* Animated ambient blobs */
+    @keyframes blobFloat {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(16px, -18px, 0) scale(1.05); }
+      100% { transform: translate3d(0, 0, 0) scale(1); }
+    }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      filter: blur(10px);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+      transition: opacity 700ms ease, transform 700ms ease, filter 700ms ease;
+    }
+
+    /* Loader blur */
+    #mainContent.is-loading { filter: blur(10px) saturate(0.92); }
+
+    /* Spotlight (pointer-follow) */
+    .spotlight {
+      background: radial-gradient(650px circle at var(--x, 50%) var(--y, 35%), rgba(255,199,44,0.18), rgba(255,199,44,0.08) 18%, rgba(0,0,0,0) 45%);
+    }
+
+    /* Tilt cards */
+    .tilt {
+      transform-style: preserve-3d;
+      transform: perspective(950px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+      transition: transform 180ms ease;
+      will-change: transform;
+    }
+
+    /* Top progress bar */
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0;
+      background: linear-gradient(90deg, rgba(255,199,44,1), rgba(255,235,160,1));
+      box-shadow: 0 0 18px rgba(255,199,44,0.35);
+      z-index: 999;
+    }
+
+    /* Better scrollbar */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.35); }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 199, 44, 0.30);
+      border-radius: 999px;
+      border: 2px solid rgba(0,0,0,0.25);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 199, 44, 0.52); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal, .reveal.is-visible { transition: none !important; filter: none !important; transform: none !important; opacity: 1 !important; }
+      .tilt { transition: none !important; transform: none !important; }
+      #scrollProgress { display: none; }
+    }
+  </style>
 </head>
-<body class="dark-bg text-white font-sans">
-    
-    <nav class="glass-card px-6 py-4 fixed top-0 left-0 right-0 z-50 rounded-none md:rounded-lg md:mx-4 md:mt-4" 
-        style="animation: slideDown 0.7s ease-out 0.1s forwards;">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-8 rtl:space-x-reverse">
-                <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain">
-                </div>
-                <div class="relative hidden lg:block">
-                    <input type="text" placeholder="البحث عن مشاريع، خدمات، أو مقالات..." 
-                            class="pl-12 pr-4 py-3 w-96 glass-card border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 bg-black/20" 
-                            style="background-color: rgba(0,0,0,0.1);">
-                    <i class="ri-search-line text-gray-400 text-xl absolute top-1/2 -translate-y-1/2 right-4"></i>
-                </div>
+
+<body class="min-h-screen bg-neutral-950 text-white font-sans">
+  <a href="#content" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:right-3 focus:z-[1000] focus:px-4 focus:py-2 focus:rounded-xl focus:bg-primary focus:text-black">تخطي إلى المحتوى</a>
+
+  <div id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- Background layer -->
+  <div class="fixed inset-0 -z-10">
+    <div class="absolute inset-0 bg-[url('images/loginbackground006.png')] bg-cover bg-center opacity-55"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/70 to-black/85"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,199,44,0.14),transparent_55%)]"></div>
+
+    <!-- Ambient blobs -->
+    <div class="absolute -top-32 -right-40 w-[520px] h-[520px] rounded-full blur-3xl opacity-20"
+         style="background: radial-gradient(circle at 35% 35%, rgba(255,199,44,0.55), transparent 60%); animation: blobFloat 9s ease-in-out infinite;"></div>
+    <div class="absolute bottom-[-220px] left-[-220px] w-[540px] h-[540px] rounded-full blur-3xl opacity-18"
+         style="background: radial-gradient(circle at 60% 40%, rgba(255,199,44,0.35), transparent 62%); animation: blobFloat 11s ease-in-out infinite; animation-delay: 400ms;"></div>
+
+    <div class="absolute inset-0 grain"></div>
+  </div>
+
+  <!-- Loader -->
+  <div id="app-loader" class="fixed inset-0 bg-neutral-950/95 flex items-center justify-center z-[1000] transition-opacity duration-300">
+    <div class="relative">
+      <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
+      <div class="absolute inset-0 rounded-full blur-xl bg-primary/15"></div>
+    </div>
+  </div>
+
+  <div id="mainContent" class="min-h-screen flex flex-col is-loading">
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-[200]">
+      <div class="mx-3 md:mx-6 mt-3">
+        <div class="glass g-border rounded-2xl px-4 md:px-6 py-3">
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <button id="openMobileMenu" class="lg:hidden w-10 h-10 grid place-items-center rounded-full hover:bg-white/5 transition" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mobileDrawer">
+                <i class="ri-menu-3-line text-xl text-gray-200"></i>
+              </button>
+
+              <a href="#home" class="flex items-center gap-3">
+                <img src="images/logos4you.png" alt="STVX" class="w-36 md:w-40 h-10 object-contain" style="filter: drop-shadow(0 0 6px rgba(255,199,44,0.55));">
+              </a>
+
+              <span class="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-gray-200">
+                <span class="w-2 h-2 rounded-full bg-primary shadow-[0_0_14px_rgba(255,199,44,0.5)]"></span>
+                متاح لمشاريع جديدة
+              </span>
             </div>
-            
-            <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <button class="w-10 h-10 flex items-center justify-center rounded-full glass-button-hover !rounded-button whitespace-nowrap">
-                        <i class="ri-notification-line text-gray-300 text-xl"></i>
-                    </button>
-                
-                <a href="auth.html" class="bg-transparent border border-primary/50 hover:bg-white/10 text-primary px-4 py-2 rounded-full font-bold text-sm transition-colors whitespace-nowrap">
-                    إنشاء حساب
-                </a>
-                
-                <a href="auth.html" class="bg-primary hover:bg-primary/90 text-black px-4 py-2 rounded-full font-bold text-sm transition-colors whitespace-nowrap">
-                    تسجيل الدخول
-                </a>
-                
+
+            <div class="hidden lg:flex items-center gap-2 flex-1 max-w-xl">
+              <button id="openPalette" class="w-full text-right glass rounded-2xl px-4 py-3 border border-white/10 hover:border-white/20 transition flex items-center justify-between gap-3" type="button" aria-haspopup="dialog" aria-controls="commandPalette">
+                <span class="text-sm text-gray-300">ابحث عن أعمال، أقسام، أو خدمات...</span>
+                <span class="text-xs text-gray-400 border border-white/10 rounded-lg px-2 py-1">Ctrl K</span>
+              </button>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="notifBtn" class="w-10 h-10 grid place-items-center rounded-full hover:bg-white/5 transition" aria-label="الإشعارات">
+                <i class="ri-notification-3-line text-xl text-gray-200"></i>
+              </button>
+
+              <div id="authButtons" class="flex items-center gap-2">
+                <button data-open-auth="signup" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/40 text-primary bg-primary/10 hover:bg-primary/15 transition text-sm font-bold">
+                  إنشاء حساب
+                </button>
+                <button data-open-auth="login" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-black hover:brightness-95 transition text-sm font-extrabold">
+                  تسجيل الدخول
+                </button>
+              </div>
+
+              <div id="userChip" class="hidden items-center gap-2 px-3 py-2 rounded-full border border-white/10 bg-white/5">
+                <span class="w-8 h-8 rounded-full bg-primary/15 border border-primary/25 grid place-items-center text-primary">
+                  <i class="ri-user-3-line"></i>
+                </span>
+                <div class="leading-tight">
+                  <div id="userName" class="text-sm font-bold">حساب</div>
+                  <button id="logoutBtn" class="text-xs text-gray-400 hover:text-primary transition">تسجيل الخروج</button>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inline nav links (desktop) -->
+          <div class="hidden lg:flex items-center gap-2 mt-3 pt-3 border-t border-white/10 text-sm">
+            <a href="#home" class="px-3 py-2 rounded-xl text-gray-200 hover:bg-white/5 transition">الرئيسية</a>
+            <a href="#services" class="px-3 py-2 rounded-xl text-gray-200 hover:bg-white/5 transition">الخدمات</a>
+            <a href="#portfolio" class="px-3 py-2 rounded-xl text-gray-200 hover:bg-white/5 transition">أعمال مختارة</a>
+            <a href="#testimonials" class="px-3 py-2 rounded-xl text-gray-200 hover:bg-white/5 transition">آراء العملاء</a>
+            <a href="#contact" class="px-3 py-2 rounded-xl text-gray-200 hover:bg-white/5 transition">تواصل</a>
+            <div class="ms-auto text-xs text-gray-400">اختصار البحث: Ctrl + K</div>
+          </div>
         </div>
+      </div>
     </nav>
 
-    <div class="flex pt-28 md:pt-20">
-        <aside class="w-64 glass-card fixed right-0 top-24 bottom-24 overflow-y-auto sidebar-scroll hidden lg:block"
-                style="animation: slideUp 0.7s ease-out 0.3s forwards;">
-            <div class="p-6 space-y-6">
-                <div class="space-y-2">
-                    <div class="flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg bg-primary/20 text-primary transition-all glass-button-hover">
-                        <div class="w-5 h-5 flex items-center justify-center"><i class="ri-home-5-line"></i></div>
-                        <span class="font-medium">الرئيسية</span>
-                    </div>
-                    <a href="portfolio.html" class="flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer glass-button-hover">
-                        <div class="w-5 h-5 flex items-center justify-center"><i class="ri-folder-open-line text-gray-300"></i></div>
-                        <span class="text-gray-300">معرض الأعمال (Portfolio)</span>
-                    </a>
-                    <div class="flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer glass-button-hover">
-                        <div class="w-5 h-5 flex items-center justify-center"><i class="ri-brush-line text-gray-300"></i></div>
-                        <span class="text-gray-300">الخدمات الإبداعية</span>
-                    </div>
-                </div>
+    <!-- Mobile Drawer -->
+    <div id="mobileDrawer" class="fixed inset-0 z-[300] hidden" aria-hidden="true">
+      <div id="mobileDrawerOverlay" class="absolute inset-0 bg-black/60"></div>
+      <div class="absolute top-0 right-0 h-full w-[86%] max-w-sm glass g-border rounded-l-3xl p-4 overflow-y-auto">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-3">
+            <img src="images/logos4you.png" alt="STVX" class="w-28 h-9 object-contain" style="filter: drop-shadow(0 0 6px rgba(255,199,44,0.55));">
+          </div>
+          <button id="closeMobileMenu" class="w-10 h-10 grid place-items-center rounded-full hover:bg-white/5 transition" aria-label="إغلاق القائمة">
+            <i class="ri-close-line text-2xl"></i>
+          </button>
+        </div>
 
-                <div class="space-y-3">
-                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">الموارد</h3>
-                    <div class="space-y-1">
-                        <div class="flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer glass-button-hover">
-                            <div class="w-5 h-5 flex items-center justify-center"><i class="ri-heart-line text-gray-300"></i></div>
-                            <span class="text-gray-300">المشاريع المفضلة</span>
-                        </div>
-                        <div class="flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer glass-button-hover">
-                            <div class="w-5 h-5 flex items-center justify-center"><i class="ri-book-open-line text-gray-300"></i></div>
-                            <span class="text-gray-300">مقالات ومدونات</span>
-                        </div>
-                        <div class="flex items-center space-x-3 rtl:space-x-reverse px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer glass-button-hover">
-                            <div class="w-5 h-5 flex items-center justify-center"><i class="ri-chat-3-line text-gray-300"></i></div>
-                            <span class="text-gray-300">تواصل معنا</span>
-                        </div>
-                    </div>
-                </div>
+        <button id="openPaletteMobile" class="w-full text-right glass rounded-2xl px-4 py-3 border border-white/10 hover:border-white/20 transition flex items-center justify-between gap-3" type="button">
+          <span class="text-sm text-gray-300">بحث سريع</span>
+          <i class="ri-search-2-line text-gray-300"></i>
+        </button>
+
+        <div class="mt-4 space-y-2 text-sm">
+          <a href="#home" class="block px-4 py-3 rounded-2xl bg-primary/10 text-primary border border-primary/20">الرئيسية</a>
+          <a href="#services" class="block px-4 py-3 rounded-2xl hover:bg-white/5 text-gray-200 border border-white/10">الخدمات</a>
+          <a href="#portfolio" class="block px-4 py-3 rounded-2xl hover:bg-white/5 text-gray-200 border border-white/10">أعمال مختارة</a>
+          <a href="#testimonials" class="block px-4 py-3 rounded-2xl hover:bg-white/5 text-gray-200 border border-white/10">آراء العملاء</a>
+          <a href="#contact" class="block px-4 py-3 rounded-2xl hover:bg-white/5 text-gray-200 border border-white/10">تواصل</a>
+        </div>
+
+        <div class="mt-5 p-4 rounded-2xl border border-white/10 bg-white/5">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-primary/15 border border-primary/25 grid place-items-center text-primary">
+              <i class="ri-shield-star-line text-xl"></i>
+            </span>
+            <div>
+              <div class="font-extrabold">جودة + أناقة</div>
+              <div class="text-gray-400 text-xs">تصميم واجهات وبرمجة دقيقة بأداء ممتاز.</div>
             </div>
-        </aside>
-
-        <main class="flex-1 lg:mr-64 pb-24 px-4 md:px-8 py-6 ml-4">
-            
-            <section class="mb-8 rounded-2xl overflow-hidden relative glass-card p-10 h-auto" 
-                    style="animation: fadeIn 1s ease-out 0.5s forwards;">
-                
-                <div class="hero-image-container"
-                    style="background-image: url('https://readdy.ai/api/search-image?query=Dark%20abstract%20gradient%20background%20with%20subtle%20gold%20waves%2C%20futuristic%20design%2C%20suitable%20for%20text%20overlay%2C%20professional%20look&width=1200&height=320&seq=hero1&orientation=landscape');">
-                </div>
-                
-                <div class="hero-overlay"></div>
-
-                <div class="hero-content relative h-full flex flex-col justify-center">
-                    <div class="text-white max-w-lg">
-                        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 hero-text-shadow">واجهات تُلهم، وتجارب تُحدث الفرق 🎨</h1>
-                        <p class="text-lg mb-6 text-gray-200 hero-text-shadow">أجمع بين فن التصميم ودقّة البرمجة، لأصنع هويات بصرية ومواقع تترك أثرًا، وتُحاكي روح الإبداع في كل تفصيلة.</p>
-                        
-                        <a href="auth.html" 
-                            class="bg-primary hover:bg-primary/90 text-black px-8 py-3 rounded-full font-bold transition-colors !rounded-button whitespace-nowrap hover:scale-105 inline-block text-center">
-                            لنصنع الإبداع معاً
-                        </a>
-                        </div>
-                </div>
-                
-            </section>
-
-            <section class="mb-12">
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                    <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all service-mini-card" style="animation: slideUp 0.6s ease-out 0.7s forwards;">
-                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                            <img src="https://readdy.ai/api/search-image?query=UI%2FUX%20icon%20with%20screen%20and%20mouse%2C%20gold%20gradient%20background%2C%20modern%20minimalist%20design&width=48&height=48&seq=liked1&orientation=squarish" 
-                                        alt="UI/UX" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
-                            <span class="font-medium text-white truncate">UI/UX Design</span> 
-                        </div>
-                    </div>
-                    <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all service-mini-card" style="animation: slideUp 0.6s ease-out 0.8s forwards;">
-                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                            <img src="https://readdy.ai/api/search-image?query=Website%20development%20icon%20with%20code%20symbol%2C%20blue%20gradient%20background%2C%20modern%20digital%20design&width=48&height=48&seq=recent1&orientation=squarish" 
-                                        alt="تطوير" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
-                            <span class="font-medium text-white truncate">تطوير فرونت إند</span>
-                        </div>
-                    </div>
-                    <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all service-mini-card" style="animation: slideUp 0.6s ease-out 0.9s forwards;">
-                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                            <img src="https://readdy.ai/api/search-image?query=Branding%20icon%20with%20abstract%20shape%2C%20green%20gradient%20background%2C%20corporate%20identity%20theme&width=48&height=48&seq=download1&orientation=squarish" 
-                                        alt="هوية" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
-                            <span class="font-medium text-white truncate">هوية بصرية</span>
-                        </div>
-                    </div>
-                    <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all service-mini-card" style="animation: slideUp 0.6s ease-out 1.0s forwards;">
-                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                            <img src="https://readdy.ai/api/search-image?query=3D%20modeling%20icon%20with%20geometric%20shape%2C%20purple%20gradient%20background%2C%20digital%20art%20theme&width=48&height=48&seq=discover1&orientation=squarish" 
-                                        alt="3D" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
-                            <span class="font-medium text-white truncate">تصميم 3D</span>
-                        </div>
-                    </div>
-                    <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all service-mini-card" style="animation: slideUp 0.6s ease-out 1.1s forwards;">
-                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                            <img src="https://readdy.ai/api/search-image?query=Motion%20graphics%20icon%20with%20moving%20lines%2C%20orange%20gradient%20background%2C%20video%20animation%20theme&width=48&height=48&seq=radio1&orientation=squarish" 
-                                        alt="موشن" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
-                            <span class="font-medium text-white truncate">موشن جرافيكس</span>
-                        </div>
-                    </div>
-                    <div class="glass-card rounded-lg p-4 hover:border-primary cursor-pointer transition-all service-mini-card" style="animation: slideUp 0.6s ease-out 1.2s forwards;">
-                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                            <img src="https://readdy.ai/api/search-image?query=Consulting%20icon%20with%20lightbulb%20and%20gear%2C%20teal%20gradient%20background%2C%20strategy%20theme&width=48&height=48&seq=podcast1&orientation=squarish" 
-                                        alt="استشارة" class="w-12 h-12 rounded object-cover border-2 border-primary transition-transform group-hover:rotate-6">
-                            <span class="font-medium text-white truncate">استشارات فنية</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="mb-12" style="animation: fadeIn 0.8s ease-out 1.4s forwards;">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-2xl font-bold text-white">أعمال مختارة (Portfolio)</h2>
-                    <a href="portfolio.html" class="text-primary hover:text-white font-medium !rounded-button whitespace-nowrap transition-transform hover:translate-x-1">
-                        شاهد الكل <i class="ri-arrow-left-line align-middle"></i>
-                    </a>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                    
-                    <a href="portfolio.html" class="glass-card rounded-xl portfolio-card cursor-pointer p-0">
-                        <div class="relative w-full aspect-square overflow-hidden rounded-xl">
-                            <img src="https://readdy.ai/api/search-image?query=Modern%20UI%20dashboard%20design%20with%20dark%20theme%2C%20minimalist%20style%2C%20gold%20accents%2C%20professional%20portfolio%20presentation&width=200&height=200&seq=album1&orientation=squarish" 
-                                        alt="لوحة تحكم" class="w-full h-full object-cover rounded-xl">
-                            <div class="card-image-overlay rounded-xl"></div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-semibold text-white mb-1 truncate">لوحة تحكم مالية متكاملة</h3>
-                            <p class="text-sm text-gray-400 truncate">تصميم واجهة مستخدم (UI)</p>
-                        </div>
-                    </a>
-
-                    <a href="portfolio.html" class="glass-card rounded-xl portfolio-card cursor-pointer p-0">
-                        <div class="relative w-full aspect-square overflow-hidden rounded-xl">
-                            <img src="https://readdy.ai/api/search-image?query=E-commerce%20website%20UI%2FUX%20design%20for%20luxury%20brand%2C%20dark%20mode%2C%20sleek%20modern%20aesthetic%2C%20high%20quality%20mockup&width=200&height=200&seq=album2&orientation=squarish" 
-                                        alt="متجر" class="w-full h-full object-cover rounded-xl">
-                            <div class="card-image-overlay rounded-xl"></div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-semibold text-white mb-1 truncate">متجر إلكتروني فاخر</h3>
-                            <p class="text-sm text-gray-400 truncate">تطوير الواجهة الأمامية</p>
-                        </div>
-                    </a>
-                    
-                    <a href="portfolio.html" class="glass-card rounded-xl portfolio-card cursor-pointer p-0">
-                        <div class="relative w-full aspect-square overflow-hidden rounded-xl">
-                            <img src="https://readdy.ai/api/search-image?query=Mobile%20app%20design%20for%20a%20fitness%20tracker%2C%20dark%20theme%2C%20glassmorphism%20elements%2C%20vibrant%20accents%2C%20professional%20mockup&width=200&height=200&seq=album3&orientation=squarish" 
-                                        alt="تطبيق جوال" class="w-full h-full object-cover rounded-xl">
-                            <div class="card-image-overlay rounded-xl"></div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-semibold text-white mb-1 truncate">تطبيق تتبع اللياقة</h3>
-                            <p class="text-sm text-gray-400 truncate">تجربة المستخدم (UX)</p>
-                        </div>
-                    </a>
-                    
-                    <a href="portfolio.html" class="glass-card rounded-xl portfolio-card cursor-pointer p-0">
-                        <div class="relative w-full aspect-square overflow-hidden rounded-xl">
-                            <img src="https://readdy.ai/api/search-image?query=Corporate%20website%20design%20with%20minimalist%20dark%20theme%2C%20elegant%20typography%2C%20clean%20layout%2C%20professional%20mockup&width=200&height=200&seq=album4&orientation=squarish" 
-                                        alt="موقع شركة" class="w-full h-full object-cover rounded-xl">
-                            <div class="card-image-overlay rounded-xl"></div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-semibold text-white mb-1 truncate">موقع تعريفي لشركة</h3>
-                            <p class="text-sm text-gray-400 truncate">تصميم متكامل</p>
-                        </div>
-                    </a>
-                    
-                    <a href="portfolio.html" class="glass-card rounded-xl portfolio-card cursor-pointer p-0">
-                        <div class="relative w-full aspect-square overflow-hidden rounded-xl">
-                            <img src="https://readdy.ai/api/search-image?query=Artistic%20portfolio%20website%20hero%20section%20with%20gold%20and%20black%20theme%2C%20abstract%20design%20event%20creative%20mockup&width=200&height=200&seq=album5&orientation=squarish" 
-                                        alt="بورتفوليو" class="w-full h-full object-cover rounded-xl">
-                            <div class="card-image-overlay rounded-xl"></div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-semibold text-white mb-1 truncate">بورتفوليو فنان رقمي</h3>
-                            <p class="text-sm text-gray-400 truncate">تطوير شخصي</p>
-                        </div>
-                    </a>
-                </div>
-            </section>
-
-            <section class="mb-12" style="animation: fadeIn 0.8s ease-out 1.6s forwards;">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-2xl font-bold text-white">خدماتنا المميزة</h2>
-                    <button class="text-primary hover:text-white font-medium !rounded-button whitespace-nowrap transition-transform hover:translate-x-1">
-                        شاهد قائمة الخدمات <i class="ri-arrow-left-line align-middle"></i>
-                    </button>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <div class="glass-card rounded-xl p-4 featured-service-card cursor-pointer">
-                            <h3 class="font-semibold text-white mb-1 truncate">تصميم UX/UI احترافي</h3>
-                            <p class="text-sm text-gray-400 truncate">واجهات سهلة الاستخدام.</p>
-                    </div>
-                    <div class="glass-card rounded-xl p-4 featured-service-card cursor-pointer">
-                            <h3 class="font-semibold text-white mb-1 truncate">تطوير الواجهة الأمامية السريع</h3>
-                            <p class="text-sm text-gray-400 truncate">كود نظيف وفعّال.</p>
-                    </div>
-                    <div class="glass-card rounded-xl p-4 featured-service-card cursor-pointer">
-                            <h3 class="font-semibold text-white mb-1 truncate">تصميم العلامات التجارية الكاملة</h3>
-                            <p class="text-sm text-gray-400 truncate">هوية بصرية متكاملة.</p>
-                    </div>
-                    <div class="glass-card rounded-xl p-4 featured-service-card cursor-pointer">
-                            <h3 class="font-semibold text-white mb-1 truncate">رسوم متحركة (Motion) ثلاثية الأبعاد</h3>
-                            <p class="text-sm text-gray-400 truncate">تأثيرات حركية احترافية.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section style="animation: fadeIn 0.8s ease-out 1.8s forwards;">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-2xl font-bold text-white">ماذا يقول العملاء؟</h2>
-                    <button class="text-primary hover:text-white font-medium !rounded-button whitespace-nowrap transition-transform hover:translate-x-1">
-                        المزيد من الآراء <i class="ri-arrow-left-line align-middle"></i>
-                    </button>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="glass-card p-6 rounded-xl hover:ring-2 ring-primary transition-all">
-                        <p class="text-gray-300 mb-4">"احترافية عالية وتواصل ممتاز. النتيجة النهائية فاقت التوقعات!"</p>
-                        <p class="font-semibold text-white">- نون NOON</p>
-                        <p class="text-sm text-gray-400">براند مجوهرات</p>
-                    </div>
-                    <div class="glass-card p-6 rounded-xl hover:ring-2 ring-primary transition-all">
-                        <p class="text-gray-300 mb-4">"ذوق، احتراف، وسرعة! شكرًا فاروق على الشغل النظيف."</p>
-                        <p class="font-semibold text-white">- ريحانة REIHAN</p>
-                        <p class="text-sm text-gray-400">متجر مخبوزات</p>
-                    </div>
-                    <div class="glass-card p-6 rounded-xl hover:ring-2 ring-primary transition-all">
-                        <p class="text-gray-300 mb-4">"مشاريع سابقة مبهرة وتفانٍ في العمل. أوصي بشدة بخدماتهم."</p>
-                        <p class="font-semibold text-white">- ملاس الفريج</p>
-                        <p class="text-sm text-gray-400">مطعم مأكولات شعبية</p>
-                    </div>
-                </div>
-            </section>
-        </main>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <footer class="fixed bottom-0 left-0 right-0 glass-card z-50 rounded-none md:rounded-t-lg" 
-            style="animation: slideUp 0.7s ease-out 0.2s forwards;">
-        <div class="px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                <div class="w-12 h-12 bg-primary rounded flex items-center justify-center">
-                    <i class="ri-briefcase-4-line text-black text-2xl"></i>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-white">هل أنت جاهز للمشروع القادم؟</h4>
-                    <p class="text-sm text-gray-400">لنصنع شيئًا مذهلاً معًا.</p>
-                </div>
-            </div>
-            <button class="bg-primary hover:bg-primary/90 text-black px-6 py-2 rounded-full font-bold transition-transform hover:scale-105">
-                تواصل الآن
-            </button>
+    <!-- Command Palette -->
+    <div id="commandPalette" class="fixed inset-0 z-[400] hidden" role="dialog" aria-modal="true" aria-labelledby="paletteTitle">
+      <div id="paletteOverlay" class="absolute inset-0 bg-black/65"></div>
+      <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[92%] max-w-2xl">
+        <div class="glass g-border rounded-3xl overflow-hidden">
+          <div class="p-4 border-b border-white/10 flex items-center gap-3">
+            <i class="ri-search-2-line text-xl text-primary"></i>
+            <input id="paletteInput" autocomplete="off" class="w-full bg-transparent outline-none placeholder:text-gray-500 text-gray-100" placeholder="اكتب للبحث... (أعمال / أقسام / خدمات)" />
+            <button id="closePalette" class="px-3 py-1 rounded-xl border border-white/10 hover:bg-white/5 text-gray-300 text-sm">Esc</button>
+          </div>
+          <div class="max-h-[56vh] overflow-y-auto" id="paletteResults"></div>
+          <div class="p-3 border-t border-white/10 text-xs text-gray-500 flex items-center justify-between">
+            <span>Enter للتحديد • الأسهم للتنقل</span>
+            <span>Ctrl + K للفتح</span>
+          </div>
         </div>
-    </footer>
-    
-    <script src="script.js"></script>
-    
+      </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 z-[500] hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <div id="authOverlay" class="absolute inset-0 bg-black/65"></div>
+      <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[92%] max-w-lg">
+        <div class="glass g-border rounded-3xl overflow-hidden">
+          <div class="p-4 border-b border-white/10 flex items-center justify-between">
+            <div>
+              <div id="authTitle" class="text-lg font-extrabold">الحساب</div>
+              <div class="text-xs text-gray-400">واجهة تجريبية داخل الصفحة.</div>
+            </div>
+            <button id="closeAuth" class="w-10 h-10 grid place-items-center rounded-full hover:bg-white/5" aria-label="إغلاق">
+              <i class="ri-close-line text-2xl"></i>
+            </button>
+          </div>
+
+          <div class="p-4">
+            <div class="flex gap-2 mb-4">
+              <button id="tabLogin" class="flex-1 px-4 py-3 rounded-2xl border border-white/10 hover:bg-white/5 text-gray-200">تسجيل الدخول</button>
+              <button id="tabSignup" class="flex-1 px-4 py-3 rounded-2xl border border-white/10 hover:bg-white/5 text-gray-200">إنشاء حساب</button>
+            </div>
+
+            <form id="authForm" class="space-y-3">
+              <div class="grid grid-cols-1 gap-3">
+                <label class="text-sm text-gray-300">الاسم</label>
+                <input id="authName" class="w-full px-4 py-3 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-primary/50" placeholder="اسمك" />
+              </div>
+              <div class="grid grid-cols-1 gap-3">
+                <label class="text-sm text-gray-300">البريد</label>
+                <input id="authEmail" type="email" class="w-full px-4 py-3 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-primary/50" placeholder="name@example.com" />
+              </div>
+              <div class="grid grid-cols-1 gap-3" id="passwordRow">
+                <label class="text-sm text-gray-300">كلمة المرور</label>
+                <input id="authPass" type="password" class="w-full px-4 py-3 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-primary/50" placeholder="••••••••" />
+              </div>
+
+              <button class="w-full mt-1 px-5 py-3 rounded-2xl bg-primary text-black font-extrabold hover:brightness-95 transition" type="submit" id="authSubmit">متابعة</button>
+
+              <div class="text-xs text-gray-500">لن يتم إرسال بياناتك—الهدف واجهة تجريبية فقط.</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Portfolio Preview Modal -->
+    <div id="previewModal" class="fixed inset-0 z-[600] hidden" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
+      <div id="previewOverlay" class="absolute inset-0 bg-black/70"></div>
+      <div class="absolute top-16 left-1/2 -translate-x-1/2 w-[94%] max-w-4xl">
+        <div class="glass g-border rounded-3xl overflow-hidden">
+          <div class="p-4 border-b border-white/10 flex items-center justify-between gap-3">
+            <div class="min-w-0">
+              <div id="previewTitle" class="text-lg md:text-xl font-extrabold truncate">عنوان العمل</div>
+              <div id="previewMeta" class="text-xs text-gray-400">قسم • دور • سنة</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="copyLinkBtn" class="px-3 py-2 rounded-2xl border border-white/10 hover:bg-white/5 text-gray-200 text-sm">نسخ</button>
+              <button id="closePreview" class="w-10 h-10 grid place-items-center rounded-full hover:bg-white/5" aria-label="إغلاق">
+                <i class="ri-close-line text-2xl"></i>
+              </button>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-0">
+            <div class="md:col-span-3">
+              <div class="relative">
+                <img id="previewImage" alt="" class="w-full aspect-[16/11] object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+              </div>
+            </div>
+            <div class="md:col-span-2 p-5">
+              <div class="flex flex-wrap gap-2" id="previewTags"></div>
+              <p id="previewDesc" class="mt-4 text-sm text-gray-200 leading-relaxed"></p>
+
+              <div class="mt-5 grid grid-cols-1 gap-2">
+                <a href="#contact" id="previewCta" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-primary text-black font-extrabold hover:brightness-95 transition">
+                  اطلب مشروع مشابه
+                  <i class="ri-arrow-left-line rtl:rotate-180"></i>
+                </a>
+                <button id="prevItem" class="px-4 py-3 rounded-2xl border border-white/10 hover:bg-white/5 text-gray-200">السابق</button>
+                <button id="nextItem" class="px-4 py-3 rounded-2xl border border-white/10 hover:bg-white/5 text-gray-200">التالي</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="flex-1 pt-24 lg:pt-28">
+      <!-- Desktop sidebar -->
+      <aside class="hidden lg:block fixed right-4 top-28 bottom-24 w-80 overflow-y-auto">
+        <div class="glass g-border rounded-3xl p-4">
+          <div class="flex items-center gap-3">
+            <span class="w-11 h-11 rounded-2xl bg-primary/15 border border-primary/25 grid place-items-center text-primary">
+              <i class="ri-sparkling-2-line text-xl"></i>
+            </span>
+            <div>
+              <div class="font-extrabold">لوحة STVX</div>
+              <div class="text-xs text-gray-400">اختصر الطريق لأهم الأقسام.</div>
+            </div>
+          </div>
+
+          <div class="mt-4 space-y-2 text-sm">
+            <a href="#home" class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-primary/10 text-primary border border-primary/20">
+              <i class="ri-home-5-line"></i>
+              <span class="font-bold">الرئيسية</span>
+            </a>
+            <a href="#services" class="flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/10 hover:bg-white/5 transition text-gray-200">
+              <i class="ri-brush-3-line text-gray-200"></i>
+              <span>الخدمات</span>
+            </a>
+            <a href="#portfolio" class="flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/10 hover:bg-white/5 transition text-gray-200">
+              <i class="ri-folder-open-line text-gray-200"></i>
+              <span>أعمال مختارة</span>
+            </a>
+            <a href="#testimonials" class="flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/10 hover:bg-white/5 transition text-gray-200">
+              <i class="ri-chat-3-line text-gray-200"></i>
+              <span>آراء العملاء</span>
+            </a>
+            <a href="#contact" class="flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/10 hover:bg-white/5 transition text-gray-200">
+              <i class="ri-mail-send-line text-gray-200"></i>
+              <span>تواصل</span>
+            </a>
+          </div>
+
+          <div class="mt-5 p-4 rounded-2xl border border-white/10 bg-white/5">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-xs text-gray-400">تركيز اليوم</div>
+                <div class="font-extrabold">تصميم • تطوير • سرعة</div>
+              </div>
+              <span class="text-primary text-sm font-bold">STVX</span>
+            </div>
+            <div class="mt-3 h-2 rounded-full bg-black/40 overflow-hidden">
+              <div class="h-full w-[78%] bg-gradient-to-r from-primary to-yellow-200"></div>
+            </div>
+            <div class="mt-2 text-xs text-gray-500">تركيز عالي على جودة التفاصيل والـ UX.</div>
+          </div>
+        </div>
+      </aside>
+
+      <main id="content" class="px-4 md:px-8 pb-36 lg:mr-[21rem]">
+        <!-- HERO -->
+        <section id="home" class="reveal">
+          <div class="glass g-border rounded-3xl overflow-hidden relative">
+            <div class="absolute inset-0 spotlight opacity-50"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,199,44,0.14),transparent_45%),radial-gradient(circle_at_80%_60%,rgba(255,199,44,0.10),transparent_45%)]"></div>
+            <div class="absolute inset-0 bg-gradient-to-l from-black/35 via-black/20 to-black/45"></div>
+
+            <div class="relative p-7 md:p-10">
+              <div class="flex flex-col lg:flex-row gap-8 items-start lg:items-center justify-between">
+                <div class="max-w-2xl">
+                  <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-sm text-gray-200">
+                    <span class="w-2 h-2 rounded-full bg-primary shadow-[0_0_14px_rgba(255,199,44,0.5)]"></span>
+                    <span>STVX Platform • تجربة رقمية أنيقة</span>
+                  </div>
+
+                  <h1 class="mt-4 text-3xl md:text-5xl font-extrabold leading-tight">
+                    أصمّم
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-200" id="rotateWord">واجهات</span>
+                    تترك أثرًا
+                  </h1>
+
+                  <p class="mt-4 text-gray-200/90 leading-relaxed">
+                    مزيج بين ذوق بصري نظيف وكود دقيق الأداء: هوية، واجهة، وتجربة مستخدم تُحترم تفاصيلها.
+                    كل عنصر هنا مبني ليبدو راقيًا ويعمل بسلاسة.
+                  </p>
+
+                  <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                    <a href="#portfolio" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-primary text-black font-extrabold hover:brightness-95 transition">
+                      استعرض الأعمال
+                      <i class="ri-arrow-left-line rtl:rotate-180"></i>
+                    </a>
+                    <a href="#contact" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border border-white/10 bg-white/5 text-gray-100 hover:bg-white/10 transition">
+                      تواصل الآن
+                      <i class="ri-send-plane-2-line"></i>
+                    </a>
+                    <button id="openPaletteHero" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border border-white/10 bg-black/10 text-gray-200 hover:bg-white/10 transition">
+                      بحث ذكي
+                      <i class="ri-search-2-line"></i>
+                    </button>
+                  </div>
+
+                  <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="glass rounded-2xl px-4 py-3 border border-white/10">
+                      <div class="text-xs text-gray-400">سرعة التنفيذ</div>
+                      <div class="font-extrabold">منظم ومحدد</div>
+                    </div>
+                    <div class="glass rounded-2xl px-4 py-3 border border-white/10">
+                      <div class="text-xs text-gray-400">الواجهة</div>
+                      <div class="font-extrabold">UI/UX</div>
+                    </div>
+                    <div class="glass rounded-2xl px-4 py-3 border border-white/10">
+                      <div class="text-xs text-gray-400">البرمجة</div>
+                      <div class="font-extrabold">Front-end</div>
+                    </div>
+                    <div class="glass rounded-2xl px-4 py-3 border border-white/10">
+                      <div class="text-xs text-gray-400">الهوية</div>
+                      <div class="font-extrabold">Branding</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full lg:w-[380px]">
+                  <div class="glass g-border rounded-3xl p-5">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <div class="text-xs text-gray-400">لماذا STVX؟</div>
+                        <div class="text-lg font-extrabold">تفاصيل تُلاحظ</div>
+                      </div>
+                      <span class="w-10 h-10 rounded-2xl bg-primary/15 border border-primary/25 grid place-items-center text-primary">
+                        <i class="ri-eye-2-line"></i>
+                      </span>
+                    </div>
+
+                    <ul class="mt-4 space-y-3 text-sm text-gray-200">
+                      <li class="flex gap-2"><i class="ri-check-line text-primary mt-0.5"></i><span>تصميم أنيق دون مبالغة: توازن بين الفخامة والوضوح.</span></li>
+                      <li class="flex gap-2"><i class="ri-check-line text-primary mt-0.5"></i><span>كود منظم: قابلية توسّع وتحسينات أداء مستمرة.</span></li>
+                      <li class="flex gap-2"><i class="ri-check-line text-primary mt-0.5"></i><span>واجهة مصممة للأجهزة: موبايل أولًا وتجربة متسقة.</span></li>
+                    </ul>
+
+                    <div class="mt-5 flex items-center gap-2">
+                      <button data-open-auth="login" class="flex-1 px-4 py-3 rounded-2xl bg-primary text-black font-extrabold hover:brightness-95 transition">ابدأ الآن</button>
+                      <a href="#services" class="flex-1 px-4 py-3 rounded-2xl border border-white/10 bg-white/5 text-center hover:bg-white/10 transition">الخدمات</a>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section id="services" class="mt-10 reveal">
+          <div class="flex items-end justify-between gap-4 mb-4">
+            <div>
+              <h2 class="text-2xl md:text-3xl font-extrabold">الخدمات</h2>
+              <p class="text-gray-400 text-sm">حزمة متكاملة من التصميم إلى التنفيذ.</p>
+            </div>
+            <button class="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition" id="servicesHint">
+              كيف نشتغل؟
+              <i class="ri-question-line"></i>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="glass g-border rounded-3xl p-5 tilt" data-tilt>
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-xs text-gray-400">تصميم</div>
+                  <div class="text-lg font-extrabold">UI/UX</div>
+                </div>
+                <span class="w-11 h-11 rounded-2xl bg-primary/15 border border-primary/25 grid place-items-center text-primary">
+                  <i class="ri-layout-2-line text-xl"></i>
+                </span>
+              </div>
+              <p class="mt-3 text-sm text-gray-200">واجهات واضحة، توزيع محتوى ذكي، وتجربة مستخدم تُشبه المنتج الحقيقي.</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="px-3 py-1 rounded-full text-xs border border-white/10 bg-white/5 text-gray-200">Wireframe</span>
+                <span class="px-3 py-1 rounded-full text-xs border border-white/10 bg-white/5 text-gray-200">Design System</span>
+                <span class="px-3 py-1 rounded-full text-xs border border-white/10 bg-white/5 text-gray-200">Prototype</span>
+              </div>
+            </div>
+
+            <div class="glass g-border rounded-3xl p-5 tilt" data-tilt>
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-xs text-gray-400">تطوير</div>
+                  <div class="text-lg font-extrabold">Front-end</div>
+                </div>
+                <span class="w-11 h-11 rounded-2xl bg-primary/15 border border-primary/25 grid place-items-center text-primary">
+                  <i class="ri-code-s-slash-line text-xl"></i>
+                </span>
+              </div>
+              <p class="mt-3 text-sm text-gray-200">تحويل التصميم إلى واجهة سريعة الاستجابة، مع تفاصيل Micro-interactions نظيفة.</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="px-3 py-1 rounded-full text-xs border border-white/10 bg-white/5 text-gray-200">Responsive</span>
+                <span class="px-3 py-1 rounded-full text-xs border border-white/10 bg-white/5 text-gray-200">Performance</span>
+                <span class="px-3 py-1 rounded-full text-xs border border-white/10 bg-white/5 text-gray-200">Accessibility</span>
+              </div>
+            </div>
+
+            <div class="glass g-border rounded-3xl p-5 tilt" data-tilt>
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-xs text-gray-400">هوية</div>
+                  <div class="text-lg font-extrabold">Branding</div>
+                </div>
+                <span class="w-11 h-11 rounded-2xl bg-primary/15 border border-primary/25 grid place-items-center text-primary">
+                  <i class="ri-pen-nib-line text-xl"></i>
+                </span>
+              </div>
+              <p class="mt-3 text-sm text-gray-200">شعار، ألوان، ونظام بصري متماسك—يظهر قويًا على كل منصة.</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="px-3 py-1 rounded-full text-xs border border-white/10 bg-white/5 text-gray-200">Logo</span>
+                <span class="px-3 py-1 rounded-full text-xs border border-white/10 bg-white/5 text-gray-200">Guidelines</span>
+                <span class="px-3 py-1 rounded-full text-xs border border-white/10 bg-white/5 text-gray-200">Templates</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PORTFOLIO -->
+        <section id="portfolio" class="mt-10 reveal">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4">
+            <div>
+              <h2 class="text-2xl md:text-3xl font-extrabold">أعمال مختارة</h2>
+              <p class="text-gray-400 text-sm">عينات توضح أسلوبي في التصميم والتنفيذ.</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-2 sm:items-center">
+              <div class="flex flex-wrap gap-2" role="tablist" aria-label="تصفية الأعمال">
+                <button class="filterChip px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-sm" data-filter="all">الكل</button>
+                <button class="filterChip px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-sm" data-filter="ui">واجهات</button>
+                <button class="filterChip px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-sm" data-filter="dev">تطوير</button>
+                <button class="filterChip px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-sm" data-filter="brand">هوية</button>
+              </div>
+
+              <button id="openPalettePortfolio" class="px-4 py-2 rounded-full border border-primary/35 bg-primary/10 text-primary hover:bg-primary/15 text-sm inline-flex items-center gap-2">
+                بحث
+                <i class="ri-search-2-line"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="portfolioGrid" aria-live="polite"></div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section id="testimonials" class="mt-10 reveal">
+          <div class="flex items-end justify-between gap-4 mb-4">
+            <div>
+              <h2 class="text-2xl md:text-3xl font-extrabold">آراء العملاء</h2>
+              <p class="text-gray-400 text-sm">مختصرات حقيقية عن جودة التجربة.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="prevTest" class="w-11 h-11 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition" aria-label="السابق"><i class="ri-arrow-right-line"></i></button>
+              <button id="nextTest" class="w-11 h-11 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition" aria-label="التالي"><i class="ri-arrow-left-line"></i></button>
+            </div>
+          </div>
+
+          <div class="glass g-border rounded-3xl p-6">
+            <div id="testimonialsTrack" class="relative overflow-hidden">
+              <div id="testimonialsInner" class="flex transition-transform duration-500" style="transform: translateX(0%);"></div>
+            </div>
+
+            <div class="mt-4 flex items-center justify-between">
+              <div class="text-xs text-gray-500">* يتم التبديل تلقائيًا كل عدة ثوانٍ.</div>
+              <div id="testDots" class="flex gap-2"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="mt-10 reveal">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4">
+            <div>
+              <h2 class="text-2xl md:text-3xl font-extrabold">تواصل</h2>
+              <p class="text-gray-400 text-sm">أرسل تفاصيل مشروعك وسأعود لك بأقرب وقت.</p>
+            </div>
+            <div class="flex gap-2">
+              <button id="copyEmail" class="px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition text-sm">
+                نسخ البريد
+              </button>
+              <a href="mailto:faroukkir01@gmail.com" class="px-4 py-2 rounded-full bg-primary text-black font-extrabold hover:brightness-95 transition text-sm">إرسال بريد</a>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+            <div class="lg:col-span-3 glass g-border rounded-3xl p-6">
+              <form id="contactForm" class="grid grid-cols-1 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="text-sm text-gray-300">الاسم</label>
+                    <input id="cName" class="mt-2 w-full px-4 py-3 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-primary/50" placeholder="اسمك" required>
+                  </div>
+                  <div>
+                    <label class="text-sm text-gray-300">البريد</label>
+                    <input id="cEmail" type="email" class="mt-2 w-full px-4 py-3 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-primary/50" placeholder="name@example.com" required>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="text-sm text-gray-300">نوع المشروع</label>
+                  <select id="cType" class="mt-2 w-full px-4 py-3 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-primary/50">
+                    <option value="ui">تصميم واجهات (UI/UX)</option>
+                    <option value="dev">برمجة واجهة (Front-end)</option>
+                    <option value="brand">هوية بصرية</option>
+                    <option value="other">أخرى</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="text-sm text-gray-300">تفاصيل</label>
+                  <textarea id="cMsg" rows="5" class="mt-2 w-full px-4 py-3 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-primary/50" placeholder="اكتب وصفًا مختصرًا + المدة المتوقعة + ميزانية تقريبية إن أمكن" required></textarea>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+                  <button class="px-6 py-3 rounded-2xl bg-primary text-black font-extrabold hover:brightness-95 transition" type="submit">
+                    إرسال الرسالة
+                  </button>
+                  <div class="text-xs text-gray-500">بالإرسال أنت توافق على التواصل عبر البريد فقط.</div>
+                </div>
+              </form>
+            </div>
+
+            <div class="lg:col-span-2 glass g-border rounded-3xl p-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-xs text-gray-400">طرق سريعة</div>
+                  <div class="text-lg font-extrabold">روابط التواصل</div>
+                </div>
+                <span class="w-10 h-10 rounded-2xl bg-primary/15 border border-primary/25 grid place-items-center text-primary">
+                  <i class="ri-links-line"></i>
+                </span>
+              </div>
+
+              <div class="mt-4 grid grid-cols-1 gap-2">
+                <a class="px-4 py-3 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition flex items-center justify-between" href="https://t.me/thestvx" target="_blank" rel="noopener">
+                  <span class="flex items-center gap-2"><i class="ri-telegram-fill text-primary"></i> Telegram</span>
+                  <i class="ri-external-link-line text-gray-400"></i>
+                </a>
+                <a class="px-4 py-3 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition flex items-center justify-between" href="https://www.instagram.com/thestiiiv" target="_blank" rel="noopener">
+                  <span class="flex items-center gap-2"><i class="ri-instagram-line text-primary"></i> Instagram</span>
+                  <i class="ri-external-link-line text-gray-400"></i>
+                </a>
+                <a class="px-4 py-3 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition flex items-center justify-between" href="https://x.com/iistevexn" target="_blank" rel="noopener">
+                  <span class="flex items-center gap-2"><i class="ri-twitter-x-fill text-primary"></i> X</span>
+                  <i class="ri-external-link-line text-gray-400"></i>
+                </a>
+                <a class="px-4 py-3 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition flex items-center justify-between" href="https://web.facebook.com/iiStevexn" target="_blank" rel="noopener">
+                  <span class="flex items-center gap-2"><i class="ri-facebook-fill text-primary"></i> Facebook</span>
+                  <i class="ri-external-link-line text-gray-400"></i>
+                </a>
+                <a class="px-4 py-3 rounded-2xl border border-primary/30 bg-primary/10 hover:bg-primary/15 transition flex items-center justify-between text-primary" href="mailto:faroukkir01@gmail.com">
+                  <span class="flex items-center gap-2"><i class="ri-mail-line"></i> Email</span>
+                  <span class="text-xs">faroukkir01@gmail.com</span>
+                </a>
+              </div>
+
+              <div class="mt-4 p-4 rounded-2xl border border-white/10 bg-black/15">
+                <div class="text-sm font-extrabold">نقطة مميزة</div>
+                <div class="text-sm text-gray-200 mt-1">أحرص على تسليم نسخة منظمة + توثيق بسيط للواجهة حتى تكون قابلة للتطوير مستقبلًا.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Footer (page) -->
+        <footer class="mt-10 pb-8 text-center text-sm text-gray-500">
+          <div class="mt-6">&copy; <span id="year"></span> STVX Platform. جميع الحقوق محفوظة.</div>
+        </footer>
+      </main>
+    </div>
+
+    <!-- Floating CTA bar -->
+    <div id="ctaBar" class="fixed bottom-3 left-3 right-3 z-[250]">
+      <div class="glass g-border rounded-2xl px-4 py-3 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="w-11 h-11 rounded-2xl bg-primary text-black grid place-items-center">
+            <i class="ri-briefcase-4-line text-2xl"></i>
+          </span>
+          <div class="min-w-0">
+            <div class="font-extrabold truncate">جاهز للمشروع القادم؟</div>
+            <div class="text-xs text-gray-400 truncate">خلّنا نحول فكرتك لواجهة راقية وتجربة ممتازة.</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="#contact" class="px-4 py-2 rounded-full bg-primary text-black font-extrabold hover:brightness-95 transition">تواصل الآن</a>
+          <button id="toTop" class="w-11 h-11 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition" aria-label="إلى الأعلى">
+            <i class="ri-arrow-up-line"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[900] hidden">
+    <div class="glass g-border rounded-2xl px-4 py-3 text-sm text-gray-100"></div>
+  </div>
+
+  <script>
+    // ---------- Utilities ----------
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+    function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+
+    function toast(msg) {
+      const t = $('#toast');
+      if (!t) return;
+      const box = t.firstElementChild;
+      box.textContent = msg;
+      t.classList.remove('hidden');
+      t.style.opacity = '0';
+      t.style.transform = 'translateX(-50%) translateY(6px)';
+      requestAnimationFrame(() => {
+        t.style.transition = 'opacity 250ms ease, transform 250ms ease';
+        t.style.opacity = '1';
+        t.style.transform = 'translateX(-50%) translateY(0)';
+      });
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transform = 'translateX(-50%) translateY(6px)';
+        setTimeout(() => t.classList.add('hidden'), 260);
+      }, 2200);
+    }
+
+    function openModal(id) {
+      const m = $(id);
+      if (!m) return;
+      m.classList.remove('hidden');
+      m.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id) {
+      const m = $(id);
+      if (!m) return;
+      m.classList.add('hidden');
+      m.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    // ---------- Loader ----------
+    document.addEventListener('DOMContentLoaded', () => {
+      const loader = $('#app-loader');
+      const main = $('#mainContent');
+      setTimeout(() => {
+        if (loader) {
+          loader.style.opacity = '0';
+          setTimeout(() => loader.style.display = 'none', 320);
+        }
+        if (main) main.classList.remove('is-loading');
+      }, 450);
+
+      $('#year').textContent = new Date().getFullYear();
+    });
+
+    // ---------- Scroll progress ----------
+    (function () {
+      const bar = $('#scrollProgress');
+      if (!bar) return;
+      const update = () => {
+        const doc = document.documentElement;
+        const scrollTop = doc.scrollTop;
+        const max = doc.scrollHeight - doc.clientHeight;
+        const p = max > 0 ? (scrollTop / max) : 0;
+        bar.style.width = (p * 100).toFixed(2) + '%';
+      };
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+    })();
+
+    // ---------- Spotlight tracking (hero card) ----------
+    (function () {
+      const target = $('.spotlight')?.parentElement;
+      if (!target) return;
+      target.addEventListener('pointermove', (e) => {
+        const rect = target.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        target.style.setProperty('--x', x + '%');
+        target.style.setProperty('--y', y + '%');
+      });
+    })();
+
+    // ---------- Reveal on scroll ----------
+    (function () {
+      const items = $$('.reveal');
+      if (!items.length) return;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            en.target.classList.add('is-visible');
+            io.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      items.forEach((el) => io.observe(el));
+    })();
+
+    // ---------- Tilt effect ----------
+    (function () {
+      const cards = $$('[data-tilt]');
+      if (!cards.length) return;
+
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      cards.forEach((card) => {
+        card.addEventListener('pointermove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const px = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          const py = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+          const rx = clamp(-py * 6, -7, 7);
+          const ry = clamp(px * 7, -8, 8);
+          card.style.setProperty('--rx', rx + 'deg');
+          card.style.setProperty('--ry', ry + 'deg');
+        });
+        card.addEventListener('pointerleave', () => {
+          card.style.setProperty('--rx', '0deg');
+          card.style.setProperty('--ry', '0deg');
+        });
+        card.classList.add('tilt');
+      });
+    })();
+
+    // ---------- Mobile drawer ----------
+    (function () {
+      const drawer = $('#mobileDrawer');
+      const openBtn = $('#openMobileMenu');
+      const closeBtn = $('#closeMobileMenu');
+      const overlay = $('#mobileDrawerOverlay');
+      if (!drawer || !openBtn || !closeBtn || !overlay) return;
+
+      const open = () => {
+        drawer.classList.remove('hidden');
+        openBtn.setAttribute('aria-expanded', 'true');
+        drawer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      };
+      const close = () => {
+        drawer.classList.add('hidden');
+        openBtn.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      };
+
+      openBtn.addEventListener('click', open);
+      closeBtn.addEventListener('click', close);
+      overlay.addEventListener('click', close);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+      // Close on link click
+      $$('#mobileDrawer a').forEach((a) => a.addEventListener('click', close));
+    })();
+
+    // ---------- Rotating hero word ----------
+    (function () {
+      const el = $('#rotateWord');
+      if (!el) return;
+      const words = ['واجهات', 'هويات', 'تجارب', 'منتجات'];
+      let i = 0;
+      setInterval(() => {
+        i = (i + 1) % words.length;
+        el.style.opacity = '0';
+        el.style.filter = 'blur(10px)';
+        setTimeout(() => {
+          el.textContent = words[i];
+          el.style.opacity = '1';
+          el.style.filter = 'blur(0px)';
+        }, 220);
+      }, 2600);
+    })();
+
+    // ---------- Portfolio data + rendering ----------
+    const portfolioData = [
+      {
+        id: 'p1',
+        title: 'لوحة تحكم مالية متكاملة',
+        cat: 'ui',
+        role: 'UI Design',
+        year: '2024',
+        tags: ['Dashboard', 'Design System', 'Dark UI'],
+        img: 'https://readdy.ai/api/search-image?query=Modern%20UI%20dashboard%20design%20with%20dark%20theme%2C%20minimalist%20style%2C%20gold%20accents%2C%20professional%20portfolio%20presentation&width=900&height=620&seq=stvx_p1&orientation=landscape',
+        desc: 'تركيز على وضوح البيانات، توازن التباين، وحالات الاستخدام؛ مع نظام مكوّنات يسهل توسيعه لاحقًا.'
+      },
+      {
+        id: 'p2',
+        title: 'متجر إلكتروني فاخر',
+        cat: 'dev',
+        role: 'Front-end',
+        year: '2024',
+        tags: ['E-commerce', 'Responsive', 'Performance'],
+        img: 'https://readdy.ai/api/search-image?query=E-commerce%20website%20UI%2FUX%20design%20for%20luxury%20brand%2C%20dark%20mode%2C%20sleek%20modern%20aesthetic%2C%20high%20quality%20mockup&width=900&height=620&seq=stvx_p2&orientation=landscape',
+        desc: 'واجهة متجر تركز على عرض المنتج، تجربة تصفح سريعة، ومسار شراء واضح يقلل التشتت.'
+      },
+      {
+        id: 'p3',
+        title: 'تطبيق تتبع اللياقة',
+        cat: 'ui',
+        role: 'UX Flow',
+        year: '2023',
+        tags: ['Mobile', 'UX', 'Micro-interactions'],
+        img: 'https://readdy.ai/api/search-image?query=Mobile%20app%20design%20for%20a%20fitness%20tracker%2C%20dark%20theme%2C%20glassmorphism%20elements%2C%20vibrant%20accents%2C%20professional%20mockup&width=900&height=620&seq=stvx_p3&orientation=landscape',
+        desc: 'رحلة مستخدم واضحة: أهداف يومية، متابعة تقدم، ورسوم تساعد المستخدم يفهم بياناته بسرعة.'
+      },
+      {
+        id: 'p4',
+        title: 'موقع تعريفي لشركة',
+        cat: 'dev',
+        role: 'Landing + Components',
+        year: '2023',
+        tags: ['Landing', 'SEO-ready', 'Clean UI'],
+        img: 'https://readdy.ai/api/search-image?query=Corporate%20website%20design%20with%20minimalist%20dark%20theme%2C%20elegant%20typography%2C%20clean%20layout%2C%20professional%20mockup&width=900&height=620&seq=stvx_p4&orientation=landscape',
+        desc: 'تصميم يبرز الرسالة الأساسية بسرعة، مع أقسام مرتبة ومكونات قابلة لإعادة الاستخدام.'
+      },
+      {
+        id: 'p5',
+        title: 'هوية بصرية لبراند',
+        cat: 'brand',
+        role: 'Brand Identity',
+        year: '2024',
+        tags: ['Logo', 'Palette', 'Guidelines'],
+        img: 'https://readdy.ai/api/search-image?query=Brand%20identity%20presentation%20mockup%20black%20and%20gold%20minimal%20logo%20guidelines%2C%20modern%20branding%20board&width=900&height=620&seq=stvx_p5&orientation=landscape',
+        desc: 'هوية متسقة: شعار، لوحة ألوان، ونبرة بصرية؛ قابلة للتطبيق على السوشال والمواد المطبوعة.'
+      },
+      {
+        id: 'p6',
+        title: 'صفحة بورتفوليو شخصية',
+        cat: 'dev',
+        role: 'Design + Build',
+        year: '2024',
+        tags: ['Portfolio', 'Glass', 'Animation'],
+        img: 'https://readdy.ai/api/search-image?query=Artistic%20portfolio%20website%20hero%20section%20with%20gold%20and%20black%20theme%2C%20abstract%20design%20event%20creative%20mockup&width=900&height=620&seq=stvx_p6&orientation=landscape',
+        desc: 'صفحة شخصية راقية: تركيز على السرد البصري، سرعة التصفح، ووضوح الأقسام الأساسية.'
+      }
+    ];
+
+    const filterState = { filter: 'all' };
+    let previewIndex = 0;
+
+    function catName(cat) {
+      return cat === 'ui' ? 'واجهات' : (cat === 'dev' ? 'تطوير' : (cat === 'brand' ? 'هوية' : 'أخرى'));
+    }
+
+    function renderPortfolio() {
+      const grid = $('#portfolioGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const items = portfolioData.filter((p) => filterState.filter === 'all' ? true : p.cat === filterState.filter);
+
+      items.forEach((p) => {
+        const el = document.createElement('button');
+        el.type = 'button';
+        el.className = 'text-right glass g-border rounded-3xl overflow-hidden border border-white/10 hover:border-primary/35 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60';
+        el.setAttribute('data-id', p.id);
+
+        el.innerHTML = `
+          <div class="relative">
+            <img src="${p.img}" alt="${p.title}" class="w-full aspect-[16/11] object-cover" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+            <div class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs border border-white/10 bg-black/25 text-gray-100">${catName(p.cat)}</div>
+          </div>
+          <div class="p-5">
+            <div class="flex items-start justify-between gap-3">
+              <div class="min-w-0">
+                <div class="font-extrabold text-lg truncate">${p.title}</div>
+                <div class="text-sm text-gray-400 truncate">${p.role} • ${p.year}</div>
+              </div>
+              <span class="w-10 h-10 rounded-2xl bg-primary/15 border border-primary/25 grid place-items-center text-primary flex-none">
+                <i class="ri-arrow-left-up-line rtl:rotate-180"></i>
+              </span>
+            </div>
+
+            <div class="mt-4 flex flex-wrap gap-2">
+              ${p.tags.slice(0, 3).map(t => `<span class="px-3 py-1 rounded-full text-xs border border-white/10 bg-white/5 text-gray-200">${t}</span>`).join('')}
+            </div>
+          </div>
+        `;
+
+        el.addEventListener('click', () => openPreviewById(p.id));
+        grid.appendChild(el);
+      });
+
+      if (!items.length) {
+        grid.innerHTML = `<div class="col-span-full glass g-border rounded-3xl p-6 text-center text-gray-300">لا توجد أعمال ضمن هذا التصنيف.</div>`;
+      }
+    }
+
+    function openPreviewById(id) {
+      const idx = portfolioData.findIndex(p => p.id === id);
+      if (idx < 0) return;
+      previewIndex = idx;
+      const p = portfolioData[idx];
+
+      $('#previewTitle').textContent = p.title;
+      $('#previewMeta').textContent = `${catName(p.cat)} • ${p.role} • ${p.year}`;
+      $('#previewImage').src = p.img;
+      $('#previewImage').alt = p.title;
+      $('#previewDesc').textContent = p.desc;
+
+      const tags = $('#previewTags');
+      tags.innerHTML = p.tags.map(t => `<span class="px-3 py-1 rounded-full text-xs border border-white/10 bg-white/5 text-gray-200">${t}</span>`).join('');
+
+      openModal('#previewModal');
+    }
+
+    function openPreviewByDelta(delta) {
+      const next = (previewIndex + delta + portfolioData.length) % portfolioData.length;
+      openPreviewById(portfolioData[next].id);
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPortfolio();
+
+      // Chips
+      const chips = $$('.filterChip');
+      function setActiveChip(val) {
+        chips.forEach(c => {
+          const active = c.dataset.filter === val;
+          c.classList.toggle('bg-primary/15', active);
+          c.classList.toggle('border-primary/30', active);
+          c.classList.toggle('text-primary', active);
+        });
+      }
+      setActiveChip('all');
+
+      chips.forEach((c) => {
+        c.addEventListener('click', () => {
+          filterState.filter = c.dataset.filter;
+          setActiveChip(filterState.filter);
+          renderPortfolio();
+        });
+      });
+    });
+
+    // ---------- Preview modal controls ----------
+    (function () {
+      const closeBtn = $('#closePreview');
+      const overlay = $('#previewOverlay');
+      const prevBtn = $('#prevItem');
+      const nextBtn = $('#nextItem');
+      const copyBtn = $('#copyLinkBtn');
+
+      if (closeBtn) closeBtn.addEventListener('click', () => closeModal('#previewModal'));
+      if (overlay) overlay.addEventListener('click', () => closeModal('#previewModal'));
+      if (prevBtn) prevBtn.addEventListener('click', () => openPreviewByDelta(-1));
+      if (nextBtn) nextBtn.addEventListener('click', () => openPreviewByDelta(1));
+
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          const p = portfolioData[previewIndex];
+          const url = `${location.href.split('#')[0]}#portfolio-${p.id}`;
+          try {
+            await navigator.clipboard.writeText(url);
+            toast('تم نسخ الرابط');
+          } catch {
+            toast('تعذر النسخ في هذا المتصفح');
+          }
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        const modalOpen = !$('#previewModal')?.classList.contains('hidden');
+        if (!modalOpen) return;
+        if (e.key === 'Escape') closeModal('#previewModal');
+        if (e.key === 'ArrowLeft') openPreviewByDelta(1);
+        if (e.key === 'ArrowRight') openPreviewByDelta(-1);
+      });
+    })();
+
+    // ---------- Command palette (sections + portfolio) ----------
+    (function () {
+      const modal = $('#commandPalette');
+      const input = $('#paletteInput');
+      const results = $('#paletteResults');
+
+      const openers = ['#openPalette', '#openPaletteMobile', '#openPaletteHero', '#openPalettePortfolio']
+        .map(sel => $(sel))
+        .filter(Boolean);
+
+      const closeBtn = $('#closePalette');
+      const overlay = $('#paletteOverlay');
+
+      const entries = [
+        { type: 'section', title: 'الرئيسية', subtitle: 'Hero', action: () => location.hash = '#home' },
+        { type: 'section', title: 'الخدمات', subtitle: 'Services', action: () => location.hash = '#services' },
+        { type: 'section', title: 'أعمال مختارة', subtitle: 'Portfolio', action: () => location.hash = '#portfolio' },
+        { type: 'section', title: 'آراء العملاء', subtitle: 'Testimonials', action: () => location.hash = '#testimonials' },
+        { type: 'section', title: 'تواصل', subtitle: 'Contact', action: () => location.hash = '#contact' },
+        ...portfolioData.map(p => ({
+          type: 'work',
+          title: p.title,
+          subtitle: `${catName(p.cat)} • ${p.role}`,
+          action: () => openPreviewById(p.id)
+        }))
+      ];
+
+      let activeIndex = 0;
+      let current = [];
+
+      function render(list) {
+        current = list;
+        activeIndex = 0;
+
+        if (!results) return;
+        if (!list.length) {
+          results.innerHTML = `<div class="p-5 text-sm text-gray-400">لا توجد نتائج.</div>`;
+          return;
+        }
+
+        results.innerHTML = list.map((it, idx) => `
+          <button type="button" class="paletteItem w-full text-right px-4 py-4 border-b border-white/10 hover:bg-white/5 transition flex items-center justify-between gap-3" data-idx="${idx}">
+            <div class="min-w-0">
+              <div class="font-bold text-gray-100 truncate">${it.title}</div>
+              <div class="text-xs text-gray-400 truncate">${it.subtitle || ''}</div>
+            </div>
+            <span class="text-xs px-2 py-1 rounded-lg border border-white/10 bg-black/20 text-gray-400">${it.type === 'work' ? 'عمل' : 'قسم'}</span>
+          </button>
+        `).join('');
+
+        setActive(0);
+        $$('.paletteItem', results).forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = Number(btn.dataset.idx);
+            close();
+            list[idx]?.action?.();
+          });
+        });
+      }
+
+      function setActive(idx) {
+        activeIndex = clamp(idx, 0, current.length - 1);
+        const btns = $$('.paletteItem', results);
+        btns.forEach((b, i) => {
+          b.classList.toggle('bg-primary/10', i === activeIndex);
+          b.classList.toggle('text-primary', i === activeIndex);
+        });
+        btns[activeIndex]?.scrollIntoView({ block: 'nearest' });
+      }
+
+      function open() {
+        openModal('#commandPalette');
+        setTimeout(() => input?.focus(), 0);
+        input.value = '';
+        render(entries);
+      }
+
+      function close() {
+        closeModal('#commandPalette');
+      }
+
+      openers.forEach(b => b.addEventListener('click', open));
+      if (closeBtn) closeBtn.addEventListener('click', close);
+      if (overlay) overlay.addEventListener('click', close);
+
+      document.addEventListener('keydown', (e) => {
+        const isOpen = modal && !modal.classList.contains('hidden');
+
+        // Ctrl+K opens
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          if (!isOpen) open();
+          return;
+        }
+
+        if (!isOpen) return;
+
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowDown') { e.preventDefault(); setActive(activeIndex + 1); }
+        if (e.key === 'ArrowUp') { e.preventDefault(); setActive(activeIndex - 1); }
+        if (e.key === 'Enter') { e.preventDefault(); close(); current[activeIndex]?.action?.(); }
+      });
+
+      input?.addEventListener('input', () => {
+        const q = input.value.trim().toLowerCase();
+        const list = entries.filter(it =>
+          it.title.toLowerCase().includes(q) || (it.subtitle || '').toLowerCase().includes(q)
+        );
+        render(list);
+      });
+    })();
+
+    // ---------- Auth modal (demo) ----------
+    (function () {
+      const modal = $('#authModal');
+      const overlay = $('#authOverlay');
+      const closeBtn = $('#closeAuth');
+      const form = $('#authForm');
+      const tabLogin = $('#tabLogin');
+      const tabSignup = $('#tabSignup');
+      const submit = $('#authSubmit');
+      const name = $('#authName');
+      const email = $('#authEmail');
+
+      let mode = 'login';
+
+      const openBtns = $$('[data-open-auth]');
+      openBtns.forEach((b) => {
+        b.addEventListener('click', () => {
+          setMode(b.dataset.openAuth === 'signup' ? 'signup' : 'login');
+          openModal('#authModal');
+          setTimeout(() => (email?.focus()), 0);
+        });
+      });
+
+      function setMode(m) {
+        mode = m;
+        tabLogin.classList.toggle('bg-primary/10', mode === 'login');
+        tabLogin.classList.toggle('border-primary/30', mode === 'login');
+        tabLogin.classList.toggle('text-primary', mode === 'login');
+
+        tabSignup.classList.toggle('bg-primary/10', mode === 'signup');
+        tabSignup.classList.toggle('border-primary/30', mode === 'signup');
+        tabSignup.classList.toggle('text-primary', mode === 'signup');
+
+        submit.textContent = mode === 'login' ? 'تسجيل الدخول' : 'إنشاء الحساب';
+        $('#authTitle').textContent = mode === 'login' ? 'تسجيل الدخول' : 'إنشاء حساب';
+      }
+
+      tabLogin?.addEventListener('click', () => setMode('login'));
+      tabSignup?.addEventListener('click', () => setMode('signup'));
+
+      function close() { closeModal('#authModal'); }
+      overlay?.addEventListener('click', close);
+      closeBtn?.addEventListener('click', close);
+
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const n = (name.value || '').trim() || 'STVX User';
+        const em = (email.value || '').trim();
+        if (!em.includes('@')) { toast('تأكد من البريد'); return; }
+
+        localStorage.setItem('stvx_user', JSON.stringify({ name: n, email: em }));
+        toast(mode === 'login' ? 'تم تسجيل الدخول' : 'تم إنشاء الحساب');
+        close();
+        syncAuth();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        const isOpen = modal && !modal.classList.contains('hidden');
+        if (!isOpen) return;
+        if (e.key === 'Escape') close();
+      });
+
+      setMode('login');
+
+      function syncAuth() {
+        const raw = localStorage.getItem('stvx_user');
+        const authButtons = $('#authButtons');
+        const userChip = $('#userChip');
+        if (!authButtons || !userChip) return;
+
+        if (!raw) {
+          authButtons.classList.remove('hidden');
+          userChip.classList.add('hidden');
+          return;
+        }
+        const user = JSON.parse(raw);
+        $('#userName').textContent = user.name || 'حساب';
+        authButtons.classList.add('hidden');
+        userChip.classList.remove('hidden');
+        userChip.classList.add('flex');
+      }
+
+      $('#logoutBtn')?.addEventListener('click', () => {
+        localStorage.removeItem('stvx_user');
+        toast('تم تسجيل الخروج');
+        syncAuth();
+      });
+
+      document.addEventListener('DOMContentLoaded', syncAuth);
+    })();
+
+    // ---------- Notifications button ----------
+    $('#notifBtn')?.addEventListener('click', () => toast('لا توجد إشعارات الآن'));
+
+    // ---------- Services hint ----------
+    $('#servicesHint')?.addEventListener('click', () => toast('ابدأ بفكرة واضحة → تصميم نظام بصري → تنفيذ → تحسينات الأداء'));
+
+    // ---------- Contact form ----------
+    (function () {
+      const f = $('#contactForm');
+      if (!f) return;
+      f.addEventListener('submit', (e) => {
+        e.preventDefault();
+        toast('تم استلام رسالتك (تجريبي)');
+        f.reset();
+      });
+
+      $('#copyEmail')?.addEventListener('click', async () => {
+        const email = 'faroukkir01@gmail.com';
+        try {
+          await navigator.clipboard.writeText(email);
+          toast('تم نسخ البريد');
+        } catch {
+          toast('تعذر النسخ');
+        }
+      });
+    })();
+
+    // ---------- Back to top ----------
+    $('#toTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ---------- CTA bar hide near contact ----------
+    (function () {
+      const cta = $('#ctaBar');
+      const contact = $('#contact');
+      if (!cta || !contact) return;
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            cta.style.opacity = '0';
+            cta.style.pointerEvents = 'none';
+            cta.style.transform = 'translateY(10px)';
+            cta.style.transition = 'opacity 220ms ease, transform 220ms ease';
+          } else {
+            cta.style.opacity = '1';
+            cta.style.pointerEvents = '';
+            cta.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.18 });
+
+      io.observe(contact);
+    })();
+
+    // ---------- Testimonials slider ----------
+    (function () {
+      const data = [
+        { quote: 'احترافية عالية وتواصل ممتاز. النتيجة النهائية فاقت التوقعات.', name: 'NOON', meta: 'براند مجوهرات' },
+        { quote: 'ذوق واهتمام بالتفاصيل وسرعة تنفيذ. تجربة ممتازة.', name: 'REIHAN', meta: 'متجر مخبوزات' },
+        { quote: 'شغل نظيف وكود منظم. واجهة سريعة على الجوال والكمبيوتر.', name: 'عميل', meta: 'مشروع متجر' },
+        { quote: 'أسلوب تصميم راقي ومتسق. التغذية الراجعة كانت احترافية.', name: 'عميل', meta: 'موقع تعريفي' }
+      ];
+
+      const inner = $('#testimonialsInner');
+      const dots = $('#testDots');
+      if (!inner || !dots) return;
+
+      inner.innerHTML = data.map((t) => `
+        <div class="w-full shrink-0">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="md:col-span-2">
+              <div class="text-lg md:text-xl font-bold text-gray-100 leading-relaxed">“${t.quote}”</div>
+              <div class="mt-4 flex items-center gap-3">
+                <span class="w-11 h-11 rounded-2xl bg-primary/15 border border-primary/25 grid place-items-center text-primary"><i class="ri-chat-quote-line text-xl"></i></span>
+                <div>
+                  <div class="font-extrabold">${t.name}</div>
+                  <div class="text-sm text-gray-400">${t.meta}</div>
+                </div>
+              </div>
+            </div>
+            <div class="hidden md:block">
+              <div class="glass rounded-3xl p-5 border border-white/10">
+                <div class="text-xs text-gray-400">ملاحظة</div>
+                <div class="font-extrabold mt-1">تجربة عميل</div>
+                <div class="text-sm text-gray-200 mt-2">التركيز دائمًا على: وضوح الواجهة، سرعة التحميل، واحترام التفاصيل.</div>
+                <div class="mt-4 h-2 rounded-full bg-black/40 overflow-hidden">
+                  <div class="h-full w-[86%] bg-gradient-to-r from-primary to-yellow-200"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      dots.innerHTML = data.map((_, i) => `
+        <button class="dot w-2.5 h-2.5 rounded-full bg-white/15 hover:bg-white/25 transition" data-i="${i}" aria-label="انتقال"></button>
+      `).join('');
+
+      let i = 0;
+      const set = (idx) => {
+        i = (idx + data.length) % data.length;
+        inner.style.transform = `translateX(${i * 100}%)`;
+        $$('.dot', dots).forEach((d, di) => {
+          d.classList.toggle('bg-primary', di === i);
+          d.classList.toggle('bg-white/15', di !== i);
+        });
+      };
+
+      // RTL: translateX positive moves content right; we want next to move left. We'll reverse by using positive.
+      // Using translateX(i*100%) works with RTL because container is still LTR in transform context.
+      // If it looks reversed, flip with negative.
+
+      // Ensure initial
+      set(0);
+
+      $$('#testDots .dot').forEach((b) => b.addEventListener('click', () => set(Number(b.dataset.i))));
+
+      $('#prevTest')?.addEventListener('click', () => set(i - 1));
+      $('#nextTest')?.addEventListener('click', () => set(i + 1));
+
+      let timer = setInterval(() => set(i + 1), 6000);
+      ['mouseenter', 'focusin'].forEach(evt => {
+        $('#testimonials')?.addEventListener(evt, () => { clearInterval(timer); });
+      });
+      ['mouseleave', 'focusout'].forEach(evt => {
+        $('#testimonials')?.addEventListener(evt, () => { clearInterval(timer); timer = setInterval(() => set(i + 1), 6000); });
+      });
+    })();
+  </script>
 </body>
 </html>
