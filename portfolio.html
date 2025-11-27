@@ -1,426 +1,413 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرض الأعمال | STVX Platform</title>
-    
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script> 
-    
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css"> 
-    
-    <script>
-        // إعدادات Tailwind (مهمة لتعريف الألوان والأنيميشن)
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#ffc72c', // لون التمييز الذهبي
-                        secondary: '#333333' // لون ثانوي للتفاصيل 
-                    },
-                    borderRadius: {
-                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
-                    },
-                    fontFamily: {
-                        // يجب أن يكون "Expo Arabic" معرّفاً في ملف style.css
-                        sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
-                        logo: ['Pacifico', 'cursive'],
-                    },
-                    // تعريفات الأنيميشن (كما هي)
-                    animation: {
-                        'fade-in': 'fadeIn 0.6s ease-out forwards',
-                        'slide-down': 'slideDown 0.5s ease-out forwards',
-                        'slide-up': 'slideUp 0.7s ease-out forwards',
-                        'card-pop': 'cardPop 0.6s ease-out forwards',
-                        'bounce': 'bounce 1s infinite',
-                        'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
-                        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-                        slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                        cardPop: { '0%': { opacity: '0', transform: 'scale(0.9) translateY(20px)' }, '100%': { opacity: '1', transform: 'scale(1) translateY(0)' } },
-                        ping: {
-                            '75%, 100%': { transform: 'scale(2)', opacity: '0' },
-                        },
-                        bounce: {
-                            '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
-                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
-                        },
-                        pulse: {
-                            '0%, 100%': { opacity: 1 },
-                            '50%': { opacity: .5 },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        /* تعريف Glass Card - ليعمل بشكل سليم */
-        .glass-card {
-            background-color: rgba(17, 17, 17, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); /* تم زيادة الظل قليلاً للوضوح */
-            border: 1px solid rgba(255, 255, 255, 0.1); /* تم زيادة وضوح الحدود */
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>معرض الأعمال | STVX Platform</title>
+
+  <!-- Tailwind CSS (Browser Build v4) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet" />
+
+  <!-- Arabic Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind theme extensions (v4 CSS-first) -->
+  <style type="text/tailwindcss">
+    @theme {
+      --color-primary: #ffc72c;
+      --color-secondary: #333333;
+      --font-sans: "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    }
+  </style>
+
+  <style>
+    /* Glass Card */
+    .glass-card {
+      background-color: rgba(17, 17, 17, 0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    /* Custom animations to replace old Tailwind config */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes slideDown {
+      0% { opacity: 0; transform: translateY(-18px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(18px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes cardPop {
+      0% { opacity: 0; transform: scale(0.95) translateY(18px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .animate-fade-in { animation: fadeIn 0.75s ease-out both; }
+    .animate-slide-down { animation: slideDown 0.55s ease-out both; }
+    .animate-slide-up { animation: slideUp 0.7s ease-out both; }
+    .animate-card-pop { animation: cardPop 0.7s ease-out both; }
+
+    /* Spotlight effect (follows pointer within card) */
+    .card-spotlight {
+      background: radial-gradient(
+        650px circle at var(--x, 50%) var(--y, 40%),
+        rgba(255, 199, 44, 0.18),
+        rgba(255, 199, 44, 0.10) 18%,
+        rgba(0, 0, 0, 0) 45%
+      );
+    }
+
+    /* Soft blur on main content while loading */
+    #mainContent.is-loading {
+      filter: blur(10px) saturate(0.9);
+    }
+
+    /* Better scrollbar */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.35); }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 199, 44, 0.35);
+      border-radius: 999px;
+      border: 2px solid rgba(0,0,0,0.25);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 199, 44, 0.55); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-fade-in, .animate-slide-down, .animate-slide-up, .animate-card-pop { animation: none !important; }
+    }
+  </style>
 </head>
-<body class="text-white font-sans flex flex-col min-h-screen 
-    bg-[url('images/loginbackground006.png')] bg-cover bg-fixed bg-center">
-    
-    <div id="app-loader" class="fixed inset-0 bg-neutral-900 flex items-center justify-center z-[100] transition-opacity duration-300">
-        <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-primary border-t-transparent"></div>
+
+<body class="text-white font-sans flex flex-col min-h-screen bg-neutral-950">
+  <!-- Background (image + overlays). If image is missing, gradient still looks good. -->
+  <div class="fixed inset-0 -z-10">
+    <div class="absolute inset-0 bg-[url('images/loginbackground006.png')] bg-cover bg-center opacity-70"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/65 to-black/80"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,199,44,0.12),transparent_55%)]"></div>
+  </div>
+
+  <!-- Loader -->
+  <div id="app-loader" class="fixed inset-0 bg-neutral-950/95 flex items-center justify-center z-[100] transition-opacity duration-300">
+    <div class="relative">
+      <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
+      <div class="absolute inset-0 rounded-full blur-xl bg-primary/15"></div>
     </div>
-    
-    <div id="mainContent" class="flex-1 transition-filter duration-300">
-        
-        <nav class="glass-card px-6 py-4 sticky top-0 left-0 right-0 z-50 rounded-none">
-            <div class="flex items-center justify-between max-w-7xl mx-auto">
-                
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <img src="images/logos4you.png" alt="STVX Logo" class="w-40 h-10 object-contain" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
+  </div>
+
+  <div id="mainContent" class="flex-1 transition-[filter] duration-500 is-loading">
+    <!-- NAVBAR -->
+    <nav class="glass-card px-4 md:px-6 py-4 sticky top-0 left-0 right-0 z-50 rounded-none">
+      <div class="flex items-center justify-between max-w-7xl mx-auto">
+        <div class="flex items-center gap-3">
+          <img src="images/logos4you.png" alt="STVX Logo" class="w-36 md:w-40 h-10 object-contain" style="filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.7));">
+        </div>
+
+        <div class="hidden md:flex gap-8 text-lg font-medium">
+          <a href="index.html" class="text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
+          <a href="#" class="text-primary border-b-2 border-primary pb-1">معرض الأعمال</a>
+          <a href="#footer" class="text-gray-300 hover:text-primary transition-colors">تواصل</a>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Mobile menu button -->
+          <button id="menuBtn" class="md:hidden w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition" aria-label="القائمة" aria-expanded="false" aria-controls="mobileMenu">
+            <i class="ri-menu-3-line text-gray-200 text-xl"></i>
+          </button>
+
+          <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" aria-label="الحساب">
+            <i class="ri-user-line text-gray-300 text-xl"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="md:hidden hidden max-w-7xl mx-auto mt-3 overflow-hidden">
+        <div class="glass-card rounded-2xl p-3 border border-white/10 animate-slide-down">
+          <a class="block px-3 py-2 rounded-xl text-gray-200 hover:bg-white/10" href="index.html">الرئيسية</a>
+          <a class="block px-3 py-2 rounded-xl text-primary bg-primary/10" href="#">معرض الأعمال</a>
+          <a class="block px-3 py-2 rounded-xl text-gray-200 hover:bg-white/10" href="#footer">تواصل</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="py-8 px-4 md:px-8 max-w-6xl mx-auto flex-1">
+      <header class="text-center mb-10 opacity-0 animate-fade-in" style="animation-delay: 120ms;">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
+          الإبداع بلغته الخاصة يبدأ هنا
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
+          كل تصميم هنا يحمل منّا جزء.. من فكر، من إحساس، ومن بصمة.
+        </p>
+      </header>
+
+      <!-- Cards: unified height/width & stretch -->
+      <section class="mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch justify-items-center">
+
+          <!-- Card 1: Graphics -->
+          <a href="graphics.html"
+             class="group block w-full max-w-sm self-stretch focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black/40 rounded-3xl opacity-0 animate-card-pop"
+             style="animation-delay: 260ms;">
+
+            <div class="relative h-full min-h-[560px] text-white rounded-3xl border border-white/10 bg-gradient-to-br from-[#050505] via-[#0b0b0b] to-[#050505] shadow-2xl duration-700 z-10 backdrop-blur-xl hover:border-white/25 overflow-hidden transition">
+              <!-- Spotlight layer -->
+              <div class="absolute inset-0 card-spotlight opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+              <!-- Decorative layers -->
+              <div class="absolute inset-0 z-0 overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-primary/20 opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
+
+                <div class="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-primary/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700"></div>
+
+                <div class="absolute top-10 left-10 w-16 h-16 rounded-full bg-primary/20 blur-xl animate-ping"></div>
+                <div class="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-primary/20 blur-lg animate-ping" style="animation-delay: 1s;"></div>
+
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000"></div>
+              </div>
+
+              <div class="p-8 relative z-10 h-full flex flex-col items-center text-center">
+                <div class="relative mb-6">
+                  <div class="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping"></div>
+                  <div class="absolute inset-0 rounded-full border border-primary/10 animate-pulse" style="animation-delay: 0.5s;"></div>
+
+                  <div class="p-6 rounded-full backdrop-blur-lg border border-white/20 bg-gradient-to-br from-black/80 to-black/60 shadow-2xl transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 hover:shadow-primary/20">
+                    <i class="ri-pen-nib-line text-4xl text-primary transform group-hover:rotate-180 transition-transform duration-700 filter drop-shadow-lg"></i>
+                  </div>
                 </div>
-                
-                <div class="hidden md:flex space-x-8 rtl:space-x-reverse text-lg font-medium">
-                    <a href="index.html" class="text-gray-300 hover:text-primary transition-colors">الرئيسية</a>
-                    <a href="#" class="text-primary border-b-2 border-primary pb-1">معرض الأعمال</a>
+
+                <!-- Fixed title height to keep both cards aligned -->
+                <div class="mb-2 h-20 flex items-center justify-center">
+                  <h2 class="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent leading-tight">
+                    تصاميم الجرافيكس
+                  </h2>
                 </div>
-                
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110">
-                        <i class="ri-user-line text-gray-300 text-xl"></i>
-                    </a>
+
+                <div class="w-full max-w-xs flex-1 flex flex-col justify-center">
+                  <div class="space-y-2">
+                    <p class="text-gray-300 text-sm font-semibold leading-relaxed group-hover:text-gray-200 transition-colors">هويات بصرية متكاملة وشعارات إبداعية.</p>
+                    <p class="text-gray-300 text-sm leading-relaxed group-hover:text-gray-200 transition-colors">موشن جرافيكس احترافي وإعلانات رقمية.</p>
+                    <p class="text-gray-300 text-sm leading-relaxed group-hover:text-gray-200 transition-colors">نصمم رؤيتك البصرية ونحولها إلى واقع جذاب.</p>
+                  </div>
                 </div>
+
+                <div class="mt-6 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full transform group-hover:w-1/2 group-hover:h-1 transition-all duration-500"></div>
+
+                <div class="flex gap-2 mt-4 opacity-70 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true">
+                  <div class="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                  <div class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+                  <div class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                </div>
+
+                <!-- CTA -->
+                <div class="mt-7">
+                  <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/25 bg-primary/10 text-primary font-semibold transition group-hover:bg-primary/15">
+                    استعرض الأعمال
+                    <i class="ri-arrow-left-line rtl:rotate-180"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-primary/10 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             </div>
-        </nav>
+          </a>
 
-        <main class="py-6 px-4 md:px-8 max-w-6xl mx-auto flex-1"> 
-            
-            <header class="text-center mb-10" style="animation: fadeIn 0.8s ease-out 0.4s forwards; opacity: 0;">
-                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-yellow-300">
-                    الإبداع بلغته الخاصة يبدأ هنا
-                </h1>
-                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
-                    كل تصميم هنا يحمل منّا جزء.. من فكر، من إحساس، ومن بصمة.
-                </p>
-            </header>
+          <!-- Card 2: UI/Development -->
+          <a href="programs.html"
+             class="group block w-full max-w-sm self-stretch focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black/40 rounded-3xl opacity-0 animate-card-pop"
+             style="animation-delay: 380ms;">
 
-            <section class="mb-4 flex justify-center"> 
-                <div class="flex flex-col md:flex-row justify-center items-center gap-12">
-                    
-                    <a href="graphics.html" 
-                        class="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:-rotate-1 animate-fade-in" 
-                        style="animation-delay: 0.8s;">
-                        <div
-                            class="text-white rounded-3xl border border-white/10 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl duration-700 z-10 relative backdrop-blur-xl hover:border-white/25 overflow-hidden hover:shadow-white/5 hover:shadow-3xl w-full max-w-sm"
-                        >
-                            <div class="absolute inset-0 z-0 overflow-hidden">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-primary/20 opacity-40 group-hover:opacity-60 transition-opacity duration-500"
-                                ></div>
+            <div class="relative h-full min-h-[560px] text-white rounded-3xl border border-white/10 bg-gradient-to-br from-[#050505] via-[#0b0b0b] to-[#050505] shadow-2xl duration-700 z-10 backdrop-blur-xl hover:border-white/25 overflow-hidden transition">
+              <!-- Spotlight layer -->
+              <div class="absolute inset-0 card-spotlight opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                                <div
-                                    style="animation-delay: 0.5s;"
-                                    class="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-primary/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce"
-                                ></div>
+              <!-- Decorative layers -->
+              <div class="absolute inset-0 z-0 overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-primary/20 opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
 
-                                <div
-                                    class="absolute top-10 left-10 w-16 h-16 rounded-full bg-primary/20 blur-xl animate-ping"
-                                ></div>
-                                <div
-                                    style="animation-delay: 1s;"
-                                    class="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-primary/20 blur-lg animate-ping"
-                                ></div>
+                <div class="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-primary/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700"></div>
 
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000"
-                                ></div>
-                            </div>
+                <div class="absolute top-10 left-10 w-16 h-16 rounded-full bg-primary/20 blur-xl animate-ping"></div>
+                <div class="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-primary/20 blur-lg animate-ping" style="animation-delay: 1s;"></div>
 
-                            <div class="p-8 relative z-10">
-                                <div class="flex flex-col items-center text-center">
-                                    <div class="relative mb-6">
-                                        <div
-                                            class="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping"
-                                        ></div>
-                                        <div
-                                            style="animation-delay: 0.5s;"
-                                            class="absolute inset-0 rounded-full border border-primary/10 animate-pulse"
-                                        ></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000"></div>
+              </div>
 
-                                        <div
-                                            class="p-6 rounded-full backdrop-blur-lg border border-white/20 bg-gradient-to-br from-black/80 to-black/60 shadow-2xl transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 hover:shadow-primary/20"
-                                        >
-                                            <i class="ri-pen-nib-line text-4xl text-primary transform group-hover:rotate-180 transition-transform duration-700 filter drop-shadow-lg"></i>
-                                        </div>
-                                    </div>
+              <div class="p-8 relative z-10 h-full flex flex-col items-center text-center">
+                <div class="relative mb-6">
+                  <div class="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping"></div>
+                  <div class="absolute inset-0 rounded-full border border-primary/10 animate-pulse" style="animation-delay: 0.5s;"></div>
 
-                                    <div
-                                        class="mb-4 transform group-hover:scale-105 transition-transform duration-300"
-                                    >
-                                        <p
-                                            class="text-3xl font-bold bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent animate-pulse"
-                                        >
-                                            تصاميم الجرافيكس
-                                        </p>
-                                    </div>
-
-                                    <div class="space-y-1 max-w-sm">
-                                        <p
-                                            class="text-gray-300 text-sm font-semibold leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
-                                        >
-                                            هويات بصرية متكاملة وشعارات إبداعية.
-                                        </p>
-
-                                        <p
-                                            class="text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
-                                        >
-                                            موشن جرافيكس احترافي وإعلانات رقمية.
-                                        </p>
-                                        <p
-                                            class="text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
-                                        >
-                                            نصمم رؤيتك البصرية ونحولها إلى واقع جذاب.
-                                        </p>
-                                    </div>
-
-                                    <div
-                                        class="mt-6 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full transform group-hover:w-1/2 group-hover:h-1 transition-all duration-500 animate-pulse"
-                                    ></div>
-
-                                    <div
-                                        class="flex space-x-2 rtl:space-x-reverse mt-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300"
-                                    >
-                                        <div class="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                                        <div
-                                            style="animation-delay: 0.1s;"
-                                            class="w-2 h-2 bg-primary rounded-full animate-bounce"
-                                        ></div>
-                                        <div
-                                            style="animation-delay: 0.2s;"
-                                            class="w-2 h-2 bg-primary rounded-full animate-bounce"
-                                        ></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                            ></div>
-                            <div
-                                class="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-primary/10 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                            ></div>
-                        </div>
-                    </a>
-
-                    <a href="programs.html" 
-                        class="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:rotate-1 animate-fade-in" 
-                        style="animation-delay: 1s;">
-                        <div
-                            class="text-white rounded-3xl border border-white/10 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl duration-700 z-10 relative backdrop-blur-xl hover:border-white/25 overflow-hidden hover:shadow-white/5 hover:shadow-3xl w-full max-w-sm"
-                        >
-                            <div class="absolute inset-0 z-0 overflow-hidden">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-primary/20 opacity-40 group-hover:opacity-60 transition-opacity duration-500"
-                                ></div>
-
-                                <div
-                                    style="animation-delay: 0.5s;"
-                                    class="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-primary/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce"
-                                ></div>
-
-                                <div
-                                    class="absolute top-10 left-10 w-16 h-16 rounded-full bg-primary/20 blur-xl animate-ping"
-                                ></div>
-                                <div
-                                    style="animation-delay: 1s;"
-                                    class="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-primary/20 blur-lg animate-ping"
-                                ></div>
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000"
-                                ></div>
-                            </div>
-
-                            <div class="p-8 relative z-10">
-                                <div class="flex flex-col items-center text-center">
-                                    <div class="relative mb-6">
-                                        <div
-                                            class="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping"
-                                        ></div>
-                                        <div
-                                            style="animation-delay: 0.5s;"
-                                            class="absolute inset-0 rounded-full border border-primary/10 animate-pulse"
-                                        ></div>
-
-                                        <div
-                                            class="p-6 rounded-full backdrop-blur-lg border border-white/20 bg-gradient-to-br from-black/80 to-black/60 shadow-2xl transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 hover:shadow-primary/20"
-                                        >
-                                            <i class="ri-code-s-slash-line text-4xl text-primary transform group-hover:rotate-180 transition-transform duration-700 filter drop-shadow-lg"></i>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="mb-4 transform group-hover:scale-105 transition-transform duration-300"
-                                    >
-                                        <p
-                                            class="text-3xl font-bold bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent animate-pulse"
-                                        >
-                                            تطوير الواجهات والبرمجة
-                                        </p>
-                                    </div>
-
-                                    <div class="space-y-1 max-w-sm">
-                                        <p
-                                            class="text-gray-300 text-sm font-semibold leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
-                                        >
-                                            بناء مواقع وتطبيقات تفاعلية متجاوبة.
-                                        </p>
-
-                                        <p
-                                            class="text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
-                                        >
-                                            استخدام أحدث تقنيات الـ Front-end.
-                                        </p>
-                                        <p
-                                            class="text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300"
-                                        >
-                                            تحويل التصميم إلى كود نظيف وسريع الأداء.
-                                        </p>
-                                    </div>
-
-                                    <div
-                                        class="mt-6 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full transform group-hover:w-1/2 group-hover:h-1 transition-all duration-500 animate-pulse"
-                                    ></div>
-
-                                    <div
-                                        class="flex space-x-2 rtl:space-x-reverse mt-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300"
-                                    >
-                                        <div class="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                                        <div
-                                            style="animation-delay: 0.1s;"
-                                            class="w-2 h-2 bg-primary rounded-full animate-bounce"
-                                        ></div>
-                                        <div
-                                            style="animation-delay: 0.2s;"
-                                            class="w-2 h-2 bg-primary rounded-full animate-bounce"
-                                        ></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                            ></div>
-                            <div
-                                class="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-primary/10 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                            ></div>
-                        </div>
-                    </a>
-
+                  <div class="p-6 rounded-full backdrop-blur-lg border border-white/20 bg-gradient-to-br from-black/80 to-black/60 shadow-2xl transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 hover:shadow-primary/20">
+                    <i class="ri-code-s-slash-line text-4xl text-primary transform group-hover:rotate-180 transition-transform duration-700 filter drop-shadow-lg"></i>
+                  </div>
                 </div>
-            </section>
 
-        </main>
-        
-        <footer class="glass-card mt-auto px-6 py-8 text-center border-t border-gray-800">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex justify-center space-x-4 rtl:space-x-reverse mb-6">
-                    
-                    <a
-                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#3b5998] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#3b5998]/40"
-                        href="https://web.facebook.com/iiStevexn"
-                        aria-label="Facebook"
-                    >
-                        <svg class="w-5" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1.1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z"></path>
-                        </svg>
-                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#3b5998] px-2 py-1 rounded-md drop-shadow-lg">
-                            Facebook
-                        </span>
-                    </a>
-                    
-                    <a
-                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#000000] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-white/40"
-                        href="https://x.com/iistevexn"
-                        aria-label="Twitter X"
-                    >
-                        <i class="ri-twitter-x-fill text-xl"></i>
-                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-black px-2 py-1 rounded-md drop-shadow-lg">
-                            Twitter/X
-                        </span>
-                    </a>
-
-                    <a
-                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-pink-600/40"
-                        style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);"
-                        href="https://www.instagram.com/thestiiiv"
-                        aria-label="Instagram"
-                    >
-                        <i class="ri-instagram-line text-xl"></i>
-                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-pink-600 px-2 py-1 rounded-md drop-shadow-lg">
-                            Instagram
-                        </span>
-                    </a>
-                    
-                    <a
-                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#5865F2] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#5865F2]/40"
-                        href="https://discord.gg/Vnr8qFnyJr"
-                        aria-label="Discord"
-                    >
-                        <i class="ri-discord-fill text-xl"></i>
-                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#5865F2] px-2 py-1 rounded-md drop-shadow-lg">
-                            Discord
-                        </span>
-                    </a>
-                    
-                    <a
-                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#0088CC] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#0088CC]/40"
-                        href="https://t.me/thestvx" 
-                        aria-label="Telegram"
-                    >
-                        <i class="ri-telegram-fill text-xl"></i>
-                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#0088CC] px-2 py-1 rounded-md drop-shadow-lg">
-                            Telegram
-                        </span>
-                    </a>
-
-                    <a
-                        class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-primary text-gray-900 font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-primary/40"
-                        href="mailto:faroukkir01@gmail.com"
-                        aria-label="Email"
-                    >
-                        <i class="ri-mail-line text-xl"></i>
-                        <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-gray-900 bg-primary px-2 py-1 rounded-md drop-shadow-lg">
-                            البريد الإلكتروني
-                        </span>
-                    </a>
-                    
+                <!-- Fixed title height to keep both cards aligned -->
+                <div class="mb-2 h-20 flex items-center justify-center">
+                  <h2 class="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent leading-tight">
+                    تطوير الواجهات والبرمجة
+                  </h2>
                 </div>
-                
-                <p class="text-base text-gray-400">&copy; 2024 STVX Platform. جميع الحقوق محفوظة.</p>
+
+                <div class="w-full max-w-xs flex-1 flex flex-col justify-center">
+                  <div class="space-y-2">
+                    <p class="text-gray-300 text-sm font-semibold leading-relaxed group-hover:text-gray-200 transition-colors">بناء مواقع وتطبيقات تفاعلية متجاوبة.</p>
+                    <p class="text-gray-300 text-sm leading-relaxed group-hover:text-gray-200 transition-colors">استخدام أحدث تقنيات الـ Front-end.</p>
+                    <p class="text-gray-300 text-sm leading-relaxed group-hover:text-gray-200 transition-colors">تحويل التصميم إلى كود نظيف وسريع الأداء.</p>
+                  </div>
+                </div>
+
+                <div class="mt-6 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full transform group-hover:w-1/2 group-hover:h-1 transition-all duration-500"></div>
+
+                <div class="flex gap-2 mt-4 opacity-70 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true">
+                  <div class="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                  <div class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+                  <div class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                </div>
+
+                <!-- CTA -->
+                <div class="mt-7">
+                  <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/25 bg-primary/10 text-primary font-semibold transition group-hover:bg-primary/15">
+                    استعرض الأعمال
+                    <i class="ri-arrow-left-line rtl:rotate-180"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-primary/10 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             </div>
-        </footer>
-        
-    </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const loader = document.getElementById('app-loader');
-                if (loader) {
-                    loader.style.opacity = '0';
-                    setTimeout(() => loader.style.display = 'none', 300);
-                }
-            }, 500); // تأخير نصف ثانية لإظهار اللودر
+          </a>
+
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer" class="glass-card mt-auto px-6 py-8 text-center border-t border-white/10">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex justify-center flex-wrap gap-3 mb-6">
+          <a class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#3b5998] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#3b5998]/40" href="https://web.facebook.com/iiStevexn" aria-label="Facebook">
+            <svg class="w-5" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1.1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z"></path></svg>
+            <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#3b5998] px-2 py-1 rounded-md drop-shadow-lg">Facebook</span>
+          </a>
+
+          <a class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#000000] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-white/40" href="https://x.com/iistevexn" aria-label="Twitter X">
+            <i class="ri-twitter-x-fill text-xl"></i>
+            <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-black px-2 py-1 rounded-md drop-shadow-lg">Twitter/X</span>
+          </a>
+
+          <a class="group relative flex justify-center p-2 rounded-md drop-shadow-xl text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-pink-600/40" style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);" href="https://www.instagram.com/thestiiiv" aria-label="Instagram">
+            <i class="ri-instagram-line text-xl"></i>
+            <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-pink-600 px-2 py-1 rounded-md drop-shadow-lg">Instagram</span>
+          </a>
+
+          <a class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#5865F2] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#5865F2]/40" href="https://discord.gg/Vnr8qFnyJr" aria-label="Discord">
+            <i class="ri-discord-fill text-xl"></i>
+            <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#5865F2] px-2 py-1 rounded-md drop-shadow-lg">Discord</span>
+          </a>
+
+          <a class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-[#0088CC] text-white font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-[#0088CC]/40" href="https://t.me/thestvx" aria-label="Telegram">
+            <i class="ri-telegram-fill text-xl"></i>
+            <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-white bg-[#0088CC] px-2 py-1 rounded-md drop-shadow-lg">Telegram</span>
+          </a>
+
+          <a class="group relative flex justify-center p-2 rounded-md drop-shadow-xl bg-primary text-gray-900 font-semibold hover:translate-y-[-4px] transition-all duration-300 hover:shadow-lg hover:shadow-primary/40" href="mailto:faroukkir01@gmail.com" aria-label="Email">
+            <i class="ri-mail-line text-xl"></i>
+            <span class="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-500 text-gray-900 bg-primary px-2 py-1 rounded-md drop-shadow-lg">البريد الإلكتروني</span>
+          </a>
+        </div>
+
+        <p class="text-base text-gray-400">&copy; 2024 STVX Platform. جميع الحقوق محفوظة.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Loader + unblur content
+    document.addEventListener('DOMContentLoaded', () => {
+      const loader = document.getElementById('app-loader');
+      const main = document.getElementById('mainContent');
+
+      setTimeout(() => {
+        if (loader) {
+          loader.style.opacity = '0';
+          setTimeout(() => {
+            loader.style.display = 'none';
+          }, 300);
+        }
+        if (main) main.classList.remove('is-loading');
+      }, 450);
+    });
+
+    // Mobile menu toggle
+    (function () {
+      const btn = document.getElementById('menuBtn');
+      const menu = document.getElementById('mobileMenu');
+      if (!btn || !menu) return;
+
+      const closeMenu = () => {
+        menu.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      };
+
+      const toggleMenu = () => {
+        const isOpen = !menu.classList.contains('hidden');
+        if (isOpen) closeMenu();
+        else {
+          menu.classList.remove('hidden');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      };
+
+      btn.addEventListener('click', toggleMenu);
+
+      document.addEventListener('click', (e) => {
+        if (menu.classList.contains('hidden')) return;
+        if (menu.contains(e.target) || btn.contains(e.target)) return;
+        closeMenu();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
+      });
+    })();
+
+    // Card spotlight pointer tracking
+    (function () {
+      const cards = document.querySelectorAll('.card-spotlight');
+      if (!cards.length) return;
+
+      const attach = (root) => {
+        root.addEventListener('pointermove', (e) => {
+          const rect = root.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top) / rect.height) * 100;
+          root.style.setProperty('--x', x + '%');
+          root.style.setProperty('--y', y + '%');
         });
-    </script>
-    
-    </body>
+      };
+
+      // .card-spotlight is the overlay; we want the parent card as root for better feel
+      document.querySelectorAll('[class*="min-h-"]').forEach(() => {});
+
+      // Attach to the card container (parent of the spotlight layer)
+      document.querySelectorAll('.card-spotlight').forEach((spot) => {
+        const card = spot.parentElement;
+        if (card) attach(card);
+      });
+    })();
+  </script>
+</body>
 </html>
