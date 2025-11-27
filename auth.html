@@ -1,355 +1,915 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>STVX Platform | تسجيل الدخول</title>
-
-
-
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
-
-
-
-    <link rel="stylesheet" href="style.css">
-
-    <link rel="stylesheet" href="auth.css">
-
-
-
-    <script>
-
-        tailwind.config = {
-
-            theme: {
-
-                extend: {
-
-                    colors: {
-
-                        primary: '#ffc72c',
-
-                        secondary: '#333333'
-
-                    },
-
-                    borderRadius: {
-
-                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
-
-                    },
-
-                    fontFamily: {
-
-                        // 🛑 تم تعديل الخط الأساسي إلى Expo Arabic 🛑
-
-                        sans: ['Expo Arabic', 'sans-serif'],
-
-                        logo: ['Pacifico', 'cursive'],
-
-                    },
-
-                    animation: {
-
-                        'fade-in': 'fadeIn 0.6s ease-out forwards',
-
-                        'slide-down': 'slideDown 0.5s ease-out forwards',
-
-                        'slide-up': 'slideUp 0.7s ease-out forwards',
-
-                    },
-
-                    keyframes: {
-
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-
-                        slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-
-                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-
-                    }
-
-                }
-
-            }
-
-        }
-
-    </script>
-
-
-
-    <style>
-
-        /* قاعدة Glassmorphism الأساسية */
-
-        .glass-card {
-
-            background-color: rgba(255, 255, 255, 0.05);
-
-            backdrop-filter: blur(12px);
-
-            -webkit-backdrop-filter: blur(12px);
-
-            border: 1px solid rgba(255, 255, 255, 0.1);
-
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-
-            transition: all 0.3s ease;
-
-        }
-
-    </style>
-
-</head>
-
-<body class="text-white font-sans auth-background">
-
-
-
-    <a href="index.html" class="fixed top-6 right-6 z-50">
-
-        <button class="w-12 h-12 glass-card rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110 hover:border-primary/50" 
-
-                title="العودة إلى الرئيسية">
-
-            <i class="ri-arrow-right-line text-2xl text-primary"></i>
-
-        </button>
-
-    </a>
-
-    <div id="loading-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md">
-
-        <svg aria-label="Loader SVG" role="img" height="56px" width="56px" viewBox="0 0 56 56" class="loader">
-
-            <g class="loader__glare-top" stroke="#ffc72c" fill="none">
-
-                <path d="M41,18 C41,18 40.5,23.5 37,27 C32.5,31.5 25,31.5 25,31.5 C25,31.5 24,31.5 20,27 C15.5,22.5 15,18 15,18 L41,18 Z"></path>
-
-            </g>
-
-            <path class="loader__model" d="M15,18 L41,18 L41,38 L15,38 L15,18 Z" stroke="#FFFFFF" fill="#000000" fill-opacity="0.8"></path>
-
-            <path class="loader__bevel" d="M15,18 L41,18 L41,19 L15,19 L15,18 Z" stroke="#333333" fill="#333333"></path>
-
-            <g class="loader__sand-top" stroke="#ffc72c" fill="#ffc72c">
-
-                <path d="M15,19 L41,19 C41,25 37,28 32,28 C27,28 25,25 25,19 L15,19 Z"></path>
-
-            </g>
-
-            <g class="loader__sand-bottom" stroke="#ffc72c" fill="#ffc72c">
-
-                <path d="M15,37 L41,37 L41,38 L15,38 L15,37 Z"></path>
-
-                <path d="M25,29 L31,29 L28,31 L25,29 Z"></path>
-
-                <path d="M28,32 L28,35 C28,35 25,36 25,36 L31,36 C31,36 28,37 28,37 Z"></path>
-
-            </g>
-
-            <g class="loader__glare-bottom" stroke="#ffc72c" fill="none">
-
-                <path d="M15,37 L41,37 C41,37 40,32 37,28 C32,23 25,23 25,23 C25,23 24,23 20,28 C15,33 15,37 15,37 Z"></path>
-
-            </g>
-
-        </svg>
-
-    </div>
-
+    <meta name="theme-color" content="#0a0a0a">
+    <title>STVX Platform | بوابة الدخول الآمنة</title>
     
-
-    <div class="flex items-center justify-center min-h-screen py-10 px-4 relative z-10">
-
-        <div class="auth-container w-full max-w-lg">
-
-            <div id="auth-card" class="glass-card rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
-
-
-
-                <div class="flex border-b border-white/10">
-
-                    <button id="login-tab" class="tab-button flex-1 py-4 text-white font-medium text-center relative active">تسجيل الدخول</button>
-
-                    <button id="register-tab" class="tab-button flex-1 py-4 text-white font-medium text-center relative">إنشاء حساب</button>
-
-                </div>
-
-
-
-                <form id="login-form" class="p-8 space-y-6 animate-slide-up">
-
-                    <h2 class="text-3xl font-bold text-white text-center">مرحبًا من جديد، هنا تُكتب الفكرة وتُرسم الصورة</h2>
-
-                    <input type="email" placeholder="البريد الإلكتروني" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
-
-                    <input type="password" placeholder="كلمة المرور" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
-
-
-
-                    <a href="#" class="block text-left text-sm text-primary hover:text-white transition-colors">نسيت كلمة المرور؟</a>
-
-
-
-                    <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-black py-3 rounded-full font-bold transition-transform hover:scale-[1.02]">
-
-                        تسجيل الدخول
-
-                    </button>
-
-
-
-                    <div class="text-center text-sm text-gray-400">
-
-                        <span class="bg-transparent px-3">أو سجل عبر</span>
-
-                    </div>
-
-
-
-                    <div class="grid grid-cols-3 gap-4">
-
-                        <button type="button" class="glass-card py-3 rounded-lg flex items-center justify-center hover:bg-white/20 transition-all">
-
-                            <i class="ri-google-fill text-xl text-red-500"></i>
-
-                        </button>
-
-                        <button type="button" class="glass-card py-3 rounded-lg flex items-center justify-center hover:bg-white/20 transition-all">
-
-                            <i class="ri-facebook-fill text-xl text-blue-500"></i>
-
-                        </button>
-
-                        <button type="button" class="glass-card py-3 rounded-lg flex items-center justify-center hover:bg-white/20 transition-all">
-
-                            <i class="ri-apple-fill text-xl text-white"></i>
-
-                        </button>
-
-                    </div>
-
-                </form>
-
-
-
-                <form id="register-form" class="p-8 space-y-6 hidden animate-slide-up">
-
-                    <h2 class="text-3xl font-bold text-white text-center">خطوتك الأولى نحو بصمة تُرى</h2>
-
-                    <input type="text" placeholder="الاسم الكامل" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
-
-                    <input type="email" placeholder="بريدك الإلكتروني" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
-
-                    <input type="password" placeholder="كلمة المرور" class="glass-card w-full px-5 py-3 rounded-lg border-none text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 bg-black/20" style="background-color: rgba(0,0,0,0.1);">
-
-
-
-                    <div class="flex items-center">
-
-                        <input type="checkbox" id="terms" class="h-4 w-4 text-primary bg-transparent border-white/30 rounded-sm mr-2 focus:ring-primary/50">
-
-                        <label for="terms" class="text-sm text-gray-300">
-
-                            أوافق على <a href="#" class="text-primary hover:underline">الشروط والأحكام</a>
-
-                        </label>
-
-                    </div>
-
-
-
-                    <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-black py-3 rounded-full font-bold transition-transform hover:scale-[1.02]">
-
-                        إنشاء حساب
-
-                    </button>
-
-                </form>
-
-            </div>
-
-        </div>
-
+    <!-- Tailwind CSS (Browser Build v4) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    
+    <!-- Arabic Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind theme extensions (v4 CSS-first) -->
+    <style type="text/tailwindcss">
+        @theme {
+            --color-primary: #ffc72c;
+            --color-secondary: #333333;
+            --font-sans: "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+        }
+    </style>
+    
+    <style>
+        :root {
+            color-scheme: dark;
+            --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.42);
+            --shadow-glow: 0 18px 60px rgba(255, 199, 44, 0.10);
+        }
+        
+        html { scroll-behavior: smooth; }
+        
+        /* Premium glass surface */
+        .glass {
+            background: rgba(17, 17, 17, 0.74);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        /* Gradient border for premium sections */
+        .g-border {
+            position: relative;
+            isolation: isolate;
+        }
+        .g-border::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(255,199,44,.45), rgba(255,255,255,.08), rgba(255,199,44,.18));
+            filter: blur(0.2px);
+            z-index: -1;
+        }
+        
+        /* Subtle grain layer */
+        .grain {
+            pointer-events: none;
+            opacity: 0.08;
+            background-image:
+                radial-gradient(circle at 20% 10%, rgba(255,255,255,0.22), transparent 35%),
+                radial-gradient(circle at 80% 30%, rgba(255,255,255,0.16), transparent 40%),
+                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.12), transparent 45%),
+                radial-gradient(circle at 60% 60%, rgba(255,255,255,0.10), transparent 45%),
+                repeating-linear-gradient(0deg, rgba(255,255,255,0.06), rgba(255,255,255,0.06) 1px, transparent 1px, transparent 3px);
+            mix-blend-mode: overlay;
+        }
+        
+        /* Animated ambient blobs */
+        @keyframes blobFloat {
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            50% { transform: translate3d(16px, -18px, 0) scale(1.05); }
+            100% { transform: translate3d(0, 0, 0) scale(1); }
+        }
+        
+        /* خلفية متحركة */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            animation: float 10s ease-in-out infinite;
+        }
+        
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #ffc72c, #ff6b6b);
+            top: -300px;
+            right: -300px;
+            animation-duration: 15s;
+        }
+        
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            bottom: -250px;
+            left: -250px;
+            animation-duration: 20s;
+            animation-delay: 2s;
+        }
+        
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 25s;
+            animation-delay: 5s;
+        }
+        
+        /* Glass morphism card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+        }
+        
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glass-card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 199, 44, 0.3);
+        }
+        
+        /* Tab buttons */
+        .tab-button {
+            position: relative;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+        
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ffc72c, #ff6b6b);
+            transition: width 0.3s ease;
+        }
+        
+        .tab-button.active::after {
+            width: 100%;
+        }
+        
+        .tab-button.active {
+            color: #ffc72c;
+            background: rgba(255, 199, 44, 0.1);
+        }
+        
+        /* Input fields */
+        .input-field {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 199, 44, 0.5);
+            box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.1);
+        }
+        
+        .input-field:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Primary button */
+        .btn-primary {
+            background: linear-gradient(135deg, #ffc72c, #ffb300);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 199, 44, 0.3);
+        }
+        
+        /* Social buttons */
+        .social-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Loading overlay */
+        .loader {
+            animation: rotate 2s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Logo styling */
+        .logo-text {
+            background: linear-gradient(135deg, #ffc72c, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        /* Logo glow effect */
+        .logo-glow {
+            filter: drop-shadow(0 0 20px rgba(255,199,44,0.4)) 
+                    drop-shadow(0 0 40px rgba(255,199,44,0.2));
+            transition: all 0.4s ease;
+        }
+        
+        .logo-glow:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 30px rgba(255,199,44,0.6)) 
+                    drop-shadow(0 0 60px rgba(255,199,44,0.3));
+        }
+        
+        /* Form animations */
+        .form-appear {
+            animation: slideUp 0.6s ease-out forwards;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .gradient-orb {
+                filter: blur(80px);
+            }
+            
+            .orb-1 { width: 400px; height: 400px; }
+            .orb-2 { width: 350px; height: 350px; }
+            .orb-3 { width: 300px; height: 300px; }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 199, 44, 0.5);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 199, 44, 0.7);
+        }
+        
+        /* Checkbox styling */
+        input[type="checkbox"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="checkbox"]:checked {
+            background: linear-gradient(135deg, #ffc72c, #ffb300);
+            border-color: #ffc72c;
+        }
+        
+        input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        /* Password strength indicator */
+        .password-strength {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .strength-weak { background: #ff6b6b; width: 33%; }
+        .strength-medium { background: #ffc72c; width: 66%; }
+        .strength-strong { background: #4ade80; width: 100%; }
+        
+        /* Advanced animations */
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        @keyframes fadeInScale {
+            from { 
+                opacity: 0; 
+                transform: scale(0.95); 
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
+        }
+        
+        @keyframes shimmer {
+            0% { 
+                background-position: -200% center; 
+            }
+            100% { 
+                background-position: 200% center; 
+            }
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 0.6s ease-out forwards;
+        }
+        
+        .animate-fade-scale {
+            animation: fadeInScale 0.5s ease-out forwards;
+        }
+        
+        /* Premium input group */
+        .input-group {
+            position: relative;
+        }
+        
+        .input-group .input-label {
+            position: absolute;
+            top: 50%;
+            right: 48px;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #9ca3af;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            background: transparent;
+            padding: 0 8px;
+        }
+        
+        .input-group input:focus ~ .input-label,
+        .input-group input:not(:placeholder-shown) ~ .input-label {
+            top: -10px;
+            transform: translateY(0);
+            font-size: 12px;
+            color: #ffc72c;
+            background: #0a0a0a;
+        }
+        
+        /* Security badge */
+        .security-badge {
+            background: linear-gradient(135deg, rgba(255,199,44,0.1), rgba(255,199,44,0.05));
+            border: 1px solid rgba(255,199,44,0.3);
+        }
+        
+        /* Success animation */
+        @keyframes successCheck {
+            0% {
+                stroke-dashoffset: 60;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .success-checkmark {
+            stroke-dasharray: 60;
+            stroke-dashoffset: 60;
+            animation: successCheck 0.6s ease forwards;
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            animation: floatParticle 4s infinite;
+        }
+        
+        @keyframes floatParticle {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(-20px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+        
+        /* 2FA Code input */
+        .code-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover::after {
+            opacity: 1;
+        }
+        
+        /* Trust indicators */
+        .trust-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            border-radius: 20px;
+            font-size: 11px;
+            color: #4ade80;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Feature list */
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            background: rgba(255, 199, 44, 0.05);
+            border-color: rgba(255, 199, 44, 0.2);
+            transform: translateX(-5px);
+        }
+        
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(255,199,44,0.2), rgba(255,199,44,0.1));
+            border-radius: 10px;
+            color: #ffc72c;
+        }
+        
+        /* Remember me switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        .switch input:checked + .switch-slider {
+            background-color: #ffc72c;
+        }
+        
+        .switch input:checked + .switch-slider:before {
+            transform: translateX(-20px);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-neutral-950 text-white font-sans">
+    <!-- Background layer -->
+    <div class="fixed inset-0 -z-10">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/70 to-black/85"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,199,44,0.14),transparent_55%)]"></div>
+        
+        <!-- Ambient blobs -->
+        <div class="absolute -top-32 -right-40 w-[520px] h-[520px] rounded-full blur-3xl opacity-20"
+             style="background: radial-gradient(circle at 35% 35%, rgba(255,199,44,0.55), transparent 60%); animation: blobFloat 9s ease-in-out infinite;"></div>
+        <div class="absolute bottom-[-220px] left-[-220px] w-[540px] h-[540px] rounded-full blur-3xl opacity-18"
+             style="background: radial-gradient(circle at 60% 40%, rgba(255,199,44,0.35), transparent 62%); animation: blobFloat 11s ease-in-out infinite; animation-delay: 400ms;"></div>
+        
+        <div class="absolute inset-0 grain"></div>
     </div>
-
-
-
-    <script src="script.js"></script>
-
-
-
+    
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md hidden">
+        <div class="text-center">
+            <svg class="loader mx-auto mb-4" width="60" height="60" viewBox="0 0 60 60">
+                <circle cx="30" cy="30" r="25" stroke="#ffc72c" stroke-width="3" fill="none" stroke-dasharray="150" stroke-dashoffset="50"/>
+            </svg>
+            <p class="text-white text-sm animate-pulse">جاري التحميل...</p>
+        </div>
+    </div>
+    
+    <!-- Back button -->
+    <div class="fixed top-6 right-6 z-50">
+        <button onclick="window.location.href='index.html'" class="glass g-border w-12 h-12 rounded-2xl flex items-center justify-center group hover:scale-105 transition-transform">
+            <i class="ri-arrow-right-line text-xl text-gray-200 group-hover:text-primary transition-colors"></i>
+        </button>
+    </div>
+    
+    <!-- Main container -->
+    <div class="flex items-center justify-center min-h-screen py-12 px-4 relative z-10">
+        <div class="w-full max-w-md">
+            <!-- Logo -->
+            <div class="text-center mb-8 animate-fade-scale">
+                <div class="relative inline-block">
+                    <!-- Logo Image -->
+                    <img src="images/logos4you.png" alt="STVX Platform" class="h-14 md:h-16 w-auto mx-auto mb-3 logo-glow">
+                    <div class="absolute -top-2 -right-2 w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+                </div>
+                <p class="text-gray-400 text-sm mt-2 font-medium">منصة الإبداع والابتكار الرقمي</p>
+                
+                <!-- Security Badges -->
+                <div class="flex items-center justify-center gap-3 mt-4">
+                    <div class="security-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full">
+                        <i class="ri-shield-check-line text-primary"></i>
+                        <span class="text-xs text-gray-300">اتصال آمن 256-bit</span>
+                    </div>
+                    <div class="security-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full">
+                        <i class="ri-verified-badge-line text-primary"></i>
+                        <span class="text-xs text-gray-300">موثق</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Auth Card -->
+            <div class="glass g-border rounded-3xl overflow-hidden">
+                <!-- Tabs -->
+                <div class="flex border-b border-white/10">
+                    <button id="login-tab" class="tab-button flex-1 py-4 text-white font-medium text-center active">
+                        <i class="ri-login-box-line ml-2"></i>
+                        تسجيل الدخول
+                    </button>
+                    <button id="register-tab" class="tab-button flex-1 py-4 text-white font-medium text-center">
+                        <i class="ri-user-add-line ml-2"></i>
+                        حساب جديد
+                    </button>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="login-form" class="p-8 space-y-5 form-appear">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-2">مرحباً بعودتك</h2>
+                        <p class="text-gray-400 text-sm">سجّل دخولك للمتابعة إلى حسابك</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="input-group">
+                            <i class="ri-mail-line absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+                            <input type="email" 
+                                   id="login-email"
+                                   placeholder=" "
+                                   required
+                                   autocomplete="email"
+                                   class="input-field w-full pl-4 pr-12 py-3.5 rounded-xl text-white placeholder-gray-500 focus:outline-none">
+                            <label class="input-label" for="login-email">البريد الإلكتروني</label>
+                        </div>
+                        
+                        <div class="relative">
+                            <i class="ri-lock-line absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="password" 
+                                   id="login-password"
+                                   placeholder="كلمة المرور" 
+                                   required
+                                   class="input-field w-full pl-12 pr-12 py-3.5 rounded-xl text-white placeholder-gray-500 focus:outline-none">
+                            <button type="button" onclick="togglePassword('login-password')" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors">
+                                <i class="ri-eye-line" id="login-password-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" class="ml-2">
+                            <span class="text-sm text-gray-400">تذكرني</span>
+                        </label>
+                        <a href="#" class="text-sm text-primary hover:text-yellow-400 transition-colors">نسيت كلمة المرور؟</a>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary w-full py-3.5 rounded-xl text-black font-semibold">
+                        تسجيل الدخول
+                    </button>
+                    
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-white/10"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-4 text-gray-400 bg-transparent">أو سجل باستخدام</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-3">
+                        <button type="button" class="social-btn py-3 rounded-xl flex items-center justify-center group">
+                            <i class="ri-google-fill text-xl text-red-500 group-hover:scale-110 transition-transform"></i>
+                        </button>
+                        <button type="button" class="social-btn py-3 rounded-xl flex items-center justify-center group">
+                            <i class="ri-facebook-fill text-xl text-blue-500 group-hover:scale-110 transition-transform"></i>
+                        </button>
+                        <button type="button" class="social-btn py-3 rounded-xl flex items-center justify-center group">
+                            <i class="ri-apple-fill text-xl text-white group-hover:scale-110 transition-transform"></i>
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Register Form -->
+                <form id="register-form" class="p-8 space-y-5 hidden">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-2">إنشاء حساب جديد</h2>
+                        <p class="text-gray-400 text-sm">انضم إلينا وابدأ رحلتك الإبداعية</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="relative">
+                            <i class="ri-user-line absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" 
+                                   placeholder="الاسم الكامل" 
+                                   required
+                                   class="input-field w-full pl-4 pr-12 py-3.5 rounded-xl text-white placeholder-gray-500 focus:outline-none">
+                        </div>
+                        
+                        <div class="relative">
+                            <i class="ri-mail-line absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="email" 
+                                   placeholder="البريد الإلكتروني" 
+                                   required
+                                   class="input-field w-full pl-4 pr-12 py-3.5 rounded-xl text-white placeholder-gray-500 focus:outline-none">
+                        </div>
+                        
+                        <div class="relative">
+                            <i class="ri-phone-line absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="tel" 
+                                   placeholder="رقم الهاتف (اختياري)" 
+                                   class="input-field w-full pl-4 pr-12 py-3.5 rounded-xl text-white placeholder-gray-500 focus:outline-none">
+                        </div>
+                        
+                        <div class="relative">
+                            <i class="ri-lock-line absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="password" 
+                                   id="register-password"
+                                   placeholder="كلمة المرور" 
+                                   required
+                                   onkeyup="checkPasswordStrength(this.value)"
+                                   class="input-field w-full pl-12 pr-12 py-3.5 rounded-xl text-white placeholder-gray-500 focus:outline-none">
+                            <button type="button" onclick="togglePassword('register-password')" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors">
+                                <i class="ri-eye-line" id="register-password-icon"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="password-strength">
+                            <div id="password-strength-bar" class="password-strength-bar"></div>
+                        </div>
+                        
+                        <div class="relative">
+                            <i class="ri-lock-2-line absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="password" 
+                                   placeholder="تأكيد كلمة المرور" 
+                                   required
+                                   class="input-field w-full pl-4 pr-12 py-3.5 rounded-xl text-white placeholder-gray-500 focus:outline-none">
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <input type="checkbox" id="terms" required class="mt-1 ml-3">
+                        <label for="terms" class="text-sm text-gray-400">
+                            أوافق على <a href="#" class="text-primary hover:text-yellow-400 transition-colors">الشروط والأحكام</a> 
+                            و <a href="#" class="text-primary hover:text-yellow-400 transition-colors">سياسة الخصوصية</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary w-full py-3.5 rounded-xl text-black font-semibold">
+                        إنشاء الحساب
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Footer text -->
+            <div class="text-center mt-6 text-gray-500 text-sm animate-fade-in">
+                <p>© 2024 STVX Platform. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </div>
+    
     <script>
-
+        // Tab switching
         const loginTab = document.getElementById('login-tab');
-
         const registerTab = document.getElementById('register-tab');
-
         const loginForm = document.getElementById('login-form');
-
         const registerForm = document.getElementById('register-form');
-
-
-
+        
         loginTab.addEventListener('click', () => {
-
             loginTab.classList.add('active');
-
             registerTab.classList.remove('active');
-
             loginForm.classList.remove('hidden');
-
             registerForm.classList.add('hidden');
-
+            loginForm.classList.add('form-appear');
         });
-
-
-
+        
         registerTab.addEventListener('click', () => {
-
             registerTab.classList.add('active');
-
             loginTab.classList.remove('active');
-
             registerForm.classList.remove('hidden');
-
             loginForm.classList.add('hidden');
-
+            registerForm.classList.add('form-appear');
         });
-
-
-
-        // الانتقال المباشر بدون لودر عند الإرسال
-
-        loginForm.addEventListener('submit', (e) => {
-
+        
+        // Toggle password visibility
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(inputId + '-icon');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('ri-eye-line');
+                icon.classList.add('ri-eye-off-line');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('ri-eye-off-line');
+                icon.classList.add('ri-eye-line');
+            }
+        }
+        
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            const strengthBar = document.getElementById('password-strength-bar');
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+            
+            strengthBar.className = 'password-strength-bar';
+            
+            if (password.length > 0) {
+                if (strength <= 1) {
+                    strengthBar.classList.add('strength-weak');
+                } else if (strength === 2 || strength === 3) {
+                    strengthBar.classList.add('strength-medium');
+                } else {
+                    strengthBar.classList.add('strength-strong');
+                }
+            }
+        }
+        
+        // Form submissions
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            window.location.href = 'index.html';
-
+            const loadingOverlay = document.getElementById('loading-overlay');
+            loadingOverlay.classList.remove('hidden');
+            
+            // Simulate API call
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+                alert('تم تسجيل الدخول بنجاح!');
+                // Redirect or handle success
+            }, 1500);
         });
-
-
-
-        registerForm.addEventListener('submit', (e) => {
-
+        
+        registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            window.location.href = 'index.html';
-
+            const loadingOverlay = document.getElementById('loading-overlay');
+            loadingOverlay.classList.remove('hidden');
+            
+            // Simulate API call
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+                alert('تم إنشاء الحساب بنجاح!');
+                // Switch to login form
+                loginTab.click();
+            }, 1500);
         });
-
+        
+        // Hide loading overlay on page load
+        window.addEventListener('load', () => {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.classList.add('hidden');
+            }
+        });
+        
+        // Add floating animation to orbs
+        document.querySelectorAll('.gradient-orb').forEach((orb, index) => {
+            orb.style.animationDelay = `${index * 2}s`;
+        });
     </script>
-
 </body>
-
 </html>
