@@ -1,1092 +1,737 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>تصاميم الجرافيكس ✨ معرض الأعمال الذهبي</title>
 
-
-
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-
-
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
 
-
-
-    <link rel="stylesheet" href="style.css">
-
-
-
     <script>
-
-        // إعدادات Tailwind (مهمة لتعريف الألوان والأنيميشن)
-
         tailwind.config = {
-
             theme: {
-
                 extend: {
-
                     colors: {
-
-                        primary: '#ffc72c', // لون التمييز الذهبي (Gold)
-
-                        dark: '#111111', // لون خلفية أساسي
-
-                        glass: 'rgba(17, 17, 17, 0.8)', // خلفية البطاقة الزجاجية
-
+                        primary: '#ffc72c',
+                        dark: '#111111',
+                        glass: 'rgba(17, 17, 17, 0.8)',
                     },
-
                     borderRadius: {
-
-                        'none': '0px', DEFAULT: '8px', 'md': '12px', '2xl': '24px', 'full': '9999px', 'button': '8px'
-
+                        'none': '0px', 
+                        DEFAULT: '8px', 
+                        'md': '12px', 
+                        '2xl': '24px', 
+                        'full': '9999px', 
+                        'button': '8px'
                     },
-
                     fontFamily: {
-
-                        // يجب أن يكون "Expo Arabic" معرّفاً في ملف style.css
-
                         sans: ['Expo Arabic', 'Cairo', 'sans-serif'],
-
                         logo: ['Pacifico', 'cursive'],
-
                     },
-
-                    // تعريفات الأنيميشن (كما هي)
-
                     animation: {
-
                         'fade-in': 'fadeIn 0.6s ease-out forwards',
-
                         'slide-down': 'slideDown 0.5s ease-out forwards',
-
-                        'card-pop': 'cardPop 0.8s cubic-bezier(0.2, 0.7, 0.4, 1) forwards', // تعديل التوقيت
-
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite', // نبض أبطأ وأكثر جمالية
-
+                        'card-pop': 'cardPop 0.8s cubic-bezier(0.2, 0.7, 0.4, 1) forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
-
                     keyframes: {
-
                         fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-
                         slideDown: { '0%': { opacity: '0', transform: 'translateY(-20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-
                         cardPop: { '0%': { opacity: '0', transform: 'scale(0.9) translateY(20px)' }, '100%': { opacity: '1', transform: 'scale(1) translateY(0)' } },
-
-                        pulse: { '0%, 100%': { opacity: 1 }, '50%': { opacity: .7 } } // تعديل تأثير النبض
-
+                        pulse: { '0%, 100%': { opacity: 1 }, '50%': { opacity: .7 } }
                     }
-
                 }
-
             }
-
         }
-
     </script>
 
-
-
     <style>
-
-        /* -------------------------------------- */
-
-        /* التنسيق الأنيق لبطاقة الزجاج (Glass Card) */
-
-        /* -------------------------------------- */
-
+        /* Glass Card Effect */
         .glass-card {
-
-            background-color: rgba(17, 17, 17, 0.7); /* أغمق قليلاً */
-
-            backdrop-filter: blur(12px); /* تضبيب أكبر */
-
+            background-color: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* ظل أعمق */
-
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             border: 1px solid rgba(255, 255, 255, 0.1);
-
         }
 
-
-
-        /* -------------------------------------- */
-
-        /* تنسيقات صور المشروع (Project Image) */
-
-        /* -------------------------------------- */
-
+        /* Project Image Container */
         .card-link-wrapper {
-
             display: block;
-
             height: 250px;
-
             position: relative;
-
             overflow: hidden;
-
-            border-radius: 8px;
-
-            margin-bottom: 1rem;
-
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4); /* ظل خفيف على الصورة */
-
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
-
-
 
         .card-link-wrapper img {
-
             width: 100%;
-
             height: 100%;
-
             object-fit: cover;
-
-            /* خاصية الانتقال التي تجعل التكبير سلساً */
-
             transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
         }
-
-
 
         .project-card:hover .card-link-wrapper img {
-
-            /* التكبير الأنيق عند التحويم */
-
-            transform: scale(1.15) rotate(1deg); /* تكبير ودوران خفيف لمسة إبداع */
-
+            transform: scale(1.08) rotate(1deg);
         }
 
-
-
-        /* -------------------------------------- */
-
-        /* تنسيقات البطاقة نفسها (Project Card) */
-
-        /* -------------------------------------- */
-
+        /* Project Card Styles */
         .project-card {
-
-            /* تعديل الخلفية إلى لون أكثر ثراءً */
-
-            background-color: rgba(27, 27, 27, 0.85);
-
-            /* إزالة blur لضمان الوضوح داخل البطاقة */
-
+            background: linear-gradient(135deg, rgba(27, 27, 27, 0.9) 0%, rgba(17, 17, 17, 0.95) 100%);
             backdrop-filter: none;
-
             -webkit-backdrop-filter: none;
-
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 10px rgba(255, 199, 44, 0.1); /* ظل مع توهج خفيف */
-
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 199, 44, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.05);
-
-            border-radius: 16px; /* تدوير أكبر للحواف */
-
+            border-radius: 16px;
             padding: 1.5rem;
-
-            transition: box-shadow 0.4s ease-out, transform 0.4s ease-out;
-
-            will-change: transform, box-shadow;
-
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
         }
 
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffc72c, transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
 
+        .project-card:hover::before {
+            transform: translateX(100%);
+        }
 
         .project-card:hover {
-
-            transform: translateY(-10px); /* رفع البطاقة للأعلى عند التحويم */
-
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 199, 44, 0.4); /* تظليل أعمق وتوهج أقوى */
-
-            border-color: rgba(255, 199, 44, 0.3); /* إطار ذهبي خفيف عند التحويم */
-
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 199, 44, 0.3);
+            border-color: rgba(255, 199, 44, 0.2);
         }
 
-        
+        /* Card Content Styles */
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
-        /* -------------------------------------- */
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 0;
+            line-height: 1.3;
+            background: linear-gradient(135deg, #fff 0%, #ffc72c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-        /* تحسين مظهر الأزرار والـ Tags */
+        .card-description {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
 
-        /* -------------------------------------- */
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
 
         .card-tag {
-
-            background-color: rgba(255, 199, 44, 0.15) !important; /* لون خلفية أغمق للـ Tag */
-
-            color: #ffc72c !important;
-
-            padding: 0.3rem 0.8rem !important;
-
-            border-radius: 6px !important;
-
-            transition: background-color 0.3s;
-
+            background-color: rgba(255, 199, 44, 0.15);
+            color: #ffc72c;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 199, 44, 0.2);
         }
 
         .card-tag:hover {
-
-            background-color: rgba(255, 199, 44, 0.3) !important;
-
+            background-color: rgba(255, 199, 44, 0.25);
+            transform: scale(1.05);
         }
 
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
+        .card-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .card-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .card-stat-icon {
+            font-size: 1.1rem;
+        }
 
         .card-button {
-
-            background-color: #ffc72c !important;
-
-            color: #111 !important;
-
-            /* التعديل هنا لتقليل حجم الزر ليتناسب مع البطاقة */
-
-            padding: 0.5rem 1.2rem !important; /* حجم متناسق للزر */
-
-            border-radius: 8px !important; /* تدوير مناسب للحجم الجديد */
-
-            font-weight: 700 !important; /* خط أقل سماكة قليلاً */
-
+            background: linear-gradient(135deg, #ffc72c 0%, #ffb300 100%);
+            color: #111;
+            padding: 0.6rem 1.4rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
             letter-spacing: 0.5px;
-
             box-shadow: 0 4px 15px rgba(255, 199, 44, 0.4);
-
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-            /* إضافة كلاس لتأكيد أن الزر يظهر كزر متناسق (يمكن دمجه مع الـ padding لتقليل عدد التعديلات) */
-
             display: inline-flex;
-
             align-items: center;
-
             justify-content: center;
-
-            font-size: 0.95rem; /* حجم خط مناسب */
-
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
         }
 
         .card-button:hover {
-
-            background-color: #ffd966 !important;
-
             transform: scale(1.05) translateY(-2px);
-
-            box-shadow: 0 6px 20px rgba(255, 199, 44, 0.6);
-
+            box-shadow: 0 6px 25px rgba(255, 199, 44, 0.6);
+            background: linear-gradient(135deg, #ffd966 0%, #ffc72c 100%);
         }
 
+        /* Special CTA Card */
+        .cta-card {
+            background: linear-gradient(135deg, rgba(255, 199, 44, 0.1) 0%, rgba(255, 199, 44, 0.05) 100%);
+            border: 2px dashed rgba(255, 199, 44, 0.4);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
+        .cta-card:hover {
+            border-color: rgba(255, 199, 44, 0.8);
+            background: linear-gradient(135deg, rgba(255, 199, 44, 0.15) 0%, rgba(255, 199, 44, 0.08) 100%);
+        }
 
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .card-link-wrapper {
+                height: 200px;
+            }
+            
+            .card-title {
+                font-size: 1.25rem;
+            }
+            
+            .card-footer {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+            
+            .card-stats {
+                justify-content: center;
+            }
+            
+            .card-button {
+                width: 100%;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 199, 44, 0.1) 50%, transparent 100%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
     </style>
-
 </head>
 
-<body class="text-white font-sans flex flex-col min-h-screen
-
-    bg-[url('images/loginbackground006.png')] bg-fixed bg-cover bg-center">
-
-
+<body class="text-white font-sans flex flex-col min-h-screen bg-[url('images/loginbackground006.png')] bg-fixed bg-cover bg-center">
 
     <div class="flex-1" id="main-content">
-
+        <!-- Navigation -->
         <nav class="glass-card px-6 py-4 sticky top-0 left-0 right-0 z-50 rounded-none border-b border-primary/20">
-
             <div class="grid grid-cols-3 items-center max-w-7xl mx-auto">
-
-
-
                 <a href="portfolio.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110" title="العودة إلى معرض الأعمال">
-
                     <i class="ri-arrow-right-line text-primary text-xl"></i>
-
                 </a>
 
-
-
                 <div class="flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-8 rtl:space-x-reverse text-lg font-bold">
-
                     <div class="flex space-x-8 rtl:space-x-reverse">
-
                         <a href="index.html" class="text-gray-300 hover:text-primary transition-colors hover:scale-105">الرئيسية</a>
-
                         <span class="text-primary border-b-2 border-primary pb-1 animate-slide-down">الجرافيكس</span>
-
                     </div>
-
                 </div>
-
                 
-
                 <div class="flex items-center justify-self-end space-x-4 rtl:space-x-reverse">
-
                     <a href="index.html" class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-transform hover:scale-110">
-
                         <i class="ri-user-line text-gray-300 text-xl"></i>
-
                     </a>
-
                 </div>
-
             </div>
-
         </nav>
 
-
-
+        <!-- Main Content -->
         <main class="py-16 px-4 md:px-8 max-w-7xl mx-auto flex-1">
-
-
-
+            <!-- Header -->
             <header class="text-center mb-16 animate-slide-down" style="animation-delay: 0.3s;">
-
                 <img src="images/logos4you.png" alt="logos4you Logo" class="w-72 h-auto object-contain mx-auto mb-8 animate-fade-in">
 
-
-
                 <h1 class="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary via-yellow-300 to-primary tracking-wide leading-tight"
-
                     style="filter: drop-shadow(0 0 8px rgba(255, 199, 44, 0.4));">
-
                     الجرافيكس على طريقتنا
-
                 </h1>
-
                 <p class="text-xl text-gray-300 max-w-4xl mx-auto opacity-90 italic">
-
                     كل مشروع جرافيكس هو انعكاس لفكرنا، ودقّتنا، وفهمنا للجمال.
-
-نقدّم تصاميم تُترجم الهوية البصرية بأسلوب متوازن بين الإبداع والاتقان.
-
+                    نقدّم تصاميم تُترجم الهوية البصرية بأسلوب متوازن بين الإبداع والاتقان.
                 </p>
-
                 <div class="w-32 h-1 bg-primary mx-auto mt-6 rounded-full animate-pulse-slow"></div>
-
             </header>
 
-
-
-            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mt-16">
-
-            
-            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
-
-                <div class="project-card animate-card-pop" style="animation-delay: 0.5s;">
-
-                    <a href="project-details-01.html" aria-label="عرض تفاصيل مشروع هوية بصرية لشركة تقنية" class="card-link-wrapper">
-
-                        <img src="graphics/project-graphic-01.jpg" alt="صورة مشروع هوية بصرية لشركة تقنية" />
-
-                    </a>
-
-                    <div class="card-content">
-
-                        <p class="card-title">براند SABA - صبا</p>
-
-                        <p class="card-description">
-
-                            تصميم شعار متكامل، وتنسيق الألوان والخطوط، وإعداد دليل الهوية البصرية لعلامة “صبا” المتخصصة في العبايات والحجابات الراقية.
-
-                        </p>
-
-                        <div class="card-tags">
-
-                            <span class="card-tag">هوية بصرية</span>
-
-                            <span class="card-tag">Branding</span>
-
-                            <span class="card-tag">Photoshop</span>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <div class="card-stats">
-
-                                <span class="card-stat">
-
-                                    <i class="ri-eye-line card-stat-icon"></i> 2.5K
-
-                                </span>
-
-                                <span class="card-stat">
-
-                                    <i class="ri-heart-line card-stat-icon"></i> 510
-
-                                </span>
-
-                            </div>
-
-                            <a class="card-button" href="project-details-01.html">تسجيل إعجاب</a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="project-card animate-card-pop" style="animation-delay: 0.7s;">
-
-                    <a href="project-details-02.html" aria-label="عرض تفاصيل مشروع تصميم منشورات سوشيال ميديا" class="card-link-wrapper">
-
-                        <img src="graphics/project-graphic-002.jpg" alt="صورة مشروع تصميم منشورات سوشيال ميديا" />
-
-                    </a>
-
-                    <div class="card-content">
-
-                        <p class="card-title">مطعم لَيمُون</p>
-
-                        <p class="card-description">
-
-                            تصميم شعار وهوية بصرية متكاملة لمطعم "ليمون" المتخصص في تقديم الأكلات السريعة بنكهات عصرية ولمسة فريدة.
-
-                        </p>
-
-                        <div class="card-tags">
-
-                            <span class="card-tag">هوية بصرية</span>
-
-                            <span class="card-tag">Marketing</span>
-
-                            <span class="card-tag">Photoshop</span>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <div class="card-stats">
-
-                                <span class="card-stat">
-
-                                    <i class="ri-eye-line card-stat-icon"></i> 5.8K
-
-                                </span>
-
-                                <span class="card-stat">
-
-                                    <i class="ri-heart-line card-stat-icon"></i> 890
-
-                                </span>
-
-                            </div>
-
-                            <a class="card-button" href="project-details-02.html">تسجيل إعجاب</a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="project-card animate-card-pop" style="animation-delay: 0.9s;">
-
-                    <a href="project-details-03.html" aria-label="عرض تفاصيل مشروع غلاف كتاب ورقي إبداعي" class="card-link-wrapper">
-
-                        <img src="graphics/project-graphic-003.jpg" alt="صورة مشروع غلاف كتاب ورقي إبداعي" />
-
-                    </a>
-
-                    <div class="card-content">
-
-                        <p class="card-title">مجوهرات نون - NOON"</p>
-
-                        <p class="card-description">
-
-                            تصميم شعار وهوية بصرية متكاملة لعلامة "نون" للمجوهرات، تعكس الفخامة والرقي بتوازن دقيق بين البساطة والتميّز.
-
-                        </p>
-
-                        <div class="card-tags">
-
-                            <span class="card-tag">هوية بصرية</span>
-
-                            <span class="card-tag">InDesgin</span>
-
-                            <span class="card-tag">Photoshop</span>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <div class="card-stats">
-
-                                <span class="card-stat">
-
-                                    <i class="ri-eye-line card-stat-icon"></i> 1.9K
-
-                                </span>
-
-                                <span class="card-stat">
-
-                                    <i class="ri-heart-line card-stat-icon"></i> 340
-
-                                </span>
-
-                            </div>
-
-                            <a class="card-button" href="project-details-03.html">تسجيل إعجاب</a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="project-card animate-card-pop" style="animation-delay: 1.1s;">
-
-                    <a href="project-details-04.html" aria-label="عرض تفاصيل مشروع تصميم ملصق إعلاني" class="card-link-wrapper">
-
-                        <img src="graphics/project-graphic-004.jpg" alt="صورة مشروع تصميم ملصق إعلاني" />
-
-                    </a>
-
-                    <div class="card-content">
-
-                        <p class="card-title">CHAIMA SEWING"</p>
-
-                        <p class="card-description">
-
-                            تصميم شعار وهوية بصرية متكاملة لعلامة “CHAIMA SEWING”، تعكس الأناقة والدقّة في عالم الخياطة الراقية.
-
-                        </p>
-
-                        <div class="card-tags">
-
-                            <span class="card-tag">هوية بصرية</span>
-
-                            <span class="card-tag">Branding</span>
-
-                            <span class="card-tag">Photoshop</span>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <div class="card-stats">
-
-                                <span class="card-stat">
-
-                                    <i class="ri-eye-line card-stat-icon"></i> 1.2K
-
-                                </span>
-
-                                <span class="card-stat">
-
-                                    <i class="ri-heart-line card-stat-icon"></i> 210
-
-                                </span>
-
-                            </div>
-
-                            <a class="card-button" href="project-details-04.html">تسجيل إعجاب</a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="project-card animate-card-pop" style="animation-delay: 1.3s;">
-
-                    <a href="project-details-05.html" aria-label="عرض تفاصيل مشروع تصميم أيقونات تطبيق" class="card-link-wrapper">
-
-                        <img src="graphics/project-graphic-005.jpg" alt="صورة مشروع تصميم أيقونات تطبيق" />
-
-                    </a>
-
-                    <div class="card-content">
-
-                        <p class="card-title">متجر ريحانة - REIHAN</p>
-
-                        <p class="card-description">
-
-                            تصميم شعار وهوية بصرية متكاملة لمتجر “ريحانة – REIHAN”، تعكس الدفء والحرفية في عالم المخبوزات الفاخرة.
-
-                        </p>
-
-                        <div class="card-tags">
-
-                            <span class="card-tag">Iconography</span>
-
-                            <span class="card-tag">Marketing</span>
-
-                            <span class="card-tag">Photoshop</span>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <div class="card-stats">
-
-                                <span class="card-stat">
-
-                                    <i class="ri-eye-line card-stat-icon"></i> 3.1K
-
-                                </span>
-
-                                <span class="card-stat">
-
-                                    <i class="ri-heart-line card-stat-icon"></i> 650
-
-                                </span>
-
-                            </div>
-
-                            <a class="card-button" href="project-details-05.html">تسجيل إعجاب</a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="project-card animate-card-pop" style="animation-delay: 1.5s;">
-
-                    <a href="project-details-06.html" aria-label="عرض تفاصيل مشروع تصميم كتيب تعريفي رقمي" class="card-link-wrapper">
-
-                        <img src="graphics/project-graphic-006.jpg" alt="صورة مشروع تصميم كتيب تعريفي رقمي" />
-
-                    </a>
-
-                    <div class="card-content">
-
-                        <p class="card-title">ملاس الفريج</p>
-
-                        <p class="card-description">
-
-                            تصميم شعار وهوية بصرية متكاملة لمطعم “ملاس الفريج”، تعبّر عن الأصالة والنكهة الشعبية بروح عصرية جذّابة.
-
-                        </p>
-
-                        <div class="card-tags">
-
-                            <span class="card-tag">Print Design</span>
-
-                            <span class="card-tag">Layout</span>
-
-                            <span class="card-tag">InDesign</span>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <div class="card-stats">
-
-                                <span class="card-stat">
-
-                                    <i class="ri-eye-line card-stat-icon"></i> 980
-
-                                </span>
-
-                                <span class="card-stat">
-
-                                    <i class="ri-heart-line card-stat-icon"></i> 190
-
-                                </span>
-
-                            </div>
-
-                            <a class="card-button" href="project-details-06.html">تسجيل إعجاب</a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="project-card animate-card-pop" style="animation-delay: 1.7s;">
-
-                    <a href="project-details-07.html" aria-label="عرض تفاصيل مشروع تصميم انفوجرافيك" class="card-link-wrapper">
-
-                        <img src="graphics/project-graphic-007.jpg" alt="صورة مشروع تصميم انفوجرافيك" />
-
-                    </a>
-
-                    <div class="card-content">
-
-                        <p class="card-title">مكتبة الأنيس</p>
-
-                        <p class="card-description">
-
-                            ابتكار هوية بصرية تجمع بين البساطة الأكاديمية والدقة في التفاصيل لعلامة “الأنيس” للخدمات المكتبية والجامعية.
-
-                        </p>
-
-                        <div class="card-tags">
-
-                            <span class="card-tag">Typography</span>
-
-                            <span class="card-tag">Photoshop</span>
-
-                            <span class="card-tag">Illustrator</span>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <div class="card-stats">
-
-                                <span class="card-stat">
-
-                                    <i class="ri-eye-line card-stat-icon"></i> 2.0K
-
-                                </span>
-
-                                <span class="card-stat">
-
-                                    <i class="ri-heart-line card-stat-icon"></i> 420
-
-                                </span>
-
-                            </div>
-
-                            <a class="card-button" href="project-details-07.html">تسجيل إعجاب</a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="project-card animate-card-pop" style="animation-delay: 1.9s;">
-
-                    <a href="project-details-08.html" aria-label="عرض تفاصيل مشروع تصميم بطاقة عمل" class="card-link-wrapper">
-
-                        <img src="graphics/project-graphic-008.jpg" alt="صورة مشروع تصميم بطاقة عمل" />
-
-                    </a>
-
-                    <div class="card-content">
-
-                        <p class="card-title">وسق للعود</p>
-
-                        <p class="card-description">
-
-                            تصميم شعار وهوية بصرية متكاملة لعلامة “وسق للعود”، تعبّر عن الأصالة والفخامة في عالم العطور والعود العربي.
-
-                        </p>
-
-                        <div class="card-tags">
-
-                            <span class="card-tag">Branding</span>
-
-                            <span class="card-tag">Photoshop</span>
-
-                            <span class="card-tag">Illustrator</span>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <div class="card-stats">
-
-                                <span class="card-stat">
-
-                                    <i class="ri-eye-line card-stat-icon"></i> 750
-
-                                </span>
-
-                                <span class="card-stat">
-
-                                    <i class="ri-heart-line card-stat-icon"></i> 150
-
-                                </span>
-
-                            </div>
-
-                            <a class="card-button" href="project-details-08.html">تسجيل إعجاب</a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="project-card animate-card-pop" style="animation-delay: 2.1s;">
-
-                    <a href="project-details-09.html" aria-label="عرض تفاصيل مشروع تصميم أغلفة منتجات تجميل" class="card-link-wrapper">
-
-                        <img src="graphics/project-graphic-009.jpg" alt="صورة مشروع تصميم أغلفة منتجات تجميل" />
-
-                    </a>
-
-                    <div class="card-content">
-
-                        <p class="card-title">LILY PRODUCTS</p>
-
-                        <p class="card-description">
-
-                            تصميم شعار وهوية بصرية متكاملة لعلامة LILY لمنتجات التجميل الطبيعية، تعبّر عن النقاء والجمال بأسلوب أنثوي راقٍ يجمع بين البساطة والأناقة.
-
-                        </p>
-
-                        <div class="card-tags">
-
-                            <span class="card-tag">Marketing</span>
-
-                            <span class="card-tag">Photoshop</span>
-
-                            <span class="card-tag">InDesign</span>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <div class="card-stats">
-
-                                <span class="card-stat">
-
-                                    <i class="ri-eye-line card-stat-icon"></i> 1.5K
-
-                                </span>
-
-                                <span class="card-stat">
-
-                                    <i class="ri-heart-line card-stat-icon"></i> 300
-
-                                </span>
-
-                            </div>
-
-                            <a class="card-button" href="project-details-09.html">تسجيل إعجاب</a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="project-card animate-card-pop" style="animation-delay: 2.3s;">
-
-                    <a href="project-details-10.html" aria-label="عرض تفاصيل مشروع ملصق متحرك (Motion Graphic)" class="card-link-wrapper">
-
-                        <img src="graphics/project-graphic-10.jpg" alt="صورة مشروع ملصق متحرك (Motion Graphic)" />
-
-                    </a>
-
-                    <div class="card-content">
-
-                        <p class="card-title">براند الأرماني</p>
-
-                        <p class="card-description">
-
-                            تصميم شعار وهوية بصرية متكاملة لعلامة الأرماني للعبايات، تعكس الفخامة والرقي في تفاصيل تصميم تجمع بين الأصالة والذوق العصري الرفيع.
-
-                        </p>
-
-                        <div class="card-tags">
-
-                            <span class="card-tag">Branding</span>
-
-                            <span class="card-tag">Photoshop</span>
-
-                            <span class="card-tag">Marketing</span>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <div class="card-stats">
-
-                                <span class="card-stat">
-
-                                    <i class="ri-eye-line card-stat-icon"></i> 4.0K
-
-                                </span>
-
-                                <span class="card-stat">
-
-                                    <i class="ri-heart-line card-stat-icon"></i> 780
-
-                                </span>
-
-                            </div>
-
-                            <a class="card-button" href="project-details-10.html">تسجيل إعجاب</a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="project-card animate-card-pop" style="animation-delay: 2.5s;">
-
-                    <a href="project-details-11.html" aria-label="عرض تفاصيل مشروع رسم رقمي للرسوم المتحركة" class="card-link-wrapper">
-
-                        <img src="graphics/project-graphic-11.jpg" alt="صورة مشروع رسم رقمي للرسوم المتحركة" />
-
-                    </a>
-
-                    <div class="card-content">
-
-                        <p class="card-title">متجر حنانة للخضر والفواكه</p>
-
-                        <p class="card-description">
-
-                            تصميم شعار وهوية بصرية متكاملة لمتجر حنانة للخضر والفواكه، تعبّر عن النقاء والطبيعة الطازجة بلمسة عصرية تعكس جودة المنتجات وحيويتها.
-
-                        </p>
-
-                        <div class="card-tags">
-
-                            <span class="card-tag">Digital Art</span>
-
-                            <span class="card-tag">Illustration</span>
-
-                            <span class="card-tag">Photoshop</span>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <div class="card-stats">
-
-                                <span class="card-stat">
-
-                                    <i class="ri-eye-line card-stat-icon"></i> 1.0K
-
-                                </span>
-
-                                <span class="card-stat">
-
-                                    <i class="ri-heart-line card-stat-icon"></i> 250
-
-                                </span>
-
-                            </div>
-
-                            <a class="card-button" href="project-details-11.html">تسجيل إعجاب</a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="project-card animate-card-pop" style="animation-delay: 2.7s;">
-
-                    <a href="project-details-12.html" aria-label="عرض تفاصيل مشروع ملصق إعلاني لـ VR" class="card-link-wrapper">
-
-                        <img src="graphics/project-graphic-12.jpg" alt="صورة مشروع ملصق إعلاني لـ VR" />
-
-                    </a>
-
-                    <div class="card-content">
-
-                        <p class="card-title">Gloviá - ڤلوفيا</p>
-
-                        <p class="card-description">
-
-                            تصميم شعار وهوية بصرية متكاملة لعلامة ڤلوفيا – Gloviá، تجسّد مفهوم الجمال الطبيعي والنعومة، بروح أنثوية راقية تعكس العناية والتألّق.
-
-                        </p>
-
-                        <div class="card-tags">
-
-                            <span class="card-tag">Branding</span>
-
-                            <span class="card-tag">Photoshop</span>
-
-                            <span class="card-tag">InDesign</span>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <div class="card-stats">
-
-                                <span class="card-stat">
-
-                                    <i class="ri-eye-line card-stat-icon"></i> 4.0K
-
-                                </span>
-
-                                <span class="card-stat">
-
-                                    <i class="ri-heart-line card-stat-icon"></i> 780
-
-                                </span>
-
-                            </div>
-
-                            <a class="card-button" href="project-details-12.html">تسجيل إعجاب</a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            <div class="project-card animate-card-pop flex items-center justify-center p-8 border-2 border-dashed border-primary/50 hover:border-primary transition-all duration-300" style="animation-delay: 2.7s;">
-
-                    <div class="text-center">
-
-                        <i class="ri-pen-nib-line text-primary text-4xl mb-4 animate-bounce"></i>
-
-                        <p class="text-xl font-bold text-primary mb-2">هل لديك فكرة جديدة؟</p>
-
-                        <p class="text-gray-300">دعنا نبتكر الهوية البصرية لبراندك القادم، بأسلوب يعبّر عن رؤيتك ويُميّز حضورك.</p>
-
-                        <a href="index.html" class="mt-4 inline-block px-6 py-3 bg-primary text-black font-bold rounded-full hover:bg-yellow-300 transition-all duration-300 shadow-lg hover:shadow-primary/50">خلينا نبدأ ..</a>
-
-                    </div>
-
-                </div>
-
+            <!-- Projects Grid -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
                 
+                <!-- Project Card 1 -->
+                <div class="project-card animate-card-pop" style="animation-delay: 0.5s;">
+                    <a href="project-details-01.html" aria-label="عرض تفاصيل مشروع هوية بصرية لشركة تقنية" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-01.jpg" alt="صورة مشروع هوية بصرية لشركة تقنية" />
+                    </a>
+                    <div class="card-content">
+                        <h3 class="card-title">براند SABA - صبا</h3>
+                        <p class="card-description">
+                            تصميم شعار متكامل، وتنسيق الألوان والخطوط، وإعداد دليل الهوية البصرية لعلامة "صبا" المتخصصة في العبايات والحجابات الراقية.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">هوية بصرية</span>
+                            <span class="card-tag">Branding</span>
+                            <span class="card-tag">Photoshop</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i> 2.5K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i> 510
+                                </span>
+                            </div>
+                            <a class="card-button" href="project-details-01.html">تسجيل إعجاب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="project-card animate-card-pop" style="animation-delay: 0.7s;">
+                    <a href="project-details-02.html" aria-label="عرض تفاصيل مشروع تصميم منشورات سوشيال ميديا" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-002.jpg" alt="صورة مشروع تصميم منشورات سوشيال ميديا" />
+                    </a>
+                    <div class="card-content">
+                        <h3 class="card-title">مطعم لَيمُون</h3>
+                        <p class="card-description">
+                            تصميم شعار وهوية بصرية متكاملة لمطعم "ليمون" المتخصص في تقديم الأكلات السريعة بنكهات عصرية ولمسة فريدة.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">هوية بصرية</span>
+                            <span class="card-tag">Marketing</span>
+                            <span class="card-tag">Photoshop</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i> 5.8K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i> 890
+                                </span>
+                            </div>
+                            <a class="card-button" href="project-details-02.html">تسجيل إعجاب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="project-card animate-card-pop" style="animation-delay: 0.9s;">
+                    <a href="project-details-03.html" aria-label="عرض تفاصيل مشروع غلاف كتاب ورقي إبداعي" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-003.jpg" alt="صورة مشروع غلاف كتاب ورقي إبداعي" />
+                    </a>
+                    <div class="card-content">
+                        <h3 class="card-title">مجوهرات نون - NOON</h3>
+                        <p class="card-description">
+                            تصميم شعار وهوية بصرية متكاملة لعلامة "نون" للمجوهرات، تعكس الفخامة والرقي بتوازن دقيق بين البساطة والتميّز.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">هوية بصرية</span>
+                            <span class="card-tag">InDesgin</span>
+                            <span class="card-tag">Photoshop</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i> 1.9K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i> 340
+                                </span>
+                            </div>
+                            <a class="card-button" href="project-details-03.html">تسجيل إعجاب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 -->
+                <div class="project-card animate-card-pop" style="animation-delay: 1.1s;">
+                    <a href="project-details-04.html" aria-label="عرض تفاصيل مشروع تصميم ملصق إعلاني" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-004.jpg" alt="صورة مشروع تصميم ملصق إعلاني" />
+                    </a>
+                    <div class="card-content">
+                        <h3 class="card-title">CHAIMA SEWING</h3>
+                        <p class="card-description">
+                            تصميم شعار وهوية بصرية متكاملة لعلامة "CHAIMA SEWING"، تعكس الأناقة والدقّة في عالم الخياطة الراقية.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">هوية بصرية</span>
+                            <span class="card-tag">Branding</span>
+                            <span class="card-tag">Photoshop</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i> 1.2K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i> 210
+                                </span>
+                            </div>
+                            <a class="card-button" href="project-details-04.html">تسجيل إعجاب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 5 -->
+                <div class="project-card animate-card-pop" style="animation-delay: 1.3s;">
+                    <a href="project-details-05.html" aria-label="عرض تفاصيل مشروع تصميم أيقونات تطبيق" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-005.jpg" alt="صورة مشروع تصميم أيقونات تطبيق" />
+                    </a>
+                    <div class="card-content">
+                        <h3 class="card-title">متجر ريحانة - REIHAN</h3>
+                        <p class="card-description">
+                            تصميم شعار وهوية بصرية متكاملة لمتجر "ريحانة – REIHAN"، تعكس الدفء والحرفية في عالم المخبوزات الفاخرة.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Iconography</span>
+                            <span class="card-tag">Marketing</span>
+                            <span class="card-tag">Photoshop</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i> 3.1K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i> 650
+                                </span>
+                            </div>
+                            <a class="card-button" href="project-details-05.html">تسجيل إعجاب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 6 -->
+                <div class="project-card animate-card-pop" style="animation-delay: 1.5s;">
+                    <a href="project-details-06.html" aria-label="عرض تفاصيل مشروع تصميم كتيب تعريفي رقمي" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-006.jpg" alt="صورة مشروع تصميم كتيب تعريفي رقمي" />
+                    </a>
+                    <div class="card-content">
+                        <h3 class="card-title">ملاس الفريج</h3>
+                        <p class="card-description">
+                            تصميم شعار وهوية بصرية متكاملة لمطعم "ملاس الفريج"، تعبّر عن الأصالة والنكهة الشعبية بروح عصرية جذّابة.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Print Design</span>
+                            <span class="card-tag">Layout</span>
+                            <span class="card-tag">InDesign</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i> 980
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i> 190
+                                </span>
+                            </div>
+                            <a class="card-button" href="project-details-06.html">تسجيل إعجاب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 7 -->
+                <div class="project-card animate-card-pop" style="animation-delay: 1.7s;">
+                    <a href="project-details-07.html" aria-label="عرض تفاصيل مشروع تصميم انفوجرافيك" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-007.jpg" alt="صورة مشروع تصميم انفوجرافيك" />
+                    </a>
+                    <div class="card-content">
+                        <h3 class="card-title">مكتبة الأنيس</h3>
+                        <p class="card-description">
+                            ابتكار هوية بصرية تجمع بين البساطة الأكاديمية والدقة في التفاصيل لعلامة "الأنيس" للخدمات المكتبية والجامعية.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Typography</span>
+                            <span class="card-tag">Photoshop</span>
+                            <span class="card-tag">Illustrator</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i> 2.0K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i> 420
+                                </span>
+                            </div>
+                            <a class="card-button" href="project-details-07.html">تسجيل إعجاب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 8 -->
+                <div class="project-card animate-card-pop" style="animation-delay: 1.9s;">
+                    <a href="project-details-08.html" aria-label="عرض تفاصيل مشروع تصميم بطاقة عمل" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-008.jpg" alt="صورة مشروع تصميم بطاقة عمل" />
+                    </a>
+                    <div class="card-content">
+                        <h3 class="card-title">وسق للعود</h3>
+                        <p class="card-description">
+                            تصميم شعار وهوية بصرية متكاملة لعلامة "وسق للعود"، تعبّر عن الأصالة والفخامة في عالم العطور والعود العربي.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Branding</span>
+                            <span class="card-tag">Photoshop</span>
+                            <span class="card-tag">Illustrator</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i> 750
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i> 150
+                                </span>
+                            </div>
+                            <a class="card-button" href="project-details-08.html">تسجيل إعجاب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 9 -->
+                <div class="project-card animate-card-pop" style="animation-delay: 2.1s;">
+                    <a href="project-details-09.html" aria-label="عرض تفاصيل مشروع تصميم أغلفة منتجات تجميل" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-009.jpg" alt="صورة مشروع تصميم أغلفة منتجات تجميل" />
+                    </a>
+                    <div class="card-content">
+                        <h3 class="card-title">LILY PRODUCTS</h3>
+                        <p class="card-description">
+                            تصميم شعار وهوية بصرية متكاملة لعلامة LILY لمنتجات التجميل الطبيعية، تعبّر عن النقاء والجمال بأسلوب أنثوي راقٍ.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Marketing</span>
+                            <span class="card-tag">Photoshop</span>
+                            <span class="card-tag">InDesign</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i> 1.5K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i> 300
+                                </span>
+                            </div>
+                            <a class="card-button" href="project-details-09.html">تسجيل إعجاب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 10 -->
+                <div class="project-card animate-card-pop" style="animation-delay: 2.3s;">
+                    <a href="project-details-10.html" aria-label="عرض تفاصيل مشروع ملصق متحرك (Motion Graphic)" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-10.jpg" alt="صورة مشروع ملصق متحرك (Motion Graphic)" />
+                    </a>
+                    <div class="card-content">
+                        <h3 class="card-title">براند الأرماني</h3>
+                        <p class="card-description">
+                            تصميم شعار وهوية بصرية متكاملة لعلامة الأرماني للعبايات، تعكس الفخامة والرقي في تفاصيل تصميم تجمع بين الأصالة والذوق العصري.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Branding</span>
+                            <span class="card-tag">Photoshop</span>
+                            <span class="card-tag">Marketing</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i> 4.0K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i> 780
+                                </span>
+                            </div>
+                            <a class="card-button" href="project-details-10.html">تسجيل إعجاب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 11 -->
+                <div class="project-card animate-card-pop" style="animation-delay: 2.5s;">
+                    <a href="project-details-11.html" aria-label="عرض تفاصيل مشروع رسم رقمي للرسوم المتحركة" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-11.jpg" alt="صورة مشروع رسم رقمي للرسوم المتحركة" />
+                    </a>
+                    <div class="card-content">
+                        <h3 class="card-title">متجر حنانة للخضر والفواكه</h3>
+                        <p class="card-description">
+                            تصميم شعار وهوية بصرية متكاملة لمتجر حنانة للخضر والفواكه، تعبّر عن النقاء والطبيعة الطازجة بلمسة عصرية تعكس جودة المنتجات.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Digital Art</span>
+                            <span class="card-tag">Illustration</span>
+                            <span class="card-tag">Photoshop</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i> 1.0K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i> 250
+                                </span>
+                            </div>
+                            <a class="card-button" href="project-details-11.html">تسجيل إعجاب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 12 -->
+                <div class="project-card animate-card-pop" style="animation-delay: 2.7s;">
+                    <a href="project-details-12.html" aria-label="عرض تفاصيل مشروع ملصق إعلاني لـ VR" class="card-link-wrapper">
+                        <img src="graphics/project-graphic-12.jpg" alt="صورة مشروع ملصق إعلاني لـ VR" />
+                    </a>
+                    <div class="card-content">
+                        <h3 class="card-title">Gloviá - ڤلوفيا</h3>
+                        <p class="card-description">
+                            تصميم شعار وهوية بصرية متكاملة لعلامة ڤلوفيا – Gloviá، تجسّد مفهوم الجمال الطبيعي والنعومة، بروح أنثوية راقية تعكس العناية والتألّق.
+                        </p>
+                        <div class="card-tags">
+                            <span class="card-tag">Branding</span>
+                            <span class="card-tag">Photoshop</span>
+                            <span class="card-tag">InDesign</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat">
+                                    <i class="ri-eye-line card-stat-icon"></i> 4.0K
+                                </span>
+                                <span class="card-stat">
+                                    <i class="ri-heart-line card-stat-icon"></i> 780
+                                </span>
+                            </div>
+                            <a class="card-button" href="project-details-12.html">تسجيل إعجاب</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Card -->
+                <div class="project-card cta-card animate-card-pop" style="animation-delay: 2.9s;">
+                    <div class="text-center p-8">
+                        <i class="ri-pen-nib-line text-primary text-5xl mb-4 animate-bounce"></i>
+                        <h3 class="text-2xl font-bold text-primary mb-3">هل لديك فكرة جديدة؟</h3>
+                        <p class="text-gray-300 mb-6 max-w-sm mx-auto">
+                            دعنا نبتكر الهوية البصرية لبراندك القادم، بأسلوب يعبّر عن رؤيتك ويُميّز حضورك.
+                        </p>
+                        <a href="index.html" class="inline-block px-8 py-4 bg-gradient-to-r from-primary to-yellow-400 text-black font-bold rounded-full hover:from-yellow-400 hover:to-primary transition-all duration-300 shadow-lg hover:shadow-primary/50 transform hover:scale-105">
+                            خلينا نبدأ ..
+                        </a>
+                    </div>
+                </div>
 
             </section>
-
         </main>
-
         
-
+        <!-- Footer -->
         <footer class="glass-card mt-16 py-6 border-t border-primary/20 text-center text-gray-400">
-
             <p>&copy; 2025 STVX Platform. جميع حقوق النشر محفوظة. | صمم بإبداع ✨</p>
-
         </footer>
-
         
-
     </div>
 
-</body>
+    <script>
+        // Add interactive like functionality
+        document.querySelectorAll('.card-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.textContent.includes('تسجيل إعجاب')) {
+                    e.preventDefault();
+                    const heartIcon = this.closest('.project-card').querySelector('.ri-heart-line');
+                    const likesCount = this.closest('.card-footer').querySelector('.card-stat:last-child');
+                    
+                    if (heartIcon) {
+                        heartIcon.classList.remove('ri-heart-line');
+                        heartIcon.classList.add('ri-heart-fill', 'text-red-500');
+                        
+                        const currentCount = parseInt(likesCount.textContent.match(/\d+/)[0]);
+                        likesCount.innerHTML = `<i class="ri-heart-fill card-stat-icon text-red-500"></i> ${currentCount + 1}`;
+                        
+                        this.textContent = 'تم الإعجاب';
+                        this.style.background = 'linear-gradient(135deg, #ff4458 0%, #ff6b6b 100%)';
+                    }
+                }
+            });
+        });
 
+        // Add smooth scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(card);
+        });
+    </script>
+</body>
 </html>
